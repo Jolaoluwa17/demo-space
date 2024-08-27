@@ -1,0 +1,10 @@
+.skill_gap_root {
+  padding: 24px;
+}
+.skill_gap_container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 24px;
+}

@@ -1,0 +1,22 @@
+.progress_root {
+  padding: 24px;
+}
+.progress_skills_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.progress_header {
+  width: 100%;
+  background-color: #fafafa;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5e5d6f;
+  justify-content: center;
+}

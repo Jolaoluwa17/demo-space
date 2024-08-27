@@ -1,0 +1,28 @@
+/* circularBar.css */
+.circular-bar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle_background {
+  fill: none;
+  stroke: white;
+}
+
+.circle_progress {
+  fill: none;
+  stroke: #4274ba; /* Progress color */
+  stroke-linecap: round; /* Make stroke ends rounded */
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.circle-text {
+  position: absolute;
+  font-size: 16px; /* Adjust size as needed; relative to circle size */
+  font-weight: bold;
+  color: #000; /* Text color */
+  text-align: center;
+  line-height: 1.2; /* Adjust for better alignment */
+}

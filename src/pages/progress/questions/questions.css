@@ -1,0 +1,93 @@
+.questions_root {
+  padding: 24px;
+}
+.question_container {
+  margin-top: 24px;
+  height: 350px;
+}
+.question_out_of {
+  font-size: 14px;
+  color: #838383;
+  font-weight: 600;
+}
+.question_text {
+  font-size: 16px;
+  margin-top: 24px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.question_option_item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  height: 56px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  margin-bottom: 8px;
+}
+.selected_option {
+  background-color: #e3e8ff;
+}
+.check_icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+}
+.options_text {
+  padding-left: 12px;
+}
+.empty_check_circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #838383;
+}
+.question_selectors {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+.back_and_next_button {
+  padding: 6px 6px 0px 6px;
+  background-color: #4274ba;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.back_and_next_button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.correct_option,
+.question_answer_input.correct,
+.highlight_correct {
+  background-color: #d2ffcc; /* Green background for correct answer */
+  color: black;
+}
+
+.wrong_option {
+  background-color: #ffc3c3; /* Red background for wrong answer */
+  color: black;
+}
+.question_answer_input {
+  width: 70%;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  border: 1px solid #e3e8ff;
+  border-radius: 8px;
+  outline-color: #4274ba;
+  font-size: 16px;
+}
+.question_answer_input.incorrect {
+  background-color: #ffc3c3;
+}
+.question_correct_answer {
+  margin-top: 24px;
+}

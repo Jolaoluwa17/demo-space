@@ -1,0 +1,184 @@
+.profile_pageone_root {
+  width: 100%;
+  position: relative;
+  padding-bottom: 40px;
+}
+.profile_pageone_title {
+  font-size: 16px;
+  color: #4274ba;
+  font-weight: 600;
+}
+.profile_pageone_subTitle {
+  color: #6a757e;
+  font-size: 14px;
+}
+.profile_pageone_form_item {
+  margin-top: 24px;
+}
+.profile_pageone_form_item label {
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.profile_pageone_input {
+  width: 100%;
+  padding: 13.5px 15px 13.5px 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  outline-color: #4274ba;
+  border: 1px solid #cbcbcc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.profile_pageone_textarea {
+  width: 100%;
+  height: 116px;
+  resize: none;
+  padding: 13.5px 15px 13.5px 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  outline-color: #4274ba;
+  border: 1px solid #cbcbcc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.profile_pageone_searchInput {
+  width: 100%;
+  padding: 13.5px 15px 12.5px 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  outline-color: #4274ba;
+  border: 1px solid #cbcbcc;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.profile_pageone_searchInput .input {
+  height: 100%;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  width: 95%;
+}
+.upload_profile_pic {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  cursor: pointer;
+}
+.upload_profile_pic_text {
+  color: #6a757e;
+  margin-left: 8px;
+  /* background-color: red; */
+}
+.profile_pageone_root .image_tag {
+  width: 100%;
+  height: 50px;
+  background-color: #f0f2ff;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  color: #848c98;
+  position: relative;
+  border-radius: 8px;
+}
+.profile_pageone_root .image_holder {
+  height: 50px;
+  width: 50px;
+  border-radius: 8px;
+}
+.profile_pageone_root .image_name {
+  margin-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+.profile_pageone_root .delete_icon {
+  position: absolute;
+  right: 13px;
+  top: 13px;
+  bottom: 13px;
+  cursor: pointer;
+}
+.add_another_entry {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+.add_another_entry .content {
+  width: 142px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #4274ba;
+  cursor: pointer;
+}
+.skillheader {
+  font-size: 14px;
+  color: #6a757e;
+  margin-top: 24px;
+}
+.skills_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.skill {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #4274ba;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 20px;
+}
+.skills_dropdown {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.skills_dropdown_item {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.multi_select_interest {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  /* background-color: red; */
+}
+.profile_pageone_root .interests {
+  padding: 16px;
+  width: 49%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e7ebe6;
+  border-radius: 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.remove_entry_button {
+  cursor: pointer;
+  color: red;
+  display: flex;
+  justify-content: space-between;
+  width: 90px;
+}
+.next_btn:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}

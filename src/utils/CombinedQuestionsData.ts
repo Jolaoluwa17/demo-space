@@ -1,0 +1,87 @@
+export const combinedQuestionsData = [
+  {
+    id: 1,
+    type: 'multiple',
+    question:
+      'Which of the following HTML elements is used to define a client-side script, such as JavaScript?',
+    options: ['<script>', '<style>', '<link>', '<meta>'],
+    correctAnswer: '<script>',
+    userAnswer: '<script>',
+  },
+  {
+    id: 2,
+    type: 'multiple',
+    question: 'What does CSS stand for?',
+    options: [
+      'Computer Style Sheets',
+      'Creative Style Sheets',
+      'Cascading Style Sheets',
+      'Colorful Style Sheets',
+    ],
+    correctAnswer: 'Cascading Style Sheets',
+    userAnswer: 'Creative Style Sheets',
+  },
+  {
+    id: 3,
+    type: 'multiple',
+    question: 'Which HTML attribute is used to define inline styles?',
+    options: ['style', 'class', 'id', 'type'],
+    correctAnswer: 'style',
+    userAnswer: 'style',
+  },
+  {
+    id: 4,
+    type: 'multiple',
+    question: 'Which of the following is a JavaScript framework?',
+    options: ['Angular', 'Bootstrap', 'jQuery', 'Laravel'],
+    correctAnswer: 'Angular',
+    userAnswer: 'jQuery',
+  },
+  {
+    id: 5,
+    type: 'multiple',
+    question: 'What does HTML stand for?',
+    options: [
+      'Hyper Text Markup Language',
+      'Hyperlink and Text Markup Language',
+      'Hyper Text Marking Language',
+      'High Text Markup Language',
+    ],
+    correctAnswer: 'Hyper Text Markup Language',
+    userAnswer: 'Hyper Text Markup Language',
+  },
+  {
+    id: 6,
+    type: 'single',
+    question: 'CSS stands for',
+    options: null,
+    correctAnswer: 'Cascading Style Sheets',
+    userAnswer: 'Cascading Style Sheets',
+  },
+  {
+    id: 7,
+    type: 'single',
+    question: 'What does HTML stand for?',
+    options: null,
+    correctAnswer: 'Hyper Text Markup Language',
+    userAnswer: 'Hyperlink and Text Markup Language',
+  },
+  {
+    id: 8,
+    type: 'single',
+    question: 'What is the purpose of JavaScript?',
+    options: null,
+    correctAnswer: 'To create interactive effects within web browsers',
+    userAnswer: 'To create interactive effects within web browsers',
+  },
+  {
+    id: 9,
+    type: 'single',
+    question: 'Explain the box model in CSS.',
+    options: null,
+    correctAnswer:
+      'The CSS box model is a box that wraps around every HTML element, consisting of margins, borders, padding, and the actual content.',
+    userAnswer:
+      'The CSS box model is a box that wraps around every HTML element, consisting of margins, borders, padding, and the actual content.',
+  },
+];

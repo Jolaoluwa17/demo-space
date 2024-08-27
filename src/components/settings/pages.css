@@ -1,0 +1,119 @@
+.settings_content {
+  border: 1px solid #cbcbcc;
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.settings_main {
+  max-width: 1108px;
+}
+.settings_page_header {
+  color: #4274ba;
+  font-size: 16px;
+}
+.settings_page_subHeader {
+  color: #6a757e;
+  font-size: 14px;
+  margin-top: 8px;
+}
+.settings_page_profile_pic {
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  margin-top: 16px;
+  position: relative;
+}
+.profile_edit {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+.profile_form_item {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.profile_input_item {
+  width: 100%;
+  max-width: 100%;
+  padding: 14px 10px 14px 10px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  border: 1px #e7ebe6 solid;
+  border-radius: 10px;
+  outline-color: #4274ba;
+  font-size: 15px;
+}
+.settings_edit_btn {
+  width: 172px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #4274ba;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.settings_edit_btn_container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.profile_custom_select {
+  margin-top: 10px;
+}
+.add_another_entry_2 {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.add_another_entry_2 .content {
+  width: 142px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #4274ba;
+  cursor: pointer;
+}
+.profile_form_item label {
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.settings_profile_searchInput {
+  width: 100%;
+  padding: 13.5px 0px 12.5px 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  outline-color: #4274ba;
+  border: 1px solid #cbcbcc;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.settings_profile_searchInput .input {
+  height: 100%;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  width: 95%;
+}
+.settings_profile_skills_dropdown {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  border-radius: 10px;
+  top: 80px;
+}

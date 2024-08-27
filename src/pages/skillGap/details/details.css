@@ -1,0 +1,42 @@
+.details_root {
+  padding: 24px;
+}
+.skill_gap_details {
+  margin-top: 24px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 24px 16px;
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+.skill_gap_details_title {
+  font-size: 16px;
+  font-weight: 600;
+}
+.skill_gap_details_overview,
+.skill_gap_details_benefits,
+.program_structure,
+.duration,
+.modules_header {
+  margin-top: 16px;
+}
+.benefits_data {
+  margin-top: 16px;
+}
+.enroll_now_container {
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.enroll_now {
+  width: 361px;
+  height: 50px;
+  background-color: #4274ba;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+}

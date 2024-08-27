@@ -1,0 +1,41 @@
+.status_root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.status_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 345px;
+  width: 100%;
+}
+.status_text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333a41;
+  margin-top: 24px;
+}
+.status_statement {
+  margin-top: 16px;
+  color: #6a757e;
+  font-size: 16px;
+  text-align: center;
+}
+.navigation_btn {
+  display: flex;
+  align-items: center;
+  color: #4274ba;
+  margin-top: 17px;
+  cursor: pointer;
+}
+.navigation_arrow {
+  margin-left: 10px;
+  padding-top: 8px;
+}

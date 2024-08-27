@@ -1,0 +1,175 @@
+import { useState } from 'react';
+import './signup.css';
+import EyeOpen from '../../icons/Eye';
+import EyeClosed from '../../icons/EyeClosed';
+
+const Signup = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [emailError, setEmailError] = useState<boolean>(true);
+  const samePassword = password === confirmPassword;
+  const isFormValid = password !== '' && !emailError && samePassword;
+
+  const validateEmail = (email: string) => {
+    // Basic email validation regex
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleHiddenTrigger = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    if (!validateEmail(value)) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+  };
+
+  return (
+    <div className="signup_root">
+      <div className="signup_container">
+        <div className="techwings_logo">
+          <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
+        </div>
+        <div className="left_section">
+          <img
+            src="/assets/images/Signup.svg"
+            alt="login_image"
+            style={{ width: '482.42px', height: '816px', borderRadius: '24px' }}
+          />
+        </div>
+        <div className="right_section">
+          <div className="signup_form">
+            <div className="login_title">Sign up</div>
+            <p>
+              Let’s get you all set up so you can access your personal account.
+            </p>
+            <div className="form_item">
+              <label htmlFor="email">Enter Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="ysemiraefe@gmail.com"
+                className="input"
+                value={email}
+                onChange={(e) => handleEmailChange(e.target.value)}
+              />
+            </div>
+            <div className="form_item">
+              <label htmlFor="password">Enter Password</label>
+              <div className="password_input">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  placeholder="************"
+                  className="input"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+                <div onClick={handleHiddenTrigger} className="see_password">
+                  {showPassword ? <EyeOpen /> : <EyeClosed />}
+                </div>
+              </div>
+            </div>
+            <div className="form_item">
+              <label htmlFor="password">Confirm Password</label>
+              <div className="password_input">
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  name="password"
+                  placeholder="************"
+                  className="input"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                />
+                <div
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="see_password"
+                >
+                  {showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
+                </div>
+              </div>
+            </div>
+            <div className="TOS">
+              <input type="checkbox" style={{ cursor: 'pointer' }} />
+              <div style={{ marginLeft: '8px' }}>
+                I agree to all the{' '}
+                <span
+                  style={{
+                    color: '#FF8682',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Terms
+                </span>{' '}
+                and{' '}
+                <span
+                  style={{
+                    color: '#FF8682',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Privacy Policies
+                </span>
+              </div>
+            </div>
+            <div
+              className="signup_btn"
+              style={{
+                backgroundColor: isFormValid ? '#4274BA' : 'grey',
+                cursor: isFormValid ? 'pointer' : 'not-allowed',
+              }}
+            >
+              Create Account
+            </div>
+            <div className="already_have_acc">
+              Already have an account?{' '}
+              <span
+                style={{
+                  color: '#FF8682',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                }}
+              >
+                Login
+              </span>
+            </div>
+            <div className="or_signup">
+              <hr />
+              <div>Or Sign up with</div>
+              <hr />
+            </div>
+            <div className="other_signup_options">
+              <div className="signup_options">
+                <img src="/assets/images/Google.svg" alt="login_image" />
+              </div>
+              <div className="signup_options">
+                <img src="/assets/images/Apple.svg" alt="login_image" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Signup;

@@ -1,0 +1,35 @@
+.pagination-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #cbcbcc;
+  color: #cbcbcc;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+  margin-right: 4px;
+}
+
+.circle.active {
+  background-color: #4274ba;
+  color: white;
+}
+
+.line {
+  width: 80px;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #cbcbcc;
+  margin-right: 5px;
+}

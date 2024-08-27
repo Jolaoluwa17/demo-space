@@ -1,0 +1,89 @@
+.multiple_choice_root {
+  padding: 24px;
+}
+.multiple_choice_header {
+  width: 100%;
+  background-color: #fafafa;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5e5d6f;
+  justify-content: center;
+}
+.question_container {
+  margin-top: 24px;
+  height: 350px;
+}
+.question_out_of {
+  font-size: 14px;
+  color: #838383;
+  font-weight: 600;
+}
+.question_text {
+  font-size: 16px;
+  margin-top: 24px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.option_item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  height: 56px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.selected_option {
+  background-color: #e3e8ff;
+}
+.check_icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+}
+.options_text {
+  padding-left: 12px;
+}
+.empty_check_circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #838383;
+}
+.question_selectors {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+.back_and_next_button {
+  padding: 6px 6px 0px 6px;
+  background-color: #4274ba;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.question_submit_btn {
+  width: 235px;
+  color: white;
+  background-color: #4274ba;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.back_and_next_button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

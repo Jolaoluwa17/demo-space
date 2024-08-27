@@ -1,0 +1,34 @@
+.evaluation_root {
+  padding: 24px;
+}
+.evaluation_paginator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.evaluation_pagination_btn {
+  padding: 7px 14px;
+  border: 1px solid #e9e9e9;
+  color: #6a757e;
+  border-radius: 25px;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.page_active {
+  background-color: #4274ba;
+  color: white;
+  cursor: default;
+}
+.evaluation_skills_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}

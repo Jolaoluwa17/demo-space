@@ -1,0 +1,18 @@
+.searchBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  border: 1px solid #dfdfdf;
+  background-color: #fafafa;
+  border-radius: 8px;
+  padding: 0px 16px;
+  box-sizing: border-box;
+}
+.search_input {
+  width: 100%;
+  border: 1px solid #dfdfdf;
+  background-color: #fafafa;
+  border: none;
+  outline: none;
+}

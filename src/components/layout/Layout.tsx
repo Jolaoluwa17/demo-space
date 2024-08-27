@@ -1,0 +1,45 @@
+import React, { ReactNode } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import './layout.css';
+import Header from '../header/Header';
+import Sidebar from '../sidebar/SideBar';
+
+interface LayoutProps {
+  children?: ReactNode; // Make children optional since it's coming from Outlet
+}
+
+const Layout: React.FC<LayoutProps> = () => {
+  const userName = 'Emmanuel Alabi';
+  const location = useLocation();
+  const pathname = location.pathname.substring(1);
+
+  const activeLink = (() => {
+    if (pathname.startsWith('evaluation')) {
+      return 'Evaluation';
+    }
+    if (pathname.startsWith('progress')) {
+      return 'Progress';
+    }
+    if (pathname.startsWith('skill-gap')) {
+      return 'Skill Gap';
+    }
+    if (pathname.startsWith('')) {
+      return 'Overview';
+    }
+    return pathname.charAt(0).toUpperCase() + pathname.slice(1);
+  })();
+
+  return (
+    <div className="layout_root">
+      <Sidebar />
+      <div className={`content_wrapper open`}>
+        <Header activeLink={activeLink} userName={userName} />
+        <main className="main_content">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default Layout;
