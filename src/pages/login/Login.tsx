@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './login.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
+import { useNavigate } from 'react-router';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -31,6 +32,9 @@ const Login = () => {
       setEmailError(false);
     }
   };
+
+  const navigator = useNavigate()
+
 
   return (
     <div className="login_root">
@@ -78,7 +82,7 @@ const Login = () => {
                 <input type="checkbox" style={{ cursor: 'pointer' }} />
                 <div style={{ marginLeft: '8px' }}>Remember me</div>
               </div>
-              <div style={{ color: '#FF8682', cursor: 'pointer' }}>
+              <div style={{ color: '#FF8682', cursor: 'pointer' }} onClick={() => navigator("/auth/forgotpassword")}>
                 Forgot Password
               </div>
             </div>
@@ -88,6 +92,7 @@ const Login = () => {
                 backgroundColor: isFormValid ? '#4274BA' : 'grey',
                 cursor: isFormValid ? 'pointer' : 'not-allowed',
               }}
+              onClick={() => navigator("/dahsboard")}
             >
               Login
             </div>
@@ -99,6 +104,7 @@ const Login = () => {
                   fontWeight: '600',
                   cursor: 'pointer',
                 }}
+                onClick={() => navigator("/auth/signup")}
               >
                 Sign up
               </span>

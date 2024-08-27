@@ -1,5 +1,5 @@
 import { motion, useAnimationControls } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import './sideBar.css';
 import NavigationLink from '../navigationLink/NavigationLink';
@@ -33,6 +33,8 @@ const Sidebar = () => {
   const containerControls = useAnimationControls();
   const location = useLocation();
   const pathname = location.pathname;
+
+  const navigator = useNavigate()
 
   return (
     <motion.nav
@@ -94,7 +96,7 @@ const Sidebar = () => {
           />
         </NavigationLink>
       </div>
-      <div className="logout_btn_container">
+      <div className="logout_btn_container" onClick={() => navigator("/auth/login")}>
         <div className="logout_btn">
           <LogOutIcon />
           <div style={{ paddingLeft: '20px', paddingBottom: '6px' }}>

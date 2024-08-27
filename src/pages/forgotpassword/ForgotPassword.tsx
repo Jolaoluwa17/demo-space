@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import LeftArrow from '../../icons/LeftArrow';
 import './forgotPassword.css';
+import { useNavigate } from 'react-router';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +21,9 @@ const ForgotPassword = () => {
       setEmailError(false);
     }
   };
+
+  const navigator = useNavigate();
+
 
   return (
     <div className="forgotpassword_root">
@@ -54,6 +58,8 @@ const ForgotPassword = () => {
               backgroundColor: isFormValid ? '#4274BA' : 'grey',
               cursor: isFormValid ? 'pointer' : 'not-allowed',
             }}
+            onClick={() => navigator('/auth/resetpassword')}
+
           >
             Submit
           </div>

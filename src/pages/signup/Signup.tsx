@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './signup.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
+import { useNavigate } from 'react-router';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -40,6 +41,8 @@ const Signup = () => {
       setEmailError(false);
     }
   };
+
+  const navigator = useNavigate();
 
   return (
     <div className="signup_root">
@@ -137,6 +140,7 @@ const Signup = () => {
                 backgroundColor: isFormValid ? '#4274BA' : 'grey',
                 cursor: isFormValid ? 'pointer' : 'not-allowed',
               }}
+              onClick={() => navigator('/auth/login')}
             >
               Create Account
             </div>
@@ -148,6 +152,7 @@ const Signup = () => {
                   fontWeight: '600',
                   cursor: 'pointer',
                 }}
+                onClick={() => navigator('/auth/login')}
               >
                 Login
               </span>
