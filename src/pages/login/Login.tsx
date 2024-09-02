@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './login.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -33,21 +33,19 @@ const Login = () => {
     }
   };
 
-  const navigator = useNavigate()
-
+  const navigator = useNavigate();
 
   return (
     <div className="login_root">
       <div className="login_container">
-        <div className="techwings_logo_login">
-          <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
-        </div>
         <div className="left_section">
+          <div className="techwings_logo_login">
+            <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
+          </div>
           <div className="login_form">
             <div className="login_title">Login</div>
             <p>
-              Please provide the information below to login and access your{' '}
-              <br />
+              Please provide the information below to login and access your
               account
             </p>
             <div className="form_item">
@@ -82,20 +80,24 @@ const Login = () => {
                 <input type="checkbox" style={{ cursor: 'pointer' }} />
                 <div style={{ marginLeft: '8px' }}>Remember me</div>
               </div>
-              <div style={{ color: '#FF8682', cursor: 'pointer' }} onClick={() => navigator("/auth/forgotpassword")}>
+              <div
+                style={{ color: '#FF8682', cursor: 'pointer' }}
+                onClick={() => navigator('/auth/forgotpassword')}
+              >
                 Forgot Password
               </div>
             </div>
-            <div
+            <button
               className="login_btn"
               style={{
                 backgroundColor: isFormValid ? '#4274BA' : 'grey',
                 cursor: isFormValid ? 'pointer' : 'not-allowed',
               }}
-              onClick={() => navigator("/dahsboard")}
+              onClick={() => navigator('/')}
+              disabled={!isFormValid}
             >
               Login
-            </div>
+            </button>
             <div className="doAccount">
               Don’t have an account?{' '}
               <span
@@ -104,7 +106,7 @@ const Login = () => {
                   fontWeight: '600',
                   cursor: 'pointer',
                 }}
-                onClick={() => navigator("/auth/signup")}
+                onClick={() => navigator('/auth/signup')}
               >
                 Sign up
               </span>
@@ -128,7 +130,7 @@ const Login = () => {
           <img
             src="/assets/images/Login.svg"
             alt="login_image"
-            style={{ width: '486px', height: '816px', borderRadius: '24px' }}
+            className="login_img"
           />
         </div>
       </div>

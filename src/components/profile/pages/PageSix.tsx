@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddIcon from '../../../icons/AddIcon';
 import './pages.css';
 import DeleteIcon from '../../../icons/DeleteIcon';
+import { useNavigate } from 'react-router-dom';
 
 interface Certification {
   certificate: string;
@@ -9,11 +10,7 @@ interface Certification {
   issueDate: string;
 }
 
-interface Props {
-  setCurrentPage: (page: number) => void;
-}
-
-const PageSix: React.FC<Props> = ({ setCurrentPage }) => {
+const PageSix = () => {
   const [certifications, setCertifications] = useState<Certification[]>([
     { certificate: '', organization: '', issueDate: '' },
   ]);
@@ -50,6 +47,8 @@ const PageSix: React.FC<Props> = ({ setCurrentPage }) => {
     );
     setIsButtonDisabled(!allCertificationsFilled);
   }, [certifications]);
+
+  const navigator = useNavigate();
 
   return (
     <div className="profile_pageone_root">
@@ -117,7 +116,7 @@ const PageSix: React.FC<Props> = ({ setCurrentPage }) => {
       </div>
       <button
         className={`next_btn`}
-        onClick={() => setCurrentPage(1)}
+        onClick={() => navigator('/')}
         disabled={isButtonDisabled}
       >
         Done

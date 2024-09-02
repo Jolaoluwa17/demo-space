@@ -67,8 +67,6 @@ function App() {
             </Route>
             <Route path="profile" element={<Settings />}>
               <Route index element={<SkillGap />} />
-              {/* <Route path="details" element={<Details />} />
-              <Route path="status" element={<DetailsStatus />} /> */}
             </Route>
           </Route>
         </Routes>

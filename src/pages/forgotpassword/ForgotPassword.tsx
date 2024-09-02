@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import LeftArrow from '../../icons/LeftArrow';
 import './forgotPassword.css';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -24,7 +24,6 @@ const ForgotPassword = () => {
 
   const navigator = useNavigate();
 
-
   return (
     <div className="forgotpassword_root">
       <div className="forgotpassword_container">
@@ -34,12 +33,17 @@ const ForgotPassword = () => {
         <div className="forgotpassword_form">
           <div className="back_to_signup">
             <LeftArrow />
-            <div style={{ marginLeft: '12px' }}>Back to sign up</div>
+            <div
+              style={{ marginLeft: '12px' }}
+              onClick={() => navigator('/auth/login')}
+            >
+              Back to login
+            </div>
           </div>
           <div className="forgotpassword_title">Forgot your password?</div>
           <p>
             Don’t worry, happens to all of us. Enter your email below to recover
-            your <br /> password.
+            your password.
           </p>
           <div className="form_item">
             <label htmlFor="email">Enter Email</label>
@@ -52,17 +56,17 @@ const ForgotPassword = () => {
               onChange={(e) => handleEmailChange(e.target.value)}
             />
           </div>
-          <div
+          <button
             className="submit_btn"
             style={{
               backgroundColor: isFormValid ? '#4274BA' : 'grey',
               cursor: isFormValid ? 'pointer' : 'not-allowed',
             }}
             onClick={() => navigator('/auth/resetpassword')}
-
+            disabled={!isFormValid}
           >
             Submit
-          </div>
+          </button>
           <div className="or_forgotpassword">
             <hr />
             <div>Or login with</div>

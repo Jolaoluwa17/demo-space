@@ -117,3 +117,44 @@
   border-radius: 10px;
   top: 80px;
 }
+.profile_pageone_form_item {
+  margin-top: 24px;
+}
+.profile_pageone_form_item label {
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.multi_select_interest {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  /* background-color: red; */
+}
+.profile_pageone_form_item .interests {
+  padding: 16px;
+  width: 49%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e7ebe6;
+  border-radius: 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.profile_input_textarea {
+  width: 100%;
+  height: 116px;
+  resize: none;
+  padding: 13.5px 15px 13.5px 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  outline-color: #4274ba;
+  border: 1px solid #e7ebe6;
+  font-size: 16px;
+  box-sizing: border-box;
+}

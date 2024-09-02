@@ -3,6 +3,7 @@ import LeftArrow from '../../icons/LeftArrow';
 import './resetPassword.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const [otp, setOtp] = useState('');
@@ -26,6 +27,8 @@ const ResetPassword = () => {
   ) => {
     setConfirmPassword(e.target.value);
   };
+
+  const navigator = useNavigate();
 
   return (
     <div className="resetpassword_root">
@@ -89,15 +92,17 @@ const ResetPassword = () => {
               </div>
             </div>
           </div>
-          <div
+          <button
             className="submit_btn"
             style={{
               backgroundColor: isFormValid ? '#4274BA' : 'grey',
               cursor: isFormValid ? 'pointer' : 'not-allowed',
             }}
+            onClick={() => navigator('/auth/login')}
+            disabled={!isFormValid}
           >
             Set password
-          </div>
+          </button>
         </div>
       </div>
     </div>

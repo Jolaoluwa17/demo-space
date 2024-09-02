@@ -5,10 +5,13 @@ import './settings.css';
 import PersonalInformation from '../../components/settings/PersonalInformation';
 import EducationalBackground from '../../components/settings/EducationalBackground';
 import Skills from '../../components/settings/Skills';
+import AreaOfInterest from '../../components/settings/AreaOfInterest';
+import Experience from '../../components/settings/Experience';
+import Certificate from '../../components/settings/Certificate';
 
 const Settings = () => {
   const tabs = [
-    { name: 'Personal Infromation', path: 'personal-information' },
+    { name: 'Personal Information', path: 'personal-information' },
     { name: 'Educational Background', path: 'educational-background' },
     { name: 'Skills', path: 'skills' },
     { name: 'Area of Interest', path: 'interest' },
@@ -49,9 +52,12 @@ const Settings = () => {
         ))}
       </div>
       <div className="settings_content_container">
-        {activeTab === 'Personal Infromation' && <PersonalInformation />}
+        {activeTab === 'Personal Information' && <PersonalInformation />}
         {activeTab === 'Educational Background' && <EducationalBackground />}
         {activeTab === 'Skills' && <Skills />}
+        {activeTab === 'Area of Interest' && <AreaOfInterest />}
+        {activeTab === 'Experience' && <Experience />}
+        {activeTab === 'Certificates' && <Certificate />}
       </div>
     </div>
   );

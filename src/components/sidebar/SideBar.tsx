@@ -33,8 +33,7 @@ const Sidebar = () => {
   const containerControls = useAnimationControls();
   const location = useLocation();
   const pathname = location.pathname;
-
-  const navigator = useNavigate()
+  const navigator = useNavigate();
 
   return (
     <motion.nav
@@ -96,8 +95,8 @@ const Sidebar = () => {
           />
         </NavigationLink>
       </div>
-      <div className="logout_btn_container" onClick={() => navigator("/auth/login")}>
-        <div className="logout_btn">
+      <div className="logout_btn_container">
+        <div className="logout_btn" onClick={() => navigator('/auth/login')}>
           <LogOutIcon />
           <div style={{ paddingLeft: '20px', paddingBottom: '6px' }}>
             Log Out

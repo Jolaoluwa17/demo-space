@@ -5,7 +5,7 @@
   height: 100%;
 }
 .techwings_logo_login {
-  position: absolute;
+  margin-bottom: 30px;
 }
 .login_container {
   display: flex;
@@ -16,9 +16,14 @@
 .login_root .right_section {
   width: 40%;
 }
+.login_img {
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .login_root .left_section {
   width: 60%;
-  padding: 84px 0px 84px 0px;
 }
 .login_form {
   width: 640px;
@@ -85,6 +90,8 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
+  border: none;
+  font-size: 14px;
 }
 .doAccount {
   width: 100%;
@@ -119,4 +126,116 @@
   border: 1px solid #cbcbcc;
   border-radius: 4px;
   cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .login_container {
+    display: flex;
+    width: 950px;
+    position: relative;
+  }
+  .login_form {
+    width: 500px;
+  }
+  .login_options {
+    width: 240px;
+    height: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login_container {
+    display: flex;
+    width: 650px;
+    position: relative;
+  }
+  .login_root .right_section {
+    width: 0%;
+    display: none;
+  }
+  .login_root .left_section {
+    width: 100%;
+  }
+  .login_form {
+    width: 100%;
+  }
+  .login_options {
+    width: 310px;
+    height: 56px;
+  }
+}
+
+@media (max-width: 430px) {
+  .login_container {
+    display: flex;
+    width: 350px;
+    position: relative;
+  }
+  .login_root .right_section {
+    width: 0%;
+    display: none;
+  }
+  .login_root .left_section {
+    width: 100%;
+  }
+  .login_form {
+    width: 100%;
+  }
+  .login_options {
+    width: 165px;
+    height: 56px;
+  }
+  .or_login hr {
+    width: 30%;
+  }
+}
+
+@media (max-width: 375px) {
+  .login_container {
+    display: flex;
+    width: 300px;
+    position: relative;
+  }
+  .login_root .right_section {
+    width: 0%;
+    display: none;
+  }
+  .login_root .left_section {
+    width: 100%;
+  }
+  .login_form {
+    width: 100%;
+  }
+  .login_options {
+    width: 140px;
+    height: 46px;
+  }
+  .or_login hr {
+    width: 30%;
+  }
+}
+
+@media (max-width: 320px) {
+  .login_container {
+    display: flex;
+    width: 280px;
+    position: relative;
+  }
+  .login_root .right_section {
+    width: 0%;
+    display: none;
+  }
+  .login_root .left_section {
+    width: 100%;
+  }
+  .login_form {
+    width: 100%;
+  }
+  .login_options {
+    width: 130px;
+    height: 46px;
+  }
+  .or_login hr {
+    width: 29%;
+  }
 }

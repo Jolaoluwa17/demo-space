@@ -1,29 +1,37 @@
 import { useState } from 'react';
 import LeftArrow from '../../icons/LeftArrow';
 import './verifyAccount.css';
+import { useNavigate } from 'react-router-dom';
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState('');
   const isFormValid = otp !== '';
 
+  const navigator = useNavigate();
+
   return (
     <div className="verify_account_root">
       <div className="verify_account_container">
-        <div className="techwings_logo">
-          <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
-        </div>
         <div className="left_section">
           <img
             src="/assets/images/VerifyAccount.svg"
             alt="login_image"
-            style={{ width: '482.42px', height: '816px', borderRadius: '24px' }}
+            className="verify_account_img"
           />
         </div>
         <div className="right_section">
+          <div className="techwings_logo">
+            <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
+          </div>
           <div className="verify_account_form">
             <div className="back_to_signup">
               <LeftArrow />
-              <div style={{ marginLeft: '12px' }}>Back to sign up</div>
+              <div
+                style={{ marginLeft: '12px' }}
+                onClick={() => navigator('/auth/signup')}
+              >
+                Back to sign up
+              </div>
             </div>
             <div className="login_title">Verify code</div>
             <p>An authentication code has been sent to your email.</p>
@@ -51,15 +59,17 @@ const VerifyAccount = () => {
                 Resend
               </span>
             </div>
-            <div
+            <button
               className="verify_btn"
               style={{
                 backgroundColor: isFormValid ? '#4274BA' : 'grey',
                 cursor: isFormValid ? 'pointer' : 'not-allowed',
               }}
+              onClick={() => navigator('/user-profile')}
+              disabled={!isFormValid}
             >
               Verify
-            </div>
+            </button>
           </div>
         </div>
       </div>

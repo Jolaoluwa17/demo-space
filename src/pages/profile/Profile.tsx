@@ -106,7 +106,7 @@ const Profile = () => {
           {currentPage === 3 && <PageThree setCurrentPage={setCurrentPage} />}
           {currentPage === 4 && <PageFour setCurrentPage={setCurrentPage} />}
           {currentPage === 5 && <PageFive setCurrentPage={setCurrentPage} />}
-          {currentPage === 6 && <PageSix setCurrentPage={setCurrentPage} />}
+          {currentPage === 6 && <PageSix />}
         </div>
       </div>
     </div>

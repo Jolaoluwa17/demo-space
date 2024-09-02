@@ -4,24 +4,30 @@
   justify-content: center;
   height: 100%;
 }
-.techwings_logo {
-  position: absolute;
+.verify_account_root .techwings_logo {
   right: 0px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 .verify_account_container {
   display: flex;
   width: 1232px;
   position: relative;
 }
+.verify_account_img {
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .verify_account_root .right_section {
-  padding: 84px 0px 84px 0px;
   width: 60%;
-  /* background-color: red; */
   padding-left: 102px;
 }
 .verify_account_root .left_section {
   width: 40%;
-  /* background-color: yellow; */
   padding: 0px;
 }
 .back_to_signup {
@@ -79,4 +85,71 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
+  border: none;
+  font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .verify_account_container {
+    display: flex;
+    width: 950px;
+    position: relative;
+  }
+  .verify_account_form {
+    width: 500px;
+  }
+  .verify_account_root .right_section {
+    padding: 0px 0px 0px 50px;
+    width: 55%;
+  }
+  .verify_account_root .left_section {
+    width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .verify_account_container {
+    display: flex;
+    width: 650px;
+    position: relative;
+  }
+  .verify_account_root .left_section {
+    width: 0%;
+    display: none;
+  }
+  .verify_account_root .right_section {
+    width: 100%;
+    padding: 0px;
+  }
+  .verify_account_form {
+    width: 100%;
+  }
+  .verify_account_root .techwings_logo {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 430px) {
+  .verify_account_container {
+    display: flex;
+    width: 350px;
+    position: relative;
+  }
+}
+
+@media (max-width: 375px) {
+  .verify_account_container {
+    display: flex;
+    width: 300px;
+    position: relative;
+  }
+}
+
+@media (max-width: 320px) {
+  .verify_account_container {
+    display: flex;
+    width: 280px;
+    position: relative;
+  }
 }

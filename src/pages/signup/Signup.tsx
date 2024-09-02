@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './signup.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -47,17 +47,17 @@ const Signup = () => {
   return (
     <div className="signup_root">
       <div className="signup_container">
-        <div className="techwings_logo">
-          <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
-        </div>
         <div className="left_section">
           <img
             src="/assets/images/Signup.svg"
             alt="login_image"
-            style={{ width: '482.42px', height: '816px', borderRadius: '24px' }}
+            className="signup_img"
           />
         </div>
         <div className="right_section">
+          <div className="techwings_logo">
+            <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
+          </div>
           <div className="signup_form">
             <div className="login_title">Sign up</div>
             <p>
@@ -134,16 +134,17 @@ const Signup = () => {
                 </span>
               </div>
             </div>
-            <div
+            <button
               className="signup_btn"
               style={{
                 backgroundColor: isFormValid ? '#4274BA' : 'grey',
                 cursor: isFormValid ? 'pointer' : 'not-allowed',
               }}
-              onClick={() => navigator('/auth/login')}
+              onClick={() => navigator('/auth/verifyaccount')}
+              disabled={!isFormValid}
             >
               Create Account
-            </div>
+            </button>
             <div className="already_have_acc">
               Already have an account?{' '}
               <span
