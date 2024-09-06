@@ -188,6 +188,34 @@
   .or_signup hr {
     width: 30%;
   }
+  .signup_root .login_title {
+    font-size: 30px;
+  }
+  .signup_root p {
+    font-size: 14px;
+  }
+  .signup_form label {
+    font-size: 16px;
+  }
+  .signup_form .input,
+  .signup_btn,
+  .or_signup,
+  .TOS,
+  .already_have_acc {
+    font-size: 14px;
+  }
+  .signup_container {
+    margin-top: 50px;
+  }
+  .signup_root .form_item,
+  .signup_root .others,
+  .signup_btn {
+    margin-top: 18px;
+  }
+  .or_signup,
+  .other_signup_options {
+    margin-top: 20px;
+  }
 }
 
 @media (max-width: 375px) {
