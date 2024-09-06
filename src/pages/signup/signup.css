@@ -204,8 +204,8 @@
   .already_have_acc {
     font-size: 14px;
   }
-  .signup_container {
-    padding-top: 80px;
+  .signup_root .techwings_logo {
+    margin-top: 50px;
   }
   .signup_root .form_item,
   .signup_root .others,
