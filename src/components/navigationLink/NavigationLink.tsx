@@ -8,10 +8,20 @@ interface Props {
   isActive?: boolean;
   isOpen?: boolean;
   link?: string;
+  hidden?: boolean;
 }
 
-const NavigationLink = ({ children, onClick, link, name, isActive }: Props) => {
-  const commonClasses = `navigation-link ${isActive ? 'active' : ''}`;
+const NavigationLink = ({
+  children,
+  onClick,
+  link,
+  name,
+  isActive,
+  hidden,
+}: Props) => {
+  const commonClasses = `navigation-link ${isActive ? 'active' : ''} ${
+    hidden ? 'hidden-class' : ''
+  }`;
 
   if (link) {
     return (
@@ -23,7 +33,7 @@ const NavigationLink = ({ children, onClick, link, name, isActive }: Props) => {
       >
         <span className="navigation-icon">{children}</span>
         <p
-          className="navigation-text"
+          className="navigation_text"
           style={{
             color: isActive ? '#4274ba' : '#6A757E',
           }}
@@ -34,7 +44,11 @@ const NavigationLink = ({ children, onClick, link, name, isActive }: Props) => {
     );
   } else {
     return (
-      <div className={commonClasses} onClick={onClick}>
+      <div
+        className={commonClasses}
+        onClick={onClick}
+        // style={{ display: hidden ? 'none' : 'block' }}
+      >
         <span className="navigation-icon">{children}</span>
         <p
           className="navigation_text"

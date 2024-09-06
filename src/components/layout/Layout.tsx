@@ -31,7 +31,9 @@ const Layout: React.FC<LayoutProps> = () => {
 
   return (
     <div className="layout_root">
-      <Sidebar />
+      <div className="sidebar_mobile_container">
+        <Sidebar />
+      </div>
       <div className={`content_wrapper open`}>
         <Header activeLink={activeLink} userName={userName} />
         <main className="main_content">

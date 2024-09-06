@@ -182,3 +182,19 @@
   background-color: grey;
   cursor: not-allowed;
 }
+
+@media (max-width: 425px) {
+  .profile_pageone_title {
+    font-size: 16px;
+  }
+  .profile_pageone_searchInput,
+  .skills_dropdown_item,
+  .skill,
+  .profile_pageone_root .interests,
+  .upload_profile_pic_text,
+  .profile_pageone_input,
+  .profile_pageone_form_item label,
+  .profile_pageone_subTitle {
+    font-size: 14px;
+  }
+}

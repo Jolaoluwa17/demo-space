@@ -33,3 +33,26 @@
   background-color: #cbcbcc;
   margin-right: 5px;
 }
+
+@media (max-width: 425px) {
+  .circle {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+  .line {
+    width: 35px;
+  }
+}
+
+@media (max-width: 375px) {
+  .line {
+    width: 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .line {
+    width: 20px;
+  }
+}

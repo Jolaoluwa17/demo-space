@@ -21,3 +21,43 @@
 .settings_content_container {
   margin-top: 16px;
 }
+.tabs_icon {
+  display: none;
+}
+.tab_name {
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .settings_content_container {
+    width: 741px;
+  }
+  .settings_tabs {
+    width: 115px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings_tabs {
+    width: 83px;
+    text-align: center;
+    font-size: 12px;
+  }
+  .settings_content_container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 425px) {
+  .settings_root {
+    padding-bottom: 50px;
+  }
+  .tab_name {
+    display: none;
+  }
+  .tabs_icon {
+    display: block;
+    font-size: 20px;
+  }
+}

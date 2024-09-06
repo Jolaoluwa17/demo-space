@@ -32,3 +32,15 @@
   flex-wrap: wrap;
   margin-top: 16px;
 }
+
+@media (max-width: 768px) {
+  .evaluation_paginator {
+    flex-wrap: wrap;
+  }
+  .evaluation_pagination_btn {
+    font-size: 14px;
+  }
+  .evaluation_root {
+    padding-bottom: 50px;
+  }
+}

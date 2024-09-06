@@ -42,3 +42,40 @@
   align-items: center;
   cursor: pointer;
 }
+.logout_mobile_btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px;
+  }
+  .logout_btn {
+    width: 155px;
+  }
+  .sidebar_header img {
+    width: 155px;
+    margin-left: -10px;
+  }
+}
+
+@media (max-width: 425px) {
+  .sidebar {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    flex-direction: row;
+    padding: 0px 20px;
+    box-sizing: border-box;
+  }
+  .sidebar_header,
+  .logout_btn_container {
+    display: none;
+  }
+  .sidebar_links {
+    flex-direction: row;
+  }
+  .logout_mobile_btn {
+    display: block;
+  }
+}

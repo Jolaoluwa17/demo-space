@@ -16,61 +16,67 @@ const Profile = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 6;
 
+  // Function to get tab from current page number
+  const getTabFromPage = (page: number) => {
+    switch (page) {
+      case 1:
+        return 'personal-information';
+      case 2:
+        return 'educational-background';
+      case 3:
+        return 'skills';
+      case 4:
+        return 'interests';
+      case 5:
+        return 'experience';
+      case 6:
+        return 'certificates';
+      default:
+        return 'personal-information';
+    }
+  };
+
+  // Function to get page number from tab name
+  const getPageFromTab = (tab: string) => {
+    switch (tab) {
+      case 'personal-information':
+        return 1;
+      case 'educational-background':
+        return 2;
+      case 'skills':
+        return 3;
+      case 'interests':
+        return 4;
+      case 'experience':
+        return 5;
+      case 'certificates':
+        return 6;
+      default:
+        return 1;
+    }
+  };
+
+  // Sync currentPage with URL tab on load
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const tab = queryParams.get('tab');
 
-    // Set default page based on tab parameter or default to page 1
-    switch (tab) {
-      case 'personal-information':
-        setCurrentPage(1);
-        break;
-      case 'educational-background':
-        setCurrentPage(2);
-        break;
-      case 'skills':
-        setCurrentPage(3);
-        break;
-      case 'interests':
-        setCurrentPage(4);
-        break;
-      case 'experience':
-        setCurrentPage(5);
-        break;
-      case 'certificates':
-        setCurrentPage(6);
-        break;
-      default:
-        setCurrentPage(1);
+    if (tab) {
+      const page = getPageFromTab(tab);
+      setCurrentPage(page);
+    } else {
+      navigate(`/user-profile?tab=personal-information`, { replace: true });
     }
-  }, [location.search]);
+  }, [location.search, navigate]);
+
+  // Sync URL with currentPage when currentPage changes
+  useEffect(() => {
+    const currentTab = getTabFromPage(currentPage);
+    navigate(`/user-profile?tab=${currentTab}`, { replace: true });
+  }, [currentPage, navigate]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    let tab = '';
-    switch (page) {
-      case 1:
-        tab = 'personal-information';
-        break;
-      case 2:
-        tab = 'educational-background';
-        break;
-      case 3:
-        tab = 'skills';
-        break;
-      case 4:
-        tab = 'interests';
-        break;
-      case 5:
-        tab = 'experience';
-        break;
-      case 6:
-        tab = 'certificates';
-        break;
-      default:
-        tab = '';
-    }
-    navigate(`/user-profile?tab=${tab}`);
   };
 
   const handleBackButtonClick = () => {

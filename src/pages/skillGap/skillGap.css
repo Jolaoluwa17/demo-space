@@ -8,3 +8,9 @@
   align-items: center;
   margin-top: 24px;
 }
+
+@media (max-width: 425px) {
+  .skill_gap_root {
+    padding-bottom: 50px;
+  }
+}

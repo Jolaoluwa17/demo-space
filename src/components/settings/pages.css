@@ -158,3 +158,15 @@
   font-size: 16px;
   box-sizing: border-box;
 }
+
+@media (max-width: 1024px) {
+  .settings_main {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings_profile_searchInput .input {
+    width: 90%;
+  }
+}

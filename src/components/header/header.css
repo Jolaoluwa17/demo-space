@@ -78,3 +78,20 @@
 .profile_name {
   font-size: 20px;
 }
+
+@media (max-width: 425px) {
+  .header_title {
+    display: none;
+  }
+  .profile_name {
+    font-size: 16px;
+  }
+  .header_right_section {
+    flex-direction: row-reverse;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .profile-role {
+    font-size: 14px;
+  }
+}

@@ -8,15 +8,31 @@ import Skills from '../../components/settings/Skills';
 import AreaOfInterest from '../../components/settings/AreaOfInterest';
 import Experience from '../../components/settings/Experience';
 import Certificate from '../../components/settings/Certificate';
+import {
+  BsPerson,
+  BsBook,
+  BsStar,
+  BsHeart,
+  BsBriefcase,
+  BsAward,
+} from 'react-icons/bs';
 
 const Settings = () => {
   const tabs = [
-    { name: 'Personal Information', path: 'personal-information' },
-    { name: 'Educational Background', path: 'educational-background' },
-    { name: 'Skills', path: 'skills' },
-    { name: 'Area of Interest', path: 'interest' },
-    { name: 'Experience', path: 'experience' },
-    { name: 'Certificates', path: 'certificates' },
+    {
+      name: 'Personal Information',
+      path: 'personal-information',
+      icon: <BsPerson />,
+    },
+    {
+      name: 'Educational Background',
+      path: 'educational-background',
+      icon: <BsBook />,
+    },
+    { name: 'Skills', path: 'skills', icon: <BsStar /> },
+    { name: 'Area of Interest', path: 'interest', icon: <BsHeart /> },
+    { name: 'Experience', path: 'experience', icon: <BsBriefcase /> },
+    { name: 'Certificates', path: 'certificates', icon: <BsAward /> },
   ];
   const location = useLocation();
   const navigate = useNavigate();
@@ -47,7 +63,10 @@ const Settings = () => {
                 : { color: 'rgba(117, 117, 117, 1)' }
             }
           >
-            <p>{tab.name}</p>
+            <p>
+              <span className="tab_name">{tab.name}</span>
+              {tab.icon && <span className="tabs_icon">{tab.icon}</span>}
+            </p>
           </div>
         ))}
       </div>

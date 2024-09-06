@@ -26,3 +26,23 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@media (max-width: 768px) {
+  .content_wrapper.open {
+    margin-left: 180px;
+  }
+}
+
+@media (max-width: 425px) {
+  .layout_root {
+    flex-direction: column;
+  }
+  .sidebar_mobile_container {
+    position: absolute;
+    bottom: 50px;
+    z-index: 99;
+  }
+  .content_wrapper.open {
+    margin-left: 0px;
+  }
+}

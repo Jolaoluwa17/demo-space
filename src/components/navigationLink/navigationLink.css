@@ -30,3 +30,29 @@
   margin-left: 5px;
   font-size: 16px;
 }
+.hidden-class {
+  display: none;
+}
+
+@media (max-width: 425px) {
+  .navigation_text {
+    display: none;
+  }
+  .navigation-link {
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding-left: 8px; */
+  }
+  .navigation-link.active {
+    background-color: #ecf4ff;
+    border-left: 0px solid #4274ba;
+    background-color: white;
+    padding: 8px;
+  }
+  .hidden-class {
+    display: block;
+  }
+}

@@ -42,3 +42,12 @@
   flex-wrap: wrap;
   margin-top: 16px;
 }
+
+@media (max-width: 425px) {
+  .overview_section_card_container {
+    flex-direction: column;
+  }
+  .overview_root {
+    padding-bottom: 50px;
+  }
+}

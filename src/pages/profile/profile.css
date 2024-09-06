@@ -59,3 +59,36 @@
   width: 70px;
   justify-content: space-between;
 }
+
+@media (max-width: 425px) {
+  .profile_container {
+    max-width: 350px;
+  }
+  .profile_title {
+    font-size: 35px;
+    text-align: center;
+  }
+  .profile_subTitle {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 375px) {
+  .profile_container {
+    max-width: 320px;
+  }
+  .profile_title {
+    font-size: 30px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 320px) {
+  .profile_container {
+    max-width: 280px;
+  }
+  .profile_title {
+    font-size: 25px;
+    text-align: center;
+  }
+}
