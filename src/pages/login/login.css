@@ -183,10 +183,28 @@
   }
   .login_options {
     width: 165px;
-    height: 56px;
+    height: 50px;
   }
   .or_login hr {
     width: 30%;
+  }
+  .login_root .login_title {
+    font-size: 30px;
+    font-weight: 700;
+  }
+  .login_root p {
+    font-size: 14px;
+  }
+  .login_form label {
+    font-size: 16px;
+  }
+  .login_form .input,
+  .rememberMe,
+  .forgot_password_text,
+  .login_btn,
+  .doAccount,
+  .or_login {
+    font-size: 14px;
   }
 }
 
