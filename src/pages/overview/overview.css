@@ -47,7 +47,4 @@
   .overview_section_card_container {
     flex-direction: column;
   }
-  .overview_root {
-    padding-bottom: 50px;
-  }
 }
