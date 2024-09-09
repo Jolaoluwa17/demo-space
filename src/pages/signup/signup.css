@@ -180,6 +180,7 @@
     display: flex;
     width: 350px;
     position: relative;
+    padding-bottom: 50px;
   }
   .signup_options {
     width: 165px;
