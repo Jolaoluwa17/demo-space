@@ -33,7 +33,7 @@ const VerifyAccount = () => {
                 Back to sign up
               </div>
             </div>
-            <div className="log_title">Verify code</div>
+            <div className="verify_account_title">Verify code</div>
             <p>An authentication code has been sent to your email.</p>
             <div className="form_item">
               <label htmlFor="code">Enter Code</label>
