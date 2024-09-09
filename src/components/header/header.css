@@ -82,9 +82,13 @@
 @media (max-width: 430px) {
   .header {
     position: fixed;
+    width: 100%;
+    background-color: white;
+    z-index: 99;
   }
   .header_title {
     display: none;
+    background-color: white;
   }
   .profile_name {
     font-size: 16px;
@@ -96,5 +100,6 @@
   }
   .profile-role {
     font-size: 14px;
+    text-decoration: none;
   }
 }

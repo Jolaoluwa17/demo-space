@@ -33,9 +33,10 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 430px) {
   .layout_root {
     flex-direction: column;
+    height: 100%;
   }
   .sidebar_mobile_container {
     position: absolute;
@@ -47,5 +48,6 @@
   }
   .main_content {
     padding-bottom: 80px;
+    padding-top: 80px;
   }
 }
