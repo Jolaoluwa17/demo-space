@@ -136,6 +136,21 @@
     width: 350px;
     position: relative;
   }
+  .verify_account_root .verify {
+    font-size: 30px;
+    font-weight: 700;
+  }
+  .verify_account_root p {
+    font-size: 14px;
+  }
+  .verify_account_root label {
+    font-size: 16px;
+  }
+  .verify_account_form .input,
+  .resend_code,
+  .verify_btn {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 375px) {
