@@ -79,7 +79,10 @@
   font-size: 20px;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 430px) {
+  .header {
+    position: fixed;
+  }
   .header_title {
     display: none;
   }
