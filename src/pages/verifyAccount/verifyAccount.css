@@ -136,7 +136,7 @@
     width: 350px;
     position: relative;
   }
-  .verify_account_root .verify {
+  .verify_account_root .login_title {
     font-size: 30px;
     font-weight: 700;
   }
