@@ -45,4 +45,7 @@
   .content_wrapper.open {
     margin-left: 0px;
   }
+  .main_content {
+    padding-bottom: 80px;
+  }
 }
