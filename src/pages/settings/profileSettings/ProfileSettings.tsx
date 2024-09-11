@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 
-import "./profileSettings.css"
+import './profileSettings.css';
 import PersonalInformation from '../../../components/settings/PersonalInformation';
 import EducationalBackground from '../../../components/settings/EducationalBackground';
 import Skills from '../../../components/settings/Skills';
@@ -16,6 +16,7 @@ import {
   BsBriefcase,
   BsAward,
 } from 'react-icons/bs';
+import PageHeader from '../../../components/pageHeader/PageHeader';
 
 const ProfileSettings = () => {
   const tabs = [
@@ -49,8 +50,16 @@ const ProfileSettings = () => {
   const activeTab =
     tabs.find((tab) => tab.path === activePath)?.name || 'personal-information';
 
+  const handleBackClick = () => {
+    navigate('/profile');
+  };
+
   return (
     <div className="settings_root">
+      <PageHeader
+        pageTitle="Profile Settings"
+        handleBackClick={handleBackClick}
+      />
       <div className="settings_tabs_root">
         {tabs.map((tab) => (
           <div
@@ -59,7 +68,11 @@ const ProfileSettings = () => {
             className="settings_tabs"
             style={
               activeTab === tab.name
-                ? { borderBottom: '2px solid #4274BA', color: '#4274BA' }
+                ? {
+                    borderBottom: '2px solid #4274BA',
+                    color: '#4274BA',
+                    backgroundColor: 'white',
+                  }
                 : { color: 'rgba(117, 117, 117, 1)' }
             }
           >
