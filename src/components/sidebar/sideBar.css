@@ -65,7 +65,7 @@
     height: 100%;
     background-color: white;
     flex-direction: row;
-    padding: 0px;
+    padding: 10px;
     box-sizing: border-box;
   }
   .sidebar_header,

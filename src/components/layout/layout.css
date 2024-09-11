@@ -40,7 +40,7 @@
   }
   .sidebar_mobile_container {
     position: absolute;
-    bottom: 50px;
+    bottom: 70px;
     z-index: 99;
   }
   .content_wrapper.open {
