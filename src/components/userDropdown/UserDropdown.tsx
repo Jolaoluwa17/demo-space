@@ -79,7 +79,7 @@ export default function UserDropdown() {
                 display: 'block',
                 position: 'absolute',
                 top: 0,
-                left: 28,
+                left: 27,
                 width: 10,
                 height: 10,
                 bgcolor: 'background.paper',
