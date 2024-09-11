@@ -60,7 +60,7 @@
   justify-content: space-between;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 430px) {
   .profile_container {
     max-width: 350px;
   }

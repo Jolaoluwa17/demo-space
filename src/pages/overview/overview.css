@@ -43,8 +43,11 @@
   margin-top: 16px;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 430px) {
   .overview_section_card_container {
     flex-direction: column;
+  }
+  .overview_header {
+    display: none;
   }
 }
