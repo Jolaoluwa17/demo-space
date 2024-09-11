@@ -29,6 +29,7 @@
   border: 1px solid #e9eaed;
   padding: 8px 8px 2px 8px;
   border-radius: 8px;
+  margin-right: 15px;
 }
 
 .bell-icon {
@@ -122,5 +123,8 @@
   .profile_dropdown_text_preview {
     font-size: 14px;
     color: #4b5563;
+  }
+  .header_bell_icon {
+    margin-right: 0px;
   }
 }
