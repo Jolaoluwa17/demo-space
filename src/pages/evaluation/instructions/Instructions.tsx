@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import LeftArrowIcon from '../../../icons/LeftArrowIcon';
 import './instruction.css';
+import PageHeader from '../../../components/pageHeader/PageHeader';
 
 const Instructions = () => {
   const navigate = useNavigate();
@@ -24,17 +24,7 @@ const Instructions = () => {
 
   return (
     <div className="instructions_root">
-      <div className="instructions_header">
-        <div className="instructions_innner_header">
-          <div className="instructions_back_btn" onClick={handleBackClick}>
-            <div className="left_arrow_icon">
-              <LeftArrowIcon />
-            </div>
-            <div>Back</div>
-          </div>
-          <div>Instructions</div>
-        </div>
-      </div>
+      <PageHeader handleBackClick={handleBackClick} pageTitle='Instructions' />
       <div className="instructions_content">
         <div className="instructions_title">HTML/CSS/JavaScript</div>
         <div className="instructions_subTitle">

@@ -5,7 +5,7 @@ import ArrowRightIcon from '../../../icons/ArrowRightIcon';
 import CheckCircleIcon from '../../../icons/CheckCircleIcon';
 import './questions.css';
 import { combinedQuestionsData } from '../../../utils/CombinedQuestionsData';
-import LeftArrowIcon from '../../../icons/LeftArrowIcon';
+import PageHeader from '../../../components/pageHeader/PageHeader';
 
 // Combined Questions Component
 const Questions: React.FC = () => {
@@ -82,22 +82,13 @@ const Questions: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const handleBackClick = () => {
+    navigate('/progress/history');
+  };
+
   return (
     <div className="questions_root">
-      <div className="subTest_header">
-        <div className="subTest_innner_header">
-          <div
-            className="subTest_back_btn"
-            onClick={() => navigate('/progress/history')}
-          >
-            <div className="left_arrow_icon">
-              <LeftArrowIcon />
-            </div>
-            <div>Back</div>
-          </div>
-          <div>Question</div>
-        </div>
-      </div>
+      <PageHeader pageTitle="Questions" handleBackClick={handleBackClick} />
       <div className="question_container">
         <div className="question_out_of">
           Question {currentQuestionIndex + 1} of {allQuestions.length}

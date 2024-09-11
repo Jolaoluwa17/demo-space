@@ -73,7 +73,7 @@ const Sidebar = () => {
           link="/progress"
         >
           <SidebarProgress
-            color={pathname === '/progress' ? '#4274BA' : '#7d868e'}
+            color={pathname.startsWith('/progress') ? '#4274BA' : '#7d868e'}
           />
         </NavigationLink>
         <NavigationLink
@@ -82,7 +82,7 @@ const Sidebar = () => {
           link="/skill-gap"
         >
           <SidebarSkillGapIcon
-            color={pathname === '/skill-gap' ? '#4274BA' : '#7d868e'}
+            color={pathname.startsWith('/skill-gap') ? '#4274BA' : '#7d868e'}
           />
         </NavigationLink>
         <NavigationLink
@@ -91,7 +91,7 @@ const Sidebar = () => {
           link="/profile"
         >
           <SidebarProfileIcon
-            color={pathname === '/profile' ? '#4274BA' : '#7d868e'}
+            color={pathname.startsWith('/profile') ? '#4274BA' : '#7d868e'}
           />
         </NavigationLink>
       </div>

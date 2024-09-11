@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import QuestionTypeCard from '../../../components/questionType/QuestionTypeCard';
-import LeftArrowIcon from '../../../icons/LeftArrowIcon';
 import './subTests.css';
 import CircularBar from '../../../components/circularbar/CircularBar';
+import PageHeader from '../../../components/pageHeader/PageHeader';
 
 const SubTest = () => {
   const questionTypes = [
@@ -36,23 +36,13 @@ const SubTest = () => {
 
   return (
     <div className="subTest_root">
-      <div className="subTest_header">
-        <div className="subTest_innner_header">
-          <div className="subTest_back_btn" onClick={handleBackClick}>
-            <div className="left_arrow_icon">
-              <LeftArrowIcon />
-            </div>
-            <div>Back</div>
-          </div>
-          <div>Sub Tests</div>
-        </div>
-      </div>
+      <PageHeader handleBackClick={handleBackClick} pageTitle="Sub Tests" />
       <div className="evaluation_score_container">
         <div className="evaluation_score_left_section">
-          <div style={{ fontSize: '16px', fontWeight: '600' }}>
+          <div className='current_eval_score'>
             Your Current Evaluation score is
           </div>
-          <div style={{ marginTop: '4px', fontSize: '14px' }}>
+          <div className='completed_percent'>
             You have completed <span style={{ fontWeight: '700' }}>1/3</span>
           </div>
         </div>
@@ -70,7 +60,7 @@ const SubTest = () => {
           <div
             key={index}
             onClick={() => handleInstructionsClick(type.route)}
-            style={{ width: '49%' }}
+            className="subTest_question_type"
           >
             <QuestionTypeCard
               title={type.title}

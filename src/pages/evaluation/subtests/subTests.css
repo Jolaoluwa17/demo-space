@@ -1,36 +1,6 @@
 .subTest_root {
   padding: 24px;
 }
-.subTest_header {
-  width: 100%;
-  background-color: #fafafa;
-  height: 48px;
-  display: flex;
-  align-items: center;
-}
-.subTest_innner_header {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  font-weight: 700;
-  color: #5e5d6f;
-}
-.subTest_back_btn {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.left_arrow_icon {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 20px;
-  padding-right: 16px;
-}
 .evaluation_score_container {
   width: 100%;
   height: 92px;
@@ -63,4 +33,30 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+.subTest_question_type {
+  width: 49%;
+}
+.current_eval_score {
+  font-size: 16px;
+  font-weight: 600;
+}
+.completed_percent {
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+@media (max-width: 430px) {
+  .subTest_question_type_container {
+    flex-direction: column;
+  }
+  .subTest_question_type {
+    width: 100%;
+  }
+  .current_eval_score {
+    font-size: 15px;
+  }
+  .completed_percent {
+    font-size: 13px;
+  }
 }

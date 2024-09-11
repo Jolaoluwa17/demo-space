@@ -16,8 +16,22 @@ const filterOptions = [
 
 const Evaluation = () => {
   const [activeFilter, setActiveFilter] = useState('All');
-
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+
+  // Filter the skills based on the search term and active filter
+  const filteredSkills = SkillsEvaluationData.filter((card) => {
+    const matchesSearch = card.language
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesFilter =
+      activeFilter === 'All' || card.category === activeFilter;
+    return matchesSearch && matchesFilter;
+  });
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term); // Update search term state
+  };
 
   const handleCardClick = () => {
     navigate('/evaluation/instructions');
@@ -25,7 +39,7 @@ const Evaluation = () => {
 
   return (
     <div className="evaluation_root">
-      <SearchInput />
+      <SearchInput handleSearch={handleSearch} />
       <div className="evaluation_paginator">
         {filterOptions.map((filter, index) => (
           <div
@@ -38,7 +52,7 @@ const Evaluation = () => {
         ))}
       </div>
       <div className="evaluation_skills_container" onClick={handleCardClick}>
-        {SkillsEvaluationData.map((card, index) => (
+        {filteredSkills.map((card, index) => (
           <SkillsCard
             key={index}
             imgSrc={card.imgSrc}

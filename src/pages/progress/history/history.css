@@ -83,11 +83,54 @@
 }
 .question_list_card {
   width: 100%;
-  height: 65px;
+  padding: 10px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #cbcbcc;
   margin-bottom: 16px;
   cursor: pointer;
+}
+
+.history_question_text {
+  font-size: 16px;
+  color: #333a41;
+  font-weight: 600;
+  width: 90%;
+}
+
+@media (max-width: 1024px) {
+  .history_overview {
+    padding: 0px 145px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .history_overview {
+    padding: 0px 55px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 430px) {
+  .history_overview {
+    padding: 0px 25px;
+    box-sizing: border-box;
+  }
+  .history_overview_title,
+  .history_question_text {
+    font-size: 15px;
+  }
+  .history_overview_content,
+  .correct_or_wrong {
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .history_skill_text {
+    font-size: 16px;
+  }
+  .back_text {
+    display: none;
+  }
 }

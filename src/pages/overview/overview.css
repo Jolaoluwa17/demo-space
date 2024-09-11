@@ -47,6 +47,9 @@
   .overview_section_card_container {
     flex-direction: column;
   }
+  .overview_section {
+    margin-top: 0px;
+  }
   .overview_header {
     display: none;
   }

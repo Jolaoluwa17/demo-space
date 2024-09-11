@@ -1,23 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import LeftArrowIcon from '../../../icons/LeftArrowIcon';
 import './details.css';
+import PageHeader from '../../../components/pageHeader/PageHeader';
 
 const Details = () => {
   const navigate = useNavigate();
 
+  const handleBackClick = () => {
+    navigate('/skill-gap');
+  };
+
   return (
     <div className="details_root">
-      <div className="subTest_header">
-        <div className="subTest_innner_header">
-          <div className="subTest_back_btn">
-            <div className="left_arrow_icon">
-              <LeftArrowIcon />
-            </div>
-            <div>Back</div>
-          </div>
-          <div>Details</div>
-        </div>
-      </div>
+      <PageHeader pageTitle="Details" handleBackClick={handleBackClick} />
       <div className="skill_gap_details">
         <div className="skill_gap_details_title">
           Frontend Development Program

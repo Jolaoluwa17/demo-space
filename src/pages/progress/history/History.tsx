@@ -25,12 +25,12 @@ const History = () => {
         <div className="history_innner_header">
           <div
             className="history_back_btn"
-            onClick={() => navigate('/progress/sub-test')}
+            onClick={() => navigate('/progress')}
           >
             <div className="left_arrow_icon">
               <LeftArrowIcon />
             </div>
-            <div>Back</div>
+            <div className='back_text'>Back</div>
           </div>
           <div className="history_text">
             <div
@@ -52,16 +52,37 @@ const History = () => {
       </div>
       <div className="history_overview">
         <div className="history_overview_item">
-          <div style={{ color: 'grey' }}>Percentage</div>
-          <div style={{ fontWeight: '600', color: '#6A757E' }}>25%</div>
+          <div style={{ color: 'grey' }} className="history_overview_title">
+            Percentage
+          </div>
+          <div
+            style={{ fontWeight: '600', color: '#6A757E' }}
+            className="history_overview_content"
+          >
+            25%
+          </div>
         </div>
         <div className="history_overview_item">
-          <div style={{ color: 'grey' }}>Correct</div>
-          <div style={{ fontWeight: '600', color: '#6A757E' }}>27/100</div>
+          <div style={{ color: 'grey' }} className="history_overview_title">
+            Correct
+          </div>
+          <div
+            style={{ fontWeight: '600', color: '#6A757E' }}
+            className="history_overview_content"
+          >
+            27/100
+          </div>
         </div>
         <div className="history_overview_item">
-          <div style={{ color: 'grey' }}>Passing Grade</div>
-          <div style={{ fontWeight: '600', color: '#6A757E' }}>75/100</div>
+          <div style={{ color: 'grey' }} className="history_overview_title">
+            Passing Grade
+          </div>
+          <div
+            style={{ fontWeight: '600', color: '#6A757E' }}
+            className="history_overview_content"
+          >
+            75/100
+          </div>
         </div>
       </div>
       <div className="list_of_ques">List of Questions</div>
@@ -73,19 +94,12 @@ const History = () => {
             onClick={() => navigateToQuestion(q.id)}
           >
             <div>
-              <div
-                style={{
-                  fontSize: '16px',
-                  color: '#333A41',
-                  fontWeight: '600',
-                }}
-              >
-                {q.question}
-              </div>
+              <div className="history_question_text">{q.question}</div>
               <div
                 style={{
                   color: q.isCorrect ? '#61E44F' : '#E44F4F',
                 }}
+                className='correct_or_wrong'
               >
                 {q.isCorrect ? 'Correct Answer' : 'Wrong Answer'}
               </div>

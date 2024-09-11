@@ -1,0 +1,65 @@
+.page_header_root {
+  width: 100%;
+  background-color: #fafafa;
+  height: 48px;
+  display: flex;
+  justify-content: center; /* Center the entire content */
+  position: relative; /* To allow absolute positioning for the back button */
+  align-items: center;
+}
+
+.page_innner_header {
+  width: 100%; /* Ensure it takes up the full width */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the pageTitle in the middle */
+  font-size: 14px;
+  font-weight: 700;
+  color: #5e5d6f;
+  position: relative; /* To handle the back button positioning */
+}
+
+.page_back_btn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  left: 20px; /* Adds space from the left */
+}
+
+.left_arrow_icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 8px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1024px) {
+  .page_innner_header {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .page_innner_header {
+    width: 100%;
+  }
+}
+
+@media (max-width: 425px) {
+  .page_innner_header {
+    width: 100%;
+  }
+
+  .page_back_text {
+    display: none; /* Hide text on smaller screens */
+  }
+
+  .left_arrow_icon {
+    width: 16px;
+    height: 16px;
+  }
+}

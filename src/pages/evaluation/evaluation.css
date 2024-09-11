@@ -41,3 +41,20 @@
     font-size: 14px;
   }
 }
+
+@media (max-width: 430px) {
+  .evaluation_paginator {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent wrapping */
+    flex-wrap: nowrap;
+  }
+  .evaluation_pagination_btn {
+    font-size: 14px;
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+    padding: 10px; /* Optional: Add padding for better spacing */
+  }
+  .evaluation_paginator::-webkit-scrollbar {
+    display: none; /* Optional: Hide scrollbar for a cleaner look */
+  }
+}
