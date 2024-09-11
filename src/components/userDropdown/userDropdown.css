@@ -1,0 +1,9 @@
+.logout_option {
+  display: none;
+}
+
+@media (max-width: 430px) {
+  .logout_option {
+    display: block;
+  }
+}

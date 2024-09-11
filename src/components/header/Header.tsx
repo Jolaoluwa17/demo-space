@@ -1,13 +1,14 @@
 import { BellIcon } from '@heroicons/react/24/outline';
 import { useEffect, useRef, useState } from 'react';
 import './header.css';
+import UserDropdown from '../userDropdown/UserDropdown';
 
 interface Props {
   activeLink: string;
   userName: string;
 }
 
-const Header: React.FC<Props> = ({ activeLink, userName }) => {
+const Header: React.FC<Props> = ({ activeLink }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [notification, setNotification] = useState(false);
 
@@ -43,12 +44,7 @@ const Header: React.FC<Props> = ({ activeLink, userName }) => {
         </div>
         <div className="profile-dropdown">
           <div className="profile-container">
-            <div className="profile_info">
-              <span className="profile_name">
-                Welcome, <span style={{ fontWeight: '600' }}>{userName}</span>
-              </span>
-              <div className="profile-role">johndoe@gmail.com</div>
-            </div>
+            <UserDropdown />
           </div>
         </div>
       </div>
