@@ -17,7 +17,6 @@ import ShortAnswer from './pages/evaluation/shortAnswer/ShortAnswer';
 import Status from './pages/evaluation/status/Status';
 import ProgressRoot from './pages/progress/ProgressRoot';
 import Progress from './pages/progress/Progress';
-import ProgressSubTest from './pages/progress/subtests/ProgressSubTest';
 import History from './pages/progress/history/History';
 import Questions from './pages/progress/questions/Questions';
 import SkillGap from './pages/skillGap/SkillGap';
@@ -56,7 +55,6 @@ function App() {
             </Route>
             <Route path="progress" element={<ProgressRoot />}>
               <Route index element={<Progress />} />
-              <Route path="sub-test" element={<ProgressSubTest />} />
               <Route path="history" element={<History />} />
               <Route path="question/:id" element={<Questions />} />
             </Route>
