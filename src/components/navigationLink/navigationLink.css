@@ -35,22 +35,34 @@
 }
 
 @media (max-width: 425px) {
-  .navigation_text {
-    display: none;
+  .navigation-link p {
+    font-size: 12px;
+    color: black;
+    overflow: visible;
+    padding: 0px;
+    margin: 0px;
+  }
+  .navigation-link span {
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+    margin: 0px;
   }
   .navigation-link {
     width: 100%;
-    padding: 8px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    /* padding-left: 8px; */
+    justify-content: center;
+    flex-direction: column;
+    border-left: none;
+    gap: 0px;
+    padding-left: 8px;
   }
   .navigation-link.active {
     background-color: #ecf4ff;
-    border-left: 0px solid #4274ba;
+    border-left: none;
+    padding-left: 8px;
     background-color: white;
-    padding: 8px;
   }
   .hidden-class {
     display: block;

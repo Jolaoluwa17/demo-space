@@ -65,7 +65,7 @@
     height: 100%;
     background-color: white;
     flex-direction: row;
-    padding: 0px 20px;
+    padding: 0px;
     box-sizing: border-box;
   }
   .sidebar_header,
@@ -74,6 +74,8 @@
   }
   .sidebar_links {
     flex-direction: row;
+    gap: 0px;
+    flex-grow: 0px;
   }
   .logout_mobile_btn {
     display: block;

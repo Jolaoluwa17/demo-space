@@ -47,7 +47,6 @@ const NavigationLink = ({
       <div
         className={commonClasses}
         onClick={onClick}
-        // style={{ display: hidden ? 'none' : 'block' }}
       >
         <span className="navigation-icon">{children}</span>
         <p

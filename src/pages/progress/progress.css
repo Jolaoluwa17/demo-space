@@ -21,8 +21,3 @@
   justify-content: center;
 }
 
-@media (max-width: 425px) {
-  .progress_root {
-    padding-bottom: 50px;
-  }
-}

@@ -47,7 +47,7 @@ const Header: React.FC<Props> = ({ activeLink, userName }) => {
               <span className="profile_name">
                 Welcome, <span style={{ fontWeight: '600' }}>{userName}</span>
               </span>
-              <span className="profile-role">johndoe@gmail.com</span>
+              <div className="profile-role">johndoe@gmail.com</div>
             </div>
           </div>
         </div>

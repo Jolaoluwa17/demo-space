@@ -9,7 +9,6 @@ import SidebarEvaluationIcon from '../../icons/SidebarEvaluationIcon';
 import SidebarProgress from '../../icons/SidebarProgress';
 import SidebarSkillGapIcon from '../../icons/SidebarSkillGapIcon';
 import SidebarProfileIcon from '../../icons/SidebarProfileIcon';
-import { RxExit } from 'react-icons/rx';
 
 const containerVariants = {
   close: {
@@ -47,7 +46,7 @@ const Sidebar = () => {
       </div>
       <div className="sidebar_links">
         <NavigationLink
-          name="Overview"
+          name="Home"
           isActive={pathname === '/' || pathname.startsWith('/overview')}
           link="/"
         >
@@ -93,17 +92,6 @@ const Sidebar = () => {
         >
           <SidebarProfileIcon
             color={pathname === '/profile' ? '#4274BA' : '#7d868e'}
-          />
-        </NavigationLink>
-        <NavigationLink
-          name=""
-          onClick={() => navigator('/auth/login')}
-          hidden={true}
-        >
-          <RxExit
-            size={21}
-            style={{ paddingTop: '8px', color: '#7f888f' }}
-            className="logout_mobile_btn"
           />
         </NavigationLink>
       </div>

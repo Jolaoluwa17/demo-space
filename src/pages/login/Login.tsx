@@ -83,6 +83,7 @@ const Login = () => {
               <div
                 style={{ color: '#FF8682', cursor: 'pointer' }}
                 onClick={() => navigator('/auth/forgotpassword')}
+                className='forgot_password_text'
               >
                 Forgot Password
               </div>
