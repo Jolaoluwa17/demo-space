@@ -25,6 +25,8 @@ import Details from './pages/skillGap/details/Details';
 import DetailsStatus from './pages/skillGap/status/DetailsStatus';
 import { Providers } from './services/Provider';
 import Settings from './pages/settings/Settings';
+import ProfileSettings from './pages/settings/profileSettings/ProfileSettings';
+import SettingsRoot from './pages/settings/SettingsRoot';
 
 function App() {
   return (
@@ -63,8 +65,9 @@ function App() {
               <Route path="details" element={<Details />} />
               <Route path="status" element={<DetailsStatus />} />
             </Route>
-            <Route path="profile" element={<Settings />}>
-              <Route index element={<SkillGap />} />
+            <Route path="profile" element={<SettingsRoot />}>
+              <Route index element={<Settings />} />
+              <Route path="profile-settings" element={<ProfileSettings />} />
             </Route>
           </Route>
         </Routes>

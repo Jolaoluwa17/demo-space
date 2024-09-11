@@ -46,6 +46,10 @@ const Header: React.FC<Props> = ({ activeLink }) => {
           <div className="profile-container">
             <UserDropdown />
           </div>
+          <div className="profile_dropdown_text">
+            <div className='profile_dropdown_text_name'>Hi, Daniel!</div>
+            <div className='profile_dropdown_text_preview'>Here's what you can do next.</div>
+          </div>
         </div>
       </div>
     </header>

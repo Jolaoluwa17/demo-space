@@ -1,82 +1,91 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import queryString from 'query-string';
-
+import RightArrowIcon from '../../icons/RightArrowIcon';
 import './settings.css';
-import PersonalInformation from '../../components/settings/PersonalInformation';
-import EducationalBackground from '../../components/settings/EducationalBackground';
-import Skills from '../../components/settings/Skills';
-import AreaOfInterest from '../../components/settings/AreaOfInterest';
-import Experience from '../../components/settings/Experience';
-import Certificate from '../../components/settings/Certificate';
-import {
-  BsPerson,
-  BsBook,
-  BsStar,
-  BsHeart,
-  BsBriefcase,
-  BsAward,
-} from 'react-icons/bs';
+import ProfileIcon from '../../icons/ProfileIcon';
+import LockIcon from '../../icons/LockIcon';
+import SupportIcon from '../../icons/SupportIcon';
+import InstagramIcon from '../../icons/InstagramIcon';
+import MailIcon from '../../icons/MailIcon';
+import TwitterIcon from '../../icons/TwitterIcon';
+import SettingsDeleteIcon from '../../icons/SettingsDeleteIcon';
+import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
-  const tabs = [
-    {
-      name: 'Personal Information',
-      path: 'personal-information',
-      icon: <BsPerson />,
-    },
-    {
-      name: 'Educational Background',
-      path: 'educational-background',
-      icon: <BsBook />,
-    },
-    { name: 'Skills', path: 'skills', icon: <BsStar /> },
-    { name: 'Area of Interest', path: 'interest', icon: <BsHeart /> },
-    { name: 'Experience', path: 'experience', icon: <BsBriefcase /> },
-    { name: 'Certificates', path: 'certificates', icon: <BsAward /> },
-  ];
-  const location = useLocation();
   const navigate = useNavigate();
-  const queryParams = queryString.parse(location.search);
-  const activePath = queryParams.tab || 'personal-information';
-
-  const setActiveTab = (path: string) => {
-    navigate({
-      pathname: location.pathname,
-      search: `?tab=${path}`,
-    });
-  };
-
-  const activeTab =
-    tabs.find((tab) => tab.path === activePath)?.name || 'personal-information';
 
   return (
     <div className="settings_root">
-      <div className="settings_tabs_root">
-        {tabs.map((tab) => (
+      <div className="settings_base_header">Settings</div>
+      <div className="settings_option_container">
+        <div className="settings_base_option">
+          <div className="settings_label">Profile</div>
           <div
-            key={tab.path}
-            onClick={() => setActiveTab(tab.path)}
-            className="settings_tabs"
-            style={
-              activeTab === tab.name
-                ? { borderBottom: '2px solid #4274BA', color: '#4274BA' }
-                : { color: 'rgba(117, 117, 117, 1)' }
-            }
+            className="settings_base_option_button"
+            onClick={() => navigate('/profile/profile-settings')}
           >
-            <p>
-              <span className="tab_name">{tab.name}</span>
-              {tab.icon && <span className="tabs_icon">{tab.icon}</span>}
-            </p>
+            <div className="first_section">
+              <ProfileIcon />
+              <div className="settings_base_option_text">Profile Setting</div>
+            </div>
+            <RightArrowIcon />
           </div>
-        ))}
+        </div>
+        <div className="settings_base_option">
+          <div className="settings_label">Security</div>
+          <div className="settings_base_option_button">
+            <div className="first_section">
+              <LockIcon />
+              <div className="settings_base_option_text">Change Password</div>
+            </div>
+            <RightArrowIcon />
+          </div>
+        </div>
       </div>
-      <div className="settings_content_container">
-        {activeTab === 'Personal Information' && <PersonalInformation />}
-        {activeTab === 'Educational Background' && <EducationalBackground />}
-        {activeTab === 'Skills' && <Skills />}
-        {activeTab === 'Area of Interest' && <AreaOfInterest />}
-        {activeTab === 'Experience' && <Experience />}
-        {activeTab === 'Certificates' && <Certificate />}
+      <div className="settings_label2">Contact and Social Media</div>
+      <div className="settings_option_container">
+        <div className="settings_base_option_button2">
+          <div className="first_section">
+            <SupportIcon />
+            <div className="settings_base_option_text">01 - 2345678 - 9</div>
+          </div>
+          <RightArrowIcon />
+        </div>
+        <div className="settings_base_option_button2">
+          <div className="first_section">
+            <InstagramIcon />
+            <div className="settings_base_option_text">Techwings_global</div>
+          </div>
+          <RightArrowIcon />
+        </div>
+        <div className="settings_base_option_button2">
+          <div className="first_section">
+            <MailIcon />
+            <div className="settings_base_option_text">
+              support@techwings.com
+            </div>
+          </div>
+          <RightArrowIcon />
+        </div>
+        <div className="settings_base_option_button2">
+          <div className="first_section">
+            <TwitterIcon />
+            <div className="settings_base_option_text">Techwings_global</div>
+          </div>
+          <RightArrowIcon />
+        </div>
+        <div
+          className="settings_base_option_button2"
+          style={{ backgroundColor: 'red' }}
+        >
+          <div className="first_section">
+            <SettingsDeleteIcon />
+            <div
+              className="settings_base_option_text"
+              style={{ color: 'white' }}
+            >
+              Delete Account
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

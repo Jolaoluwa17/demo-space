@@ -1,60 +1,76 @@
 .settings_root {
   padding: 24px;
 }
-.settings_tabs_root {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #fafafa;
+.settings_base_header {
   width: 100%;
-}
-.settings_tabs {
-  width: 183px;
+  background-color: #fafafa;
+  height: 48px;
   display: flex;
   align-items: center;
-  justify-content: center;
   font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  border-bottom: 2px solid white;
+  font-weight: 700;
+  color: #5e5d6f;
+  justify-content: center;
 }
-.settings_content_container {
+.settings_option_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.settings_base_option {
+  width: 49%;
+  margin-top: 24px;
+}
+.settings_label {
+  color: #9a9a9a;
+  font-weight: 600;
+}
+.settings_label2 {
+  color: #9a9a9a;
+  font-weight: 600;
   margin-top: 16px;
 }
-.tabs_icon {
-  display: none;
+.settings_base_option_button {
+  width: 100%;
+  height: 64px;
+  background-color: #ecf4ff;
+  margin-top: 16px;
+  border-radius: 8px;
+  padding: 26px 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
-.tab_name {
-  display: block;
+.settings_base_option_button2 {
+  width: 49%;
+  height: 64px;
+  background-color: #ecf4ff;
+  margin-top: 16px;
+  border-radius: 8px;
+  padding: 26px 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
-
-@media (max-width: 1024px) {
-  .settings_content_container {
-    width: 741px;
-  }
-  .settings_tabs {
-    width: 115px;
-    text-align: center;
-  }
+.first_section {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.settings_base_option_text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #6a757e;
 }
 
 @media (max-width: 768px) {
-  .settings_tabs {
-    width: 83px;
-    text-align: center;
-    font-size: 12px;
-  }
-  .settings_content_container {
+  .settings_base_option_button2,
+  .settings_base_option {
     width: 100%;
-  }
-}
-
-@media (max-width: 430px) {
-  .tab_name {
-    display: none;
-  }
-  .tabs_icon {
-    display: block;
-    font-size: 20px;
   }
 }
