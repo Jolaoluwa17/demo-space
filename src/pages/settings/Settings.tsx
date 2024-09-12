@@ -75,6 +75,7 @@ const Settings = () => {
         <div
           className="settings_base_option_button2"
           style={{ backgroundColor: 'red' }}
+          onClick={() => navigate('/profile/delete-account')}
         >
           <div className="first_section">
             <SettingsDeleteIcon />

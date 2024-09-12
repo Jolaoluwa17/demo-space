@@ -27,6 +27,7 @@ import { Providers } from './services/Provider';
 import Settings from './pages/settings/Settings';
 import ProfileSettings from './pages/settings/profileSettings/ProfileSettings';
 import SettingsRoot from './pages/settings/SettingsRoot';
+import DeleteAccount from './pages/settings/deleteAccount/DeleteAccount';
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
             <Route path="profile" element={<SettingsRoot />}>
               <Route index element={<Settings />} />
               <Route path="profile-settings" element={<ProfileSettings />} />
+              <Route path="delete-account" element={<DeleteAccount />} />
             </Route>
           </Route>
         </Routes>
