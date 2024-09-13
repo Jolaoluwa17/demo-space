@@ -31,7 +31,10 @@ const Settings = () => {
         </div>
         <div className="settings_base_option">
           <div className="settings_label">Security</div>
-          <div className="settings_base_option_button">
+          <div
+            className="settings_base_option_button"
+            onClick={() => navigate('/profile/change-password')}
+          >
             <div className="first_section">
               <LockIcon />
               <div className="settings_base_option_text">Change Password</div>

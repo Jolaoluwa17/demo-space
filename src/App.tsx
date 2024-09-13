@@ -28,6 +28,7 @@ import Settings from './pages/settings/Settings';
 import ProfileSettings from './pages/settings/profileSettings/ProfileSettings';
 import SettingsRoot from './pages/settings/SettingsRoot';
 import DeleteAccount from './pages/settings/deleteAccount/DeleteAccount';
+import ChangePassword from './pages/settings/changePassword/ChangePassword';
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
               <Route index element={<Settings />} />
               <Route path="profile-settings" element={<ProfileSettings />} />
               <Route path="delete-account" element={<DeleteAccount />} />
+              <Route path="change-password" element={<ChangePassword />} />
             </Route>
           </Route>
         </Routes>
