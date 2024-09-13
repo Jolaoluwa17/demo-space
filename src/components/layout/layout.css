@@ -36,7 +36,8 @@
 @media (max-width: 430px) {
   .layout_root {
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
+    position: relative;
   }
   .sidebar_mobile_container {
     position: absolute;
