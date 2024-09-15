@@ -51,13 +51,6 @@
   color: inherit; /* Ensure text color follows your CSS */
 }
 
-/* For WebKit-based browsers (Safari, Chrome on iOS and Android) */
-input[type='date'].profile_input_item::-webkit-inner-spin-button,
-input[type='date'].profile_input_item::-webkit-calendar-picker-indicator {
-  display: none; /* Hide the calendar icon */
-  -webkit-appearance: none;
-}
-
 .settings_edit_btn {
   width: 172px;
   height: 48px;
@@ -211,5 +204,11 @@ input[type='date'].profile_input_item::-webkit-calendar-picker-indicator {
   }
   .profile_pageone_form_item .interests {
     font-size: 14px;
+  }
+  /* For WebKit-based browsers (Safari, Chrome on iOS and Android) */
+  input[type='date'].profile_input_item::-webkit-inner-spin-button,
+  input[type='date'].profile_input_item::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
   }
 }
