@@ -185,6 +185,7 @@
     height: 100%;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
   }
   .signup_options {
     width: 165px;
