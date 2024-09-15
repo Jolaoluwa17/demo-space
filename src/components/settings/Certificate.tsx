@@ -11,8 +11,16 @@ interface Certification {
 }
 
 const Certificate: React.FC = () => {
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const [certifications, setCertifications] = useState<Certification[]>([
-    { certificate: '', organization: '', issueDate: '' },
+    { certificate: '', organization: '', issueDate: getCurrentDate() },
   ]);
 
   const handleInputChange = (
