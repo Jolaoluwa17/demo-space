@@ -47,12 +47,13 @@
   font-size: 15px;
   appearance: none; /* Remove browser default styles */
   background-color: white; /* Ensure consistent background */
+  text-align: left; /* Ensure text is left-aligned */
   color: inherit; /* Ensure text color follows your CSS */
 }
 
 /* For WebKit-based browsers (Safari, Chrome on iOS and Android) */
-input[type="date"].profile_input_item::-webkit-inner-spin-button,
-input[type="date"].profile_input_item::-webkit-calendar-picker-indicator {
+input[type='date'].profile_input_item::-webkit-inner-spin-button,
+input[type='date'].profile_input_item::-webkit-calendar-picker-indicator {
   display: none; /* Hide the calendar icon */
   -webkit-appearance: none;
 }
