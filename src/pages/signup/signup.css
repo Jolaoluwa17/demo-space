@@ -177,19 +177,18 @@
 
 @media (max-width: 430px) {
   .signup_container {
-    display: flex;
+    display:block;
     width: 350px;
     position: relative;
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
     height: 100%;
-    align-items: center;
-    justify-content: center;
     box-sizing: border-box;
+    margin-top: 30px;
   }
   .signup_container .right_section {
-    padding-top: env(safe-area-inset-top, 20px); /* fallback value */
-    padding-bottom: env(safe-area-inset-bottom, 20px); /* fallback value */
+    padding-top: env(safe-area-inset-top, 20px);
+    padding-bottom: env(safe-area-inset-bottom, 20px);
   }
   .signup_options {
     width: 165px;
