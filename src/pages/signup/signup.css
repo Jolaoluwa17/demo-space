@@ -180,8 +180,8 @@
     display: flex;
     width: 350px;
     position: relative;
-    padding-bottom: 50px;
-    padding-top: 50px;
+    padding-top: calc(50px + env(safe-area-inset-top)); /* Adds padding for top inset */
+    padding-bottom: calc(50px + env(safe-area-inset-bottom));
     height: 100%;
     align-items: center;
     justify-content: center;
