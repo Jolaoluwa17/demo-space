@@ -3,8 +3,6 @@ import './pages.css';
 import CustomSelect from '../customselect/CustomSelect'; // Adjust the import path as necessary
 import AddIcon from '../../icons/AddIcon';
 import DeleteIcon from '../../icons/DeleteIcon';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
 const degreeOptions = [
   'Associate Degree',
@@ -59,8 +57,6 @@ const EducationalBackground = () => {
   const handleRemoveEntry = (index: number) => {
     setEducationEntries(educationEntries.filter((_, i) => i !== index));
   };
-
-  const [startDate] = useState(new Date());
 
   return (
     <div className="settings_content">
@@ -124,7 +120,7 @@ const EducationalBackground = () => {
             </div>
             <div className="profile_form_item">
               <label htmlFor={`graduationDate_${index}`}>Graduation Date</label>
-              {/* <input
+              <input
                 type="date"
                 className="profile_input_item"
                 name={`graduationDate_${index}`}
@@ -132,18 +128,13 @@ const EducationalBackground = () => {
                 onChange={(e) =>
                   handleInputChange(index, 'graduationDate', e.target.value)
                 }
-              /> */}
-              <DatePicker
-                selected={startDate}
-                // onChange={(date) => setStartDate(date)}
-                className="profile_input_item"
               />
             </div>
           </div>
         ))}
 
-        <div className="add_another_entry_2">
-          <div className="content" onClick={addNewEntry}>
+        <div className="add_another_entry_2" onClick={addNewEntry}>
+          <div className="content">
             <AddIcon />
             <div style={{ fontSize: '14px', paddingBottom: '4px' }}>
               Add Another Entry

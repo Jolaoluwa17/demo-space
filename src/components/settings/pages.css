@@ -38,14 +38,25 @@
 .profile_input_item {
   width: 100%;
   max-width: 100%;
-  padding: 14px 10px 14px 10px;
+  padding: 14px 10px;
   box-sizing: border-box;
   margin-top: 10px;
   border: 1px #e7ebe6 solid;
   border-radius: 10px;
   outline-color: #4274ba;
   font-size: 15px;
+  appearance: none; /* Remove browser default styles */
+  background-color: white; /* Ensure consistent background */
+  color: inherit; /* Ensure text color follows your CSS */
 }
+
+/* For WebKit-based browsers (Safari, Chrome on iOS and Android) */
+input[type="date"].profile_input_item::-webkit-inner-spin-button,
+input[type="date"].profile_input_item::-webkit-calendar-picker-indicator {
+  display: none; /* Hide the calendar icon */
+  -webkit-appearance: none;
+}
+
 .settings_edit_btn {
   width: 172px;
   height: 48px;
