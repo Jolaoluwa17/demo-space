@@ -60,7 +60,7 @@ const EducationalBackground = () => {
     setEducationEntries(educationEntries.filter((_, i) => i !== index));
   };
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate] = useState(new Date());
 
   return (
     <div className="settings_content">
