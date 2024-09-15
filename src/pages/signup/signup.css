@@ -184,11 +184,7 @@
     padding-bottom: env(safe-area-inset-bottom);
     height: 100%;
     box-sizing: border-box;
-    margin-top: 30px;
-  }
-  .signup_container .right_section {
-    padding-top: env(safe-area-inset-top, 20px);
-    padding-bottom: env(safe-area-inset-bottom, 20px);
+    margin-top: 50px;
   }
   .signup_options {
     width: 165px;
@@ -205,6 +201,7 @@
   }
   .signup_form {
     margin-top: 20px;
+    padding-bottom: 30px;
   }
   .signup_form label {
     font-size: 16px;
