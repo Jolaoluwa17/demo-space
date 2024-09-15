@@ -37,9 +37,9 @@ const ResetPassword = () => {
           <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
         </div>
         <div className="resetpassword_form">
-          <div className="back_to_signup">
+          <div className="back_to_signup" onClick={() => navigator("/auth/login")}>
             <LeftArrow />
-            <div style={{ marginLeft: '12px' }}>Back to sign up</div>
+            <div style={{ marginLeft: '12px' }}>Back to login</div>
           </div>
           <div className="resetpassword_title">Set a password</div>
           <p>
