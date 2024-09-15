@@ -41,14 +41,14 @@
   .sidebar_mobile_container {
     position: absolute;
     bottom: 0px;
-    /* height: calc(60px + env(safe-area-inset-bottom, 0px)); */
+    height: calc(60px + env(safe-area-inset-bottom, 0px));
     z-index: 99;
   }
   .content_wrapper.open {
     margin-left: 0px;
   }
   .main_content {
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
     padding-top: 80px;
   }
 }
