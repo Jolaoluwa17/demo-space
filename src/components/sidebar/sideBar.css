@@ -62,7 +62,7 @@
 @media (max-width: 430px) {
   .sidebar {
     width: 100%;
-    height: 60px;
+    height: 100%;
     background-color: red;
     flex-direction: row;
     padding: 8px;
