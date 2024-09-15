@@ -39,7 +39,7 @@
     height: 100%;
   }
   .sidebar_mobile_container {
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     height: calc(60px + env(safe-area-inset-bottom, 0px));
     z-index: 99;
