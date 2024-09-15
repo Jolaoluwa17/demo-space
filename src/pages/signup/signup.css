@@ -210,9 +210,13 @@
   .already_have_acc {
     font-size: 14px;
   }
-  /* .signup_root .techwings_logo {
-    margin-top: 30px;
-  } */
+  .signup_root .techwings_logo {
+    right: 0px;
+    margin-bottom: 0px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
   .signup_root .form_item,
   .signup_root .others,
   .signup_btn {
