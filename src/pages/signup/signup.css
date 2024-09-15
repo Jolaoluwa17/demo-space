@@ -182,6 +182,9 @@
     position: relative;
     padding-bottom: 50px;
     padding-top: 50px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
   }
   .signup_options {
     width: 165px;
@@ -206,9 +209,9 @@
   .already_have_acc {
     font-size: 14px;
   }
-  .signup_root .techwings_logo {
+  /* .signup_root .techwings_logo {
     margin-top: 30px;
-  }
+  } */
   .signup_root .form_item,
   .signup_root .others,
   .signup_btn {
