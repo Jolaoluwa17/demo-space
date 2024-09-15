@@ -188,8 +188,8 @@
     box-sizing: border-box;
   }
   .signup_container .right_section {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top, 20px); /* fallback value */
+    padding-bottom: env(safe-area-inset-bottom, 20px); /* fallback value */
   }
   .signup_options {
     width: 165px;
