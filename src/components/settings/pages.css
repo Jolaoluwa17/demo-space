@@ -102,7 +102,7 @@ input[type='date'].profile_input_item::-webkit-calendar-picker-indicator {
 }
 .settings_profile_searchInput {
   width: 100%;
-  padding: 13.5px 20px 12.5px 15px;
+  padding: 13.5px 10px 12.5px 15px;
   margin-top: 10px;
   border-radius: 10px;
   outline-color: #4274ba;
@@ -170,16 +170,26 @@ input[type='date'].profile_input_item::-webkit-calendar-picker-indicator {
   font-size: 16px;
   box-sizing: border-box;
 }
+.remove_entry_button {
+  display: flex;
+  align-items: center;
+}
 
 @media (max-width: 1024px) {
   .settings_main {
     max-width: 100%;
+  }
+  .settings_profile_searchInput {
+    padding: 13.5px 20px 12.5px 15px;
   }
 }
 
 @media (max-width: 768px) {
   .settings_profile_searchInput .input {
     width: 90%;
+  }
+  .settings_profile_searchInput {
+    padding: 13.5px 5px 12.5px 15px;
   }
 }
 
@@ -193,8 +203,11 @@ input[type='date'].profile_input_item::-webkit-calendar-picker-indicator {
     height: 40px;
     font-size: 14px;
   }
+  .settings_profile_searchInput {
+    padding: 13.5px 20px 12.5px 15px;
+  }
   .settings_profile_searchInput .input {
-    width:100%;
+    width: 100%;
   }
   .profile_pageone_form_item .interests {
     font-size: 14px;

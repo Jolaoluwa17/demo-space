@@ -39,7 +39,7 @@ const Certificate: React.FC = () => {
   const handleAddCertification = () => {
     setCertifications([
       ...certifications,
-      { certificate: '', organization: '', issueDate: '' },
+      { certificate: '', organization: '', issueDate: getCurrentDate() },
     ]);
   };
 

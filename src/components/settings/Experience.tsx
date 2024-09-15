@@ -5,8 +5,9 @@ import DeleteIcon from '../../icons/DeleteIcon';
 import AddIcon from '../../icons/AddIcon';
 
 const Experience = () => {
-  const getCurrentDate = () => {
+  const getCurrentDate = (addDays = 0) => {
     const today = new Date();
+    today.setDate(today.getDate() + addDays); // Add the specified number of days
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
@@ -18,7 +19,7 @@ const Experience = () => {
       jobTitle: '',
       jobDescription: '',
       startDate: getCurrentDate(),
-      endDate: getCurrentDate(),
+      endDate: getCurrentDate(1),
     },
   ]);
 
@@ -37,7 +38,12 @@ const Experience = () => {
   const handleAddEntry = () => {
     setEntries([
       ...entries,
-      { jobTitle: '', jobDescription: '', startDate: '', endDate: '' },
+      {
+        jobTitle: '',
+        jobDescription: '',
+        startDate: getCurrentDate(),
+        endDate: getCurrentDate(1),
+      },
     ]);
   };
 

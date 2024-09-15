@@ -1,9 +1,33 @@
 .logout_option {
   display: none;
 }
+.menu-arrow::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 18px;
+  width: 10px;
+  height: 10px;
+  background-color: white; /* or use the corresponding variable for 'background.paper' */
+  transform: translateY(-50%) rotate(45deg);
+  z-index: 0;
+}
 
 @media (max-width: 430px) {
   .logout_option {
     display: block;
+  }
+  .menu-arrow::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 27px;
+    width: 10px;
+    height: 10px;
+    background-color: white; /* or use the corresponding variable for 'background.paper' */
+    transform: translateY(-50%) rotate(45deg);
+    z-index: 0;
   }
 }

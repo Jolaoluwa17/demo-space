@@ -37,7 +37,7 @@ export default function UserDropdown() {
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: "-3px" }}
+            sx={{ ml: '-3px' }}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
@@ -64,6 +64,7 @@ export default function UserDropdown() {
         slotProps={{
           paper: {
             elevation: 0,
+            className: 'menu-arrow', // Apply the CSS class here
             sx: {
               overflow: 'visible',
               filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
@@ -73,18 +74,6 @@ export default function UserDropdown() {
                 height: 32,
                 ml: -0.5,
                 mr: 1,
-              },
-              '&::before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                left: 27,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
               },
             },
           },
