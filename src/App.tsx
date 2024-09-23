@@ -29,12 +29,16 @@ import ProfileSettings from './pages/settings/profileSettings/ProfileSettings';
 import SettingsRoot from './pages/settings/SettingsRoot';
 import DeleteAccount from './pages/settings/deleteAccount/DeleteAccount';
 import ChangePassword from './pages/settings/changePassword/ChangePassword';
+import Home from './pages/home/Home';
 
 function App() {
   return (
     <Providers>
       <BrowserRouter>
         <Routes>
+          {/* Landing Route */}
+          <Route path="/" element={<Home />} />
+
           {/* Authentication Routes */}
           <Route path="auth" element={<AuthLayout />}>
             <Route path="login" element={<Login />} />
@@ -44,10 +48,11 @@ function App() {
             <Route path="resetpassword" element={<ResetPassword />} />
           </Route>
 
+          {/* Settings Route */}
           <Route path="/user-profile" element={<Profile />} />
 
           {/* Dashboard Routes */}
-          <Route path="/" element={<Layout />}>
+          <Route path="/dashboard" element={<Layout />}>
             <Route index element={<Overview />} />
             <Route path="evaluation" element={<EvaluationRoot />}>
               <Route index element={<Evaluation />} />

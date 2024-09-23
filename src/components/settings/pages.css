@@ -45,15 +45,15 @@
   border-radius: 10px;
   outline-color: #4274ba;
   font-size: 15px;
-  appearance: none; /* Remove browser default styles */
-  background-color: white; /* Ensure consistent background */
-  text-align: left; /* Ensure text is left-aligned */
-  color: inherit; /* Ensure text color follows your CSS */
+  appearance: none;
+  background-color: white;
+  text-align: left;
+  color: inherit;
 }
 
 .settings_edit_btn {
   width: 172px;
-  height: 48px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,6 +61,8 @@
   background-color: #4274ba;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 12px;
+  border: none;
 }
 .settings_edit_btn_container {
   width: 100%;

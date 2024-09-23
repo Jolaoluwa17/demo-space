@@ -67,7 +67,7 @@ const PersonalInformation = () => {
           <input type="text" className="profile_input_item" name="email" />
         </div>
         <div className="settings_edit_btn_container">
-          <div className="settings_edit_btn">Edit</div>
+          <div className="settings_edit_btn">SAVE INFORMATION</div>
         </div>
       </div>
     </div>

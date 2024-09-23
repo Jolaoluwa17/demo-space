@@ -55,7 +55,7 @@ const AreaOfInterest = () => {
           </div>
         </div>
         <div className="settings_edit_btn_container">
-          <div className="settings_edit_btn">Edit</div>
+          <div className="settings_edit_btn">SAVE INFORMATION</div>
         </div>
       </div>
     </div>

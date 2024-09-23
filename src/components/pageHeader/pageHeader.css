@@ -16,7 +16,7 @@
   font-size: 14px;
   font-weight: 700;
   color: #5e5d6f;
-  position: relative; /* To handle the back button positioning */
+  position: relative;
 }
 
 .page_back_btn {

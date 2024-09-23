@@ -139,7 +139,7 @@ const Experience = () => {
         </div>
         <div className="settings_edit_btn_container">
           <button className="settings_edit_btn" disabled={isButtonDisabled}>
-            Edit
+            SAVE INFORMATION
           </button>
         </div>
       </div>

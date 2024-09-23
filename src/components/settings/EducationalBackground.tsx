@@ -141,8 +141,8 @@ const EducationalBackground = () => {
           </div>
         ))}
 
-        <div className="add_another_entry_2" onClick={addNewEntry}>
-          <div className="content">
+        <div className="add_another_entry_2">
+          <div className="content" onClick={addNewEntry}>
             <AddIcon />
             <div style={{ fontSize: '14px', paddingBottom: '4px' }}>
               Add Another Entry
@@ -151,7 +151,7 @@ const EducationalBackground = () => {
         </div>
 
         <div className="settings_edit_btn_container">
-          <div className="settings_edit_btn">Edit</div>
+          <div className="settings_edit_btn">SAVE INFORMATION</div>
         </div>
       </div>
     </div>

@@ -84,6 +84,63 @@
 .profile_dropdown_text {
   display: none;
 }
+.notification_popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0px 20px;
+  box-sizing: border-box;
+}
+.notification_popup_text {
+  width: 100%;
+}
+.notification_popup p {
+  font-weight: 600;
+  text-align: center;
+  color: #333a41;
+}
+.notification_popup div {
+  text-align: center;
+  width: 100%;
+  color: #6a757e;
+  font-weight: 600;
+}
+.notification_title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+.notification_title span {
+  color: black;
+  font-weight: bold;
+}
+.notification_cancel_btn {
+  position: absolute;
+  right: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0px;
+  margin: 0px;
+  padding-top: 3px;
+  border-radius: 50%;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .notification_popup {
+    padding: 20px 35px;
+  }
+}
 
 @media (max-width: 430px) {
   .header {
@@ -126,5 +183,17 @@
   }
   .header_bell_icon {
     margin-right: 0px;
+  }
+  .notification_popup {
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 320px) {
+  .notification_popup {
+    padding: 10px 12px;
+  }
+  .notification_popup div {
+    font-size: 14px;
   }
 }
