@@ -4,6 +4,7 @@
   padding: 120px 170px;
   box-sizing: border-box;
   position: relative;
+  background-color: #ebf1f8;
 }
 .about_us_container {
   display: flex;
@@ -42,6 +43,7 @@
   border-radius: 8px;
   display: flex;
   gap: 48px;
+  background-color: white;
 }
 .about_us_card_content {
   display: flex;
