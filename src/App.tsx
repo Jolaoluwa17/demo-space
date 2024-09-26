@@ -36,7 +36,7 @@ function App() {
     <Providers>
       <BrowserRouter>
         <Routes>
-          {/* Landing Route */}
+          {/* Landing Routes */}
           <Route path="/" element={<Home />} />
 
           {/* Authentication Routes */}

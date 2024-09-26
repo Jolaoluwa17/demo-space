@@ -31,7 +31,7 @@ const ChangePassword = () => {
   }, [password, confirmPassword, oldPassword]);
 
   const handleBackClick = () => {
-    navigate('/profile');
+    navigate('/dashboard/profile');
   };
 
   const handleHiddenTrigger = () => {

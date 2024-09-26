@@ -20,7 +20,7 @@ const Settings = () => {
           <div className="settings_label">Profile</div>
           <div
             className="settings_base_option_button"
-            onClick={() => navigate('/profile/profile-settings')}
+            onClick={() => navigate('/dashboard/profile/profile-settings')}
           >
             <div className="first_section">
               <ProfileIcon />
@@ -33,7 +33,7 @@ const Settings = () => {
           <div className="settings_label">Security</div>
           <div
             className="settings_base_option_button"
-            onClick={() => navigate('/profile/change-password')}
+            onClick={() => navigate('/dashboard/profile/change-password')}
           >
             <div className="first_section">
               <LockIcon />
@@ -78,7 +78,7 @@ const Settings = () => {
         <div
           className="settings_base_option_button2"
           style={{ backgroundColor: 'red' }}
-          onClick={() => navigate('/profile/delete-account')}
+          onClick={() => navigate('/dashboard/profile/delete-account')}
         >
           <div className="first_section">
             <SettingsDeleteIcon />

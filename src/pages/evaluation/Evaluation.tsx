@@ -34,7 +34,7 @@ const Evaluation = () => {
   };
 
   const handleCardClick = () => {
-    navigate('/evaluation/instructions');
+    navigate('/dashboard/evaluation/instructions');
   };
 
   return (

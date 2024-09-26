@@ -34,6 +34,7 @@ const Sidebar = () => {
   const location = useLocation();
   const pathname = location.pathname;
   const navigator = useNavigate();
+  const baseRoute = '/dashboard';
 
   return (
     <motion.nav
@@ -47,12 +48,16 @@ const Sidebar = () => {
       <div className="sidebar_links">
         <NavigationLink
           name="Home"
-          isActive={pathname === '/' || pathname.startsWith('/overview')}
-          link="/"
+          isActive={
+            pathname === `${baseRoute}` ||
+            pathname.startsWith(`${baseRoute}/overview`)
+          }
+          link={`${baseRoute}`}
         >
           <SidebarOverviewIcon
             color={
-              pathname === '/' || pathname.startsWith('/overview')
+              pathname === `${baseRoute}` ||
+              pathname.startsWith(`${baseRoute}/overview`)
                 ? '#4274BA'
                 : '#7d868e'
             }
@@ -60,38 +65,50 @@ const Sidebar = () => {
         </NavigationLink>
         <NavigationLink
           name="Evaluation"
-          isActive={pathname.startsWith('/evaluation')}
-          link="/evaluation"
+          isActive={pathname.startsWith(`${baseRoute}/evaluation`)}
+          link={`${baseRoute}/evaluation`}
         >
           <SidebarEvaluationIcon
-            color={pathname.startsWith('/evaluation') ? '#4274BA' : '#7d868e'}
+            color={
+              pathname.startsWith(`${baseRoute}/evaluation`)
+                ? '#4274BA'
+                : '#7d868e'
+            }
           />
         </NavigationLink>
         <NavigationLink
           name="Progress"
-          isActive={pathname.startsWith('/progress')}
-          link="/progress"
+          isActive={pathname.startsWith(`${baseRoute}/progress`)}
+          link={`${baseRoute}/progress`}
         >
           <SidebarProgress
-            color={pathname.startsWith('/progress') ? '#4274BA' : '#7d868e'}
+            color={
+              pathname.startsWith(`${baseRoute}/progress`)
+                ? '#4274BA'
+                : '#7d868e'
+            }
           />
         </NavigationLink>
         <NavigationLink
           name="Skill Gap"
-          isActive={pathname.startsWith('/skill-gap')}
-          link="/skill-gap"
+          isActive={pathname.startsWith(`${baseRoute}/skill-gap`)}
+          link={`${baseRoute}/skill-gap`}
         >
           <SidebarSkillGapIcon
-            color={pathname.startsWith('/skill-gap') ? '#4274BA' : '#7d868e'}
+            color={
+              pathname.startsWith(`${baseRoute}/skill-gap`)
+                ? '#4274BA'
+                : '#7d868e'
+            }
           />
         </NavigationLink>
         <NavigationLink
           name="Profile"
-          isActive={pathname.startsWith('/profile')}
-          link="/profile"
+          isActive={pathname.startsWith(`${baseRoute}/profile`)}
+          link={`${baseRoute}/profile`}
         >
           <SidebarProfileIcon
-            color={pathname.startsWith('/profile') ? '#4274BA' : '#7d868e'}
+            color={pathname.startsWith(`${baseRoute}/profile`) ? '#4274BA' : '#7d868e'}
           />
         </NavigationLink>
       </div>

@@ -16,7 +16,7 @@ const History = () => {
   }));
 
   const navigateToQuestion = (id: number) => {
-    navigate(`/progress/question/${id}`);
+    navigate(`/dashboard/progress/question/${id}`);
   };
 
   return (
@@ -25,7 +25,7 @@ const History = () => {
         <div className="history_innner_header">
           <div
             className="history_back_btn"
-            onClick={() => navigate('/progress')}
+            onClick={() => navigate('/dashboard/progress')}
           >
             <div className="left_arrow_icon">
               <LeftArrowIcon />

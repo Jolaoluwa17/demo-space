@@ -83,7 +83,7 @@ const Questions: React.FC = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate('/progress/history');
+    navigate('/dashboard/progress/history');
   };
 
   return (

@@ -20,7 +20,7 @@ const SkillGap = () => {
       <SearchInput handleSearch={(term: string) => setSearchTerm(term)} />
       <div
         className="skill_gap_container"
-        onClick={() => navigate('/skill-gap/details')}
+        onClick={() => navigate('/dashboard/skill-gap/details')}
       >
         {filteredSkillGapData.map((card, index) => (
           <SkillProgramCard

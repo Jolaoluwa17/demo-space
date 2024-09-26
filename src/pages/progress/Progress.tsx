@@ -7,7 +7,7 @@ const Progress = () => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate('/progress/history');
+    navigate('/dashboard/progress/history');
   };
 
   return (

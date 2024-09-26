@@ -2,10 +2,14 @@ import HomeNavBar from '../homeNavBar/HomeNavBar';
 import './heroSection.css';
 import { IoLogoGooglePlaystore, IoLogoApple } from 'react-icons/io5';
 
-const HeroSection = () => {
+interface Props {
+  featuresBtn: (value: unknown) => void;
+}
+
+const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
   return (
     <div className="hero_section_root">
-      <HomeNavBar />
+      <HomeNavBar featuresBtn={featuresBtn} />
       <div className="hero_section_content">
         <div className="content_container">
           <div className="content_title">

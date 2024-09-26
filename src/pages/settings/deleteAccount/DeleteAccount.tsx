@@ -26,7 +26,7 @@ const DeleteAccount = () => {
   }, [password, confirmPassword]);
 
   const handleBackClick = () => {
-    navigate('/profile');
+    navigate('/dashboard/profile');
   };
 
   const handleHiddenTrigger = () => {

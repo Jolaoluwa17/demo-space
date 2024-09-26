@@ -6,7 +6,7 @@ const Details = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate('/skill-gap');
+    navigate('/dashboard/skill-gap');
   };
 
   return (
@@ -42,7 +42,7 @@ const Details = () => {
         <div className="enroll_now_container">
           <div
             className="enroll_now"
-            onClick={() => navigate('/skill-gap/status')}
+            onClick={() => navigate('/dashboard/skill-gap/status')}
           >
             Enroll Now
           </div>

@@ -70,7 +70,7 @@ const ShortAnswer: React.FC = () => {
         </div>
         <div
           className="question_submit_btn"
-          onClick={() => navigate('/evaluation/status')}
+          onClick={() => navigate('/dashboard/evaluation/status')}
         >
           Submit
         </div>

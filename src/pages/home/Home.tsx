@@ -6,13 +6,24 @@ import AskQuestions from '../../components/home/questions/Questions';
 import TheFuture from '../../components/home/theFuture/TheFuture';
 import { LuCopyright } from 'react-icons/lu';
 import './home.css';
+import { useRef } from 'react';
 
 const Home = () => {
+  const featuresRef = useRef<HTMLDivElement | null>(null);
+
+  const handleScrollToFeatures = () => {
+    if (featuresRef.current) {
+      featuresRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="home_root">
-      <HeroSection />
+      <HeroSection featuresBtn={handleScrollToFeatures} />
       <AboutUs />
-      <AppFeatures />
+      <div ref={featuresRef}>
+        <AppFeatures />
+      </div>
       <ExpandPotential />
       <AskQuestions />
       <TheFuture />

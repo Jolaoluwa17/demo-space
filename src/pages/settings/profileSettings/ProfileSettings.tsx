@@ -51,7 +51,7 @@ const ProfileSettings = () => {
     tabs.find((tab) => tab.path === activePath)?.name || 'personal-information';
 
   const handleBackClick = () => {
-    navigate('/profile');
+    navigate('/dashboard/profile');
   };
 
   return (

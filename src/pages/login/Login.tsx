@@ -83,7 +83,7 @@ const Login = () => {
               <div
                 style={{ color: '#FF8682', cursor: 'pointer' }}
                 onClick={() => navigator('/auth/forgotpassword')}
-                className='forgot_password_text'
+                className="forgot_password_text"
               >
                 Forgot Password
               </div>
@@ -94,7 +94,7 @@ const Login = () => {
                 backgroundColor: isFormValid ? '#4274BA' : 'grey',
                 cursor: isFormValid ? 'pointer' : 'not-allowed',
               }}
-              onClick={() => navigator('/')}
+              onClick={() => navigator('/dashboard')}
               disabled={!isFormValid}
             >
               Login

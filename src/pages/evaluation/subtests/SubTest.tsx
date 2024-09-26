@@ -27,7 +27,7 @@ const SubTest = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate('/evaluation/instructions'); // Navigate to the Evaluation page
+    navigate('/dashboard/evaluation/instructions'); // Navigate to the Evaluation page
   };
 
   const handleInstructionsClick = (route: string) => {

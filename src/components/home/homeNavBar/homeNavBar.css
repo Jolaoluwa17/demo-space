@@ -25,6 +25,29 @@
   font-weight: 600;
   cursor: pointer;
 }
+.get_started_container {
+  position: relative;
+}
+.get_started_options {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: 100%;
+  position: absolute;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.get_started_options_tab {
+  height: 20px;
+  padding: 10px;
+  font-weight: 600;
+}
+.get_started_options_tab:hover {
+  background-color: #4274ba;
+  color: white;
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
   .home_nav_bar_root {

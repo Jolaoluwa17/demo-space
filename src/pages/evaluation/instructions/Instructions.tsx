@@ -6,11 +6,11 @@ const Instructions = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/evaluation/sub-test'); // Navigate to the Evaluation page
+    navigate('/dashboard/evaluation/sub-test'); // Navigate to the Evaluation page
   };
 
   const handleBackClick = () => {
-    navigate('/evaluation'); // Navigate to the Evaluation page
+    navigate('/dashboard/evaluation'); // Navigate to the Evaluation page
   };
 
   const instructions = [
