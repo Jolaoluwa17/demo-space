@@ -1,5 +1,6 @@
 .overview_root {
   padding: 24px;
+max-width: 1440px;
 }
 .overview_header {
   width: 100%;

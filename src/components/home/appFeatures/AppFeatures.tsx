@@ -71,7 +71,7 @@ const AppFeatures = () => {
           ))}
         </div>
         <div className="middle">
-          <img src="/images/DemoPhone.svg" alt="" />
+          <img src="/images/DemoPhone.svg" alt="" className='app_features_middle_img' />
         </div>
         <div className="right">
           {appFeaturesRightData.map((feature, index) => (

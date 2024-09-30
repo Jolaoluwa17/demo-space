@@ -16,8 +16,8 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
             Unlock Your <span className="full">Full</span> Potential in Tech
           </div>
           <div className="content_subTitle">
-            Join our elite skill gap programs and master The technologies
-            shaping the future.
+            Join Our Elite Skill Gap Programs And Master The Technologies
+            Shaping The Future.
           </div>
           <div className="download_our">Download our app</div>
           <div className="download_btn_container">

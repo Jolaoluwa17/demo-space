@@ -24,7 +24,9 @@ const Home = () => {
       <div ref={featuresRef}>
         <AppFeatures />
       </div>
-      <ExpandPotential />
+      <div className='expand_potential_component'>
+        <ExpandPotential />
+      </div>
       <AskQuestions />
       <TheFuture />
       <div className="home_footer">

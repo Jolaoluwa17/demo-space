@@ -37,11 +37,19 @@ const AboutUs = () => {
   return (
     <div className="about_us_root">
       <div className="about_us_container">
-        <div className="about_us_title">About Us</div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div className="about_us_title">About Us</div>
+        </div>
         <div className="about_us_subTitle">
           Discover how our mission, approach, and community are dedicated to
-          empowering you with the skills and opportunities needed to
-          excel in the tech industry.
+          empowering you with the skills and opportunities needed to excel in
+          the tech industry.
         </div>
         <div className="about_us_card_container">
           {aboutUsCards.map((card, index) => (

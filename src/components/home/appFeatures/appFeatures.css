@@ -1,6 +1,5 @@
 .app_features_root {
   width: 100%;
-  height: 1188px;
   background: linear-gradient(to right, #4274ba, #00265c);
   padding: 100px;
   box-sizing: border-box;
@@ -34,12 +33,13 @@
 .app_features_content .left,
 .app_features_content .right {
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   max-width: 384px;
   height: 100%;
-  padding: 30px 0px;
   box-sizing: border-box;
+  gap: 83px;
 }
 .app_features_card_title {
   color: white;
@@ -81,9 +81,6 @@
 }
 
 @media (max-width: 768px) {
-  .app_features_root {
-    height: 988px;
-  }
   .app_features_content .middle {
     display: none;
   }
@@ -92,5 +89,28 @@
   }
   .app_features_star {
     top: 33px;
+  }
+}
+
+@media (max-width: 425px) {
+  .app_features_root {
+    padding: 48px 24px;
+  }
+  .app_features_content {
+    flex-direction: column;
+    margin-top: 24px;
+  }
+  .app_features_content .middle {
+    display: block;
+  }
+  .app_features_star {
+    display: none;
+  }
+  .app_features_content .left,
+  .app_features_content .right {
+    gap: 34px;
+  }
+  .app_features_middle_img {
+    width: 298px;
   }
 }

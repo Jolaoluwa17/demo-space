@@ -1,13 +1,21 @@
 .home_nav_bar_root {
+  width: 100%;
+}
+.home_nav_bar_root .main {
   display: flex;
   padding: 20px 72px;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 }
 .home_nav_btn_container {
   display: flex;
   align-items: center;
   gap: 24px;
+}
+.mobile_home_nav_btn_container,
+.home_mobile_nav_bar_options {
+  visibility: hidden;
 }
 .home_nav_btn {
   color: white;
@@ -50,11 +58,44 @@
 }
 
 @media (max-width: 768px) {
-  .home_nav_bar_root {
+  .home_nav_bar_root .main {
     padding: 20px 42px;
+    box-sizing: border-box;
   }
   .home_nav_btn,
   .home_nav_getStarted {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 425px) {
+  .homeNav_techwings_logo_main {
+    width: 137px;
+  }
+  .home_nav_btn_container {
+    display: none;
+  }
+  .home_nav_bar_root .main {
+    padding: 20px 24px;
+    box-sizing: border-box;
+  }
+  .mobile_home_nav_btn_container {
+    visibility: visible;
+  }
+  .home_mobile_nav_bar_options {
+    visibility: visible;
+    background-color: #4274ba;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px;
+  }
+  .home_mobile_nav_bar_options_btn {
+    /* background-color: red; */
+    padding: 15px 20px;
+    box-sizing: border-box;
+    color: white;
+    font-weight: 600;
   }
 }

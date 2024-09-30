@@ -1,5 +1,4 @@
 .home_root {
-  position: relative;
   width: 100%;
   height: 100%;
 }
@@ -12,4 +11,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+
+@media (max-width: 425px) {
+  .expand_potential_component {
+    display: none;
+  }
 }
