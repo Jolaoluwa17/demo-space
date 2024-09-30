@@ -7,6 +7,7 @@
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
+  width: 100%;
 }
 .home_nav_btn_container {
   display: flex;
@@ -15,7 +16,7 @@
 }
 .mobile_home_nav_btn_container,
 .home_mobile_nav_bar_options {
-  visibility: hidden;
+  display: none;
 }
 .home_nav_btn {
   color: white;
@@ -68,7 +69,7 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 430px) {
   .homeNav_techwings_logo_main {
     width: 137px;
   }
@@ -80,10 +81,10 @@
     box-sizing: border-box;
   }
   .mobile_home_nav_btn_container {
-    visibility: visible;
+    display: block;
   }
   .home_mobile_nav_bar_options {
-    visibility: visible;
+    display: block;
     background-color: #4274ba;
     width: 100%;
     position: absolute;
