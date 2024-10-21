@@ -9,9 +9,9 @@ const ShortAnswer: React.FC = () => {
   const navigate = useNavigate();
 
   // Filter the questions to include only those with the type 'single'
-  const shortAnswerQuestions = combinedQuestionsData.filter(
-    (question) => question.type === 'single'
-  );
+  // const shortAnswerQuestions = combinedQuestionsData.filter(
+  //   (question) => question.type === 'single'
+  // );
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
@@ -25,7 +25,7 @@ const ShortAnswer: React.FC = () => {
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < shortAnswerQuestions.length - 1) {
+    if (currentQuestionIndex < combinedQuestionsData.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
@@ -36,19 +36,19 @@ const ShortAnswer: React.FC = () => {
     }
   };
 
-  const currentQuestion = shortAnswerQuestions[currentQuestionIndex];
+  const currentQuestion = combinedQuestionsData[currentQuestionIndex];
   const currentAnswer = answers[currentQuestionIndex] || '';
 
   const isFirstQuestion = currentQuestionIndex === 0;
   const isLastQuestion =
-    currentQuestionIndex === shortAnswerQuestions.length - 1;
+    currentQuestionIndex === combinedQuestionsData.length - 1;
 
   return (
     <div className="short_answer_root">
       <div className="short_answer_header">Questions</div>
       <div className="question_container">
         <div className="question_out_of">
-          Question {currentQuestionIndex + 1} of {shortAnswerQuestions.length}
+          Question {currentQuestionIndex + 1} of {combinedQuestionsData.length}
         </div>
         <div className="question_main_container">
           <div className="question_text">{currentQuestion.question}</div>
