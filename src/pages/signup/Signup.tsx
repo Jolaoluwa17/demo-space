@@ -52,24 +52,6 @@ const Signup = () => {
     }
   };
 
-  const [signup, { isLoading }] = useSignUpMutation();
-  const [err, setErr] = useState<string>('');
-
-  const handleSignup = async () => {
-    const userData = {
-      email: email,
-      password: password,
-    };
-    try {
-      const res = await signup(userData).unwrap();
-      console.log(res);
-      navigator('/auth/verifyaccount');
-    } catch (error: unknown) {
-      console.log(error);
-      setErr('Something went wrong');
-    }
-  };
-
   return (
     <div className="signup_root">
       <div className="signup_container">
@@ -143,13 +125,6 @@ const Signup = () => {
               </div>
             </div>
 
-            {err && (
-              <div className="error_message">
-                <BiSolidErrorAlt fontSize={18} />
-                <div style={{ paddingLeft: '5px' }}>{err}</div>
-              </div>
-            )}
-
             <div className="TOS">
               <input
                 type="checkbox"
@@ -184,13 +159,13 @@ const Signup = () => {
             <button
               className="signup_btn"
               style={{
-                backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
-                cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
+                backgroundColor: isFormValid ? '#4274BA' : 'grey',
+                cursor: isFormValid ? 'pointer' : 'not-allowed',
               }}
               onClick={() => navigator('/auth/verifyaccount')}
-              disabled={!isFormValid || isLoading}
+              disabled={!isFormValid}
             >
-              {isLoading ? <div className="spinner"></div> : 'Create Account'}
+              Create Account
             </button>
 
             <div className="already_have_acc">
