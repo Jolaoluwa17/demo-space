@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 const SkillGapRoot = () => {
   return (
-    <div>
+    <div style={{maxWidth: "1440px"}}>
       <Outlet />
     </div>
   );

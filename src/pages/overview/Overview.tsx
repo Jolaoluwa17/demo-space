@@ -22,7 +22,7 @@ const Overview = () => {
             <div>Start Your Skill Evaluation</div>
             <div
               style={{ color: '#4274BA', cursor: 'pointer' }}
-              onClick={() => navigate('/evaluation')}
+              onClick={() => navigate('/dashboard/evaluation')}
             >
               See More
             </div>
@@ -47,7 +47,7 @@ const Overview = () => {
 
             <div
               style={{ color: '#4274BA', cursor: 'pointer' }}
-              onClick={() => navigate('/skill-gap')}
+              onClick={() => navigate('/dashboard/skill-gap')}
             >
               See More
             </div>

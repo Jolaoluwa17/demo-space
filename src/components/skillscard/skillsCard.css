@@ -41,7 +41,7 @@
   overflow: hidden;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .skills_card {
     width: 100%;
   }

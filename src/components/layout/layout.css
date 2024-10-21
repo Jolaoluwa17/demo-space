@@ -33,7 +33,7 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .layout_root {
     flex-direction: column;
     height: 100%;

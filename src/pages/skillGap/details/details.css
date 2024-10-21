@@ -42,7 +42,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .skill_gap_details_overview,
   .benefits_data,
   .duration {

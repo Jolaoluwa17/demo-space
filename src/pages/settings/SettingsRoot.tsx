@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 const SettingsRoot = () => {
   return (
-    <div>
+    <div style={{maxWidth: "1440px"}}>
       <Outlet />
     </div>
   );

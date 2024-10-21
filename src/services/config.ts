@@ -1,4 +1,4 @@
 export default {
-  baseURL: 'http://localhost:5500',
-  hostedURL: '',
+  baseURL: 'http://localhost:9000',
+  hostedURL: 'https://evaluatorappapi.onrender.com/',
 };

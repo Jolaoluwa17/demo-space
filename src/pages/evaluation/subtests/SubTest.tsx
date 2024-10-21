@@ -10,18 +10,18 @@ const SubTest = () => {
       title: 'Multiple Choice Questions',
       description:
         'Test your theoretical knowledge in HTML, CSS, and JavaScript.',
-      route: '/evaluation/multiple-choice',
+      route: '/dashboard/evaluation/multiple-choice',
     },
     {
       title: 'Short-Form Answers',
       description: 'Answer brief questions to demonstrate your understanding',
-      route: '/evaluation/short-answer',
+      route: '/dashboard/evaluation/short-answer',
     },
-    {
-      title: 'Coding/Design Tasks',
-      description: 'Solve practical tasks to showcase your coding skills.',
-      route: '/evaluation/coding-tasks',
-    },
+    // {
+    //   title: 'Coding/Design Tasks',
+    //   description: 'Solve practical tasks to showcase your coding skills.',
+    //   route: '/dashboard/evaluation/coding-tasks',
+    // },
   ];
 
   const navigate = useNavigate();

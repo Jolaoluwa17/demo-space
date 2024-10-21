@@ -6,7 +6,7 @@ const Instructions = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/dashboard/evaluation/sub-test'); // Navigate to the Evaluation page
+    navigate('/dashboard/evaluation/multiple-choice'); // Navigate to the Evaluation page
   };
 
   const handleBackClick = () => {

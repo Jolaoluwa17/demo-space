@@ -40,7 +40,11 @@ const Login = () => {
       <div className="login_container">
         <div className="left_section">
           <div className="techwings_logo_login">
-            <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
+            <img
+              src="/assets/images/TechWingLogo.svg"
+              alt="login_image"
+              onClick={() => navigator('/')}
+            />
           </div>
           <div className="login_form">
             <div className="login_title">Login</div>

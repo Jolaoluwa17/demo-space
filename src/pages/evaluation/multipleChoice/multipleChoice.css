@@ -11,6 +11,13 @@
   font-weight: 700;
   color: #5e5d6f;
   justify-content: center;
+  position: relative;
+}
+.timer {
+  position: absolute;
+  right: 20px; /* Align the timer to the right */
+  font-size: 14px;
+  color: #5e5d6f;
 }
 .question_container {
   margin-top: 24px;

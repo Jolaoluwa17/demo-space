@@ -107,7 +107,13 @@ const Certificate: React.FC = () => {
         <div className="add_another_entry_2">
           <div className="content" onClick={handleAddCertification}>
             <AddIcon />
-            <div style={{ fontSize: '14px', paddingBottom: '4px' }}>
+            <div
+              style={{
+                fontSize: '14px',
+                paddingBottom: '4px',
+                paddingLeft: '10px',
+              }}
+            >
               Add Another Entry
             </div>
           </div>

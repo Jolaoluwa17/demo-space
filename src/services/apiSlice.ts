@@ -45,7 +45,7 @@ const baseQueryWithReauth = async (
       const navigate: NavigateFunction = api.extra as NavigateFunction;
 
       // Redirect to the login page
-      navigate('/login');
+      navigate('/auth/login');
     }
   }
   return result;

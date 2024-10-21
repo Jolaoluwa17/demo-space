@@ -12,24 +12,8 @@ const Questions: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const questionId = id ? parseInt(id, 10) : null;
 
-  // Memoize questions based on their type
-  const multipleChoiceQuestions = useMemo(
-    () =>
-      combinedQuestionsData.filter((question) => question.type === 'multiple'),
-    []
-  );
-
-  const shortAnswerQuestions = useMemo(
-    () =>
-      combinedQuestionsData.filter((question) => question.type === 'single'),
-    []
-  );
-
-  // Combine both question types
-  const allQuestions = useMemo(
-    () => [...multipleChoiceQuestions, ...shortAnswerQuestions],
-    [multipleChoiceQuestions, shortAnswerQuestions]
-  );
+  // Memoize all questions (since only multiple-choice questions remain)
+  const allQuestions = useMemo(() => combinedQuestionsData, []);
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
@@ -42,7 +26,7 @@ const Questions: React.FC = () => {
         setCurrentQuestionIndex(index);
       }
     }
-  }, [questionId, allQuestions]); // Only update if questionId or allQuestions changes
+  }, [questionId, allQuestions]);
 
   // Effect to pre-fill the user's answer if available
   useEffect(() => {
@@ -53,7 +37,7 @@ const Questions: React.FC = () => {
         [currentQuestionIndex]: currentQuestion.userAnswer,
       }));
     }
-  }, [currentQuestionIndex, allQuestions]); // Update if currentQuestionIndex or allQuestions changes
+  }, [currentQuestionIndex, allQuestions]);
 
   // Handle navigation between questions
   const handleNextQuestion = () => {
@@ -69,16 +53,9 @@ const Questions: React.FC = () => {
   };
 
   const currentQuestion = allQuestions[currentQuestionIndex];
-  const currentAnswer = answers[currentQuestionIndex] || '';
 
   const isFirstQuestion = currentQuestionIndex === 0;
   const isLastQuestion = currentQuestionIndex === allQuestions.length - 1;
-
-  // Check if the user's answer is correct
-  const isAnswerCorrect =
-    currentQuestion.type === 'single'
-      ? currentAnswer === currentQuestion.correctAnswer
-      : true; // Multiple-choice questions do not require this check
 
   const navigate = useNavigate();
 
@@ -95,57 +72,40 @@ const Questions: React.FC = () => {
         </div>
         <div>
           <div className="question_text">{currentQuestion.question}</div>
-          {currentQuestion.type === 'multiple' ? (
-            <div className="options">
-              {currentQuestion.options &&
-                currentQuestion.options.map((option, index) => {
-                  const label = ['A', 'B', 'C', 'D'][index] || '';
-                  const isCorrect = option === currentQuestion.correctAnswer;
-                  const isUserAnswer = option === answers[currentQuestionIndex];
+          <div className="options">
+            {currentQuestion.options &&
+              currentQuestion.options.map((option, index) => {
+                const label = ['A', 'B', 'C', 'D'][index] || '';
+                const isCorrect = option === currentQuestion.correctAnswer;
+                const isUserAnswer = option === answers[currentQuestionIndex];
 
-                  return (
-                    <div
-                      key={index}
-                      className={`question_option_item ${
-                        isUserAnswer
-                          ? isCorrect
-                            ? 'correct_option'
-                            : 'wrong_option'
-                          : isCorrect
-                            ? 'highlight_correct'
-                            : ''
-                      }`}
-                    >
-                      <div className="check_icon">
-                        {isUserAnswer ? (
-                          <CheckCircleIcon />
-                        ) : (
-                          <div className="empty_check_circle"></div>
-                        )}
-                      </div>
-                      <div className="options_text">
-                        {label}. {option}
-                      </div>
+                return (
+                  <div
+                    key={index}
+                    className={`question_option_item ${
+                      isUserAnswer
+                        ? isCorrect
+                          ? 'correct_option'
+                          : 'wrong_option'
+                        : isCorrect
+                          ? 'highlight_correct'
+                          : ''
+                    }`}
+                  >
+                    <div className="check_icon">
+                      {isUserAnswer ? (
+                        <CheckCircleIcon />
+                      ) : (
+                        <div className="empty_check_circle"></div>
+                      )}
                     </div>
-                  );
-                })}
-            </div>
-          ) : (
-            <div className="input_answer_container">
-              <input
-                type="text"
-                className={`question_answer_input ${!isAnswerCorrect ? 'incorrect' : 'correct'}`}
-                value={currentAnswer}
-                disabled
-              />
-              {!isAnswerCorrect && (
-                <div className="question_correct_answer">
-                  <span style={{ fontWeight: '600' }}>Correct answer:</span>{' '}
-                  {currentQuestion.correctAnswer}
-                </div>
-              )}
-            </div>
-          )}
+                    <div className="options_text">
+                      {label}. {option}
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
       <div className="question_selectors">

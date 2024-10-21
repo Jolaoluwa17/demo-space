@@ -52,8 +52,7 @@
 }
 
 .settings_edit_btn {
-  width: 172px;
-  height: 45px;
+  padding: 12px 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,8 +79,8 @@
   margin-top: 12px;
 }
 .add_another_entry_2 .content {
-  width: 142px;
-  height: 100%;
+  /* width: 142px;
+  height: 100%; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -188,14 +187,12 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .profile_form_item label,
   .profile_input_item {
     font-size: 14px;
   }
   .settings_edit_btn {
-    width: 130px;
-    height: 40px;
     font-size: 14px;
   }
   .settings_profile_searchInput {

@@ -81,7 +81,7 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .delete_account_popup {
     padding: 10px 15px;
   }

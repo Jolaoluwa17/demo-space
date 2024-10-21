@@ -6,6 +6,7 @@
 }
 .techwings_logo_login {
   margin-bottom: 30px;
+  cursor: pointer;
 }
 .login_container {
   display: flex;
@@ -165,7 +166,7 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .login_container {
     display: flex;
     width: 350px;

@@ -184,7 +184,7 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .hero_section_img2,
   .hero_section_img1 {
     display: none;

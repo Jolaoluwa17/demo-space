@@ -46,7 +46,7 @@
   font-size: 14px;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .subTest_question_type_container {
     flex-direction: column;
   }

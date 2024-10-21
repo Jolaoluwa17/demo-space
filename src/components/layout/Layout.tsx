@@ -14,16 +14,19 @@ const Layout: React.FC<LayoutProps> = () => {
   const pathname = location.pathname.substring(1);
 
   const activeLink = (() => {
-    if (pathname.startsWith('evaluation')) {
+    if (pathname.startsWith('dashboard/evaluation')) {
       return 'Evaluation';
     }
-    if (pathname.startsWith('progress')) {
+    if (pathname.startsWith('dashboard/progress')) {
       return 'Progress';
     }
-    if (pathname.startsWith('skill-gap')) {
+    if (pathname.startsWith('dashboard/skill-gap')) {
       return 'Skill Gap';
     }
-    if (pathname.startsWith('')) {
+    if (pathname.startsWith('dashboard/profile')) {
+      return 'Profile';
+    }
+    if (pathname.startsWith('dashboard')) {
       return 'Overview';
     }
     return pathname.charAt(0).toUpperCase() + pathname.slice(1);

@@ -142,7 +142,7 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .header {
     position: fixed;
     width: 100%;

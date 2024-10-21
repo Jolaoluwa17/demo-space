@@ -1,6 +1,6 @@
 .overview_root {
   padding: 24px;
-max-width: 1440px;
+  max-width: 1440px;
 }
 .overview_header {
   width: 100%;
@@ -44,7 +44,7 @@ max-width: 1440px;
   margin-top: 16px;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 450px) {
   .overview_section_card_container {
     flex-direction: column;
   }
