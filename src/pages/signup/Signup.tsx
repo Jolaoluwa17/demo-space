@@ -3,8 +3,6 @@ import './signup.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
 import { useNavigate } from 'react-router-dom';
-import { useSignUpMutation } from '../../services/features/auth/authApiSlice';
-import { BiSolidErrorAlt } from 'react-icons/bi';
 
 const Signup = () => {
   const [email, setEmail] = useState<string>('');
