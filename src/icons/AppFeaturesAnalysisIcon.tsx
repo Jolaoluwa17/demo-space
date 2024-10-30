@@ -11,9 +11,9 @@ function AppFeaturesAnalysisIcon() {
         <path
           d="M38.1667 25.2439C43.5833 25.2439 45.8333 23.1606 43.8333 16.3273C42.4792 11.7231 38.5208 7.76478 33.9167 6.41061C27.0833 4.41061 25 6.66061 25 12.0773V18.0773C25 23.1606 27.0833 25.2439 31.25 25.2439H38.1667Z"
           stroke="white"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <mask
           id="path-2-outside-1_791_6674"

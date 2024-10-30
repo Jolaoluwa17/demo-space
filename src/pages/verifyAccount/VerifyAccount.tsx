@@ -1,13 +1,64 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LeftArrow from '../../icons/LeftArrow';
 import './verifyAccount.css';
 import { useNavigate } from 'react-router-dom';
+import {
+  useRequestCodeMutation,
+  useVerifyAccountMutation,
+} from '../../services/features/auth/authApiSlice';
+import { BiSolidErrorAlt } from 'react-icons/bi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../services/store';
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState('');
   const isFormValid = otp !== '';
 
-  const navigator = useNavigate();
+  const navigate = useNavigate();
+
+  const [verifyAccount, { isLoading }] = useVerifyAccountMutation();
+  const [err, setErr] = useState<string>('');
+  const [countdown, setCountdown] = useState(0); // Countdown state in seconds
+
+  const handleVerifyAccount = async () => {
+    const userData = {
+      verificationCode: otp,
+    };
+    try {
+      const res = await verifyAccount(userData).unwrap();
+      console.log(res);
+      navigate('/auth/login');
+    } catch (error: unknown) {
+      console.log(error);
+      setErr('Wrong OTP');
+    }
+  };
+
+  const [requestCode] = useRequestCodeMutation();
+  const email = useSelector((state: RootState) => state.auth.email);
+
+  const handleRequestCode = async () => {
+    const userData = { email: email };
+    try {
+      await requestCode(userData).unwrap();
+      setCountdown(120); // Start countdown for 2 minutes (120 seconds)
+    } catch (error: unknown) {
+      console.log(error);
+      setErr('Something went wrong');
+    }
+  };
+
+  // Countdown effect
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+
+      // Clear timer when countdown reaches zero or component unmounts
+      return () => clearInterval(timer);
+    }
+  }, [countdown]);
 
   return (
     <div className="verify_account_root">
@@ -28,7 +79,7 @@ const VerifyAccount = () => {
               <LeftArrow />
               <div
                 style={{ marginLeft: '12px' }}
-                onClick={() => navigator('/auth/signup')}
+                onClick={() => navigate('/auth/signup')}
               >
                 Back to sign up
               </div>
@@ -46,29 +97,36 @@ const VerifyAccount = () => {
                 onChange={(e) => setOtp(e.target.value)}
               />
             </div>
+            {err && (
+              <div className="error_message">
+                <BiSolidErrorAlt fontSize={18} />
+                <div style={{ paddingLeft: '5px' }}>{err}</div>
+              </div>
+            )}
             <div className="resend_code">
               Already have an account?{' '}
               <span
                 style={{
-                  color: '#FF8682',
+                  color: countdown === 0 ? '#FF8682' : 'grey',
                   fontWeight: '600',
-                  cursor: 'pointer',
+                  cursor: countdown === 0 ? 'pointer' : 'not-allowed',
                   marginLeft: '8px',
                 }}
+                onClick={countdown === 0 ? handleRequestCode : undefined}
               >
-                Resend
+                {countdown === 0 ? 'Resend' : `Resend in ${countdown}s`}
               </span>
             </div>
             <button
               className="verify_btn"
               style={{
-                backgroundColor: isFormValid ? '#4274BA' : 'grey',
-                cursor: isFormValid ? 'pointer' : 'not-allowed',
+                backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
+                cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
               }}
-              onClick={() => navigator('/user-profile')}
-              disabled={!isFormValid}
+              onClick={handleVerifyAccount}
+              disabled={!isFormValid || isLoading}
             >
-              Verify
+              {isLoading ? <div className="spinner"></div> : 'Verify'}
             </button>
           </div>
         </div>

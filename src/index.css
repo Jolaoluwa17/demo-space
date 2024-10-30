@@ -1,13 +1,12 @@
 :root {
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
-    format("truetype");
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat/Montserrat-VariableFont_wght.ttf')
+    format('truetype');
 }
-
 
 html,
 body {
@@ -18,4 +17,31 @@ body {
 
 #root {
   height: 100%;
+}
+
+.error_message {
+  color: red;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* loading animation */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: white;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
+    id: '',
     email: '',
     password: '',
     isAuthenticated: false,
-    accessToken: null,
+    token: null,
     emailVerified: false,
-    refreshToken: null,
   },
   reducers: {
     setCredentials: (state, action) => {
@@ -17,24 +17,22 @@ const authSlice = createSlice({
     },
     setAuthState: (state, action) => {
       state.isAuthenticated = action.payload.isAuthenticated;
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
+      state.token = action.payload.token;
       state.emailVerified = action.payload.emailVerified;
+      state.id = action.payload.id;
 
-      sessionStorage.setItem('accessToken', action.payload.accessToken ?? '');
-      sessionStorage.setItem('refreshToken', action.payload.refreshToken);
+      sessionStorage.setItem('token', action.payload.token ?? '');
+      sessionStorage.setItem('id', action.payload.id ?? '');
     },
     logout: (state) => {
       state.email = '';
       state.password = '';
       state.isAuthenticated = false;
-      state.accessToken = null;
-      state.emailVerified = true;
-      state.refreshToken = null;
+      state.token = null;
 
       // Clear AsyncStorage
-      sessionStorage.removeItem('accessToken');
-      sessionStorage.removeItem('refreshToken');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('id');
     },
     setAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;

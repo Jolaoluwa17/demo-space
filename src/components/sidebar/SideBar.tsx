@@ -9,6 +9,8 @@ import SidebarEvaluationIcon from '../../icons/SidebarEvaluationIcon';
 import SidebarProgress from '../../icons/SidebarProgress';
 import SidebarSkillGapIcon from '../../icons/SidebarSkillGapIcon';
 import SidebarProfileIcon from '../../icons/SidebarProfileIcon';
+import { logout } from '../../services/features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 const containerVariants = {
   close: {
@@ -35,6 +37,12 @@ const Sidebar = () => {
   const pathname = location.pathname;
   const navigator = useNavigate();
   const baseRoute = '/dashboard';
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigator('/auth/login');
+  };
 
   return (
     <motion.nav
@@ -108,12 +116,16 @@ const Sidebar = () => {
           link={`${baseRoute}/profile`}
         >
           <SidebarProfileIcon
-            color={pathname.startsWith(`${baseRoute}/profile`) ? '#4274BA' : '#7d868e'}
+            color={
+              pathname.startsWith(`${baseRoute}/profile`)
+                ? '#4274BA'
+                : '#7d868e'
+            }
           />
         </NavigationLink>
       </div>
       <div className="logout_btn_container">
-        <div className="logout_btn" onClick={() => navigator('/auth/login')}>
+        <div className="logout_btn" onClick={handleLogout}>
           <LogOutIcon />
           <div style={{ paddingLeft: '20px', paddingBottom: '6px' }}>
             Log Out

@@ -3,6 +3,9 @@ import './login.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
 import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../services/features/auth/authApiSlice';
+import { useDispatch } from 'react-redux';
+import { setAuthState } from '../../services/features/auth/authSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -34,6 +37,36 @@ const Login = () => {
   };
 
   const navigator = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
+
+  const handleLogin = async () => {
+    const userData = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const res = await login(userData).unwrap();
+      console.log(res);
+      dispatch(
+        setAuthState({
+          isAuthenticated: true,
+          token: res.token,
+          emailVerified: res.user.status ?? false,
+          id: res.user._id ?? '',
+        })
+      );
+      if (res.user.status === false) {
+        navigator('/auth/verifyaccount');
+      } else {
+        navigator('/dashboard');
+      }
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="login_root">
@@ -95,13 +128,13 @@ const Login = () => {
             <button
               className="login_btn"
               style={{
-                backgroundColor: isFormValid ? '#4274BA' : 'grey',
-                cursor: isFormValid ? 'pointer' : 'not-allowed',
+                backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
+                cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
               }}
-              onClick={() => navigator('/dashboard')}
-              disabled={!isFormValid}
+              onClick={handleLogin}
+              disabled={!isFormValid || isLoading}
             >
-              Login
+              {isLoading ? <div className="spinner"></div> : 'Login'}
             </button>
             <div className="doAccount">
               Don’t have an account?{' '}

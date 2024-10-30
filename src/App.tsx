@@ -28,6 +28,7 @@ import SettingsRoot from './pages/settings/SettingsRoot';
 import DeleteAccount from './pages/settings/deleteAccount/DeleteAccount';
 import ChangePassword from './pages/settings/changePassword/ChangePassword';
 import Home from './pages/home/Home';
+import ProtectedRoute from './services/ProtectRoute';
 
 function App() {
   return (
@@ -50,7 +51,10 @@ function App() {
           <Route path="/user-profile" element={<Profile />} />
 
           {/* Dashboard Routes */}
-          <Route path="/dashboard" element={<Layout />}>
+          <Route
+            path="/dashboard"
+            element={<ProtectedRoute element={<Layout />} />}
+          >
             <Route index element={<Overview />} />
             <Route path="evaluation" element={<EvaluationRoot />}>
               <Route index element={<Evaluation />} />

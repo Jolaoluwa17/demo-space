@@ -2,6 +2,8 @@ import { useState } from 'react';
 import LeftArrow from '../../icons/LeftArrow';
 import './forgotPassword.css';
 import { useNavigate } from 'react-router-dom';
+import { useForgotPasswordMutation } from '../../services/features/auth/authApiSlice';
+import { BiSolidErrorAlt } from 'react-icons/bi';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -23,6 +25,20 @@ const ForgotPassword = () => {
   };
 
   const navigator = useNavigate();
+  const [forgotPassword] = useForgotPasswordMutation();
+  const [err, setErr] = useState<string>('');
+
+  const handleForgotPassword = async () => {
+    const userData = { email: email };
+    try {
+      const res = await forgotPassword(userData).unwrap();
+      // navigator('/auth/resetpassword');
+      console.log(res);
+    } catch (error: unknown) {
+      setErr('Something went wrong');
+      console.log(error);
+    }
+  };
 
   return (
     <div className="forgotpassword_root">
@@ -60,13 +76,19 @@ const ForgotPassword = () => {
               onChange={(e) => handleEmailChange(e.target.value)}
             />
           </div>
+          {err && (
+            <div className="error_message">
+              <BiSolidErrorAlt fontSize={18} />
+              <div style={{ paddingLeft: '5px' }}>{err}</div>
+            </div>
+          )}
           <button
             className="submit_btn"
             style={{
               backgroundColor: isFormValid ? '#4274BA' : 'grey',
               cursor: isFormValid ? 'pointer' : 'not-allowed',
             }}
-            onClick={() => navigator('/auth/resetpassword')}
+            onClick={handleForgotPassword}
             disabled={!isFormValid}
           >
             Submit

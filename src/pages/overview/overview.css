@@ -18,6 +18,7 @@
   font-size: 14px;
   color: #6a757e;
   font-weight: 600;
+  margin-top: 8px;
 }
 .overview_section {
   margin-top: 24px;
@@ -55,3 +56,4 @@
     display: none;
   }
 }
+

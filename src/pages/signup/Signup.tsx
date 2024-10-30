@@ -3,6 +3,10 @@ import './signup.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
 import { useNavigate } from 'react-router-dom';
+import { useSignUpMutation } from '../../services/features/auth/authApiSlice';
+import { BiSolidErrorAlt } from 'react-icons/bi';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../services/features/auth/authSlice';
 
 const Signup = () => {
   const [email, setEmail] = useState<string>('');
@@ -47,6 +51,31 @@ const Signup = () => {
       setEmailError(true);
     } else {
       setEmailError(false);
+    }
+  };
+
+  const [signup, { isLoading }] = useSignUpMutation();
+  const [err, setErr] = useState<string>('');
+  const dispatch = useDispatch();
+
+  const handleSignup = async () => {
+    const userData = {
+      email: email,
+      password: password,
+    };
+    try {
+      await signup(userData).unwrap();
+      dispatch(setCredentials({ email: email }));
+      navigator('/auth/verifyaccount');
+    } catch (error: unknown) {
+      console.log(error);
+      const err = error as { status?: number };
+
+      if (err.status === 409) {
+        setErr('User already exists');
+      } else {
+        setErr('Something went wrong');
+      }
     }
   };
 
@@ -123,6 +152,13 @@ const Signup = () => {
               </div>
             </div>
 
+            {err && (
+              <div className="error_message">
+                <BiSolidErrorAlt fontSize={18} />
+                <div style={{ paddingLeft: '5px' }}>{err}</div>
+              </div>
+            )}
+
             <div className="TOS">
               <input
                 type="checkbox"
@@ -157,13 +193,13 @@ const Signup = () => {
             <button
               className="signup_btn"
               style={{
-                backgroundColor: isFormValid ? '#4274BA' : 'grey',
-                cursor: isFormValid ? 'pointer' : 'not-allowed',
+                backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
+                cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
               }}
-              onClick={() => navigator('/auth/verifyaccount')}
-              disabled={!isFormValid}
+              onClick={handleSignup}
+              disabled={!isFormValid || isLoading}
             >
-              Create Account
+              {isLoading ? <div className="spinner"></div> : 'Create Account'}
             </button>
 
             <div className="already_have_acc">

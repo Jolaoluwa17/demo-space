@@ -40,7 +40,7 @@ const Layout: React.FC<LayoutProps> = () => {
       <div className={`content_wrapper open`}>
         <Header activeLink={activeLink} userName={userName} />
         <main className="main_content">
-          <Outlet />
+          <Outlet  />
         </main>
       </div>
     </div>

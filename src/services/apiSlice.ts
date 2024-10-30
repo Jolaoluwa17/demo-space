@@ -7,17 +7,17 @@ import {
 import { NavigateFunction } from 'react-router-dom';
 import config from './config';
 import { RootState } from './store';
-import { refreshTokenRequest } from './features/auth/refreshToken';
 
 interface ExtraPoints {
   navigate?: NavigateFunction;
 }
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: config.baseURL,
-  credentials: 'include',
+  baseUrl: config.hostedURL,
+  // credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.accessToken;
+    const token = (getState() as RootState).auth.token;
+    console.log(token)
 
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
@@ -35,18 +35,10 @@ const baseQueryWithReauth = async (
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
-    // Send a request to your server to refresh the tokens using the refresh token
-    const refreshResult = await refreshTokenRequest();
+    const navigate: NavigateFunction = api.extra as NavigateFunction;
 
-    if (refreshResult && refreshResult.accessToken) {
-      // Retry the original query with the new access token
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      const navigate: NavigateFunction = api.extra as NavigateFunction;
-
-      // Redirect to the login page
-      navigate('/auth/login');
-    }
+    // Redirect to the login page
+    navigate('/auth/login');
   }
   return result;
 };
