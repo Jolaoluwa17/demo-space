@@ -15,7 +15,7 @@ const Overview = () => {
   const navigate = useNavigate();
   const userid = sessionStorage.getItem('id');
 
-  const { data, error, isLoading } = useGetUserQuery(userid ? userid : '') as {
+  const { data } = useGetUserQuery(userid ? userid : '') as {
     data: UserType | undefined;
     error: any;
     isLoading: boolean;
