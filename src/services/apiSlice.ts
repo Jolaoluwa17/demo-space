@@ -14,7 +14,7 @@ interface ExtraPoints {
 
 const baseQuery = fetchBaseQuery({
   baseUrl: config.hostedURL,
-  // credentials: 'include',
+  credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     console.log(token)
