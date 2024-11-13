@@ -1,0 +1,121 @@
+.create_evaluation_root {
+  padding: 24px;
+}
+.create_evaluation_content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 24px;
+}
+.create_evaluation_content .left {
+  width: 65%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.create_evaluation_content .right {
+  width: 30%;
+  height: 156px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.create_evaluation_form_item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+.create_evaluation_form_item.two {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+}
+.create_evaluation_form_item label {
+  font-size: 16px;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.create_evaluation_form_item input {
+  border: 1px solid #dfdfdf;
+  padding: 16px 15px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+.uploadIcon {
+  border: 1px solid #dfdfdf;
+  height: 48px;
+  width: 310px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6a757e;
+}
+.instructions_textarea {
+  height: 148px;
+  resize: none;
+  border: 1px solid #dfdfdf;
+  padding: 16px 15px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+.create_evaluation_form_item_cont {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.add_evaluation_title {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #4f4f4f;
+  font-size: 16px;
+}
+.upload_file_title {
+  margin-bottom: 8px;
+  color: #4f4f4f;
+  font-size: 12px;
+}
+.file_name_display {
+  border: 1px solid #dfdfdf;
+  height: 48px;
+  width: 310px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #6a757e;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.file_name_text {
+  max-width: 155px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.create_evaluation_confirm_btn {
+  padding: 15px 12px;
+  background-color: #4274ba;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 330px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

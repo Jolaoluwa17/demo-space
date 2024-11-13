@@ -14,6 +14,9 @@
 .content_wrapper.open {
   margin-left: 235px;
 }
+.content_wrapper.admin_open {
+  margin-left: 260px;
+}
 .main_content {
   flex-grow: 1;
   overflow-y: auto;

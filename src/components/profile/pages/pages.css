@@ -109,7 +109,7 @@
   justify-content: flex-end;
 }
 .add_another_entry .content {
-  width: 142px;
+  width: 160px;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -182,6 +182,21 @@
   background-color: grey;
   cursor: not-allowed;
 }
+.pages_empty_checkbox {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1px solid #6a757e;
+
+  cursor: pointer;
+}
+.currently_working_here {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  color: #333a41;
+  font-size: 14px;
+}
 
 @media (max-width: 450px) {
   .profile_pageone_title {
@@ -194,7 +209,11 @@
   .upload_profile_pic_text,
   .profile_pageone_input,
   .profile_pageone_form_item label,
-  .profile_pageone_subTitle {
+  .profile_pageone_subTitle,
+  .remove_entry_button {
     font-size: 14px;
+  }
+  .add_another_entry .content {
+    width: 160px;
   }
 }

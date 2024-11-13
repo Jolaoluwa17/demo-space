@@ -1,0 +1,76 @@
+.user_details_root {
+  padding: 24px;
+}
+.user_details_content {
+  padding: 48px 183px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  margin-top: 24px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  color: #333a41;
+}
+.user_details_user_profile .user_profile {
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+}
+.user_details_user_profile .name {
+  margin-top: 16px;
+  font-size: 16px;
+}
+.user_details_user_profile .edit_profile {
+  text-align: center;
+  color: #4274ba;
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.user_details_section {
+  margin-top: 32px;
+  width: 100%;
+}
+.user_details_content .section_header {
+  color: #333a41;
+  font-size: 16px;
+  font-weight: 600;
+}
+.user_details_content .section_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+.user_details_content .skills_item_container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.user_details_content .skills_item {
+  padding: 8px 16px;
+  border: 1px solid #4274ba;
+  border-radius: 24px;
+}
+.user_details_section .item_content {
+  max-width: 445px;
+}
+.user_details_root .delete_account_btn {
+  background-color: #ff0202;
+  width: 375px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  margin-top: 32px;
+  cursor: pointer;
+  border-radius: 8px;
+}

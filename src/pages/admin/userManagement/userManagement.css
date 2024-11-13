@@ -1,0 +1,93 @@
+.user_management_root {
+  padding: 24px;
+}
+.user_management_overview {
+  width: 100%;
+  height: 164px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.user_management_overview .top_navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user_management_overview .top_navigation .title {
+  font-size: 18px;
+  color: black;
+  font-weight: 600;
+}
+.user_management_overview .top_navigation .month_year_filter {
+  display: flex;
+  align-items: center;
+}
+.month_year_filter .right_month_controls,
+.month_year_filter .left_month_controls {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #dfdfdf;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.month_year_filter .right_month_controls {
+  margin-left: 12px;
+}
+.month_indicator {
+  margin: 0px 20px;
+  color: #6a757e;
+  font-size: 20px;
+  font-weight: 500;
+  max-width: 120px;
+  min-width: 120px;
+  text-align: center;
+}
+.create_user_btn {
+  background-color: #4274ba;
+  padding: 15px 15px;
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.user_management_overview .bottom_navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user_management_search {
+  width: 64%;
+}
+
+.user_management_table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.user_management_table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user_management_table th,
+.user_management_table td {
+  padding: 20px 23px;
+  text-align: left;
+  color: #5e5d6f;
+  box-sizing: border-box;
+}
+
+.user_management_table th {
+  background-color: #e9e9e9;
+  font-weight: 600;
+}
+
+.user_management_table tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}

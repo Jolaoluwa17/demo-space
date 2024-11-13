@@ -1,0 +1,48 @@
+.skill_gap_list_root {
+  padding: 24px;
+}
+.programs_list_container {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.program_card {
+  width: 49%;
+  height: 84px;
+  border-radius: 8px;
+  background-color: white;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+.program_card .content {
+  display: flex;
+  align-items: center;
+}
+.program_card .content .title {
+  color: #333a41;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.create_program_btn {
+  position: absolute;
+  top: 0px;
+  height: 100%;
+  background-color: #4274ba;
+  right: 0px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 182px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}

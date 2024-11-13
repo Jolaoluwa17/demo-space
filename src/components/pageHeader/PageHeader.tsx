@@ -2,7 +2,7 @@ import LeftArrowIcon from '../../icons/LeftArrowIcon';
 import './pageHeader.css';
 
 interface Props {
-  handleBackClick: any;
+  handleBackClick: () => void;
   pageTitle: string;
 }
 

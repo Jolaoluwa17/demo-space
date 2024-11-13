@@ -1,6 +1,7 @@
 .custom_select {
   position: relative;
   width: 100%;
+  min-width: 80px;
 }
 
 .custom_select_trigger {

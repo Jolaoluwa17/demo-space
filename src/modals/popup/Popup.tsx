@@ -10,9 +10,7 @@ const Popup: React.FC<Props> = ({ popup, children }) => {
 
   return (
     <div className="popup_root">
-      <div className="popup_main">
-        {children} 
-      </div>
+      <div className="popup_main">{children}</div>
     </div>
   );
 };

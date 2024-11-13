@@ -44,10 +44,7 @@ const NavigationLink = ({
     );
   } else {
     return (
-      <div
-        className={commonClasses}
-        onClick={onClick}
-      >
+      <div className={commonClasses} onClick={onClick}>
         <span className="navigation-icon">{children}</span>
         <p
           className="navigation_text"

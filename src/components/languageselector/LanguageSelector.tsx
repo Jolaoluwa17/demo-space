@@ -2,8 +2,8 @@ import './languageSelector.css';
 import { languages } from '../../utils/Constants';
 
 interface Props {
-  language: any;
-  handleLanguageChange: any;
+  language: string;
+  handleLanguageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const LanguageSelector: React.FC<Props> = ({

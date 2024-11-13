@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './pages.css';
+import {
+  useGetUserQuery,
+  useUpdateUserProfileMutation,
+} from '@/services/features/user/userSlice';
 
 interface Props {
   setCurrentPage: (page: number) => void;
@@ -21,6 +25,17 @@ const interestsList = [
 const PageFour: React.FC<Props> = ({ setCurrentPage }) => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const userid = sessionStorage.getItem('id');
+
+  const { data, isLoading: isUserLoading } = useGetUserQuery(
+    userid ? userid : ''
+  );
+
+  useEffect(() => {
+    if (data && !isUserLoading && data.response.areaOfInterest) {
+      setSelectedInterests(data.response.areaOfInterest);
+    }
+  }, [data, isUserLoading]);
 
   // Handle clicking on an interest div
   const handleInterestClick = (interest: string) => {
@@ -37,6 +52,22 @@ const PageFour: React.FC<Props> = ({ setCurrentPage }) => {
   useEffect(() => {
     setIsButtonDisabled(selectedInterests.length === 0);
   }, [selectedInterests]);
+
+  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
+
+  const handleUpdateProfile = async () => {
+    const userData = {
+      id: userid,
+      areaOfInterest: selectedInterests,
+    };
+
+    try {
+      await updateUserProfile(userData).unwrap();
+      setCurrentPage(5);
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="profile_pageone_root">
@@ -64,10 +95,14 @@ const PageFour: React.FC<Props> = ({ setCurrentPage }) => {
         </div>
         <button
           className={`next_btn`}
-          onClick={() => setCurrentPage(5)}
-          disabled={isButtonDisabled}
+          onClick={handleUpdateProfile}
+          style={{
+            backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
+            cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',
+          }}
+          disabled={isButtonDisabled || isLoading}
         >
-          Next
+          {isLoading ? <div className="spinner"></div> : 'Next'}
         </button>
       </div>
     </div>

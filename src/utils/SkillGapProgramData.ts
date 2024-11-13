@@ -5,7 +5,7 @@ const SkillGapProgramData = [
     description: 'Learn HTML, CSS, JavaScript, and React.',
   },
   {
-    imgSrc: '/images/AI.svg',
+    imgSrc: '/images/laptop.svg',
     language: 'AI and Machine Learning',
     description: 'Explore AI concepts and machine learning algorithms.',
   },

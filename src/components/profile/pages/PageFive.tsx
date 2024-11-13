@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import AddIcon from '../../../icons/AddIcon';
 import './pages.css';
 import DeleteIcon from '../../../icons/DeleteIcon';
+import {
+  useGetUserQuery,
+  useUpdateUserProfileMutation,
+} from '@/services/features/user/userSlice';
+import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
 
 interface Entry {
   jobTitle: string;
   jobDescription: string;
   startDate: string;
   endDate: string;
+  companyName: string;
+  currentlyWorking: boolean;
 }
 
 interface Props {
@@ -16,9 +23,17 @@ interface Props {
 
 const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
   const [entries, setEntries] = useState<Entry[]>([
-    { jobTitle: '', jobDescription: '', startDate: '', endDate: '' },
+    {
+      jobTitle: '',
+      jobDescription: '',
+      companyName: '',
+      startDate: '',
+      endDate: '',
+      currentlyWorking: false,
+    },
   ]);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const userid = sessionStorage.getItem('id');
 
   const handleInputChange = (
     index: number,
@@ -33,12 +48,26 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
   const handleAddEntry = () => {
     setEntries([
       ...entries,
-      { jobTitle: '', jobDescription: '', startDate: '', endDate: '' },
+      {
+        jobTitle: '',
+        jobDescription: '',
+        companyName: '',
+        startDate: '',
+        endDate: '',
+        currentlyWorking: false,
+      },
     ]);
   };
 
   const handleRemoveEntry = (index: number) => {
     setEntries(entries.filter((_, i) => i !== index));
+  };
+
+  const handleCheckboxChange = (index: number) => {
+    const updatedEntries = [...entries];
+    updatedEntries[index].currentlyWorking =
+      !updatedEntries[index].currentlyWorking;
+    setEntries(updatedEntries);
   };
 
   // Check if the Next button should be disabled
@@ -48,10 +77,58 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
         entry.jobTitle &&
         entry.jobDescription &&
         entry.startDate &&
-        entry.endDate
+        (entry.currentlyWorking || entry.endDate)
     );
     setIsButtonDisabled(!allEntriesFilled);
   }, [entries]);
+
+  const { data, isLoading: isUserLoading } = useGetUserQuery(
+    userid ? userid : ''
+  );
+
+  useEffect(() => {
+    if (data && Array.isArray(data.response.job) && !isUserLoading) {
+      const formattedEntries = data.response.job.map(
+        (entry: {
+          title?: string;
+          description?: string;
+          companyName?: string;
+          startDate?: string;
+          endDate?: string;
+          currentlyWorking?: boolean;
+        }): Entry => ({
+          jobTitle: entry.title || '',
+          jobDescription: entry.description || '',
+          companyName: entry.companyName || '',
+          startDate: entry.startDate
+            ? new Date(entry.startDate).toISOString().split('T')[0]
+            : '',
+          endDate: entry.endDate
+            ? new Date(entry.endDate).toISOString().split('T')[0]
+            : '',
+          currentlyWorking: entry.currentlyWorking || false,
+        })
+      );
+
+      setEntries(formattedEntries);
+    }
+  }, [data, isUserLoading]);
+
+  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
+
+  const handleUpdateProfile = async () => {
+    const userData = {
+      id: userid,
+      job: entries,
+    };
+
+    try {
+      await updateUserProfile(userData).unwrap();
+      setCurrentPage(5);
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="profile_pageone_root">
@@ -84,6 +161,17 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
             onChange={(event) => handleInputChange(index, event)}
           />
           <div className="profile_pageone_form_item">
+            <label htmlFor={`companyName-${index}`}>Company Name</label>
+            <input
+              type="text"
+              name="companyName"
+              id={`companyName-${index}`}
+              value={entry.companyName}
+              className="profile_pageone_input"
+              onChange={(event) => handleInputChange(index, event)}
+            />
+          </div>
+          <div className="profile_pageone_form_item">
             <label htmlFor={`jobDescription-${index}`}>Job Description</label>
             <textarea
               name="jobDescription"
@@ -114,7 +202,28 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
               value={entry.endDate}
               className="profile_pageone_input"
               onChange={(event) => handleInputChange(index, event)}
+              disabled={entry.currentlyWorking} // Disable if currently working
             />
+          </div>
+          <div className="currently_working_here">
+            <div
+              onClick={() => handleCheckboxChange(index)}
+              style={{
+                cursor: 'pointer',
+                marginRight: '10px',
+                width: '15px',
+                height: '15px',
+              }}
+            >
+              {entry.currentlyWorking ? (
+                <div style={{ paddingTop: '-5px' }}>
+                  <RememberMeCheckBox />
+                </div>
+              ) : (
+                <div className="pages_empty_checkbox"></div>
+              )}
+            </div>
+            <div style={{ paddingTop: '5px' }}>Currently Working Here</div>
           </div>
         </div>
       ))}
@@ -128,10 +237,14 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
       </div>
       <button
         className={`next_btn`}
-        onClick={() => setCurrentPage(6)}
-        disabled={isButtonDisabled}
+        onClick={handleUpdateProfile}
+        style={{
+          backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
+          cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',
+        }}
+        disabled={isButtonDisabled || isLoading}
       >
-        Next
+        {isLoading ? <div className="spinner"></div> : 'Next'}
       </button>
     </div>
   );

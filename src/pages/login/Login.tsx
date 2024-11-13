@@ -3,9 +3,15 @@ import './login.css';
 import EyeOpen from '../../icons/Eye';
 import EyeClosed from '../../icons/EyeClosed';
 import { useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../services/features/auth/authApiSlice';
+import {
+  useLoginMutation,
+  useRequestCodeMutation,
+} from '../../services/features/auth/authApiSlice';
 import { useDispatch } from 'react-redux';
-import { setAuthState } from '../../services/features/auth/authSlice';
+import {
+  setAuthState,
+  setCredentials,
+} from '../../services/features/auth/authSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -59,10 +65,23 @@ const Login = () => {
         })
       );
       if (res.user.status === false) {
+        dispatch(setCredentials({ email: email, password: password }));
+        handleRequestCode();
         navigator('/auth/verifyaccount');
       } else {
         navigator('/dashboard');
       }
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
+
+  const [requestCode] = useRequestCodeMutation();
+
+  const handleRequestCode = async () => {
+    const userData = { email: email };
+    try {
+      await requestCode(userData).unwrap();
     } catch (error: unknown) {
       console.log(error);
     }

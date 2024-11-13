@@ -3,6 +3,10 @@ import AddIcon from '../../../icons/AddIcon';
 import './pages.css';
 import DeleteIcon from '../../../icons/DeleteIcon';
 import { useNavigate } from 'react-router-dom';
+import {
+  useGetUserQuery,
+  useUpdateUserProfileMutation,
+} from '@/services/features/user/userSlice';
 
 interface Certification {
   certificate: string;
@@ -15,6 +19,7 @@ const PageSix = () => {
     { certificate: '', organization: '', issueDate: '' },
   ]);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const userid = sessionStorage.getItem('id');
 
   const handleInputChange = (
     index: number,
@@ -50,6 +55,48 @@ const PageSix = () => {
 
   const navigator = useNavigate();
 
+  const { data, isLoading: isUserLoading } = useGetUserQuery(
+    userid ? userid : ''
+  );
+
+  useEffect(() => {
+    if (data && Array.isArray(data.response.certifications) && !isUserLoading) {
+      // Map the educationalBackground array to the format used by educationEntries
+      const formattedEntries = data.response.certifications.map(
+        (entry: {
+          name?: string;
+          issuedBy?: string;
+          dateObtained?: string;
+        }) => ({
+          certificate: entry.name || '',
+          organization: entry.issuedBy || '',
+          issueDate: entry.dateObtained
+            ? new Date(entry.dateObtained).toISOString().split('T')[0]
+            : '',
+        })
+      );
+
+      // Set the formatted entries to the state
+      setCertifications(formattedEntries);
+    }
+  }, [data, isUserLoading]);
+
+  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
+
+  const handleUpdateProfile = async () => {
+    const userData = {
+      id: userid,
+      certifications: certifications,
+    };
+
+    try {
+      await updateUserProfile(userData).unwrap();
+      navigator('/dashboard');
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="profile_pageone_root">
       <div className="profile_pageone_title">Certifications</div>
@@ -78,6 +125,7 @@ const PageSix = () => {
               value={cert.certificate}
               className="profile_pageone_input"
               onChange={(event) => handleInputChange(index, event)}
+              disabled={isUserLoading}
             />
           </div>
           <div className="profile_pageone_form_item">
@@ -91,6 +139,7 @@ const PageSix = () => {
               value={cert.organization}
               className="profile_pageone_input"
               onChange={(event) => handleInputChange(index, event)}
+              disabled={isUserLoading}
             />
           </div>
           <div className="profile_pageone_form_item">
@@ -102,6 +151,7 @@ const PageSix = () => {
               value={cert.issueDate}
               className="profile_pageone_input"
               onChange={(event) => handleInputChange(index, event)}
+              disabled={isUserLoading}
             />
           </div>
         </div>
@@ -116,10 +166,14 @@ const PageSix = () => {
       </div>
       <button
         className={`next_btn`}
-        onClick={() => navigator('/')}
-        disabled={isButtonDisabled}
+        onClick={handleUpdateProfile}
+        style={{
+          backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
+          cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',
+        }}
+        disabled={isButtonDisabled || isLoading}
       >
-        Done
+        {isLoading ? <div className="spinner"></div> : 'Next'}
       </button>
     </div>
   );

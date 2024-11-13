@@ -1,7 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import UploadIcon from '../../../icons/UploadIcon';
+import UploadIcon from '@/icons/UploadIcon';
 import './pages.css';
-import DeleteIcon from '../../../icons/DeleteIcon';
+import DeleteIcon from '@/icons/DeleteIcon';
+import {
+  useGetUserQuery,
+  useUpdateUserProfileMutation,
+} from '@/services/features/user/userSlice';
 
 interface Props {
   setCurrentPage: (page: number) => void;
@@ -12,9 +16,21 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
   const [imageName, setImageName] = useState<string>('');
   const [fullName, setFullName] = useState<string>('');
   const [phoneNo, setPhoneNo] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const userid = sessionStorage.getItem('id');
+
+  const { data, isLoading: isUserLoading } = useGetUserQuery(
+    userid ? userid : ''
+  );
+
+  // Populate form fields when user data is available
+  useEffect(() => {
+    if (data && !isUserLoading) {
+      setFullName(data.response.fullName || '');
+      setPhoneNo(data.response.phoneNumber || '');
+    }
+  }, [data, isUserLoading]);
 
   const handleFileUpload = () => {
     if (fileInputRef.current) {
@@ -38,12 +54,26 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
 
   useEffect(() => {
     setIsFormValid(
-      fullName.trim() !== '' &&
-        phoneNo.trim() !== '' &&
-        email.trim() !== '' &&
-        image !== null
+      fullName.trim() !== '' && phoneNo.trim() !== '' && image !== null
     );
-  }, [fullName, phoneNo, email, image]);
+  }, [fullName, phoneNo, image]);
+
+  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
+
+  const handleUpdateProfile = async () => {
+    const userData = {
+      fullName: fullName,
+      phoneNumber: phoneNo,
+      id: userid,
+    };
+
+    try {
+      await updateUserProfile(userData).unwrap();
+      setCurrentPage(2);
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="profile_pageone_root">
@@ -59,6 +89,7 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
           className="profile_pageone_input"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
+          disabled={isUserLoading}
         />
       </div>
       <div className="profile_pageone_form_item">
@@ -69,16 +100,7 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
           className="profile_pageone_input"
           value={phoneNo}
           onChange={(e) => setPhoneNo(e.target.value)}
-        />
-      </div>
-      <div className="profile_pageone_form_item">
-        <label htmlFor="email">Enter Email</label>
-        <input
-          type="email"
-          name="email"
-          className="profile_pageone_input"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          disabled={isUserLoading}
         />
       </div>
       {image === null && (
@@ -114,10 +136,14 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
       )}
       <button
         className={`next_btn`}
-        onClick={() => setCurrentPage(2)}
-        disabled={!isFormValid}
+        onClick={handleUpdateProfile}
+        style={{
+          backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
+          cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
+        }}
+        disabled={!isFormValid || isLoading}
       >
-        Next
+        {isLoading ? <div className="spinner"></div> : 'Next'}
       </button>
     </div>
   );
