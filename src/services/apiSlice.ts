@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({
   // credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    console.log(token);
+    console.log(token)
 
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
@@ -32,7 +32,7 @@ const baseQueryWithReauth = async (
   api: BaseQueryApi,
   extraOptions: ExtraPoints
 ) => {
-  const result = await baseQuery(args, api, extraOptions);
+  let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
     const navigate: NavigateFunction = api.extra as NavigateFunction;
