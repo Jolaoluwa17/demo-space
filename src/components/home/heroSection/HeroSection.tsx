@@ -7,6 +7,7 @@ interface Props {
 }
 
 const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
+ 
   return (
     <div className="hero_section_root">
       <HomeNavBar featuresBtn={featuresBtn} />

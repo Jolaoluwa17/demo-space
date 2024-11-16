@@ -5,8 +5,19 @@ import { useState } from 'react';
 import { adminSkillGapProgramData } from '@/utils/adminSkillGapProgramData';
 import { useNavigate } from 'react-router-dom';
 import TablePagination from '@/components/tablePagination/TablePagination';
+import SearchInput from '@/components/searchinput/SearchInput';
+import DateFilter from '@/components/dateFilter/DateFilter';
+import SortFilter from '@/components/sortFilter/SortFilter';
+
+const currentYear = new Date().getFullYear();
+const currentMonthIndex = new Date().getMonth();
+const years = Array.from({ length: currentYear - 2020 + 1 }, (_, i) =>
+  (2020 + i).toString()
+);
 
 const SkillGapProgram = () => {
+  const [isYear, setYear] = useState(currentYear.toString());
+  const [currentMonth, setCurrentMonth] = useState(currentMonthIndex);
   const overviewCards = [
     {
       id: 1,
@@ -40,6 +51,16 @@ const SkillGapProgram = () => {
 
   const navigate = useNavigate();
 
+  const [sort, setSort] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+  const sortData = [
+    { name: 'By date', key: 'signupDate' },
+    { name: 'By name', key: 'name' },
+    { name: 'By email', key: 'email' },
+  ];
+
   return (
     <div className="skill_gap_program_root">
       <div className="skill_gap_program_overview">
@@ -70,6 +91,29 @@ const SkillGapProgram = () => {
         </div>
       </div>
       <div className="skill_gap_program_table">
+        <div className="top_filters_navigation">
+          <div className="serach_input_tag">
+            <SearchInput handleSearch={() => ''} />
+          </div>
+          <DateFilter
+            isYear={isYear}
+            setYear={setYear}
+            currentMonth={currentMonth}
+            setCurrentMonth={setCurrentMonth}
+            currentYear={currentYear}
+            currentMonthIndex={currentMonthIndex}
+            years={years}
+          />
+          <SortFilter
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            sort={sort}
+            setSort={setSort}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+            sortData={sortData}
+          />
+        </div>
         <table>
           <thead>
             <tr>
@@ -77,17 +121,43 @@ const SkillGapProgram = () => {
               <th>Name</th>
               <th>Program</th>
               <th>Email</th>
-              <th>Score</th>
+              <th>Date</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {getPaginatedUsers().map((user, index) => (
-              <tr key={index}>
+              <tr
+                key={index}
+                onClick={() => navigate('user-details')}
+                style={{ cursor: 'pointer' }}
+              >
                 <td>{user.userId}</td>
                 <td>{user.name}</td>
                 <td>{user.program}</td>
                 <td>{user.email}</td>
-                <td>{user.score}</td>
+                <td>{user.date}</td>
+                <td style={{ padding: '0px' }}>
+                  <div
+                    style={{
+                      border:
+                        user.status === 'Accepted'
+                          ? '1px solid #00FF00'
+                          : user.status === 'Rejected'
+                            ? '1px solid #FF0000'
+                            : '1px solid #FFDD00',
+                      backgroundColor:
+                        user.status === 'Accepted'
+                          ? '#EDFFED'
+                          : user.status === 'Rejected'
+                            ? '#FFF4F4'
+                            : '#FFFCE7',
+                    }}
+                    className="status_column"
+                  >
+                    {user.status}
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>

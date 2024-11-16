@@ -6,6 +6,7 @@ import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
 import Popup from '@/modals/popup/Popup';
 
+
 const ChangePassword = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');

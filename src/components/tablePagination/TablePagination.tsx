@@ -1,20 +1,49 @@
 import './tablePagination.css';
 
-interface Props {
+interface Props<T> {
   currentPage: number;
-  data: Array<any>; // Assuming this is an array of objects, you can further define a specific type if the data structure is known.
+  data: T[]; // Use generic type T instead of any
   handlePageClick: (page: number) => void;
   totalPages: number;
   rowsPerPage: number;
 }
 
-const TablePagination: React.FC<Props> = ({
+const TablePagination = <T,>({
   currentPage,
   data,
   handlePageClick,
   totalPages,
   rowsPerPage,
-}) => {
+}: Props<T>) => {
+  const getPaginationRange = () => {
+    const range = [];
+
+    // Always show the first page
+    range.push(1);
+
+    // Add "..." if the current page is more than 3 away from the first page
+    if (currentPage > 3) range.push('...');
+
+    // Add the range of pages around the current page
+    for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+      if (i > 1 && i < totalPages) range.push(i);
+    }
+
+    // Add "..." if the current page is more than 2 pages away from the last page
+    if (currentPage < totalPages - 2) range.push('...');
+
+    // Always show the last page if it's not the same as the first page or the current page
+    if (
+      totalPages > 1 &&
+      currentPage !== totalPages &&
+      !range.includes(totalPages)
+    ) {
+      range.push(totalPages);
+    }
+
+    return range;
+  };
+
   return (
     <div className="table_pagination_root">
       <div className="table_pagination_details">
@@ -23,44 +52,22 @@ const TablePagination: React.FC<Props> = ({
         entries
       </div>
       <div className="table_pagination_main">
-        {/* Always show the first page */}
-        <div
-          className={`table_pagination_controls ${currentPage === 1 ? 'active' : ''}`}
-          onClick={() => handlePageClick(1)}
-        >
-          1
-        </div>
-
-        {/* Show dots if currentPage > 3 to indicate skipped pages */}
-        {currentPage > 3 && <div className="pagination_dots">...</div>}
-
-        {/* Display current, previous, and next pages without showing 1 or the last page again */}
-        {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
-          .filter((page) => page > 1 && page < totalPages)
-          .map((page) => (
-            <div
-              key={page}
-              className={`table_pagination_controls ${currentPage === page ? 'active' : ''}`}
-              onClick={() => handlePageClick(page)}
-            >
-              {page}
-            </div>
-          ))}
-
-        {/* Show dots if currentPage is far from the last page */}
-        {currentPage < totalPages - 2 && (
-          <div className="pagination_dots">...</div>
-        )}
-
-        {/* Show the last page only if it's different from the first page */}
-        {totalPages > 1 && currentPage !== totalPages && (
+        {/* Generate pagination buttons based on the range */}
+        {getPaginationRange().map((page, index) => (
           <div
-            className={`table_pagination_controls ${currentPage === totalPages ? 'active' : ''}`}
-            onClick={() => handlePageClick(totalPages)}
+            key={index}
+            className={`table_pagination_controls ${
+              page === currentPage ? 'active' : ''
+            } ${page === '...' ? 'dots' : ''}`}
+            onClick={() => {
+              if (page !== '...') {
+                handlePageClick(page as number); // Cast '...' to number when clicked
+              }
+            }}
           >
-            {totalPages}
+            {page}
           </div>
-        )}
+        ))}
       </div>
     </div>
   );

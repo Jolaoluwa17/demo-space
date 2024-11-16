@@ -129,7 +129,7 @@
 .password_validator {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 10px; 
   margin-top: 20px;
   font-size: 14px;
 }
@@ -193,7 +193,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
   .signup_container {
-    display: block;
+    display:block;
     width: 350px;
     position: relative;
     padding-top: env(safe-area-inset-top);

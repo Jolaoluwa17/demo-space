@@ -10,11 +10,7 @@ const ExpandPotential = () => {
           toward your goals, every day.
         </div>
         <div className="laptop_picture">
-          <img
-            src="/images/LaptopView.svg"
-            alt=""
-            className="laptop_picture_main"
-          />
+          <img src="/images/LaptopView.svg" alt="" className='laptop_picture_main' />
         </div>
       </div>
     </div>

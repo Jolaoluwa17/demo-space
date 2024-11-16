@@ -22,6 +22,26 @@
   height: 50px;
   justify-content: center;
   flex-direction: row;
+  /* background-color: red; */
+}
+.bellIcon {
+  padding-top: 8px;
+  position: relative;
+  cursor: pointer;
+}
+.notification_indicator_no {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #4274ba;
+  color: white;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 5px;
+  left: 10px;
 }
 
 .header_bell_icon {

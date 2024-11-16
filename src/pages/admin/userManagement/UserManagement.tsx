@@ -1,13 +1,20 @@
 import './userManagement.css';
-import RightArrowIcon from '@/icons/RightArrowIcon';
-import LeftArrowIcon from '@/icons/LeftArrowIcon';
-import CustomSelect from '@/components/customselect/CustomSelect';
 import { useState } from 'react';
 import SearchInput from '@/components/searchinput/SearchInput';
 import { sampleUserManagement } from '@/utils/sampleUserManagement';
 import { useNavigate } from 'react-router-dom';
 import { IoMdAdd } from 'react-icons/io';
 import TablePagination from '@/components/tablePagination/TablePagination';
+import SortFilter from '@/components/sortFilter/SortFilter';
+import DateFilter from '@/components/dateFilter/DateFilter';
+
+type User = {
+  userId: string;
+  signupDate: string;
+  name: string;
+  email: string;
+  lastLogin: string;
+};
 
 const currentYear = new Date().getFullYear();
 const currentMonthIndex = new Date().getMonth();
@@ -19,60 +26,47 @@ const UserManagement = () => {
   const [isYear, setYear] = useState(currentYear.toString());
   const [currentMonth, setCurrentMonth] = useState(currentMonthIndex);
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 8;
+  const [sort, setSort] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
+  const rowsPerPage = 8;
   const totalPages = Math.ceil(sampleUserManagement.length / rowsPerPage);
 
   const handlePageClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  const handlePreviousMonth = () => {
-    setCurrentMonth((prev) => {
-      if (prev === 0) {
-        // If January (0), wrap to December (11) and decrease the year
-        setYear((prevYear) => (parseInt(prevYear) - 1).toString());
-        return 11; // December
-      }
-      return prev - 1; // Just decrease the month
-    });
-  };
+  const sortData = [
+    { name: 'By date', key: 'signupDate' },
+    { name: 'By name', key: 'name' },
+    { name: 'By email', key: 'email' },
+  ];
 
-  // Function to go to the next month
-  const handleNextMonth = () => {
-    setCurrentMonth((prev) => {
-      if (parseInt(isYear) === currentYear && prev === currentMonthIndex) {
-        // Prevent moving past the current month if the year matches the current year
-        return prev;
+  const getSortedUsers = () => {
+    const sortKey = sortData.find((item) => item.name === selectedFilter)
+      ?.key as keyof User;
+    if (!sortKey) return sampleUserManagement;
+
+    const sortedData = [...sampleUserManagement].sort((a, b) => {
+      const aValue = a[sortKey];
+      const bValue = b[sortKey];
+
+      if (sortOrder === 'asc') {
+        return aValue.localeCompare(bValue);
+      } else {
+        return bValue.localeCompare(aValue);
       }
-      if (prev === 11) {
-        // If December (11), wrap to January (0) and increase the year
-        setYear((prevYear) => (parseInt(prevYear) + 1).toString());
-        return 0; // January
-      }
-      return prev + 1; // Just increase the month
     });
+
+    return sortedData;
   };
 
   const getPaginatedUsers = () => {
+    const sortedUsers = getSortedUsers();
     const startIndex = (currentPage - 1) * rowsPerPage;
-    return sampleUserManagement.slice(startIndex, startIndex + rowsPerPage);
+    return sortedUsers.slice(startIndex, startIndex + rowsPerPage);
   };
-
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
 
   const navigate = useNavigate();
 
@@ -81,21 +75,15 @@ const UserManagement = () => {
       <div className="user_management_overview">
         <div className="top_navigation">
           <div className="title">View All Users</div>
-          <div className="month_year_filter">
-            <div className="left_month_controls" onClick={handlePreviousMonth}>
-              <LeftArrowIcon />
-            </div>
-            <div className="right_month_controls" onClick={handleNextMonth}>
-              <RightArrowIcon />
-            </div>
-            <div className="month_indicator">{monthNames[currentMonth]}</div>
-            <CustomSelect
-              options={years}
-              value={isYear}
-              onChange={setYear}
-              placeholder="Year"
-            />
-          </div>
+          <DateFilter
+            isYear={isYear}
+            setYear={setYear}
+            currentMonth={currentMonth}
+            setCurrentMonth={setCurrentMonth}
+            currentYear={currentYear}
+            currentMonthIndex={currentMonthIndex}
+            years={years}
+          />
           <div
             className="create_user_btn"
             onClick={() => navigate('create-user')}
@@ -108,6 +96,15 @@ const UserManagement = () => {
           <div className="user_management_search">
             <SearchInput handleSearch={() => ''} />
           </div>
+          <SortFilter
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            sort={sort}
+            setSort={setSort}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+            sortData={sortData}
+          />
         </div>
       </div>
       <div className="user_management_table">

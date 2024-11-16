@@ -16,19 +16,15 @@ const TheFuture = () => {
           <div className="the_future_download_our">Download our app</div>
           <div className="the_future_download_btn_conatiner">
             <div className="the_future_download_btn">
-              <img src="/images/AppStore.svg" alt="" className="btn_img" />
+              <img src="/images/AppStore.svg" alt="" className='btn_img' />
             </div>
             <div className="the_future_download_btn">
-              <img src="/images/PlayStore.svg" alt="" className="btn_img" />
+              <img src="/images/PlayStore.svg" alt="" className='btn_img' />
             </div>
           </div>
         </div>
         <div className="right">
-          <img
-            src="/images/TheFuture.svg"
-            alt=""
-            className="the_future_phone_img"
-          />
+          <img src="/images/TheFuture.svg" alt="" className='the_future_phone_img' />
         </div>
       </div>
     </div>

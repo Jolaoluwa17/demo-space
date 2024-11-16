@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import AddIcon from '../../../icons/AddIcon';
+import AddIcon from '@/icons/AddIcon';
 import './pages.css';
-import DeleteIcon from '../../../icons/DeleteIcon';
-import {
-  useGetUserQuery,
-  useUpdateUserProfileMutation,
-} from '@/services/features/user/userSlice';
+import DeleteIcon from '@/icons/DeleteIcon';
 import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
 
 interface Entry {
-  jobTitle: string;
-  jobDescription: string;
+  title: string;
+  description: string;
   startDate: string;
   endDate: string;
   companyName: string;
@@ -19,21 +15,18 @@ interface Entry {
 
 interface Props {
   setCurrentPage: (page: number) => void;
+  entries: Entry[];
+  setEntries: React.Dispatch<React.SetStateAction<Entry[]>>;
+  isLoading: boolean;
 }
 
-const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
-  const [entries, setEntries] = useState<Entry[]>([
-    {
-      jobTitle: '',
-      jobDescription: '',
-      companyName: '',
-      startDate: '',
-      endDate: '',
-      currentlyWorking: false,
-    },
-  ]);
+const PageFive: React.FC<Props> = ({
+  setCurrentPage,
+  entries,
+  setEntries,
+  isLoading,
+}) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
-  const userid = sessionStorage.getItem('id');
 
   const handleInputChange = (
     index: number,
@@ -49,8 +42,8 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
     setEntries([
       ...entries,
       {
-        jobTitle: '',
-        jobDescription: '',
+        title: '',
+        description: '',
         companyName: '',
         startDate: '',
         endDate: '',
@@ -65,8 +58,16 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
 
   const handleCheckboxChange = (index: number) => {
     const updatedEntries = [...entries];
-    updatedEntries[index].currentlyWorking =
-      !updatedEntries[index].currentlyWorking;
+    const isCurrentlyWorking = !updatedEntries[index].currentlyWorking;
+
+    // Toggle the `currentlyWorking` state
+    updatedEntries[index].currentlyWorking = isCurrentlyWorking;
+
+    // If `currentlyWorking` is true, clear the `endDate`
+    if (isCurrentlyWorking) {
+      updatedEntries[index].endDate = '';
+    }
+
     setEntries(updatedEntries);
   };
 
@@ -74,61 +75,13 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
   useEffect(() => {
     const allEntriesFilled = entries.every(
       (entry) =>
-        entry.jobTitle &&
-        entry.jobDescription &&
+        entry.title &&
+        entry.description &&
         entry.startDate &&
         (entry.currentlyWorking || entry.endDate)
     );
     setIsButtonDisabled(!allEntriesFilled);
   }, [entries]);
-
-  const { data, isLoading: isUserLoading } = useGetUserQuery(
-    userid ? userid : ''
-  );
-
-  useEffect(() => {
-    if (data && Array.isArray(data.response.job) && !isUserLoading) {
-      const formattedEntries = data.response.job.map(
-        (entry: {
-          title?: string;
-          description?: string;
-          companyName?: string;
-          startDate?: string;
-          endDate?: string;
-          currentlyWorking?: boolean;
-        }): Entry => ({
-          jobTitle: entry.title || '',
-          jobDescription: entry.description || '',
-          companyName: entry.companyName || '',
-          startDate: entry.startDate
-            ? new Date(entry.startDate).toISOString().split('T')[0]
-            : '',
-          endDate: entry.endDate
-            ? new Date(entry.endDate).toISOString().split('T')[0]
-            : '',
-          currentlyWorking: entry.currentlyWorking || false,
-        })
-      );
-
-      setEntries(formattedEntries);
-    }
-  }, [data, isUserLoading]);
-
-  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
-
-  const handleUpdateProfile = async () => {
-    const userData = {
-      id: userid,
-      job: entries,
-    };
-
-    try {
-      await updateUserProfile(userData).unwrap();
-      setCurrentPage(5);
-    } catch (error: unknown) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="profile_pageone_root">
@@ -139,7 +92,7 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
       {entries.map((entry, index) => (
         <div key={index} className="education_entry">
           <div className="profile_pageone_form_item">
-            <label htmlFor={`jobTitle-${index}`}>
+            <label htmlFor={`title-${index}`}>
               Job Title
               {index > 0 && (
                 <div
@@ -154,9 +107,9 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
           </div>
           <input
             type="text"
-            name="jobTitle"
-            id={`jobTitle-${index}`}
-            value={entry.jobTitle}
+            name="title"
+            id={`title-${index}`}
+            value={entry.title}
             className="profile_pageone_input"
             onChange={(event) => handleInputChange(index, event)}
           />
@@ -172,11 +125,11 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
             />
           </div>
           <div className="profile_pageone_form_item">
-            <label htmlFor={`jobDescription-${index}`}>Job Description</label>
+            <label htmlFor={`description-${index}`}>Job Description</label>
             <textarea
-              name="jobDescription"
-              id={`jobDescription-${index}`}
-              value={entry.jobDescription}
+              name="description"
+              id={`description-${index}`}
+              value={entry.description}
               className="profile_pageone_textarea"
               rows={5}
               onChange={(event) => handleInputChange(index, event)}
@@ -228,16 +181,25 @@ const PageFive: React.FC<Props> = ({ setCurrentPage }) => {
         </div>
       ))}
       <div className="add_another_entry">
-        <div className="content" onClick={handleAddEntry}>
-          <AddIcon />
+        <div
+          className="content"
+          onClick={!isButtonDisabled && !isLoading ? handleAddEntry : undefined}
+          style={isButtonDisabled || isLoading ? { color: 'grey', cursor: "not-allowed" } : {}}
+        >
+          <AddIcon
+            color={isButtonDisabled || isLoading ? '#808080' : '#4274BA'}
+          />
           <div style={{ fontSize: '14px', paddingBottom: '4px' }}>
             Add Another Entry
           </div>
         </div>
       </div>
+      <div className="skip_btn" onClick={() => setCurrentPage(6)}>
+        Skip
+      </div>
       <button
         className={`next_btn`}
-        onClick={handleUpdateProfile}
+        onClick={() => setCurrentPage(6)}
         style={{
           backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
           cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',

@@ -39,9 +39,11 @@ const AdminHeader: React.FC<Props> = ({ activeLink }) => {
       <div className="header_right_section">
         <div
           onClick={() => setNotification(!notification)}
-          style={{ marginRight: '33px' }}
+          style={{marginRight: "33px"}}
+          className='bellIcon'
         >
           <AdminBellIcon />
+          <div className="notification_indicator_no">4</div>
         </div>
         <div className="profile-dropdown">
           <div className="profile-container">

@@ -62,7 +62,8 @@
   padding: 24px;
   box-sizing: border-box;
 }
-.admin_dashboard_left .title {
+.admin_dashboard_left .title,
+.admin_dashboard_right .title {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,7 +72,8 @@
   font-size: 18px;
   font-weight: 600;
 }
-.admin_dashboard_left .admin_view_all {
+.admin_dashboard_left .admin_view_all,
+.admin_dashboard_right .admin_view_all {
   color: #4d4d4d;
   font-size: 14px;
   font-weight: 600;

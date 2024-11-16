@@ -6,7 +6,6 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { NavigateFunction } from 'react-router-dom';
 import config from './config';
-import { RootState } from './store';
 
 interface ExtraPoints {
   navigate?: NavigateFunction;
@@ -14,16 +13,15 @@ interface ExtraPoints {
 
 const baseQuery = fetchBaseQuery({
   baseUrl: config.hostedURL,
-  // credentials: 'include',
-  prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
-    console.log(token)
+  credentials: 'include',
+  prepareHeaders: () => {
+    // const token = (getState() as RootState).auth.token;
 
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
-    }
+    // if (token) {
+    //   headers.set('Authorization', `Bearer ${token}`);
+    // }
 
-    return headers;
+    // return headers;
   },
 });
 
@@ -32,7 +30,7 @@ const baseQueryWithReauth = async (
   api: BaseQueryApi,
   extraOptions: ExtraPoints
 ) => {
-  let result = await baseQuery(args, api, extraOptions);
+  const result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
     const navigate: NavigateFunction = api.extra as NavigateFunction;

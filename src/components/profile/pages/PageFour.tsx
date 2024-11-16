@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './pages.css';
-import {
-  useGetUserQuery,
-  useUpdateUserProfileMutation,
-} from '@/services/features/user/userSlice';
 
 interface Props {
   setCurrentPage: (page: number) => void;
+  areaOfInterest: string[];
+  setareaOfInterest: React.Dispatch<React.SetStateAction<string[]>>;
+  isLoading: boolean;
 }
 
 const interestsList = [
@@ -22,52 +21,27 @@ const interestsList = [
   'Game Development',
 ];
 
-const PageFour: React.FC<Props> = ({ setCurrentPage }) => {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+const PageFour: React.FC<Props> = ({
+  setCurrentPage,
+  areaOfInterest,
+  setareaOfInterest,
+  isLoading,
+}) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
-  const userid = sessionStorage.getItem('id');
-
-  const { data, isLoading: isUserLoading } = useGetUserQuery(
-    userid ? userid : ''
-  );
-
-  useEffect(() => {
-    if (data && !isUserLoading && data.response.areaOfInterest) {
-      setSelectedInterests(data.response.areaOfInterest);
-    }
-  }, [data, isUserLoading]);
 
   // Handle clicking on an interest div
   const handleInterestClick = (interest: string) => {
-    if (selectedInterests.includes(interest)) {
-      setSelectedInterests(
-        selectedInterests.filter((item) => item !== interest)
-      );
+    if (areaOfInterest.includes(interest)) {
+      setareaOfInterest(areaOfInterest.filter((item) => item !== interest));
     } else {
-      setSelectedInterests([...selectedInterests, interest]);
+      setareaOfInterest([...areaOfInterest, interest]);
     }
   };
 
   // Check if the Next button should be disabled
   useEffect(() => {
-    setIsButtonDisabled(selectedInterests.length === 0);
-  }, [selectedInterests]);
-
-  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
-
-  const handleUpdateProfile = async () => {
-    const userData = {
-      id: userid,
-      areaOfInterest: selectedInterests,
-    };
-
-    try {
-      await updateUserProfile(userData).unwrap();
-      setCurrentPage(5);
-    } catch (error: unknown) {
-      console.log(error);
-    }
-  };
+    setIsButtonDisabled(areaOfInterest.length === 0);
+  }, [areaOfInterest]);
 
   return (
     <div className="profile_pageone_root">
@@ -87,15 +61,18 @@ const PageFour: React.FC<Props> = ({ setCurrentPage }) => {
               <div>{interest}</div>
               <input
                 type="checkbox"
-                checked={selectedInterests.includes(interest)}
+                checked={areaOfInterest.includes(interest)}
                 readOnly
               />
             </div>
           ))}
         </div>
+        <div className="skip_btn" onClick={() => setCurrentPage(5)}>
+          Skip
+        </div>
         <button
           className={`next_btn`}
-          onClick={handleUpdateProfile}
+          onClick={() => setCurrentPage(5)}
           style={{
             backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
             cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',

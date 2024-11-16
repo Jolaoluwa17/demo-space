@@ -6,6 +6,7 @@ import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
 import Popup from '@/modals/popup/Popup';
 
+
 const DeleteAccount = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -95,7 +96,7 @@ const DeleteAccount = () => {
             className={`delete_account_confirm_btn ${isButtonDisabled ? 'disabled' : ''}`}
             onClick={!isButtonDisabled ? handleDeleteAccount : undefined}
             style={{
-              backgroundColor: isButtonDisabled ? 'grey' : '',
+              backgroundColor: isButtonDisabled ? 'grey' : '', 
               cursor: isButtonDisabled ? 'not-allowed' : 'pointer',
             }}
           >

@@ -10,6 +10,16 @@ import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
 import './userDropdown.css';
 import { useNavigate } from 'react-router-dom';
+import { useGetUserQuery } from '@/services/features/user/userSlice';
+import { IoPersonSharp } from 'react-icons/io5';
+
+interface UserType {
+  response: {
+    fullName: string;
+    email: string;
+    profileImg: string;
+  };
+}
 
 export default function UserDropdown() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -28,6 +38,14 @@ export default function UserDropdown() {
   const handleLogout = () => {
     setAnchorEl(null);
     navigate('/auth/login');
+  };
+
+  const userid = sessionStorage.getItem('id');
+
+  const { data, error, isLoading } = useGetUserQuery(userid ? userid : '') as {
+    data: UserType | undefined;
+    error: undefined;
+    isLoading: boolean;
   };
 
   return (
@@ -50,7 +68,19 @@ export default function UserDropdown() {
                 color: 'white',
               }}
             >
-              M
+              {isLoading ? (
+                <IoPersonSharp color="white" />
+              ) : (
+                <img
+                  src={data?.response.profileImg}
+                  alt=""
+                  style={{
+                    objectFit: 'contain',
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
+              )}
             </Avatar>
           </IconButton>
         </Tooltip>

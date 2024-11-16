@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './coding.css';
 import { Editor, OnMount } from '@monaco-editor/react';
+import * as monaco from 'monaco-editor';
 import { languages } from '@/utils/Constants';
 import { executeCode } from '@/services/codeEditorApi';
 import LanguageSelector from '@/components/languageselector/LanguageSelector';
@@ -24,7 +25,7 @@ const Coding = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const editorRef = useRef<any | null>(null);
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
   // Type for the onMount function from Monaco Editor
   const onMount: OnMount = (editor) => {
@@ -57,8 +58,8 @@ const Coding = () => {
       );
 
       const result: ExecuteCodeResponse = await executeCode({
-        language: selectedLanguage?.value,
-        version: selectedLanguage?.version,
+        language: selectedLanguage?.value ?? 'javascript',
+        version: selectedLanguage?.version ?? '1.0.0',
         sourceCode,
       });
 

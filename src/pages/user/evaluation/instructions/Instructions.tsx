@@ -24,7 +24,7 @@ const Instructions = () => {
 
   return (
     <div className="instructions_root">
-      <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />
+      <PageHeader handleBackClick={handleBackClick} pageTitle='Instructions' />
       <div className="instructions_content">
         <div className="instructions_title">HTML/CSS/JavaScript</div>
         <div className="instructions_subTitle">

@@ -1,79 +1,52 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import UploadIcon from '@/icons/UploadIcon';
 import './pages.css';
 import DeleteIcon from '@/icons/DeleteIcon';
-import {
-  useGetUserQuery,
-  useUpdateUserProfileMutation,
-} from '@/services/features/user/userSlice';
 
 interface Props {
   setCurrentPage: (page: number) => void;
+  fullName: string;
+  setFullName: (fullName: string) => void;
+  phoneNo: string;
+  setPhoneNo: (phoneNo: string) => void;
+  isLoading: boolean;
+  setFileInput: React.Dispatch<React.SetStateAction<HTMLInputElement | null>>;
+  image: string | null;
+  setImage: React.Dispatch<React.SetStateAction<string | null>>;
+  imageName: string;
+  setImageName: React.Dispatch<React.SetStateAction<string>>;
+  handleFileUpload: () => void; // Prop for file upload
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
-  const [image, setImage] = useState<string | null>(null);
-  const [imageName, setImageName] = useState<string>('');
-  const [fullName, setFullName] = useState<string>('');
-  const [phoneNo, setPhoneNo] = useState<string>('');
+const Pageone: React.FC<Props> = ({
+  setCurrentPage,
+  fullName,
+  setFullName,
+  phoneNo,
+  setPhoneNo,
+  isLoading,
+  setFileInput,
+  image,
+  setImage,
+  imageName,
+  setImageName,
+  handleFileChange,
+  handleFileUpload,
+}) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const userid = sessionStorage.getItem('id');
-
-  const { data, isLoading: isUserLoading } = useGetUserQuery(
-    userid ? userid : ''
-  );
-
-  // Populate form fields when user data is available
-  useEffect(() => {
-    if (data && !isUserLoading) {
-      setFullName(data.response.fullName || '');
-      setPhoneNo(data.response.phoneNumber || '');
-    }
-  }, [data, isUserLoading]);
-
-  const handleFileUpload = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      setImageName(file.name); // Set the image name
-    }
-  };
 
   const handleRemoveImage = () => {
-    setImage(null); // Clear the image URL
-    setImageName(''); // Clear the image name
+    setImage(null);
+    setImageName('');
   };
 
+  // Form validation
   useEffect(() => {
     setIsFormValid(
       fullName.trim() !== '' && phoneNo.trim() !== '' && image !== null
     );
   }, [fullName, phoneNo, image]);
-
-  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
-
-  const handleUpdateProfile = async () => {
-    const userData = {
-      fullName: fullName,
-      phoneNumber: phoneNo,
-      id: userid,
-    };
-
-    try {
-      await updateUserProfile(userData).unwrap();
-      setCurrentPage(2);
-    } catch (error: unknown) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="profile_pageone_root">
@@ -89,7 +62,6 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
           className="profile_pageone_input"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
-          disabled={isUserLoading}
         />
       </div>
       <div className="profile_pageone_form_item">
@@ -100,7 +72,6 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
           className="profile_pageone_input"
           value={phoneNo}
           onChange={(e) => setPhoneNo(e.target.value)}
-          disabled={isUserLoading}
         />
       </div>
       {image === null && (
@@ -114,7 +85,7 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
       )}
       <input
         type="file"
-        ref={fileInputRef}
+        ref={(input) => setFileInput(input)}
         accept=".png, .jpeg, .jpg, .svg"
         style={{ display: 'none' }}
         onChange={handleFileChange}
@@ -136,7 +107,7 @@ const Pageone: React.FC<Props> = ({ setCurrentPage }) => {
       )}
       <button
         className={`next_btn`}
-        onClick={handleUpdateProfile}
+        onClick={() => setCurrentPage(2)}
         style={{
           backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
           cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',

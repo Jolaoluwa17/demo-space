@@ -1,0 +1,24 @@
+.month_year_filter {
+  display: flex;
+  align-items: center;
+}
+.month_year_filter .right_month_controls,
+.month_year_filter .left_month_controls {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #dfdfdf;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.month_year_filter .right_month_controls {
+  margin-left: 12px;
+}
+.month_indicator {
+  margin: 0px 20px;
+  color: #6a757e;
+  font-size: 20px;
+  font-weight: 500;
+  max-width: 120px;
+  min-width: 120px;
+  text-align: center;
+}

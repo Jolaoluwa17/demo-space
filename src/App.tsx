@@ -43,6 +43,7 @@ import SkillGapProgramRoot from './pages/admin/skillGapProgram/SkillGapProgramRo
 import SkillGapProgram from './pages/admin/skillGapProgram/SkillGapProgram';
 import SkillGapList from './pages/admin/skillGapProgram/skillGapList/SkillGapList';
 import CreateProgram from './pages/admin/skillGapProgram/createProgram/CreateProgram';
+import UserSkillGapDetails from './pages/admin/skillGapProgram/userSkillGapDetails/UserSkillGapDetails';
 
 function App() {
   return (
@@ -62,10 +63,7 @@ function App() {
           </Route>
 
           {/* Settings Route */}
-          <Route
-            path="/user-profile"
-            element={<ProtectedRoute element={<Profile />} />}
-          />
+          <Route path="/user-profile" element={<Profile />} />
 
           {/* Dashboard Routes */}
           <Route
@@ -120,6 +118,7 @@ function App() {
               <Route index element={<SkillGapProgram />} />
               <Route path="programs" element={<SkillGapList />} />
               <Route path="create-program" element={<CreateProgram />} />
+              <Route path="user-details" element={<UserSkillGapDetails />} />
             </Route>
           </Route>
         </Routes>

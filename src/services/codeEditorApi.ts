@@ -7,9 +7,9 @@ interface ExecuteCodeResponse {
 }
 
 interface ExecuteCodeProps {
-  language: any; // Specify the type for language
+  language: string ; // Specify the type for language
   sourceCode: string; // Specify the type for sourceCode
-  version: any;
+  version: string;
 }
 
 const API = axios.create({

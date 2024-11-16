@@ -8,29 +8,41 @@ import SkillGapProgramData from '@/utils/SkillGapProgramData';
 import SkillProgramCard from '@/components/skillscard/SkillProgramCard';
 
 interface UserType {
-  id: string;
-  name: string;
+  response: {
+    fullName: string;
+    email: string;
+  };
 }
 
 const Overview = () => {
   const navigate = useNavigate();
   const userid = sessionStorage.getItem('id');
 
-  const { data } = useGetUserQuery(userid ? userid : '') as {
+  const { data, isLoading } = useGetUserQuery(userid ? userid : '') as {
     data: UserType | undefined;
+    isLoading: boolean;
   };
+
 
   return (
     <div className="overview_root">
-      <div className="overview_header">
-        <div className="overview_title">
-          Welcome,{' '}
-          <span style={{ fontWeight: '600' }}>{data?.name || 'John Doe'}</span>
+      {isLoading ? (
+        <div className="skeleton_loader_overview_header"></div>
+      ) : (
+        <div className="overview_header">
+          <div className="overview_title">
+            Welcome,{' '}
+            {data && (
+              <span style={{ fontWeight: '600' }}>
+                {data?.response?.fullName}
+              </span>
+            )}
+          </div>
+          <div className="overview_subTitle">
+            Ready to continue your learning journey?
+          </div>
         </div>
-        <div className="overview_subTitle">
-          Ready to continue your learning journey?
-        </div>
-      </div>
+      )}
 
       <div className="overview_section">
         <div className="overview_section_title">

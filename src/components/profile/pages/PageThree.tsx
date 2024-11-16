@@ -1,32 +1,22 @@
 import { useState, useEffect } from 'react';
 import CancelIcon from '@/icons/CancelIcon';
-import SearchIcon from '@/icons/SearchIcon';
 import './pages.css';
-import {
-  useGetUserQuery,
-  useUpdateUserProfileMutation,
-} from '@/services/features/user/userSlice';
 
 interface Props {
   setCurrentPage: (page: number) => void;
+  skillSet: string[];
+  setskillSet: React.Dispatch<React.SetStateAction<string[]>>;
+  isLoading: boolean;
 }
 
-const PageThree: React.FC<Props> = ({ setCurrentPage }) => {
+const PageThree: React.FC<Props> = ({
+  setCurrentPage,
+  skillSet,
+  setskillSet,
+  isLoading,
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
-  const userid = sessionStorage.getItem('id');
-
-  const { data, isLoading: isUserLoading } = useGetUserQuery(
-    userid ? userid : ''
-  );
-
-  // Populate form fields when user data is available
-  useEffect(() => {
-    if (data && !isUserLoading && data.response.skillSet) {
-      setSelectedSkills(data.response.skillSet);
-    }
-  }, [data, isUserLoading]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,14 +26,18 @@ const PageThree: React.FC<Props> = ({ setCurrentPage }) => {
 
   // Handle the 'Enter' key press to add a skill
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      e.key === 'Enter' &&
-      searchTerm.trim() !== '' &&
-      selectedSkills.length < 10
-    ) {
+    if (e.key === 'Enter' && searchTerm.trim() !== '' && skillSet.length < 10) {
       e.preventDefault(); // Prevent form submission or unwanted behavior
-      if (!selectedSkills.includes(searchTerm.trim())) {
-        setSelectedSkills([...selectedSkills, searchTerm.trim()]);
+      if (!skillSet.includes(searchTerm.trim())) {
+        setskillSet([...skillSet, searchTerm.trim()]);
+        setSearchTerm(''); // Clear the input field
+      }
+    }
+  };
+  const handleAddSkill = () => {
+    if (searchTerm.trim() !== '' && skillSet.length < 10) {
+      if (!skillSet.includes(searchTerm.trim())) {
+        setskillSet([...skillSet, searchTerm.trim()]);
         setSearchTerm(''); // Clear the input field
       }
     }
@@ -51,29 +45,13 @@ const PageThree: React.FC<Props> = ({ setCurrentPage }) => {
 
   // Remove a skill from the selected skills list
   const handleSkillRemove = (skill: string) => {
-    setSelectedSkills(selectedSkills.filter((s) => s !== skill));
+    setskillSet(skillSet.filter((s) => s !== skill));
   };
 
   // Check if the Next button should be disabled
   useEffect(() => {
-    setIsButtonDisabled(selectedSkills.length === 0);
-  }, [selectedSkills]);
-
-  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
-
-  const handleUpdateProfile = async () => {
-    const userData = {
-      id: userid,
-      skillSet: selectedSkills,
-    };
-
-    try {
-      await updateUserProfile(userData).unwrap();
-      setCurrentPage(4);
-    } catch (error: unknown) {
-      console.log(error);
-    }
-  };
+    setIsButtonDisabled(skillSet.length === 0);
+  }, [skillSet]);
 
   return (
     <div className="profile_pageone_root">
@@ -92,14 +70,18 @@ const PageThree: React.FC<Props> = ({ setCurrentPage }) => {
             value={searchTerm}
             onChange={handleSearchChange}
             onKeyDown={handleKeyDown}
-            disabled={isUserLoading}
           />
-          <SearchIcon />
+          <div
+            style={{ color: '#4274ba', fontWeight: '600', cursor: 'pointer' }}
+            onClick={handleAddSkill}
+          >
+            Add
+          </div>
         </div>
       </div>
       <div className="skillheader">You can add up to 10 skills</div>
       <div className="skills_container">
-        {selectedSkills.map((skill) => (
+        {skillSet.map((skill) => (
           <div className="skill" key={skill}>
             <div style={{ marginRight: '12.5px' }}>{skill}</div>
             <div
@@ -111,9 +93,12 @@ const PageThree: React.FC<Props> = ({ setCurrentPage }) => {
           </div>
         ))}
       </div>
+      <div className="skip_btn" onClick={() => setCurrentPage(4)}>
+        Skip
+      </div>
       <button
         className={`next_btn`}
-        onClick={handleUpdateProfile}
+        onClick={() => setCurrentPage(4)}
         style={{
           backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
           cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',

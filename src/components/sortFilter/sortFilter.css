@@ -1,0 +1,37 @@
+.sort_filter_root {
+  position: relative;
+}
+.sort_filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6a757e;
+  cursor: pointer;
+}
+.sort_filter_modal_two {
+  z-index: 9;
+  background-color: white;
+}
+.sort_filter_modal_one .items {
+  width: 150px;
+  background-color: white;
+  margin-bottom: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+}
+.sort_filter_modal_one .items.selected {
+  background-color: #ecf4ff;
+}
+
+.little_arrow_indicator {
+  position: absolute;
+  top: -8px; /* Adjust this value to align the arrow */
+  left: 20px; /* Adjust this value based on the modal position */
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #fff;
+}

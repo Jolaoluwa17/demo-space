@@ -3,6 +3,8 @@ import './dashboard.css';
 import NotepadIcon from '@/icons/NotepadIcon';
 import TalentPoolIcon from '@/icons/TalentPoolIcon';
 import CoinIcon from '@/icons/CoinIcon';
+import { userSignedUpData } from '@/utils/userSignedUpData';
+import { skillGapPendingData } from '@/utils/skillGapPendingData';
 
 const Dashboard = () => {
   const overviewCards = [
@@ -34,58 +36,6 @@ const Dashboard = () => {
       title: 'Skill Gap Programs',
       number: 250,
     },
-  ];
-
-  const tableData = [
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      dateSignedUp: '2024-01-01',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane.smith@example.com',
-      dateSignedUp: '2024-02-15',
-    },
-    {
-      id: 3,
-      name: 'Olusanya Jolaoluwa',
-      email: 'olusanyajolaoluwa@gmail.com',
-      dateSignedUp: '2024-03-20',
-    },
-    {
-      id: 4,
-      name: 'Olusanya Jolaoluwa',
-      email: 'olusanyajolaoluwa@gmail.com',
-      dateSignedUp: '2024-03-20',
-    },
-    {
-      id: 5,
-      name: 'Olusanya Jolaoluwa',
-      email: 'olusanyajolaoluwa@gmail.com',
-      dateSignedUp: '2024-03-20',
-    },
-    {
-      id: 6,
-      name: 'Olusanya Jolaoluwa',
-      email: 'olusanyajolaoluwa@gmail.com',
-      dateSignedUp: '2024-03-20',
-    },
-    {
-      id: 7,
-      name: 'Olusanya Jolaoluwa',
-      email: 'olusanyajolaoluwa@gmail.com',
-      dateSignedUp: '2024-03-20',
-    },
-    {
-      id: 8,
-      name: 'Olusanya Jolaoluwa',
-      email: 'olusanyajolaoluwa@gmail.com',
-      dateSignedUp: '2024-03-20',
-    },
-    // Add more data as needed
   ];
 
   return (
@@ -125,7 +75,7 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {tableData.map((user) => (
+                {userSignedUpData.map((user) => (
                   <tr key={user.id}>
                     <td className="user_table_name">{user.name}</td>
                     <td className="user_table_email">{user.email}</td>
@@ -137,21 +87,45 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="admin_dashboard_right">
-          <div className="title">Activity Log</div>
-          <div className="activity_log">
-            John Doe updated profile information
+          <div className="title">
+            <div className="table_header">Skill Gap</div>
+            <div className="admin_view_all">View all</div>
           </div>
-          <div className="activity_log">
-            John Doe updated profile information
-          </div>
-          <div className="activity_log">
-            John Doe updated profile information
-          </div>
-          <div className="activity_log">
-            John Doe updated profile information
-          </div>
-          <div className="activity_log">
-            John Doe updated profile information
+          <div className="admin_dashboard_table_container">
+            <table className="admin_dashboard_user_table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Program</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {skillGapPendingData.map((user) => (
+                  <tr key={user.id}>
+                    <td className="user_table_name">{user.name}</td>
+                    <td className="user_table_email">{user.program}</td>
+                    <td style={{ padding: '0px' }}>
+                      <div
+                        style={{
+                          border: '1px solid #FFDD00',
+                          backgroundColor: '#FFFCE7',
+                          width: '100px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          padding: '5px 0px',
+                        }}
+                      >
+                        {user.status}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

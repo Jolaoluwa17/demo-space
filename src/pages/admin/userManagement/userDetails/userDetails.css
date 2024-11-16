@@ -55,8 +55,9 @@
 }
 .user_details_content .skills_item {
   padding: 8px 16px;
-  border: 1px solid #4274ba;
   border-radius: 24px;
+  background-color: #4274ba;
+  color: white;
 }
 .user_details_section .item_content {
   max-width: 445px;
@@ -73,4 +74,57 @@
   margin-top: 32px;
   cursor: pointer;
   border-radius: 8px;
+}
+
+.accepted_tag {
+  width: 100px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #edffed;
+  border: 1px solid #00ff00;
+}
+
+.rejected_tag {
+  width: 100px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff4f4;
+  border: 1px solid #ff0000;
+  border-radius: 20px;
+}
+
+.pending_tag {
+  width: 80px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user_details_content .section_item .accept_btn {
+  width: 32px;
+  height: 32px;
+  background-color: #edffed;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #00ff00;
+}
+
+.user_details_content .section_item .reject_btn {
+  width: 32px;
+  height: 32px;
+  background-color: #fff4f4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ff0000;
 }

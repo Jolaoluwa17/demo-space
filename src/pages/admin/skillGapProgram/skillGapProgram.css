@@ -69,6 +69,18 @@
   width: 100%;
   margin-top: 20px;
 }
+.skill_gap_program_table .top_filters_navigation {
+  padding: 24px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 8px 8px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.skill_gap_program_table .top_filters_navigation .serach_input_tag {
+  width: 575px;
+}
 .skill_gap_program_table table {
   width: 100%;
   border-collapse: collapse;

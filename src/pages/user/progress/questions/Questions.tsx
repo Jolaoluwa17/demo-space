@@ -8,6 +8,7 @@ import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import ArrowLeftIcon from '@/icons/ArrowLeftIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
 
+
 // Combined Questions Component
 const Questions: React.FC = () => {
   const { id } = useParams<{ id: string }>();

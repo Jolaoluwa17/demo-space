@@ -1,34 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import AddIcon from '../../../icons/AddIcon';
+import AddIcon from '@/icons/AddIcon';
 import './pages.css';
-import DeleteIcon from '../../../icons/DeleteIcon';
-import {
-  useGetUserQuery,
-  useUpdateUserProfileMutation,
-} from '@/services/features/user/userSlice';
+import DeleteIcon from '@/icons/DeleteIcon';
 
 interface Props {
   setCurrentPage: (page: number) => void;
+  educationEntries: EducationEntry[];
+  setEducationEntries: React.Dispatch<React.SetStateAction<EducationEntry[]>>;
+  isLoading: boolean;
 }
 
 interface EducationEntry {
-  institution: string;
-  degree: string;
+  institutionName: string;
+  degreeObtained: string;
   degreeType: string;
   graduationDate: string;
 }
 
-const PageTwo: React.FC<Props> = ({ setCurrentPage }) => {
-  const [educationEntries, setEducationEntries] = useState<EducationEntry[]>([
-    { institution: '', degree: '', degreeType: '', graduationDate: '' },
-  ]);
+const PageTwo: React.FC<Props> = ({
+  setCurrentPage,
+  educationEntries,
+  setEducationEntries,
+  isLoading,
+}) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
-  const userid = sessionStorage.getItem('id');
 
   const handleAddEntry = () => {
     setEducationEntries([
       ...educationEntries,
-      { institution: '', degree: '', degreeType: '', graduationDate: '' },
+      {
+        institutionName: '',
+        degreeObtained: '',
+        degreeType: '',
+        graduationDate: '',
+      },
     ]);
   };
 
@@ -51,8 +56,8 @@ const PageTwo: React.FC<Props> = ({ setCurrentPage }) => {
     const validateForm = () => {
       return educationEntries.every(
         (entry) =>
-          entry.institution.trim() !== '' &&
-          entry.degree.trim() !== '' &&
+          entry.institutionName.trim() !== '' &&
+          entry.degreeObtained.trim() !== '' &&
           entry.degreeType.trim() !== '' &&
           entry.graduationDate.trim() !== ''
       );
@@ -60,45 +65,6 @@ const PageTwo: React.FC<Props> = ({ setCurrentPage }) => {
 
     setIsFormValid(validateForm());
   }, [educationEntries]);
-
-  const { data, isLoading: isUserLoading } = useGetUserQuery(
-    userid ? userid : ''
-  );
-
-  useEffect(() => {
-    if (data && Array.isArray(data.response.education) && !isUserLoading) {
-      // Map the educationalBackground array to the format used by educationEntries
-      const formattedEntries = data.response.education.map(
-        (entry: {
-          institution?: string;
-          degree?: string;
-          degreeType?: string;
-          graduationDate?: string;
-        }) => ({
-          institution: entry.institution || '',
-          degree: entry.degree || '',
-          degreeType: entry.degreeType || '',
-          graduationDate: entry.graduationDate
-            ? new Date(entry.graduationDate).toISOString().split('T')[0]
-            : '',
-        })
-      );
-
-      // Set the formatted entries to the state
-      setEducationEntries(formattedEntries);
-    }
-  }, [data, isUserLoading]);
-
-  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
-
-  const handleUpdateProfile = async () => {
-    try {
-      await updateUserProfile(educationEntries).unwrap();
-      setCurrentPage(3);
-    } catch (error: unknown) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="profile_pageone_root">
@@ -126,11 +92,10 @@ const PageTwo: React.FC<Props> = ({ setCurrentPage }) => {
               type="text"
               name={`institution-${index}`}
               className="profile_pageone_input"
-              value={entry.institution}
+              value={entry.institutionName}
               onChange={(e) =>
-                handleInputChange(index, 'institution', e.target.value)
+                handleInputChange(index, 'institutionName', e.target.value)
               }
-              disabled={isUserLoading}
             />
           </div>
           <div className="profile_pageone_form_item">
@@ -139,11 +104,10 @@ const PageTwo: React.FC<Props> = ({ setCurrentPage }) => {
               type="text"
               name={`degree-${index}`}
               className="profile_pageone_input"
-              value={entry.degree}
+              value={entry.degreeObtained}
               onChange={(e) =>
-                handleInputChange(index, 'degree', e.target.value)
+                handleInputChange(index, 'degreeObtained', e.target.value)
               }
-              disabled={isUserLoading}
             />
           </div>
           <div className="profile_pageone_form_item">
@@ -156,7 +120,6 @@ const PageTwo: React.FC<Props> = ({ setCurrentPage }) => {
               onChange={(e) =>
                 handleInputChange(index, 'degreeType', e.target.value)
               }
-              disabled={isUserLoading}
             />
           </div>
           <div className="profile_pageone_form_item">
@@ -169,23 +132,33 @@ const PageTwo: React.FC<Props> = ({ setCurrentPage }) => {
               onChange={(e) =>
                 handleInputChange(index, 'graduationDate', e.target.value)
               }
-              disabled={isUserLoading}
             />
           </div>
         </div>
       ))}
 
-      <div className="add_another_entry" onClick={handleAddEntry}>
-        <div className="content">
-          <AddIcon />
+      <div className="add_another_entry">
+        <div
+          className="content"
+          onClick={isFormValid && !isLoading ? handleAddEntry : undefined}
+          style={
+            !isFormValid || isLoading
+              ? { color: 'grey', cursor: 'not-allowed' }
+              : {}
+          }
+        >
+          <AddIcon color={!isFormValid || isLoading ? '#808080' : '#4274BA'} />
           <div style={{ fontSize: '14px', paddingBottom: '4px' }}>
-            Add Another entry
+            Add Another Entry
           </div>
         </div>
       </div>
+      <div className="skip_btn" onClick={() => setCurrentPage(3)}>
+        Skip
+      </div>
       <button
         className={`next_btn`}
-        onClick={handleUpdateProfile}
+        onClick={() => setCurrentPage(3)}
         style={{
           backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
           cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',

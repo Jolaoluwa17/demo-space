@@ -197,6 +197,12 @@
   color: #333a41;
   font-size: 14px;
 }
+.skip_btn {
+  text-align: center;
+  color: #4274ba;
+  margin-top: 24px;
+  cursor: pointer;
+}
 
 @media (max-width: 450px) {
   .profile_pageone_title {

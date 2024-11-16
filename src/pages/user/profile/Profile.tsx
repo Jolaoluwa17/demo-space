@@ -9,6 +9,29 @@ import PageSix from '@/components/profile/pages/PageSix';
 import PageFive from '@/components/profile/pages/PageFive';
 import PageFour from '@/components/profile/pages/PageFour';
 import PageThree from '@/components/profile/pages/PageThree';
+import { useUpdateUserProfileMutation } from '@/services/features/user/userSlice';
+
+interface EducationEntry {
+  institutionName: string;
+  degreeObtained: string;
+  degreeType: string;
+  graduationDate: string;
+}
+
+interface Entry {
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  companyName: string;
+  currentlyWorking: boolean;
+}
+
+interface Certification {
+  name: string;
+  issuedBy: string;
+  dateObtained: string;
+}
 
 const Profile = () => {
   const location = useLocation();
@@ -88,6 +111,89 @@ const Profile = () => {
     }
   };
 
+  const userid = sessionStorage.getItem('id');
+
+  const [fullName, setFullName] = useState<string>('');
+  const [phoneNo, setPhoneNo] = useState<string>('');
+  const [fileInput, setFileInput] = useState<HTMLInputElement | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<string | null>(null);
+  const [imageName, setImageName] = useState<string>('');
+  const [educationEntries, setEducationEntries] = useState<EducationEntry[]>([
+    {
+      institutionName: '',
+      degreeObtained: '',
+      degreeType: '',
+      graduationDate: '',
+    },
+  ]);
+  const [skillSet, setskillSet] = useState<string[]>([]);
+  const [areaOfInterest, setareaOfInterest] = useState<string[]>([]);
+  const [entries, setEntries] = useState<Entry[]>([
+    {
+      title: '',
+      description: '',
+      companyName: '',
+      startDate: '',
+      endDate: '',
+      currentlyWorking: false,
+    },
+  ]);
+  const [certifications, setCertifications] = useState<Certification[]>([
+    { name: '', issuedBy: '', dateObtained: '' },
+  ]);
+
+  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
+
+  const handleUpdateProfile = async () => {
+    if (!file) {
+      console.log('No file selected.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('fullName', fullName);
+    formData.append('phoneNumber', phoneNo);
+    formData.append('profileImg', file);
+    formData.append('id', userid || '');
+    formData.append('education', JSON.stringify(educationEntries));
+    skillSet.forEach((skills) => {
+      formData.append('skillSet', skills);
+    });
+    areaOfInterest.forEach((interest) => {
+      formData.append('areaOfInterest', interest);
+    });
+    formData.append(
+      'job',
+      JSON.stringify(entries.map(({ currentlyWorking, ...rest }) => rest))
+    );
+    formData.append('certifications', JSON.stringify(certifications));
+
+    try {
+      await updateUserProfile(formData).unwrap();
+      navigate('/dashboard');
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
+
+  const handleFileUpload = () => {
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setFile(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+      setImageName(file.name);
+    }
+  };
+
   return (
     <div className="profile_root">
       <div className="profile_container">
@@ -95,10 +201,13 @@ const Profile = () => {
           {currentPage > 1 && (
             <div
               className="profile_back_btn_inner"
-              onClick={handleBackButtonClick}
+              onClick={!isLoading ? handleBackButtonClick : undefined}
+              style={isLoading ? { color: 'grey' } : {}}
             >
-              <ProfileBackArrow />
-              <div style={{ paddingBottom: '6px' }}>Back</div>
+              <ProfileBackArrow color={isLoading ? '#808080' : '#4274BA'} />
+              <div style={{ paddingBottom: '6px', paddingLeft: '10px' }}>
+                Back
+              </div>
             </div>
           )}
         </div>
@@ -110,12 +219,63 @@ const Profile = () => {
         </div>
         <Pagination totalPages={totalPages} currentPage={currentPage} />
         <div className="content">
-          {currentPage === 1 && <Pageone setCurrentPage={setCurrentPage} />}
-          {currentPage === 2 && <PageTwo setCurrentPage={setCurrentPage} />}
-          {currentPage === 3 && <PageThree setCurrentPage={setCurrentPage} />}
-          {currentPage === 4 && <PageFour setCurrentPage={setCurrentPage} />}
-          {currentPage === 5 && <PageFive setCurrentPage={setCurrentPage} />}
-          {currentPage === 6 && <PageSix />}
+          {currentPage === 1 && (
+            <Pageone
+              setCurrentPage={setCurrentPage}
+              fullName={fullName}
+              setFullName={setFullName}
+              phoneNo={phoneNo}
+              setPhoneNo={setPhoneNo}
+              setFileInput={setFileInput}
+              isLoading={isLoading}
+              image={image}
+              setImage={setImage}
+              imageName={imageName}
+              setImageName={setImageName}
+              handleFileChange={handleFileChange}
+              handleFileUpload={handleFileUpload}
+            />
+          )}
+          {currentPage === 2 && (
+            <PageTwo
+              setCurrentPage={setCurrentPage}
+              educationEntries={educationEntries}
+              setEducationEntries={setEducationEntries}
+              isLoading={isLoading}
+            />
+          )}
+          {currentPage === 3 && (
+            <PageThree
+              setCurrentPage={setCurrentPage}
+              skillSet={skillSet}
+              setskillSet={setskillSet}
+              isLoading={isLoading}
+            />
+          )}
+          {currentPage === 4 && (
+            <PageFour
+              setCurrentPage={setCurrentPage}
+              areaOfInterest={areaOfInterest}
+              setareaOfInterest={setareaOfInterest}
+              isLoading={isLoading}
+            />
+          )}
+          {currentPage === 5 && (
+            <PageFive
+              setCurrentPage={setCurrentPage}
+              entries={entries}
+              setEntries={setEntries}
+              isLoading={isLoading}
+            />
+          )}
+          {currentPage === 6 && (
+            <PageSix
+              certifications={certifications}
+              setCertifications={setCertifications}
+              isLoading={isLoading}
+              handleUpdateProfile={handleUpdateProfile}
+            />
+          )}
         </div>
       </div>
     </div>

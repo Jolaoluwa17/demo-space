@@ -9,11 +9,14 @@ export const userSlice = apiSlice.injectEndpoints({
       }),
     }),
     updateUserProfile: builder.mutation({
-      query: (userData) => ({
-        url: `user/userprofile/${userData.id}`,
-        method: 'PUT',
-        body: userData,
-      }),
+      query: (userData) => {
+        const userId = userData.get('id'); // Access the 'id' from FormData
+        return {
+          url: `user/userprofile/${userId}`,
+          method: 'PUT',
+          body: userData,
+        };
+      },
     }),
   }),
   overrideExisting: true,
