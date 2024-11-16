@@ -3,6 +3,8 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding: 30px;
+  box-sizing: border-box;
 }
 .techwings_logo_login {
   margin-bottom: 30px;
@@ -19,7 +21,7 @@
 }
 .login_img {
   border-radius: 24px;
-  object-fit: cover;
+  object-fit:cover;
   height: 100%;
   width: 100%;
 }
