@@ -63,7 +63,10 @@ function App() {
           </Route>
 
           {/* Settings Route */}
-          <Route path="/user-profile" element={<Profile />} />
+          <Route
+            path="/user-profile"
+            element={<ProtectedRoute element={<Profile />} />}
+          />
 
           {/* Dashboard Routes */}
           <Route
