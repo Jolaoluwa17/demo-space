@@ -68,7 +68,7 @@ const Login = () => {
         dispatch(setCredentials({ email: email, password: password }));
         handleRequestCode();
         navigator('/auth/verifyaccount');
-      } else if (!res.user.education || res.user.education.length === 0) {
+      } else if (!res.user.fullName) {
         navigator('/user-profile');
       } else {
         navigator('/dashboard');
