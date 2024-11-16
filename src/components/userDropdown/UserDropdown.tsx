@@ -42,9 +42,8 @@ export default function UserDropdown() {
 
   const userid = sessionStorage.getItem('id');
 
-  const { data, error, isLoading } = useGetUserQuery(userid ? userid : '') as {
+  const { data, isLoading } = useGetUserQuery(userid ? userid : '') as {
     data: UserType | undefined;
-    error: undefined;
     isLoading: boolean;
   };
 
