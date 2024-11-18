@@ -156,7 +156,7 @@ const Login = () => {
             {isLoading ? <div className="spinner"></div> : 'Login'}
           </button>
           <div className="donot_have_acc">
-            Don’t have an account?{' '}
+            Don't have an account?{' '}
             <span
               style={{ color: '#FF8682', cursor: 'pointer', fontWeight: '600' }}
               onClick={() => navigator('/auth/signup')}
