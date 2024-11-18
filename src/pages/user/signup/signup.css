@@ -179,7 +179,7 @@
 
 @media (max-width: 425px) {
   .signup_root {
-    padding: 85px 10px 0px 10px;
+    padding: 85px 10px 50px 10px;
   }
   .signup_root .techwings_logo {
     position: absolute;
