@@ -1,4 +1,5 @@
 // import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './login.css';
 // import EyeOpen from '../../icons/Eye';
 // import EyeClosed from '../../icons/EyeClosed';
@@ -88,6 +89,8 @@ const Login = () => {
   //     console.log(error);
   //   }
   // };
+
+  const navigator = useNavigate()
 
   return (
     <div className="login_root">
