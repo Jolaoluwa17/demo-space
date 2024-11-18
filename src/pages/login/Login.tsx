@@ -90,19 +90,20 @@ const Login = () => {
   //   }
   // };
 
-  const navigator = useNavigate()
+  const navigator = useNavigate();
 
   return (
     <div className="login_root">
-      <div className="techwings_logo_login">
-        <img
-          src="/assets/images/TechWingLogo.svg"
-          alt="login_image"
-          onClick={() => navigator('/')}
-        />
-      </div>
       <div className="login_container">
-        <div className="left"></div>
+        <div className="left">
+          <div className="techwings_logo_login">
+            <img
+              src="/assets/images/TechWingLogo.svg"
+              alt="login_image"
+              onClick={() => navigator('/')}
+            />
+          </div>
+        </div>
         <div className="right"></div>
       </div>
     </div>
