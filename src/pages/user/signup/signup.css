@@ -188,7 +188,7 @@
   }
   .signup_container .right_section {
     padding: 30px 20px;
-    /* overflow-y: hidden; */
+    overflow-y: hidden;
   }
   .password_indicator_option,
   .or_signup,
