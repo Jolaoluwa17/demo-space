@@ -98,6 +98,9 @@
   font-size: 15px;
   cursor: pointer;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .donot_have_acc {
   margin-top: 25px;

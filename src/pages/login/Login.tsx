@@ -13,12 +13,21 @@ import {
   setCredentials,
 } from '@/services/features/auth/authSlice';
 
+interface ErrorResponse {
+  status: number;
+  data: {
+    error: string;
+    response: string;
+  };
+}
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState<boolean>(true);
   const isFormValid = password !== '' && !emailError;
+  const [errMsg, setErrMsg] = useState<string>('');
 
   const validateEmail = (email: string) => {
     // Basic email validation regex
@@ -72,6 +81,14 @@ const Login = () => {
         navigator('/dashboard');
       }
     } catch (error: unknown) {
+      const err = error as ErrorResponse;
+
+      if (err?.status === 404) {
+        setErrMsg("Invalid email or password");
+      }
+      else {
+        setErrMsg("Something went wrong")
+      }
       console.log(error);
     }
   };
@@ -155,6 +172,7 @@ const Login = () => {
           >
             {isLoading ? <div className="spinner"></div> : 'Login'}
           </button>
+          <div className="error_message">{errMsg}</div>
           <div className="donot_have_acc">
             Don't have an account?{' '}
             <span
