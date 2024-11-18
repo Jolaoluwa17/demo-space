@@ -6,8 +6,7 @@
   justify-content: center;
   padding: 85px 100px 50px 100px;
   box-sizing: border-box;
-  overflow: hidden;
-  overflow-y: hidden;
+  position: fixed;
 }
 .signup_root .techwings_logo {
   position: absolute;
