@@ -1,47 +1,47 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
-// import EyeOpen from '../../icons/Eye';
-// import EyeClosed from '../../icons/EyeClosed';
+import EyeOpen from '@/icons/Eye';
+import EyeClosed from '@/icons/EyeClosed';
 // import { useNavigate } from 'react-router-dom';
 // import {
 //   useLoginMutation,
 //   useRequestCodeMutation,
-// } from '../../services/features/auth/authApiSlice';
+// } from '@/services/features/auth/authApiSlice';
 // import { useDispatch } from 'react-redux';
 // import {
 //   setAuthState,
 //   setCredentials,
-// } from '../../services/features/auth/authSlice';
+// } from '@/services/features/auth/authSlice';
 
 const Login = () => {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [showPassword, setShowPassword] = useState(false);
-  // const [emailError, setEmailError] = useState<boolean>(true);
-  // const isFormValid = password !== '' && !emailError;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState<boolean>(true);
+  const isFormValid = password !== '' && !emailError;
 
-  // const validateEmail = (email: string) => {
-  //   // Basic email validation regex
-  //   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  // };
+  const validateEmail = (email: string) => {
+    // Basic email validation regex
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
-  // const handleHiddenTrigger = () => {
-  //   setShowPassword(!showPassword);
-  // };
+  const handleHiddenTrigger = () => {
+    setShowPassword(!showPassword);
+  };
 
-  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPassword(e.target.value);
-  // };
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
-  // const handleEmailChange = (value: string) => {
-  //   setEmail(value);
-  //   if (!validateEmail(value)) {
-  //     setEmailError(true);
-  //   } else {
-  //     setEmailError(false);
-  //   }
-  // };
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    if (!validateEmail(value)) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+  };
 
   // const navigator = useNavigate();
 
@@ -99,9 +99,69 @@ const Login = () => {
           <div className="techwings_logo_login">
             <img
               src="/assets/images/TechWingLogo.svg"
-              alt="login_image"
+              alt="TechWings Global"
               onClick={() => navigator('/')}
             />
+          </div>
+          <div className="login_title">Login</div>
+          <div className="login_sub_title">
+            Please provide the information below to login and access your
+            account
+          </div>
+          <div className="login_form_item">
+            <label htmlFor="">Enter Email</label>
+            <input type="text" />
+          </div>
+          <div className="login_form_item">
+            <label htmlFor="">Enter Password</label>
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              <div
+                className="login_password_visibility"
+                onClick={handleHiddenTrigger}
+              >
+                {showPassword ? <EyeOpen /> : <EyeClosed />}
+              </div>
+            </div>
+          </div>
+          <div className="login_configurations">
+            <div className="remember_me">
+              <input type="checkbox" style={{ cursor: 'pointer' }} />
+              <div style={{ marginLeft: '8px' }}>Remember me</div>
+            </div>
+            <div
+              className="forgot_password_btn"
+              style={{ color: '#FF8682', cursor: 'pointer', fontSize: '14px' }}
+              onClick={() => navigator('/auth/forgotpassword')}
+            >
+              Forgot Password
+            </div>
+          </div>
+          <button className="login_btn">Login</button>
+          <div className="donot_have_acc">
+            Don’t have an account?{' '}
+            <span
+              style={{ color: '#FF8682', cursor: 'pointer', fontWeight: '600' }}
+            >
+              Sign up
+            </span>
+          </div>
+          <div className="or_login">
+            <hr />
+            <div style={{ padding: '0px 10px' }}>Or login with</div>
+            <hr />
+          </div>
+          <div className="login_options">
+            <div className="login_options_button">
+              <img src="/assets/images/Google.svg" alt="login_image" />
+            </div>
+            <div className="login_options_button">
+              <img src="/assets/images/Apple.svg" alt="login_image" />
+            </div>
           </div>
         </div>
         <div className="right"></div>
