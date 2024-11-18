@@ -64,6 +64,7 @@
   outline: none;
   width: 100%;
   box-sizing: border-box;
+  font-size: 14px;
 }
 .signup_root .password_input {
   position: relative;
@@ -193,11 +194,7 @@
     padding: 30px 20px;
     padding-bottom: 100px;
   }
-  .password_indicator_option,
-  .or_signup,
-  .already_have_acc,
-  .signup_root .TOS,
-  .signup_root p {
+  .password_indicator_option {
     font-size: 12px;
   }
   .or_signup hr {
