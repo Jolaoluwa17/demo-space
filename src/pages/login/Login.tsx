@@ -15,16 +15,16 @@ import EyeClosed from '@/icons/EyeClosed';
 // } from '@/services/features/auth/authSlice';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [emailError, setEmailError] = useState<boolean>(true);
-  const isFormValid = password !== '' && !emailError;
+  // const [emailError, setEmailError] = useState<boolean>(true);
+  // const isFormValid = password !== '' && !emailError;
 
-  const validateEmail = (email: string) => {
-    // Basic email validation regex
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  // const validateEmail = (email: string) => {
+  //   // Basic email validation regex
+  //   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  // };
 
   const handleHiddenTrigger = () => {
     setShowPassword(!showPassword);
@@ -34,14 +34,14 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
-    if (!validateEmail(value)) {
-      setEmailError(true);
-    } else {
-      setEmailError(false);
-    }
-  };
+  // const handleEmailChange = (value: string) => {
+  //   setEmail(value);
+  //   if (!validateEmail(value)) {
+  //     setEmailError(true);
+  //   } else {
+  //     setEmailError(false);
+  //   }
+  // };
 
   // const navigator = useNavigate();
 
