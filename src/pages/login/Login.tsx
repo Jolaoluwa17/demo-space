@@ -163,8 +163,15 @@ const Login = () => {
               <img src="/assets/images/Apple.svg" alt="login_image" />
             </div>
           </div>
+          <div className='image_container'></div>
         </div>
-        <div className="right"></div>
+        <div className="right">
+          <img
+            src="/assets/images/Login.svg"
+            alt="login_image"
+            className="login_img"
+          />
+        </div>
       </div>
     </div>
   );
