@@ -180,7 +180,7 @@
     padding: 85px 40px 50px 40px;
   }
   .login_container .left {
-    padding-bottom: 120px;
+    padding-bottom: 100px;
   }
 }
 
@@ -195,5 +195,6 @@
   }
   .login_container .left {
     padding: 30px 20px;
+    padding-bottom: 100px;
   }
 }
