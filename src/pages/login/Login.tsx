@@ -186,7 +186,11 @@ const Login = () => {
           </div>
         </div>
         <div className="right_section">
-         
+          <img
+            src="/assets/images/Login.svg"
+            alt="login_image"
+            className="login_img"
+          />
         </div>
       </div>
     </div>

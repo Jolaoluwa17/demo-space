@@ -12,8 +12,11 @@
 }
 .login_container {
   display: flex;
-  width: 1232px;
-  position: relative;
+  max-width: 1232px;
+  width: 100%;
+  /* position: relative; */
+  /* background-color: red; */
+  height: 100%;
 }
 
 .login_root .right_section {
