@@ -182,12 +182,6 @@
 
 @media (max-width: 425px) {
   .login_root {
-    padding: 85px 20px 50px 20px;
-  }
-}
-
-@media (max-width: 375px) {
-  .login_root {
     padding: 85px 10px 50px 10px;
   }
   .techwings_logo_login {
