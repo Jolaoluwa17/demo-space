@@ -188,7 +188,16 @@
   }
   .signup_container .right_section {
     padding: 30px 20px;
-    padding-bottom: 50px;
     /* overflow-y: hidden; */
+  }
+  .password_indicator_option,
+  .or_signup,
+  .already_have_acc,
+  .signup_root .TOS,
+  .signup_root p {
+    font-size: 12px;
+  }
+  .or_signup hr {
+    width: 25%;
   }
 }
