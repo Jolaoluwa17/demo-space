@@ -1,8 +1,15 @@
-import { useState } from 'react';
 import './pages.css';
 import CustomSelect from '../customselect/CustomSelect'; // Adjust the import path as necessary
 import AddIcon from '../../icons/AddIcon';
 import DeleteIcon from '../../icons/DeleteIcon';
+
+interface Props {
+  educationEntries?: EducationEntry[];
+  setEducationEntries?: React.Dispatch<React.SetStateAction<EducationEntry[]>>;
+  userDataIsLoading?: boolean;
+  isLoading?: boolean;
+  handleUpdateProfile?: () => Promise<void>;
+}
 
 const degreeOptions = [
   'Associate Degree',
@@ -16,13 +23,19 @@ const degreeOptions = [
 ];
 
 interface EducationEntry {
-  institution: string;
+  institutionName: string;
   degreeObtained: string;
   degreeType: string;
   graduationDate: string;
 }
 
-const EducationalBackground = () => {
+const EducationalBackground: React.FC<Props> = ({
+  educationEntries = [], // Provide a default empty array if undefined
+  setEducationEntries,
+  userDataIsLoading,
+  isLoading,
+  handleUpdateProfile,
+}) => {
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -31,15 +44,6 @@ const EducationalBackground = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const [educationEntries, setEducationEntries] = useState<EducationEntry[]>([
-    {
-      institution: '',
-      degreeObtained: '',
-      degreeType: '',
-      graduationDate: getCurrentDate(),
-    },
-  ]);
-
   const handleInputChange = (
     index: number,
     field: keyof EducationEntry,
@@ -47,14 +51,14 @@ const EducationalBackground = () => {
   ) => {
     const updatedEntries = [...educationEntries];
     updatedEntries[index][field] = value;
-    setEducationEntries(updatedEntries);
+    setEducationEntries && setEducationEntries(updatedEntries); // Ensure the setter is defined
   };
 
   const addNewEntry = () => {
-    setEducationEntries([
+    setEducationEntries?.([
       ...educationEntries,
       {
-        institution: '',
+        institutionName: '',
         degreeObtained: '',
         degreeType: '',
         graduationDate: getCurrentDate(),
@@ -63,8 +67,21 @@ const EducationalBackground = () => {
   };
 
   const handleRemoveEntry = (index: number) => {
-    setEducationEntries(educationEntries.filter((_, i) => i !== index));
+    setEducationEntries?.(educationEntries.filter((_, i) => i !== index)); // Safely call setter
   };
+
+  // Ensure at least one empty entry is present if no data exists
+  const entriesToDisplay =
+    educationEntries.length > 0
+      ? educationEntries
+      : [
+          {
+            institutionName: '',
+            degreeObtained: '',
+            degreeType: '',
+            graduationDate: getCurrentDate(),
+          },
+        ];
 
   return (
     <div className="settings_content">
@@ -74,7 +91,7 @@ const EducationalBackground = () => {
           Tell us about your academic qualifications.
         </div>
 
-        {educationEntries.map((entry, index) => (
+        {entriesToDisplay.map((entry, index) => (
           <div key={index} className="profile_form_item_group">
             <div className="profile_form_item">
               <div>
@@ -95,10 +112,11 @@ const EducationalBackground = () => {
                 type="text"
                 className="profile_input_item"
                 name={`institution_${index}`}
-                value={entry.institution}
+                value={entry.institutionName}
                 onChange={(e) =>
-                  handleInputChange(index, 'institution', e.target.value)
+                  handleInputChange(index, 'institutionName', e.target.value)
                 }
+                disabled={userDataIsLoading || isLoading}
               />
             </div>
             <div className="profile_form_item">
@@ -111,6 +129,7 @@ const EducationalBackground = () => {
                 onChange={(e) =>
                   handleInputChange(index, 'degreeObtained', e.target.value)
                 }
+                disabled={userDataIsLoading || isLoading}
               />
             </div>
             <div className="profile_form_item">
@@ -132,18 +151,27 @@ const EducationalBackground = () => {
                 type="date"
                 className="profile_input_item"
                 name={`graduationDate_${index}`}
-                value={entry.graduationDate}
+                value={
+                  entry.graduationDate
+                    ? new Date(entry.graduationDate).toISOString().split('T')[0]
+                    : getCurrentDate() // Fallback to current date if graduationDate is invalid
+                }
                 onChange={(e) =>
                   handleInputChange(index, 'graduationDate', e.target.value)
                 }
+                disabled={userDataIsLoading || isLoading}
               />
             </div>
           </div>
         ))}
 
         <div className="add_another_entry_2">
-          <div className="content" onClick={addNewEntry}>
-            <AddIcon />
+          <div
+            className="content"
+            onClick={!isLoading ? addNewEntry : undefined}
+            style={isLoading ? { color: 'grey', cursor: 'not-allowed' } : {}}
+          >
+            <AddIcon color={isLoading ? '#808080' : '#4274BA'} />
             <div
               style={{
                 fontSize: '14px',
@@ -157,7 +185,17 @@ const EducationalBackground = () => {
         </div>
 
         <div className="settings_edit_btn_container">
-          <div className="settings_edit_btn">SAVE INFORMATION</div>
+          <div
+            className="settings_edit_btn"
+            style={{
+              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              pointerEvents: isLoading ? 'none' : 'auto',
+            }}
+            onClick={!isLoading ? handleUpdateProfile : undefined}
+          >
+            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+          </div>
         </div>
       </div>
     </div>

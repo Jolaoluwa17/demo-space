@@ -1,5 +1,8 @@
 .settings_root {
   padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .settings_tabs_root {
   display: flex;

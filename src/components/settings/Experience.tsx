@@ -1,10 +1,33 @@
 import React, { useState, useEffect } from 'react';
-
 import './pages.css';
 import DeleteIcon from '../../icons/DeleteIcon';
 import AddIcon from '../../icons/AddIcon';
+import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
 
-const Experience = () => {
+interface Entry {
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string | null;
+  companyName: string;
+  currentlyWorking: boolean;
+}
+
+interface Props {
+  entries?: Entry[];
+  setEntries?: React.Dispatch<React.SetStateAction<Entry[]>>;
+  userDataIsLoading?: boolean;
+  isLoading?: boolean;
+  handleUpdateProfile?: () => Promise<void>;
+}
+
+const Experience: React.FC<Props> = ({
+  entries = [],
+  setEntries,
+  userDataIsLoading,
+  isLoading,
+  handleUpdateProfile,
+}) => {
   const getCurrentDate = (addDays = 0) => {
     const today = new Date();
     today.setDate(today.getDate() + addDays); // Add the specified number of days
@@ -13,15 +36,6 @@ const Experience = () => {
     const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-
-  const [entries, setEntries] = useState([
-    {
-      jobTitle: '',
-      jobDescription: '',
-      startDate: getCurrentDate(),
-      endDate: getCurrentDate(1),
-    },
-  ]);
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -32,36 +46,55 @@ const Experience = () => {
     const { name, value } = event.target;
     const updatedEntries = [...entries];
     updatedEntries[index] = { ...updatedEntries[index], [name]: value };
-    setEntries(updatedEntries);
+    setEntries?.(updatedEntries); // Safe call with optional chaining
   };
 
   const handleAddEntry = () => {
-    setEntries([
+    setEntries?.([
+      // Adding a new entry with empty values
       ...entries,
       {
-        jobTitle: '',
-        jobDescription: '',
+        title: '',
+        description: '',
+        companyName: '',
         startDate: getCurrentDate(),
         endDate: getCurrentDate(1),
+        currentlyWorking: false,
       },
     ]);
   };
 
   const handleRemoveEntry = (index: number) => {
-    setEntries(entries.filter((_, i) => i !== index));
+    setEntries?.(entries.filter((_, i) => i !== index));
   };
 
   // Check if the Edit button should be disabled
   useEffect(() => {
     const allEntriesFilled = entries.every(
       (entry) =>
-        entry.jobTitle &&
-        entry.jobDescription &&
+        entry.title &&
+        entry.description &&
+        entry.companyName &&
         entry.startDate &&
-        entry.endDate
+        (entry.currentlyWorking || entry.endDate)
     );
     setIsButtonDisabled(!allEntriesFilled);
   }, [entries]);
+
+  const handleCheckboxChange = (index: number) => {
+    const updatedEntries = [...entries];
+    const isCurrentlyWorking = !updatedEntries[index].currentlyWorking;
+
+    // Toggle the `currentlyWorking` state
+    updatedEntries[index].currentlyWorking = isCurrentlyWorking;
+
+    // If `currentlyWorking` is true, set `endDate` to null; otherwise, provide a default date
+    updatedEntries[index].endDate = isCurrentlyWorking
+      ? null
+      : getCurrentDate(1);
+
+    setEntries?.(updatedEntries);
+  };
 
   return (
     <div className="settings_content">
@@ -70,65 +103,185 @@ const Experience = () => {
         <div className="settings_page_subHeader">
           Highlight your job experience
         </div>
-        {entries.map((entry, index) => (
-          <div key={index} className="experience_entry">
+
+        {entries.length === 0 ? (
+          // Show a single empty entry if no data exists
+          <div className="experience_entry">
             <div className="profile_form_item">
-              <label htmlFor={`jobTitle-${index}`}>
-                Job Title
-                {index > 0 && (
-                  <div
-                    className="remove_entry_button"
-                    onClick={() => handleRemoveEntry(index)}
-                  >
-                    <DeleteIcon color="red" />
-                    Remove
-                  </div>
-                )}
-              </label>
+              <label htmlFor="jobTitle-0">Job Title</label>
               <input
                 type="text"
                 name="jobTitle"
-                id={`jobTitle-${index}`}
-                value={entry.jobTitle}
+                id="jobTitle-0"
                 className="profile_input_item"
-                onChange={(event) => handleInputChange(index, event)}
+                onChange={(event) => handleInputChange(0, event)}
+                disabled={userDataIsLoading}
               />
             </div>
             <div className="profile_form_item">
-              <label htmlFor={`jobDescription-${index}`}>Job Description</label>
+              <label htmlFor="companyName-0">Company Name</label>
+              <input
+                type="text"
+                name="companyName"
+                id="companyName-0"
+                className="profile_input_item"
+                onChange={(event) => handleInputChange(0, event)}
+                disabled={userDataIsLoading}
+              />
+            </div>
+            <div className="profile_form_item">
+              <label htmlFor="jobDescription-0">Job Description</label>
               <textarea
                 name="jobDescription"
-                id={`jobDescription-${index}`}
-                value={entry.jobDescription}
+                id="jobDescription-0"
                 className="profile_input_textarea"
                 rows={5}
-                onChange={(event) => handleInputChange(index, event)}
+                onChange={(event) => handleInputChange(0, event)}
+                disabled={userDataIsLoading}
               />
             </div>
             <div className="profile_form_item">
-              <label htmlFor={`startDate-${index}`}>Start Date</label>
+              <label htmlFor="startDate-0">Start Date</label>
               <input
                 type="date"
                 name="startDate"
-                id={`startDate-${index}`}
-                value={entry.startDate}
+                id="startDate-0"
                 className="profile_input_item"
-                onChange={(event) => handleInputChange(index, event)}
+                onChange={(event) => handleInputChange(0, event)}
+                disabled={userDataIsLoading}
               />
             </div>
             <div className="profile_form_item">
-              <label htmlFor={`endDate-${index}`}>End Date</label>
+              <label htmlFor="endDate-0">End Date</label>
               <input
                 type="date"
                 name="endDate"
-                id={`endDate-${index}`}
-                value={entry.endDate}
+                id="endDate-0"
                 className="profile_input_item"
-                onChange={(event) => handleInputChange(index, event)}
+                onChange={(event) => handleInputChange(0, event)}
+                disabled={userDataIsLoading}
               />
             </div>
+            <div className="currently_working_here">
+              <div
+                onClick={() => handleCheckboxChange(0)}
+                style={{
+                  cursor: 'pointer',
+                  marginRight: '10px',
+                  width: '15px',
+                  height: '15px',
+                }}
+              >
+                {false ? (
+                  <RememberMeCheckBox />
+                ) : (
+                  <div className="pages_empty_checkbox"></div>
+                )}
+              </div>
+              <div style={{ paddingTop: '5px' }}>Currently Working Here</div>
+            </div>
           </div>
-        ))}
+        ) : (
+          // Render existing entries
+          entries.map((entry, index) => (
+            <div key={index} className="experience_entry">
+              <div className="profile_form_item">
+                <label htmlFor={`jobTitle-${index}`}>
+                  Job Title
+                  {index > 0 && (
+                    <div
+                      className="remove_entry_button"
+                      onClick={() => handleRemoveEntry(index)}
+                    >
+                      <DeleteIcon color="red" />
+                      Remove
+                    </div>
+                  )}
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  id={`jobTitle-${index}`}
+                  value={entry.title || ''}
+                  className="profile_input_item"
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={userDataIsLoading}
+                />
+              </div>
+              <div className="profile_form_item">
+                <label htmlFor={`comapanyName-${index}`}>Company Name</label>
+                <input
+                  type="text"
+                  name="companyName"
+                  id={`companyName-${index}`}
+                  value={entry.companyName || ''}
+                  className="profile_input_item"
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={userDataIsLoading}
+                />
+              </div>
+              <div className="profile_form_item">
+                <label htmlFor={`jobDescription-${index}`}>
+                  Job Description
+                </label>
+                <textarea
+                  name="description"
+                  id={`jobDescription-${index}`}
+                  value={entry.description || ''}
+                  className="profile_input_textarea"
+                  rows={5}
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={userDataIsLoading}
+                />
+              </div>
+              <div className="profile_form_item">
+                <label htmlFor={`startDate-${index}`}>Start Date</label>
+                <input
+                  type="date"
+                  name="startDate"
+                  id={`startDate-${index}`}
+                  value={
+                    entry.startDate ? entry.startDate.substring(0, 10) : ''
+                  }
+                  className="profile_input_item"
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={userDataIsLoading}
+                />
+              </div>
+              <div className="profile_form_item">
+                <label htmlFor={`endDate-${index}`}>End Date</label>
+                <input
+                  type="date"
+                  name="endDate"
+                  id={`endDate-${index}`}
+                  value={entry.endDate ? entry.endDate.substring(0, 10) : ''}
+                  className="profile_input_item"
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={entry.currentlyWorking || userDataIsLoading}
+                />
+              </div>
+              <div className="currently_working_here">
+                <div
+                  onClick={() => handleCheckboxChange(index)}
+                  style={{
+                    cursor: 'pointer',
+                    marginRight: '10px',
+                    width: '15px',
+                    height: '15px',
+                  }}
+                >
+                  {entry.currentlyWorking ? (
+                    <RememberMeCheckBox />
+                  ) : (
+                    <div className="pages_empty_checkbox"></div>
+                  )}
+                </div>
+                <div style={{ paddingTop: '5px' }}>Currently Working Here</div>
+              </div>
+            </div>
+          ))
+        )}
+
         <div className="add_another_entry_2">
           <div className="content" onClick={handleAddEntry}>
             <AddIcon />
@@ -143,9 +296,20 @@ const Experience = () => {
             </div>
           </div>
         </div>
+
         <div className="settings_edit_btn_container">
-          <button className="settings_edit_btn" disabled={isButtonDisabled}>
-            SAVE INFORMATION
+          <button
+            className="settings_edit_btn"
+            disabled={isButtonDisabled || isLoading}
+            onClick={handleUpdateProfile}
+            style={{
+              backgroundColor:
+                isLoading || isButtonDisabled ? 'grey' : '#4274BA',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              pointerEvents: isLoading ? 'none' : 'auto',
+            }}
+          >
+            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
           </button>
         </div>
       </div>

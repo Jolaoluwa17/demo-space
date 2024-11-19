@@ -3,17 +3,28 @@ import './dashboard.css';
 import NotepadIcon from '@/icons/NotepadIcon';
 import TalentPoolIcon from '@/icons/TalentPoolIcon';
 import CoinIcon from '@/icons/CoinIcon';
-import { userSignedUpData } from '@/utils/userSignedUpData';
 import { skillGapPendingData } from '@/utils/skillGapPendingData';
+import { useGetAllUserQuery } from '@/services/features/user/userSlice';
+
+interface User {
+  id: string;
+  fullName: string;
+  email: string;
+  createdAt: string;
+}
 
 const Dashboard = () => {
+  const { data, isLoading } = useGetAllUserQuery({});
+  const userCount =
+    data?.response?.filter((user: User) => user.fullName)?.length || 0;
+
   const overviewCards = [
     {
       id: 1,
       icon: <RegisteredUsersIcon />,
       backgroundColor: '#D5F1F6',
       title: 'Registered Users',
-      number: 2000,
+      number: userCount,
     },
     {
       id: 2,
@@ -65,26 +76,41 @@ const Dashboard = () => {
             <div className="table_header">Recent Signup</div>
             <div className="admin_view_all">View all</div>
           </div>
-          <div className="admin_dashboard_table_container">
-            <table className="admin_dashboard_user_table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Date Signed Up</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userSignedUpData.map((user) => (
-                  <tr key={user.id}>
-                    <td className="user_table_name">{user.name}</td>
-                    <td className="user_table_email">{user.email}</td>
-                    <td>{user.dateSignedUp}</td>
+          {isLoading ? (
+            <div className="loadingData">Loading Data...</div>
+          ) : (
+            <div className="admin_dashboard_table_container">
+              <table className="admin_dashboard_user_table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Date Signed Up</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {data?.response
+                    ?.filter((user: User) => user.fullName)
+                    .map((user: User) => (
+                      <tr key={user.id}>
+                        <td className="user_table_name">{user.fullName}</td>
+                        <td className="user_table_email">{user.email}</td>
+                        <td>
+                          {new Date(user.createdAt).toLocaleDateString(
+                            'en-US',
+                            {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                            }
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
         <div className="admin_dashboard_right">
           <div className="title">

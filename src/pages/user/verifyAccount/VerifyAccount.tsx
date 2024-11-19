@@ -36,7 +36,7 @@ const VerifyAccount = () => {
       handleLogin();
     } catch (error: unknown) {
       console.log(error);
-      setErr('Wrong OTP');
+      setErr('Invalid OTP');
     }
   };
 

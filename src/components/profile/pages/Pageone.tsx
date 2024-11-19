@@ -44,9 +44,9 @@ const Pageone: React.FC<Props> = ({
   // Form validation
   useEffect(() => {
     setIsFormValid(
-      fullName.trim() !== '' && phoneNo.trim() !== '' && image !== null
+      fullName.trim() !== '' && phoneNo.trim() !== ''
     );
-  }, [fullName, phoneNo, image]);
+  }, [fullName, phoneNo]);
 
   return (
     <div className="profile_pageone_root">

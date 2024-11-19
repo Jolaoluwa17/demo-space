@@ -85,6 +85,8 @@
 .admin_dashboard_user_table {
   width: 100%;
   border-collapse: collapse;
+  position: relative;
+  height: 100%;
 }
 .admin_dashboard_user_table th,
 .admin_dashboard_user_table td {
@@ -120,4 +122,10 @@
 .activity_log {
   margin-bottom: 24px;
   font-size: 14px;
+}
+.loadingData {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  margin-top: 150px;
 }

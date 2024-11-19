@@ -146,34 +146,86 @@ const Profile = () => {
   const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
 
   const handleUpdateProfile = async () => {
-    if (!file) {
-      console.log('No file selected.');
-      return;
+    const formData = new FormData();
+
+    // Only append non-empty fields
+    if (fullName.trim()) {
+      formData.append('fullName', fullName);
+    }
+    if (phoneNo.trim()) {
+      formData.append('phoneNumber', phoneNo);
+    }
+    if (userid) {
+      formData.append('id', userid);
+    }
+    if (file) {
+      formData.append('profileImg', file);
     }
 
-    const formData = new FormData();
-    formData.append('fullName', fullName);
-    formData.append('phoneNumber', phoneNo);
-    formData.append('profileImg', file);
-    formData.append('id', userid || '');
-    formData.append('education', JSON.stringify(educationEntries));
-    skillSet.forEach((skills) => {
-      formData.append('skillSet', skills);
-    });
-    areaOfInterest.forEach((interest) => {
-      formData.append('areaOfInterest', interest);
-    });
-    formData.append(
-      'job',
-      JSON.stringify(entries.map(({ currentlyWorking, ...rest }) => rest))
-    );
-    formData.append('certifications', JSON.stringify(certifications));
+    // Validate and append `educationEntries`
+    if (
+      educationEntries &&
+      educationEntries.some((entry) =>
+        Object.values(entry).some(
+          (value) => typeof value === 'string' && value.trim() !== ''
+        )
+      )
+    ) {
+      formData.append('education', JSON.stringify(educationEntries));
+    }
+
+    // Validate and append `skillSet`
+    if (skillSet && skillSet.length > 0) {
+      skillSet.forEach((skill) => {
+        formData.append('skillSet', skill);
+      });
+    }
+
+    // Validate and append `areaOfInterest`
+    if (areaOfInterest && areaOfInterest.length > 0) {
+      areaOfInterest.forEach((interest) => {
+        formData.append('areaOfInterest', interest);
+      });
+    }
+
+    // Validate and append `entries`
+    if (
+      entries &&
+      entries.some((entry) =>
+        Object.values(entry).some(
+          (value) => typeof value === 'string' && value.trim() !== ''
+        )
+      )
+    ) {
+      formData.append(
+        'job',
+        JSON.stringify(entries.map(({ currentlyWorking, ...rest }) => rest))
+      );
+    }
+
+    // Validate and append `certifications`
+    if (
+      certifications &&
+      certifications.some((cert) =>
+        Object.values(cert).some(
+          (value) => typeof value === 'string' && value.trim() !== ''
+        )
+      )
+    ) {
+      formData.append('certifications', JSON.stringify(certifications));
+    }
 
     try {
+      console.log('FormData Contents:');
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+
+      // Uncomment the actual call when ready
       await updateUserProfile(formData).unwrap();
       navigate('/dashboard');
     } catch (error: unknown) {
-      console.log(error);
+      console.error('Error during profile update:', error);
     }
   };
 

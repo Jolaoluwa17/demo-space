@@ -1,30 +1,41 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import EditProfileIcon from '../../icons/EditProfileIcon';
 import './pages.css';
+import { IoPersonSharp } from 'react-icons/io5';
 
-const PersonalInformation = () => {
-  const [profileImage, setProfileImage] = useState<string>(
-    '/images/DummyProfilePic.svg'
-  );
+interface Props {
+  fullName?: string;
+  setFullName?: (fullName: string) => void;
+  phoneNo?: string;
+  setPhoneNo?: (phoneNo: string) => void;
+  email?: string;
+  setEmail?: (email: string) => void;
+  isLoading?: boolean;
+  image?: string | null;
+  setImage?: React.Dispatch<React.SetStateAction<string | null>>;
+  handleFileChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  userDataIsLoading?: boolean;
+  handleUpdateProfile?: () => Promise<void>;
+}
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const fileType = file.type;
-      if (
-        fileType === 'image/jpeg' ||
-        fileType === 'image/jpg' ||
-        fileType === 'image/svg+xml'
-      ) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setProfileImage(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        alert('Please upload an image file of type JPEG, JPG, or SVG.');
-      }
-    }
+const PersonalInformation: React.FC<Props> = ({
+  fullName,
+  setFullName,
+  phoneNo,
+  setPhoneNo,
+  email,
+  setEmail,
+  handleFileChange,
+  image,
+  userDataIsLoading,
+  handleUpdateProfile,
+  isLoading,
+}) => {
+  // Using useRef for the file input element
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const triggerFileUpload = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -34,40 +45,86 @@ const PersonalInformation = () => {
         <div className="settings_page_subHeader">
           This information will be used to create your personal profile.
         </div>
-        <div
-          className="settings_page_profile_pic"
-          onClick={() => document.getElementById('fileInput')?.click()}
-        >
-          <img
-            src={profileImage}
-            alt="profile_picture"
-            style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: "cover" }}
-          />
+        <div className="settings_page_profile_pic" onClick={triggerFileUpload}>
+          {image ? (
+            <img
+              src={image}
+              alt="profile_picture"
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                objectFit: 'cover',
+              }}
+            />
+          ) : (
+            <IoPersonSharp fontSize={60} color="white" />
+          )}
           <div className="profile_edit">
             <EditProfileIcon />
           </div>
         </div>
         <input
           type="file"
-          id="fileInput"
+          ref={fileInputRef}
+          accept=".png, .jpeg, .jpg, .svg"
           style={{ display: 'none' }}
-          accept=".jpeg,.jpg,.svg"
-          onChange={handleImageUpload}
+          onChange={handleFileChange}
+          disabled={userDataIsLoading || isLoading}
         />
+
+        {/* Full Name Input */}
         <div className="profile_form_item">
           <label htmlFor="fullName">Enter Full Name</label>
-          <input type="text" className="profile_input_item" name="fullName" />
+          <input
+            type="text"
+            className="profile_input_item"
+            name="fullName"
+            value={fullName || ''}
+            onChange={(e) => setFullName?.(e.target.value)}
+            disabled={userDataIsLoading || isLoading}
+          />
         </div>
+
+        {/* Phone Number Input */}
         <div className="profile_form_item">
           <label htmlFor="phoneNo">Enter Phone No.</label>
-          <input type="text" className="profile_input_item" name="phoneNo" />
+          <input
+            type="text"
+            className="profile_input_item"
+            name="phoneNo"
+            value={phoneNo || ''}
+            onChange={(e) => setPhoneNo?.(e.target.value)}
+            disabled={userDataIsLoading || isLoading}
+          />
         </div>
+
+        {/* Email Input */}
         <div className="profile_form_item">
           <label htmlFor="email">Enter Email Address</label>
-          <input type="text" className="profile_input_item" name="email" />
+          <input
+            type="text"
+            className="profile_input_item"
+            name="email"
+            value={email || ''}
+            onChange={(e) => setEmail?.(e.target.value)}
+            disabled
+          />
         </div>
+
+        {/* Save Button */}
         <div className="settings_edit_btn_container">
-          <div className="settings_edit_btn">SAVE INFORMATION</div>
+          <div
+            className="settings_edit_btn"
+            style={{
+              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              pointerEvents: isLoading ? 'none' : 'auto',
+            }}
+            onClick={!isLoading ? handleUpdateProfile : undefined}
+          >
+            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+          </div>
         </div>
       </div>
     </div>

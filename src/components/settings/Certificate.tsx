@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
 import './pages.css';
 import DeleteIcon from '../../icons/DeleteIcon';
 import AddIcon from '../../icons/AddIcon';
 
-interface Certification {
-  certificate: string;
-  organization: string;
-  issueDate: string;
+interface Props {
+  certifications?: Certification[];
+  setCertifications?: React.Dispatch<React.SetStateAction<Certification[]>>;
+  userDataIsLoading?: boolean;
+  isLoading?: boolean;
+  handleUpdateProfile?: () => Promise<void>;
 }
 
-const Certificate: React.FC = () => {
+interface Certification {
+  name: string;
+  issuedBy: string;
+  dateObtained: string;
+}
+
+const Certificate: React.FC<Props> = ({
+  certifications = [],
+  setCertifications,
+  userDataIsLoading,
+  isLoading,
+  handleUpdateProfile,
+}) => {
+  // Set default certification if no certifications are passed in
+  useEffect(() => {
+    if (certifications.length === 0 && setCertifications) {
+      setCertifications([
+        { name: '', issuedBy: '', dateObtained: getCurrentDate() },
+      ]);
+    }
+  }, [certifications, setCertifications]);
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -18,10 +41,6 @@ const Certificate: React.FC = () => {
     const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-
-  const [certifications, setCertifications] = useState<Certification[]>([
-    { certificate: '', organization: '', issueDate: getCurrentDate() },
-  ]);
 
   const handleInputChange = (
     index: number,
@@ -33,19 +52,31 @@ const Certificate: React.FC = () => {
       ...updatedCertifications[index],
       [name]: value,
     };
-    setCertifications(updatedCertifications);
+    if (setCertifications) {
+      setCertifications(updatedCertifications);
+    }
   };
 
   const handleAddCertification = () => {
-    setCertifications([
-      ...certifications,
-      { certificate: '', organization: '', issueDate: getCurrentDate() },
-    ]);
+    if (setCertifications) {
+      setCertifications([
+        ...certifications,
+        { name: '', issuedBy: '', dateObtained: getCurrentDate() },
+      ]);
+    }
   };
 
   const handleRemoveEntry = (index: number) => {
-    setCertifications(certifications.filter((_, i) => i !== index));
+    if (setCertifications) {
+      setCertifications(certifications.filter((_, i) => i !== index));
+    }
   };
+
+  // Ensure at least one input field is visible when certifications are empty
+  const certificationsToDisplay =
+    certifications.length > 0
+      ? certifications
+      : [{ name: '', issuedBy: '', dateObtained: getCurrentDate() }];
 
   return (
     <div className="settings_content">
@@ -54,7 +85,7 @@ const Certificate: React.FC = () => {
         <div className="settings_page_subHeader">
           List any certifications you have obtained.
         </div>
-        {certifications.map((cert, index) => (
+        {certificationsToDisplay.map((cert, index) => (
           <div key={index} className="certificate_entry">
             <div className="profile_form_item">
               <label htmlFor={`certificate-${index}`}>
@@ -71,11 +102,12 @@ const Certificate: React.FC = () => {
               </label>
               <input
                 type="text"
-                name="certificate"
+                name="name"
                 id={`certificate-${index}`}
-                value={cert.certificate}
+                value={cert.name || ''} // Fallback to empty string if cert.name is null
                 className="profile_input_item"
                 onChange={(event) => handleInputChange(index, event)}
+                disabled={userDataIsLoading || isLoading}
               />
             </div>
             <div className="profile_form_item">
@@ -84,22 +116,24 @@ const Certificate: React.FC = () => {
               </label>
               <input
                 type="text"
-                name="organization"
+                name="issuedBy"
                 id={`organization-${index}`}
-                value={cert.organization}
+                value={cert.issuedBy || ''} // Fallback to empty string if cert.issuedBy is null
                 className="profile_input_item"
                 onChange={(event) => handleInputChange(index, event)}
+                disabled={userDataIsLoading || isLoading}
               />
             </div>
             <div className="profile_form_item">
               <label htmlFor={`issueDate-${index}`}>Issue Date</label>
               <input
                 type="date"
-                name="issueDate"
+                name="dateObtained"
                 id={`issueDate-${index}`}
-                value={cert.issueDate}
+                value={cert.dateObtained || ''} // Fallback to empty string if cert.dateObtained is null
                 className="profile_input_item"
                 onChange={(event) => handleInputChange(index, event)}
+                disabled={userDataIsLoading || isLoading}
               />
             </div>
           </div>
@@ -119,7 +153,17 @@ const Certificate: React.FC = () => {
           </div>
         </div>
         <div className="settings_edit_btn_container">
-          <div className="settings_edit_btn">SAVE INFORMATION</div>
+          <div
+            className="settings_edit_btn"
+            style={{
+              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              pointerEvents: isLoading ? 'none' : 'auto',
+            }}
+            onClick={!isLoading ? handleUpdateProfile : undefined}
+          >
+            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+          </div>
         </div>
       </div>
     </div>

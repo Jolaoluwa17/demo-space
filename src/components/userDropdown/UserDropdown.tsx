@@ -44,6 +44,7 @@ export default function UserDropdown() {
 
   const { data, isLoading } = useGetUserQuery(userid ? userid : '') as {
     data: UserType | undefined;
+    error: undefined;
     isLoading: boolean;
   };
 
@@ -67,7 +68,7 @@ export default function UserDropdown() {
                 color: 'white',
               }}
             >
-              {isLoading ? (
+              {isLoading || !data?.response.profileImg ? (
                 <IoPersonSharp color="white" />
               ) : (
                 <img

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './pages.css';
 
 const interestsList = [
@@ -14,17 +13,29 @@ const interestsList = [
   'Game Development',
 ];
 
-const AreaOfInterest = () => {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+interface Props {
+  areaOfInterest?: string[];
+  setAreaOfInterest?: React.Dispatch<React.SetStateAction<string[]>>;
+  userDataIsLoading?: boolean;
+  isLoading?: boolean;
+  handleUpdateProfile?: () => Promise<void>;
+}
 
+const AreaOfInterest: React.FC<Props> = ({
+  areaOfInterest = [],
+  setAreaOfInterest,
+  userDataIsLoading,
+  isLoading,
+  handleUpdateProfile,
+}) => {
   // Handle clicking on an interest div
   const handleInterestClick = (interest: string) => {
-    if (selectedInterests.includes(interest)) {
-      setSelectedInterests(
-        selectedInterests.filter((item) => item !== interest)
-      );
-    } else {
-      setSelectedInterests([...selectedInterests, interest]);
+    if (setAreaOfInterest) {
+      if (areaOfInterest.includes(interest)) {
+        setAreaOfInterest(areaOfInterest.filter((item) => item !== interest));
+      } else {
+        setAreaOfInterest([...areaOfInterest, interest]);
+      }
     }
   };
 
@@ -47,15 +58,26 @@ const AreaOfInterest = () => {
                 <div>{interest}</div>
                 <input
                   type="checkbox"
-                  checked={selectedInterests.includes(interest)}
+                  checked={areaOfInterest.includes(interest)}
                   readOnly
+                  disabled={userDataIsLoading || isLoading}
                 />
               </div>
             ))}
           </div>
         </div>
         <div className="settings_edit_btn_container">
-          <div className="settings_edit_btn">SAVE INFORMATION</div>
+          <div
+            className="settings_edit_btn"
+            style={{
+              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              pointerEvents: isLoading ? 'none' : 'auto',
+            }}
+            onClick={!isLoading ? handleUpdateProfile : undefined}
+          >
+            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+          </div>
         </div>
       </div>
     </div>

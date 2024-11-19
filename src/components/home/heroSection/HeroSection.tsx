@@ -7,6 +7,7 @@ interface Props {
 }
 
 const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
+ 
   return (
     <div className="hero_section_root">
       <HomeNavBar featuresBtn={featuresBtn} />
@@ -33,7 +34,6 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
       <div className="hero_section_img2">
         <img
           src="/images/LandingPageImg2.svg"
-          loading="lazy"
           alt=""
           className="hero_section_img2_2"
         />
@@ -41,7 +41,6 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
       <div className="hero_section_img1">
         <img
           src="/images/LandingPageImg1.svg"
-          loading="lazy"
           alt=""
           className="hero_section_img1"
         />
@@ -49,7 +48,6 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
       <div className="hero_section_img3">
         <img
           src="/images/LandingPageImg3.svg"
-          loading="lazy"
           alt=""
           className="hero_section_img3_3"
         />
@@ -57,34 +55,18 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
       <div className="hero_section_img4">
         <img
           src="/images/LandingPageImg4.svg"
-          loading="lazy"
           alt=""
           className="hero_section_img4_4"
         />
       </div>
       <div className="hero_section_rhode1">
-        <img
-          src="/images/RhodeIsland.svg"
-          alt=""
-          loading="lazy"
-          className="rhodes"
-        />
+        <img src="/images/RhodeIsland.svg" alt="" className="rhodes" />
       </div>
       <div className="hero_section_rhode2">
-        <img
-          src="/images/RhodeIsland.svg"
-          alt=""
-          loading="lazy"
-          className="rhodes"
-        />
+        <img src="/images/RhodeIsland.svg" alt="" className="rhodes" />
       </div>
       <div className="hero_section_star1">
-        <img
-          src="/images/SoftStar.svg"
-          alt=""
-          className="star"
-          loading="lazy"
-        />
+        <img src="/images/SoftStar.svg" alt="" className="star" />
       </div>
     </div>
   );

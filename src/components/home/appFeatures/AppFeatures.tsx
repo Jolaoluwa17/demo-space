@@ -71,11 +71,7 @@ const AppFeatures = () => {
           ))}
         </div>
         <div className="middle">
-          <img
-            src="/images/DemoPhone.svg"
-            alt=""
-            className="app_features_middle_img"
-          />
+          <img src="/images/DemoPhone.svg" alt="" className='app_features_middle_img' />
         </div>
         <div className="right">
           {appFeaturesRightData.map((feature, index) => (
@@ -90,12 +86,7 @@ const AppFeatures = () => {
         </div>
       </div>
       <div className="app_features_star">
-        <img
-          src="/images/SoftStar.svg"
-          alt=""
-          className="star"
-          loading="lazy"
-        />
+        <img src="/images/SoftStar.svg" alt="" className="star" />
       </div>
     </div>
   );

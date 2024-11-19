@@ -8,6 +8,12 @@ export const userSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getAllUser: builder.query({
+      query: () => ({
+        url: `user/`,
+        method: 'GET',
+      }),
+    }),
     updateUserProfile: builder.mutation({
       query: (userData) => {
         const userId = userData.get('id'); // Access the 'id' from FormData
@@ -22,4 +28,8 @@ export const userSlice = apiSlice.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetUserQuery, useUpdateUserProfileMutation } = userSlice;
+export const {
+  useGetUserQuery,
+  useGetAllUserQuery,
+  useUpdateUserProfileMutation,
+} = userSlice;

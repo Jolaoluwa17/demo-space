@@ -1,39 +1,63 @@
 import { useState } from 'react';
-import SearchIcon from '../../icons/SearchIcon';
 import './pages.css';
 import CancelIcon from '../../icons/CancelIcon';
 
-const Skills = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([
-    'JavaScript',
-    'HTML',
-  ]);
+interface Props {
+  skillSet?: string[]; // Default to an empty array if undefined
+  setSkillSet?: React.Dispatch<React.SetStateAction<string[]>>;
+  userDataIsLoading?: boolean;
+  isLoading?: boolean;
+  handleUpdateProfile?: () => Promise<void>;
+}
 
-  // Handle search input change
+const Skills: React.FC<Props> = ({
+  skillSet = [], // Default to an empty array if undefined
+  setSkillSet,
+  userDataIsLoading,
+  isLoading,
+  handleUpdateProfile,
+}) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      e.key === 'Enter' &&
-      searchTerm.trim() !== '' &&
-      selectedSkills.length < 10
-    ) {
+    if (e.key === 'Enter' && searchTerm.trim() !== '' && skillSet.length < 10) {
       e.preventDefault(); // Prevent form submission or unwanted behavior
-      if (!selectedSkills.includes(searchTerm.trim())) {
-        setSelectedSkills([...selectedSkills, searchTerm.trim()]);
+      if (!skillSet.includes(searchTerm.trim())) {
+        setSkillSet?.([...skillSet, searchTerm.trim()]);
         setSearchTerm(''); // Clear the input field
       }
     }
   };
 
-  // Remove a skill from the selected skills list
   const handleSkillRemove = (skill: string) => {
-    setSelectedSkills(selectedSkills.filter((s) => s !== skill));
+    setSkillSet?.(skillSet.filter((s) => s !== skill));
   };
+
+  const handleAddSkill = () => {
+    const trimmedSkill = searchTerm.trim();
+    if (
+      trimmedSkill !== '' &&
+      skillSet.length < 10 &&
+      !skillSet.includes(trimmedSkill)
+    ) {
+      setSkillSet?.([...skillSet, trimmedSkill]);
+      setSearchTerm(''); // Clear the input field
+    }
+  };
+
+  // Filter out any empty or invalid skills
+  const validSkills = skillSet.filter(
+    (skill) =>
+      skill !== 'null' &&
+      skill !== undefined &&
+      typeof skill === 'string' &&
+      skill.trim() !== ''
+  );
 
   return (
     <div className="settings_content">
@@ -53,12 +77,18 @@ const Skills = () => {
               value={searchTerm}
               onChange={handleSearchChange}
               onKeyDown={handleKeyDown}
+              disabled={userDataIsLoading || isLoading}
             />
-            <SearchIcon />
+            <div
+              style={{ color: '#4274ba', fontWeight: '600', cursor: 'pointer' }}
+              onClick={handleAddSkill}
+            >
+              Add
+            </div>
           </div>
           <div className="skillheader">You can add up to 10 skills</div>
           <div className="skills_container">
-            {selectedSkills.map((skill) => (
+            {validSkills.map((skill) => (
               <div className="skill" key={skill}>
                 <div style={{ marginRight: '12.5px' }}>{skill}</div>
                 <div
@@ -72,7 +102,17 @@ const Skills = () => {
           </div>
         </div>
         <div className="settings_edit_btn_container">
-          <div className="settings_edit_btn">SAVE INFORMATION</div>
+          <div
+            className="settings_edit_btn"
+            style={{
+              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              pointerEvents: isLoading ? 'none' : 'auto',
+            }}
+            onClick={!isLoading ? handleUpdateProfile : undefined}
+          >
+            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+          </div>
         </div>
       </div>
     </div>
