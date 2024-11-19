@@ -193,7 +193,8 @@
 
 @media (max-width: 450px) {
   .profile_form_item label,
-  .profile_input_item {
+  .profile_input_item,
+  .profile_pageone_form_item label {
     font-size: 14px;
   }
   .settings_edit_btn {
@@ -207,6 +208,12 @@
   }
   .profile_pageone_form_item .interests {
     font-size: 14px;
+  }
+  .multi_select_interest {
+    flex-direction: column;
+  }
+  .profile_pageone_form_item .interests {
+    width: 100%;
   }
   /* For WebKit-based browsers (Safari, Chrome on iOS and Android) */
   input[type='date'].profile_input_item::-webkit-inner-spin-button,

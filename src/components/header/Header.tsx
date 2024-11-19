@@ -4,10 +4,18 @@ import './header.css';
 import UserDropdown from '../userDropdown/UserDropdown';
 import Popup from '../../modals/popup/Popup';
 import Xicon from '../../icons/Xicon';
+import { useGetUserQuery } from '@/services/features/user/userSlice';
 
 interface Props {
   activeLink: string;
   userName: string;
+}
+
+interface UserType {
+  response: {
+    fullName: string;
+    email: string;
+  };
 }
 
 const Header: React.FC<Props> = ({ activeLink }) => {
@@ -34,6 +42,14 @@ const Header: React.FC<Props> = ({ activeLink }) => {
     };
   }, [isOpen]);
 
+  const userid = sessionStorage.getItem('id');
+
+  const { data } = useGetUserQuery(userid ? userid : '') as {
+    data: UserType | undefined;
+    error: undefined;
+    isLoading: boolean;
+  };
+
   return (
     <header className="header">
       <h1 className="header_title">{activeLink}</h1>
@@ -49,7 +65,14 @@ const Header: React.FC<Props> = ({ activeLink }) => {
             <UserDropdown />
           </div>
           <div className="profile_dropdown_text">
-            <div className="profile_dropdown_text_name">Hi, Daniel!</div>
+            <div className="profile_dropdown_text_name">
+              Hi,{' '}
+              {data && (
+                <span style={{ fontWeight: '600' }}>
+                  {data?.response?.fullName}
+                </span>
+              )}
+            </div>
             <div className="profile_dropdown_text_preview">
               Here's what you can do next.
             </div>
