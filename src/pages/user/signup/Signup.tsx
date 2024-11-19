@@ -100,6 +100,7 @@ const Signup = () => {
               src="/assets/images/TechWingLogo.svg"
               alt="techwings_logo"
               onClick={() => navigator('/')}
+              loading="lazy"
             />
           </div>
           <div className="signup_form">

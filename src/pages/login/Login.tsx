@@ -114,6 +114,7 @@ const Login = () => {
               src="/assets/images/TechWingLogo.svg"
               alt="TechWings Global"
               onClick={() => navigator('/')}
+              loading="lazy"
             />
           </div>
           <div className="login_title">Login</div>
@@ -204,6 +205,7 @@ const Login = () => {
             alt="login_image"
             className="login_img"
             style={{borderRadius: "10px"}}
+            loading="lazy"
           />
         </div>
       </div>
