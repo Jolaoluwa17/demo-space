@@ -84,10 +84,9 @@ const Login = () => {
       const err = error as ErrorResponse;
 
       if (err?.status === 404) {
-        setErrMsg("Invalid email or password");
-      }
-      else {
-        setErrMsg("Something went wrong")
+        setErrMsg('Invalid email or password');
+      } else {
+        setErrMsg('Something went wrong');
       }
       console.log(error);
     }
@@ -199,7 +198,14 @@ const Login = () => {
           </div>
           <div className="image_container"></div>
         </div>
-        <div className="right"></div>
+        <div className="right">
+          <img
+            src="/assets/images/Login.svg"
+            alt="login_image"
+            className="login_img"
+            style={{borderRadius: "10px"}}
+          />
+        </div>
       </div>
     </div>
   );

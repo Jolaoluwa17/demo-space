@@ -1,5 +1,5 @@
 .signup_root {
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   display: flex;
   align-items: center;
@@ -34,7 +34,7 @@
 .signup_root .left_section {
   width: 40%;
   height: 100%;
-  background-color: #4274ba;
+  /* background-color: #4274ba; */
   margin: 0px;
   border-radius: 10px;
 }
@@ -147,6 +147,10 @@
   display: flex;
   align-items: center;
   font-size: 14px;
+}
+.signup_img {
+  height: 750px;
+  width: 100%;
 }
 
 @media (max-width: 850px) {

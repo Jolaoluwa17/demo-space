@@ -1,12 +1,11 @@
 .login_root {
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 85px 100px 50px 100px;
   box-sizing: border-box;
-  position: fixed;
 }
 .techwings_logo_login {
   position: absolute;
@@ -29,15 +28,19 @@
   padding: 30px 0px;
   box-sizing: border-box;
   padding-right: 100px;
-  overflow-y: auto;
 }
 
 .login_container .right {
   width: 40%;
   height: 100%;
-  background-color: #4274ba;
   margin: 0px;
-  border-radius: 10px;
+  border-radius: 15px;
+  /* overflow: hidden; */
+  /* background-color: #4274ba; */
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .login_title {
   font-size: 30px;
@@ -140,6 +143,10 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+.login_img {
+  height: 750px;
+  width: 100%;
 }
 
 /* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */

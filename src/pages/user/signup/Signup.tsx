@@ -88,11 +88,11 @@ const Signup = () => {
     <div className="signup_root">
       <div className="signup_container">
         <div className="left_section">
-          {/* <img
+          <img
             src="/assets/images/Signup.svg"
             alt="signup_image"
             className="signup_img"
-          /> */}
+          />
         </div>
         <div className="right_section">
           <div className="techwings_logo">
