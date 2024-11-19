@@ -45,3 +45,14 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.status_column {
+  color: black;
+  padding: 5px 0px;
+  font-size: 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+}
