@@ -92,6 +92,7 @@ const Signup = () => {
             src="/assets/images/Signup.svg"
             alt="signup_image"
             className="signup_img"
+            style={{ borderRadius: '10px' }}
           />
         </div>
         <div className="right_section">
@@ -281,7 +282,7 @@ const Signup = () => {
             </div>
             <div className="or_signup">
               <hr />
-              <div style={{textAlign: "center"}}>Or Sign up with</div>
+              <div style={{ textAlign: 'center' }}>Or Sign up with</div>
               <hr />
             </div>
 

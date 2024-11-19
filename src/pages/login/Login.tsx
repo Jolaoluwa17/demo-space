@@ -204,7 +204,7 @@ const Login = () => {
             src="/assets/images/Login.svg"
             alt="login_image"
             className="login_img"
-            style={{borderRadius: "10px"}}
+            style={{ borderRadius: '10px', position: 'inherit' }}
             loading="lazy"
           />
         </div>
