@@ -12,6 +12,7 @@ import {
   setAuthState,
   setCredentials,
 } from '@/services/features/auth/authSlice';
+import { BiSolidErrorAlt } from 'react-icons/bi';
 
 interface ErrorResponse {
   status: number;
@@ -26,6 +27,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState<boolean>(true);
+  const [rememberMe, setRememberMe] = useState(false);
   const isFormValid = password !== '' && !emailError;
   const [errMsg, setErrMsg] = useState<string>('');
 
@@ -40,6 +42,10 @@ const Login = () => {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+  };
+
+  const handleRememberMeChange = () => {
+    setRememberMe(!rememberMe);
   };
 
   const handleEmailChange = (value: string) => {
@@ -59,6 +65,14 @@ const Login = () => {
       email: email,
       password: password,
     };
+
+    if (rememberMe) {
+      // Save email in localStorage if "Remember Me" is checked
+      localStorage.setItem('evaluator', email);
+    } else {
+      // Remove saved email if "Remember Me" is not checked
+      localStorage.removeItem('evaluator');
+    }
 
     try {
       const res = await login(userData).unwrap();
@@ -129,6 +143,7 @@ const Login = () => {
               value={email}
               onChange={(e) => handleEmailChange(e.target.value)}
               placeholder="ysemiraefe@gmail.com"
+              disabled={isLoading}
             />
           </div>
           <div className="login_form_item">
@@ -139,6 +154,7 @@ const Login = () => {
                 value={password}
                 onChange={handlePasswordChange}
                 placeholder="************"
+                disabled={isLoading}
               />
               <div
                 className="login_password_visibility"
@@ -150,7 +166,11 @@ const Login = () => {
           </div>
           <div className="login_configurations">
             <div className="remember_me">
-              <input type="checkbox" style={{ cursor: 'pointer' }} />
+              <input
+                type="checkbox"
+                style={{ cursor: 'pointer' }}
+                onChange={handleRememberMeChange}
+              />
               <div style={{ marginLeft: '8px' }}>Remember me</div>
             </div>
             <div
@@ -172,7 +192,12 @@ const Login = () => {
           >
             {isLoading ? <div className="spinner"></div> : 'Login'}
           </button>
-          <div className="error_message">{errMsg}</div>
+          {errMsg && (
+            <div className="error_message">
+              <BiSolidErrorAlt fontSize={18} style={{ paddingRight: '5px' }} />
+              {errMsg}
+            </div>
+          )}
           <div className="donot_have_acc">
             Don't have an account?{' '}
             <span

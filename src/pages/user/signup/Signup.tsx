@@ -10,6 +10,14 @@ import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
 import { IoClose, IoCheckmark } from 'react-icons/io5';
 
+interface ErrorResponse {
+  status: number;
+  data: {
+    error: string;
+    response: string;
+  };
+}
+
 const Signup = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -77,9 +85,11 @@ const Signup = () => {
       navigator('/auth/verifyaccount');
     } catch (error: unknown) {
       console.log(error);
-      const err = error as { status?: number };
+      const err = error as ErrorResponse;
       setErr(
-        err.status === 409 ? 'User already exists' : 'Something went wrong'
+        err.data.response === 'User already exists'
+          ? 'User already exists'
+          : 'Something went wrong'
       );
     }
   };
@@ -119,6 +129,7 @@ const Signup = () => {
                 className="input"
                 value={email}
                 onChange={(e) => handleEmailChange(e.target.value)}
+                disabled={isLoading}
               />
             </div>
 
@@ -132,6 +143,7 @@ const Signup = () => {
                   className="input"
                   value={password}
                   onChange={handlePasswordChange}
+                  disabled={isLoading}
                 />
                 <div onClick={handleHiddenTrigger} className="see_password">
                   {showPassword ? <EyeOpen /> : <EyeClosed />}
@@ -207,6 +219,7 @@ const Signup = () => {
                   className="input"
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
+                  disabled={isLoading}
                 />
                 <div
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
