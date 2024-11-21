@@ -64,13 +64,28 @@ const AboutUs = () => {
         </div>
       </div>
       <div className="about_us_star">
-        <img src="/images/SoftStar.svg" alt="" className="star" />
+        <img
+          src="/images/SoftStar.svg"
+          alt=""
+          className="star"
+          loading="lazy"
+        />
       </div>
       <div className="about_us_rhode1">
-        <img src="/images/RhodeIsland.svg" alt="" className="rhodes" />
+        <img
+          src="/images/RhodeIsland.svg"
+          alt=""
+          className="rhodes"
+          loading="lazy"
+        />
       </div>
       <div className="about_us_rhode2">
-        <img src="/images/RhodeIsland.svg" alt="" className="rhodes" />
+        <img
+          src="/images/RhodeIsland.svg"
+          alt=""
+          className="rhodes"
+          loading="lazy"
+        />
       </div>
     </div>
   );

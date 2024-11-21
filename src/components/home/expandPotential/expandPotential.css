@@ -49,6 +49,21 @@
   }
 }
 
+@media (max-width: 1145px) {
+  .laptop_picture_main {
+    width: 850px;
+  }
+}
+
+@media (max-width: 875px) {
+  .laptop_picture_main {
+    width: 750px;
+  }
+  .expand_potential_subTitle {
+    font-size: 35px;
+  }
+}
+
 @media (max-width: 768px) {
   .expand_potential_root {
     width: 100%;

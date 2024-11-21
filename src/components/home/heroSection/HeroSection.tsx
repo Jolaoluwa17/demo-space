@@ -7,7 +7,6 @@ interface Props {
 }
 
 const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
- 
   return (
     <div className="hero_section_root">
       <HomeNavBar featuresBtn={featuresBtn} />
@@ -36,6 +35,7 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
           src="/images/LandingPageImg2.svg"
           alt=""
           className="hero_section_img2_2"
+          loading="lazy"
         />
       </div>
       <div className="hero_section_img1">
@@ -43,6 +43,7 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
           src="/images/LandingPageImg1.svg"
           alt=""
           className="hero_section_img1"
+          loading="lazy"
         />
       </div>
       <div className="hero_section_img3">
@@ -50,6 +51,7 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
           src="/images/LandingPageImg3.svg"
           alt=""
           className="hero_section_img3_3"
+          loading="lazy"
         />
       </div>
       <div className="hero_section_img4">
@@ -57,16 +59,32 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
           src="/images/LandingPageImg4.svg"
           alt=""
           className="hero_section_img4_4"
+          loading="lazy"
         />
       </div>
       <div className="hero_section_rhode1">
-        <img src="/images/RhodeIsland.svg" alt="" className="rhodes" />
+        <img
+          src="/images/RhodeIsland.svg"
+          alt=""
+          className="rhodes"
+          loading="lazy"
+        />
       </div>
       <div className="hero_section_rhode2">
-        <img src="/images/RhodeIsland.svg" alt="" className="rhodes" />
+        <img
+          src="/images/RhodeIsland.svg"
+          alt=""
+          className="rhodes"
+          loading="lazy"
+        />
       </div>
       <div className="hero_section_star1">
-        <img src="/images/SoftStar.svg" alt="" className="star" />
+        <img
+          src="/images/SoftStar.svg"
+          alt=""
+          className="star"
+          loading="lazy"
+        />
       </div>
     </div>
   );

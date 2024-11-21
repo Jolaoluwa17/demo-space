@@ -58,3 +58,12 @@
     font-size: 14px;
   }
 }
+
+@media (max-width: 735px) {
+  .accordion_title {
+    font-size: 14px;
+  }
+  .accordion-content {
+    font-size: 12px;
+  }
+}

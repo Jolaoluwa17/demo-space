@@ -8,7 +8,7 @@ import { useSignUpMutation } from '@/services/features/auth/authApiSlice';
 import { setCredentials } from '@/services/features/auth/authSlice';
 import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
-import { IoClose, IoCheckmark } from 'react-icons/io5';
+import { IoClose, IoCheckmarkDoneOutline } from 'react-icons/io5';
 
 interface ErrorResponse {
   status: number;
@@ -99,10 +99,11 @@ const Signup = () => {
       <div className="signup_container">
         <div className="left_section">
           <img
-            src="/assets/images/Signup.svg"
+            src="/assets/images/Signup.png"
             alt="signup_image"
             className="signup_img"
             style={{ borderRadius: '10px' }}
+            loading="lazy"
           />
         </div>
         <div className="right_section">
@@ -144,6 +145,7 @@ const Signup = () => {
                   value={password}
                   onChange={handlePasswordChange}
                   disabled={isLoading}
+                  style={samePassword ? {} : { border: '1px solid red' }}
                 />
                 <div onClick={handleHiddenTrigger} className="see_password">
                   {showPassword ? <EyeOpen /> : <EyeClosed />}
@@ -157,7 +159,7 @@ const Signup = () => {
                 style={{ color: hasMinLength ? 'green' : 'red' }}
               >
                 {hasMinLength ? (
-                  <IoCheckmark style={{ paddingRight: '5px' }} />
+                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
                 ) : (
                   <IoClose style={{ paddingRight: '5px' }} />
                 )}
@@ -168,7 +170,7 @@ const Signup = () => {
                 style={{ color: hasUppercase ? 'green' : 'red' }}
               >
                 {hasUppercase ? (
-                  <IoCheckmark style={{ paddingRight: '5px' }} />
+                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
                 ) : (
                   <IoClose style={{ paddingRight: '5px' }} />
                 )}
@@ -179,7 +181,7 @@ const Signup = () => {
                 style={{ color: hasLowercase ? 'green' : 'red' }}
               >
                 {hasLowercase ? (
-                  <IoCheckmark style={{ paddingRight: '5px' }} />
+                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
                 ) : (
                   <IoClose style={{ paddingRight: '5px' }} />
                 )}
@@ -190,7 +192,7 @@ const Signup = () => {
                 style={{ color: hasSpecialChar ? 'green' : 'red' }}
               >
                 {hasSpecialChar ? (
-                  <IoCheckmark style={{ paddingRight: '5px' }} />
+                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
                 ) : (
                   <IoClose style={{ paddingRight: '5px' }} />
                 )}
@@ -201,7 +203,7 @@ const Signup = () => {
                 style={{ color: hasNumber ? 'green' : 'red' }}
               >
                 {hasNumber ? (
-                  <IoCheckmark style={{ paddingRight: '5px' }} />
+                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
                 ) : (
                   <IoClose style={{ paddingRight: '5px' }} />
                 )}
@@ -220,6 +222,7 @@ const Signup = () => {
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
                   disabled={isLoading}
+                  style={samePassword ? {} : { border: '1px solid red' }}
                 />
                 <div
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}

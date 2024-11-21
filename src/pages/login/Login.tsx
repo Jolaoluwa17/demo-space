@@ -226,7 +226,7 @@ const Login = () => {
         </div>
         <div className="right">
           <img
-            src="/assets/images/Login.svg"
+            src="/assets/images/Login.png"
             alt="login_image"
             className="login_img"
             style={{ borderRadius: '10px', position: 'inherit' }}

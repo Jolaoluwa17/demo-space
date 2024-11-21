@@ -3,7 +3,7 @@
   padding: 120px 170px;
   box-sizing: border-box;
   position: relative;
-  background-color: #ebf1f8;
+  background: linear-gradient(to bottom right, #ebf1f8, #ffffff 50%, #ebf1f8);
   display: flex;
   align-items: center;
   justify-content: center;

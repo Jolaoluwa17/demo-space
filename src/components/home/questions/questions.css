@@ -72,6 +72,15 @@
   }
 }
 
+@media (max-width: 735px) {
+  .ask_question_subTitle {
+    font-size: 20px;
+  }
+  .ask_question_subTitle_sub {
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 450px) {
   .ask_question_root {
     padding: 50px 24px;
