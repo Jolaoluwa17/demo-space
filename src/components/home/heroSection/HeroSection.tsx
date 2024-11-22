@@ -43,7 +43,6 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
           src="/images/LandingPageImg1.png"
           alt=""
           className="hero_section_img1"
-          loading="lazy"
         />
       </div>
       <div className="hero_section_img3">
