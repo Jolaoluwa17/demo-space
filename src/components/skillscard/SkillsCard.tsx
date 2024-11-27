@@ -2,9 +2,9 @@ import RightArrowIcon from '../../icons/RightArrowIcon';
 import './skillsCard.css';
 
 interface Props {
-  // imgSrc: string;
+  imgSrc?: string;
   language: string;
-  // description: string;
+  description?: string;
   onClick?: () => void;
 }
 
