@@ -90,7 +90,8 @@
   border-radius: 8px;
   cursor: pointer;
 }
-.back_and_next_button.disabled {
+.back_and_next_button.disabled,
+.question_submit_btn.disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }

@@ -127,8 +127,8 @@ const Profile = () => {
       graduationDate: '',
     },
   ]);
-  const [skillSet, setskillSet] = useState<string[]>([]);
-  const [areaOfInterest, setareaOfInterest] = useState<string[]>([]);
+  const [skillSet, setSkillSet] = useState<string[]>([]);
+  const [areaOfInterest, setAreaOfInterest] = useState<string[]>([]);
   const [entries, setEntries] = useState<Entry[]>([
     {
       title: '',
@@ -217,7 +217,7 @@ const Profile = () => {
 
     try {
       console.log('FormData Contents:');
-      for (let [key, value] of formData.entries()) {
+      for (const [key, value] of formData.entries()) {
         console.log(`${key}:`, value);
       }
 
@@ -300,7 +300,7 @@ const Profile = () => {
             <PageThree
               setCurrentPage={setCurrentPage}
               skillSet={skillSet}
-              setskillSet={setskillSet}
+              setSkillSet={setSkillSet}
               isLoading={isLoading}
             />
           )}
@@ -308,7 +308,7 @@ const Profile = () => {
             <PageFour
               setCurrentPage={setCurrentPage}
               areaOfInterest={areaOfInterest}
-              setareaOfInterest={setareaOfInterest}
+              setAreaOfInterest={setAreaOfInterest}
               isLoading={isLoading}
             />
           )}
@@ -322,12 +322,22 @@ const Profile = () => {
           )}
           {currentPage === 6 && (
             <PageSix
+              handleUpdateProfile={handleUpdateProfile}
               certifications={certifications}
               setCertifications={setCertifications}
               isLoading={isLoading}
-              handleUpdateProfile={handleUpdateProfile}
             />
           )}
+        </div>
+        <div className="profile_footer">
+          <button
+            className="submit_button"
+            disabled={isLoading}
+            onClick={!isLoading ? handleUpdateProfile : undefined}
+            style={isLoading ? { backgroundColor: 'grey' } : {}}
+          >
+            {isLoading ? 'Submitting...' : 'Submit'}
+          </button>
         </div>
       </div>
     </div>

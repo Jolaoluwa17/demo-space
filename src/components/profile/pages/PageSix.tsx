@@ -116,7 +116,11 @@ const PageSix: React.FC<Props> = ({
           onClick={
             !isButtonDisabled && !isLoading ? handleAddCertification : undefined
           }
-          style={isButtonDisabled || isLoading ? { color: 'grey', cursor: "not-allowed" } : {}}
+          style={
+            isButtonDisabled || isLoading
+              ? { color: 'grey', cursor: 'not-allowed' }
+              : {}
+          }
         >
           <AddIcon
             color={isButtonDisabled || isLoading ? '#808080' : '#4274BA'}

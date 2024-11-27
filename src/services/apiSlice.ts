@@ -16,11 +16,9 @@ const baseQuery = fetchBaseQuery({
   credentials: 'include',
   prepareHeaders: () => {
     // const token = (getState() as RootState).auth.token;
-
     // if (token) {
     //   headers.set('Authorization', `Bearer ${token}`);
     // }
-
     // return headers;
   },
 });

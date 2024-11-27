@@ -23,7 +23,6 @@ const Overview = () => {
     isLoading: boolean;
   };
 
-
   return (
     <div className="overview_root">
       {isLoading ? (

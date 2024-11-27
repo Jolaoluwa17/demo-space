@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UploadedDocumentIcon from '@/icons/UploadedDocumentIcon';
 import { BiX } from 'react-icons/bi';
-import { TfiSave } from "react-icons/tfi";
+import { TfiSave } from 'react-icons/tfi';
 
 const time = ['40', '50', '60'];
 const passingGrade = ['60', '70', '80'];

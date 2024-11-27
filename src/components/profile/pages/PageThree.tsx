@@ -5,14 +5,14 @@ import './pages.css';
 interface Props {
   setCurrentPage: (page: number) => void;
   skillSet: string[];
-  setskillSet: React.Dispatch<React.SetStateAction<string[]>>;
+  setSkillSet: React.Dispatch<React.SetStateAction<string[]>>;
   isLoading: boolean;
 }
 
 const PageThree: React.FC<Props> = ({
   setCurrentPage,
   skillSet,
-  setskillSet,
+  setSkillSet,
   isLoading,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,7 +29,7 @@ const PageThree: React.FC<Props> = ({
     if (e.key === 'Enter' && searchTerm.trim() !== '' && skillSet.length < 10) {
       e.preventDefault(); // Prevent form submission or unwanted behavior
       if (!skillSet.includes(searchTerm.trim())) {
-        setskillSet([...skillSet, searchTerm.trim()]);
+        setSkillSet([...skillSet, searchTerm.trim()]);
         setSearchTerm(''); // Clear the input field
       }
     }
@@ -37,7 +37,7 @@ const PageThree: React.FC<Props> = ({
   const handleAddSkill = () => {
     if (searchTerm.trim() !== '' && skillSet.length < 10) {
       if (!skillSet.includes(searchTerm.trim())) {
-        setskillSet([...skillSet, searchTerm.trim()]);
+        setSkillSet([...skillSet, searchTerm.trim()]);
         setSearchTerm(''); // Clear the input field
       }
     }
@@ -45,7 +45,7 @@ const PageThree: React.FC<Props> = ({
 
   // Remove a skill from the selected skills list
   const handleSkillRemove = (skill: string) => {
-    setskillSet(skillSet.filter((s) => s !== skill));
+    setSkillSet(skillSet.filter((s) => s !== skill));
   };
 
   // Check if the Next button should be disabled

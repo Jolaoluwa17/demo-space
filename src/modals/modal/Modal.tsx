@@ -9,13 +9,22 @@ interface Props {
   onClose: () => void; // Function to close the modal
 }
 
-const Modal: React.FC<Props> = ({ modal, children, zindex = 1, left = "0px", onClose }) => {
+const Modal: React.FC<Props> = ({
+  modal,
+  children,
+  zindex = 1,
+  left = '0px',
+  onClose,
+}) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Close the modal when clicked outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -32,7 +41,11 @@ const Modal: React.FC<Props> = ({ modal, children, zindex = 1, left = "0px", onC
   if (!modal) return null;
 
   return (
-    <div className="modal_main" style={{ zIndex: zindex, left: left }} onClick={() => onClose()}>
+    <div
+      className="modal_main"
+      style={{ zIndex: zindex, left: left }}
+      onClick={() => onClose()}
+    >
       <div
         className="modal_content"
         ref={modalRef}

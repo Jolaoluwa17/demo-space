@@ -32,7 +32,7 @@ const UserSkillGapDetails = () => {
             <div className="item_title">Frontend Program</div>
             <div className="pending_tag">
               <div className="accept_btn">
-                <IoCheckmark fontSize={20}/>
+                <IoCheckmark fontSize={20} />
               </div>
               <div className="reject_btn">
                 <BiX fontSize={25} />

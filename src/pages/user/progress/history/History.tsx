@@ -31,7 +31,7 @@ const History = () => {
             <div className="left_arrow_icon">
               <LeftArrowIcon />
             </div>
-            <div className='back_text'>Back</div>
+            <div className="back_text">Back</div>
           </div>
           <div className="history_text">
             <div
@@ -100,7 +100,7 @@ const History = () => {
                 style={{
                   color: q.isCorrect ? '#61E44F' : '#E44F4F',
                 }}
-                className='correct_or_wrong'
+                className="correct_or_wrong"
               >
                 {q.isCorrect ? 'Correct Answer' : 'Wrong Answer'}
               </div>

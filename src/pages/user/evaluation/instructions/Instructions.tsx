@@ -1,12 +1,15 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './instruction.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
 
 const Instructions = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams(); // Extract URL parameters
+  const id = searchParams.get('id');
 
   const handleClick = () => {
-    navigate('/dashboard/evaluation/multiple-choice'); // Navigate to the Evaluation page
+    // Navigate to the next page, including the id in the URL
+    navigate(`/dashboard/evaluation/multiple-choice?id=${id}`);
   };
 
   const handleBackClick = () => {
@@ -24,7 +27,7 @@ const Instructions = () => {
 
   return (
     <div className="instructions_root">
-      <PageHeader handleBackClick={handleBackClick} pageTitle='Instructions' />
+      <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />
       <div className="instructions_content">
         <div className="instructions_title">HTML/CSS/JavaScript</div>
         <div className="instructions_subTitle">

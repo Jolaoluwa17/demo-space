@@ -79,7 +79,8 @@
   .settings_base_option_text {
     font-size: 14px;
   }
-  .settings_label2, .settings_label {
+  .settings_label2,
+  .settings_label {
     font-size: 15px;
   }
 }

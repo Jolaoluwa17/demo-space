@@ -43,9 +43,7 @@ const Pageone: React.FC<Props> = ({
 
   // Form validation
   useEffect(() => {
-    setIsFormValid(
-      fullName.trim() !== '' && phoneNo.trim() !== ''
-    );
+    setIsFormValid(fullName.trim() !== '' && phoneNo.trim() !== '');
   }, [fullName, phoneNo]);
 
   return (

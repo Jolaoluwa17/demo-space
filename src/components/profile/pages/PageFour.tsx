@@ -4,7 +4,7 @@ import './pages.css';
 interface Props {
   setCurrentPage: (page: number) => void;
   areaOfInterest: string[];
-  setareaOfInterest: React.Dispatch<React.SetStateAction<string[]>>;
+  setAreaOfInterest: React.Dispatch<React.SetStateAction<string[]>>;
   isLoading: boolean;
 }
 
@@ -24,7 +24,7 @@ const interestsList = [
 const PageFour: React.FC<Props> = ({
   setCurrentPage,
   areaOfInterest,
-  setareaOfInterest,
+  setAreaOfInterest,
   isLoading,
 }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
@@ -32,9 +32,9 @@ const PageFour: React.FC<Props> = ({
   // Handle clicking on an interest div
   const handleInterestClick = (interest: string) => {
     if (areaOfInterest.includes(interest)) {
-      setareaOfInterest(areaOfInterest.filter((item) => item !== interest));
+      setAreaOfInterest(areaOfInterest.filter((item) => item !== interest));
     } else {
-      setareaOfInterest([...areaOfInterest, interest]);
+      setAreaOfInterest([...areaOfInterest, interest]);
     }
   };
 

@@ -15,8 +15,13 @@ const SkillGapList = () => {
           handleBackClick={() => navigate('/admin/dashboard/skill-gap-program')}
           pageTitle={'Programs'}
         />
-        <div className="create_program_btn" onClick={() => navigate('/admin/dashboard/skill-gap-program/create-program')}>
-          <FiPlus style={{ marginRight: '5px' }} fontSize={20}  />
+        <div
+          className="create_program_btn"
+          onClick={() =>
+            navigate('/admin/dashboard/skill-gap-program/create-program')
+          }
+        >
+          <FiPlus style={{ marginRight: '5px' }} fontSize={20} />
           Create program
         </div>
       </div>

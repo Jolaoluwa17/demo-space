@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './status.css';
 import NavigationArrow from '@/icons/NavigationArrow';
+import { useLocation } from 'react-router-dom';
 
 const Status = () => {
-  const [status] = useState(Math.random() < 0.5);
+  const location = useLocation();
+  const userScore = location.state?.score;
+  const noQuestions = location.state?.noQuestions;
+
+  // Calculate the percentage score if the total number of questions is available
+  const [percentage, setPercentage] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (userScore !== undefined && noQuestions !== undefined) {
+      const calculatedPercentage = (userScore / noQuestions) * 100;
+      setPercentage(calculatedPercentage);
+    }
+  }, [userScore, noQuestions]);
 
   return (
     <div className="status_root">
-      {!status ? (
+      {percentage !== null && percentage < 50 ? (
         <div>
           <div className="status_container">
             <img src="/images/failure.svg" alt="failure" />

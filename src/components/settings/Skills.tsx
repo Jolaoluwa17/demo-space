@@ -18,19 +18,47 @@ const Skills: React.FC<Props> = ({
   handleUpdateProfile,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredSkills, setFilteredSkills] = useState<string[]>([]);
+
+  // Predefined skills list (example)
+  const skillsList = [
+    'JavaScript',
+    'Python',
+    'React',
+    'Node.js',
+    'TypeScript',
+    'CSS',
+    'HTML',
+    'Ruby',
+    'Java',
+    'SQL',
+    'MongoDB',
+    'Git',
+    'Django',
+    'Vue.js',
+    'Angular',
+    'Redux',
+  ];
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
+
+    // Filter skills as the user types (case insensitive matching)
+    const filtered = skillsList.filter(
+      (skill) =>
+        skill.toLowerCase().includes(value.toLowerCase()) &&
+        !skillSet.includes(skill) && // Exclude already added skills
+        value.trim() !== ''
+    );
+    setFilteredSkills(filtered);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchTerm.trim() !== '' && skillSet.length < 10) {
-      e.preventDefault(); // Prevent form submission or unwanted behavior
-      if (!skillSet.includes(searchTerm.trim())) {
-        setSkillSet?.([...skillSet, searchTerm.trim()]);
-        setSearchTerm(''); // Clear the input field
-      }
+  const handleSkillSelect = (skill: string) => {
+    if (skillSet.length < 10 && !skillSet.includes(skill)) {
+      setSkillSet?.([...skillSet, skill]);
+      setSearchTerm('');
+      setFilteredSkills([]); // Clear filtered list after selection
     }
   };
 
@@ -38,26 +66,8 @@ const Skills: React.FC<Props> = ({
     setSkillSet?.(skillSet.filter((s) => s !== skill));
   };
 
-  const handleAddSkill = () => {
-    const trimmedSkill = searchTerm.trim();
-    if (
-      trimmedSkill !== '' &&
-      skillSet.length < 10 &&
-      !skillSet.includes(trimmedSkill)
-    ) {
-      setSkillSet?.([...skillSet, trimmedSkill]);
-      setSearchTerm(''); // Clear the input field
-    }
-  };
-
   // Filter out any empty or invalid skills
-  const validSkills = skillSet.filter(
-    (skill) =>
-      skill !== 'null' &&
-      skill !== undefined &&
-      typeof skill === 'string' &&
-      skill.trim() !== ''
-  );
+  const validSkills = skillSet.filter((skill) => skill.trim() !== '');
 
   return (
     <div className="settings_content">
@@ -67,7 +77,7 @@ const Skills: React.FC<Props> = ({
           Highlight your technical and soft skills.
         </div>
         <div className="profile_form_item">
-          <label htmlFor="fullName">Add your Skill</label>
+          <label htmlFor="skill">Add your Skill</label>
           <div className="settings_profile_searchInput">
             <input
               type="text"
@@ -76,15 +86,22 @@ const Skills: React.FC<Props> = ({
               placeholder="Select Skill"
               value={searchTerm}
               onChange={handleSearchChange}
-              onKeyDown={handleKeyDown}
               disabled={userDataIsLoading || isLoading}
             />
-            <div
-              style={{ color: '#4274ba', fontWeight: '600', cursor: 'pointer' }}
-              onClick={handleAddSkill}
-            >
-              Add
-            </div>
+            {/* Display filtered skill options as a dropdown */}
+            {searchTerm && filteredSkills.length > 0 && (
+              <div className="settings_profile_skills_dropdown">
+                {filteredSkills.map((skill) => (
+                  <div
+                    key={skill}
+                    className="settings_profile_skill_item"
+                    onClick={() => handleSkillSelect(skill)}
+                  >
+                    {skill}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div className="skillheader">You can add up to 10 skills</div>
           <div className="skills_container">

@@ -51,7 +51,10 @@ const AdminSidebar = () => {
       <div className="sidebar_header">
         <img src="/images/SideBarTechWingsLogo.svg" alt="" />
       </div>
-      <div className="sidebar_links" style={{ padding: '0px 20px', boxSizing: "border-box" }}>
+      <div
+        className="sidebar_links"
+        style={{ padding: '0px 20px', boxSizing: 'border-box' }}
+      >
         <AdminNavigationLink
           name="Dashboard"
           isActive={

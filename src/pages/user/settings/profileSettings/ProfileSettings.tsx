@@ -154,7 +154,7 @@ const ProfileSettings = () => {
 
       // Map education entries
       setEducationEntries(
-        response.education?.map((edu: any) => ({
+        response.education?.map((edu: EducationEntry) => ({
           institutionName: edu.institutionName || '',
           degreeObtained: edu.degreeObtained || '',
           degreeType: edu.degreeType || '',
@@ -164,19 +164,18 @@ const ProfileSettings = () => {
 
       // Map job entries
       setEntries(
-        response.job?.map((job: any) => ({
+        response.job?.map((job: Entry) => ({
           title: job.title || '',
           description: job.description || '',
           companyName: job.companyName || '',
           startDate: job.startDate || '',
           endDate: job.endDate || null,
-          currentlyWorking: !job.endDate,
         })) || []
       );
 
       // Map certifications
       setCertifications(
-        response.certifications?.map((cert: any) => ({
+        response.certifications?.map((cert: Certification) => ({
           name: cert.name || '',
           issuedBy: cert.issuedBy || '',
           dateObtained: cert.dateObtained || null,

@@ -184,7 +184,11 @@ const PageFive: React.FC<Props> = ({
         <div
           className="content"
           onClick={!isButtonDisabled && !isLoading ? handleAddEntry : undefined}
-          style={isButtonDisabled || isLoading ? { color: 'grey', cursor: "not-allowed" } : {}}
+          style={
+            isButtonDisabled || isLoading
+              ? { color: 'grey', cursor: 'not-allowed' }
+              : {}
+          }
         >
           <AddIcon
             color={isButtonDisabled || isLoading ? '#808080' : '#4274BA'}

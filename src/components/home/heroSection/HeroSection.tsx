@@ -40,7 +40,7 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
       </div>
       <div className="hero_section_img1">
         <img
-          src="/images/LandingPageImg1.svg"
+          src="/images/LandingPageImg1.png"
           alt=""
           className="hero_section_img1"
         />

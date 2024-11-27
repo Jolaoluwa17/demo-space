@@ -69,5 +69,5 @@ export const {
   useVerifyAccountMutation,
   useRequestCodeMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
 } = authApiSlice;

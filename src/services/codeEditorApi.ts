@@ -7,7 +7,7 @@ interface ExecuteCodeResponse {
 }
 
 interface ExecuteCodeProps {
-  language: string ; // Specify the type for language
+  language: string; // Specify the type for language
   sourceCode: string; // Specify the type for sourceCode
   version: string;
 }
