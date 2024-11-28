@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import SearchInput from '@/components/searchinput/SearchInput';
 import SkillsCard from '@/components/skillscard/SkillsCard';
 import { useGetAllAssessmentsQuery } from '@/services/features/quiz/quizSlice';
+import { FadeLoader } from 'react-spinners';
+import descriptionGeneric from '@/utils/descriptionGeneric';
 
 const filterOptions = [
   'All',
@@ -16,7 +18,7 @@ const filterOptions = [
 ];
 
 const Evaluation = () => {
-  const [activeFilter, setActiveFilter] = useState('All'); // Keeps track of the visually selected filter
+  const [activeFilter, setActiveFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
@@ -37,10 +39,17 @@ const Evaluation = () => {
       card.course.toLowerCase().includes(searchTerm.toLowerCase())
     ) || [];
 
+  const getRandomDescription = () => {
+    const randomIndex = Math.floor(Math.random() * descriptionGeneric.length);
+    return descriptionGeneric[randomIndex].description;
+  };
+
   return (
     <div className="evaluation_root">
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="loading_container">
+          <FadeLoader color="#4274ba" />
+        </div>
       ) : (
         <div>
           <SearchInput handleSearch={handleSearch} />
@@ -63,6 +72,7 @@ const Evaluation = () => {
                 <SkillsCard
                   key={index}
                   language={card.course}
+                  description={getRandomDescription()}
                   onClick={() => handleCardClick(card._id)} // Attach ID to handler
                 />
               )

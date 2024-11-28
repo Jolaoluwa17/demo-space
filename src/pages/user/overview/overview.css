@@ -66,6 +66,14 @@
   border-radius: 8px;
   animation: flicker 1.5s infinite linear;
 }
+.skeleton_loader_overview_section_card {
+  background-color: #e0e0e0;
+  width: 49%;
+  height: 125px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  animation: flicker 1.5s infinite linear;
+}
 
 /* Flicker Animation */
 @keyframes flicker {

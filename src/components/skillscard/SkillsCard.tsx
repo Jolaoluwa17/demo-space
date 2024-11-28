@@ -8,20 +8,20 @@ interface Props {
   onClick?: () => void;
 }
 
-const SkillsCard: React.FC<Props> = ({ language, onClick }) => {
+const SkillsCard: React.FC<Props> = ({ language, onClick, description }) => {
   return (
     <div className="skills_card" onClick={onClick}>
       <div className="skills_card_left_section">
-        <div style={{ width: '60px', height: '60px' }}>
+        <div className="skills_items_img">
           <img
             src={'/images/evaluationCode.jpg'}
             alt={language}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
-        <div style={{ marginLeft: '8px' }}>
+        <div style={{ marginLeft: '10px' }}>
           <div className="skills_programming_language">{language}</div>
-          {/* <div className="skills_card_text">{description}</div> */}
+          <div className="skills_card_text">{description}</div>
         </div>
       </div>
       <div className="skills_card_right_section">

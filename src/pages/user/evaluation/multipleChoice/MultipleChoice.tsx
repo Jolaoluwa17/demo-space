@@ -8,6 +8,11 @@ import {
 import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import ArrowLeftIcon from '@/icons/ArrowLeftIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
+import { useCreateResultMutation } from '@/services/features/result/resultSlice';
+import ErrorResponse from '@/types/ErrorResponse';
+import { BiSolidErrorAlt } from 'react-icons/bi';
+import { FadeLoader } from 'react-spinners';
+import NavigationArrow from '@/icons/NavigationArrow';
 
 interface Assessment {
   _id: string;
@@ -27,23 +32,23 @@ const MultipleChoice: React.FC = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
 
-  // Fetch all assessments and questions by quiz ID
   const { data: assessmentData, isLoading: assessmentLoading } =
     useGetAllAssessmentsQuery({});
   const { data: questionsData, isLoading: questionsLoading } =
     useGetQuizQuestionQuery(id);
 
-  // State to keep track of selected options
+  // console.log(questionsData);
+
   const [selectedOptions, setSelectedOptions] = useState<{
     [key: number]: string | null;
   }>({});
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
-  // State to manage the timer
   const [time, setTime] = useState<number>(10 * 60);
+  const [randomizedOptions, setRandomizedOptions] = useState<string[]>([]);
+  const [errMsg, setErrMsg] = useState<string>('');
+  const [result, { isLoading: resultLoading }] = useCreateResultMutation();
+  const userid = sessionStorage.getItem('id');
 
-  // Use effect to set the timer duration from assessment data
   useEffect(() => {
     if (assessmentData) {
       const selectedAssessment = assessmentData.response.find(
@@ -55,16 +60,26 @@ const MultipleChoice: React.FC = () => {
     }
   }, [assessmentData, id]);
 
-  // Timer logic
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
-  // Format time as mm:ss
+  useEffect(() => {
+    const currentQuestion = questionsData?.data[currentQuestionIndex];
+    if (currentQuestion) {
+      const options = [
+        currentQuestion.optionA,
+        currentQuestion.optionB,
+        currentQuestion.optionC,
+        currentQuestion.answer,
+      ].filter(Boolean);
+      setRandomizedOptions(options.sort(() => Math.random() - 0.5));
+    }
+  }, [questionsData, currentQuestionIndex]);
+
   const formatTime = (timeInSeconds: number) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
@@ -73,7 +88,6 @@ const MultipleChoice: React.FC = () => {
       .padStart(2, '0')}`;
   };
 
-  // Handle option click
   const handleOptionClick = (option: string) => {
     setSelectedOptions((prevState) => ({
       ...prevState,
@@ -81,7 +95,6 @@ const MultipleChoice: React.FC = () => {
     }));
   };
 
-  // Navigate to next/previous questions
   const handleNextQuestion = () => {
     if (
       questionsData?.data &&
@@ -97,57 +110,71 @@ const MultipleChoice: React.FC = () => {
     }
   };
 
-  // Get current question data
+  const handleSubmit = async () => {
+    let userScore = 0;
+
+    questionsData?.data.forEach((question: Question, index: number) => {
+      const selectedAnswer = selectedOptions[index];
+      if (selectedAnswer === question.answer) {
+        userScore += 1;
+      }
+    });
+
+    const resultData = {
+      score: userScore,
+      quizId: id,
+      userId: userid,
+    };
+
+    try {
+      await result(resultData).unwrap();
+      navigate('/dashboard/evaluation/status', {
+        state: { score: userScore, noQuestions: questionsData.data.length },
+      });
+    } catch (error: unknown) {
+      const err = error as ErrorResponse;
+      setErrMsg(
+        err?.data.error === 'Validation Error'
+          ? 'Score not recorded'
+          : 'Something went wrong'
+      );
+    }
+  };
+
   const currentQuestion = questionsData?.data
     ? questionsData.data[currentQuestionIndex]
     : null;
   const selectedOption = selectedOptions[currentQuestionIndex] || null;
-
   const isLastQuestion =
     currentQuestionIndex === (questionsData?.data?.length || 0) - 1;
   const isFirstQuestion = currentQuestionIndex === 0;
 
-  // State to store randomized options
-  const [randomizedOptions, setRandomizedOptions] = useState<string[]>([]);
-
-  // Randomize options once when the page is loaded
-  useEffect(() => {
-    if (currentQuestion) {
-      const options = [
-        currentQuestion.optionA,
-        currentQuestion.optionB,
-        currentQuestion.optionC,
-        currentQuestion.answer,
-      ].filter((option) => option);
-
-      // Randomize options once
-      setRandomizedOptions(options.sort(() => Math.random() - 0.5));
-    }
-  }, [currentQuestion]);
-
-  // Handle submit action to calculate the score
-  const handleSubmit = () => {
-    let userScore = 0;
-
-    // Loop through all questions and check selected answers
-    questionsData?.data.forEach((question: Question, index: number) => {
-      const selectedAnswer = selectedOptions[index];
-      if (selectedAnswer === question.answer) {
-        userScore += 1; // Increment score if answer is correct
-      }
-    });
-
-    console.log(`Your score is: ${userScore}`); // Log the score
-
-    navigate('/dashboard/evaluation/status', {
-      state: { score: userScore, noQuestions: questionsData.data.length },
-    });
-  };
-
   return (
     <div>
-      {questionsLoading || assessmentLoading || !questionsData?.data ? (
-        <div>Loading...</div>
+      {questionsLoading || assessmentLoading ? (
+        <div className="loading_container">
+          <FadeLoader color="#4274ba" />
+        </div>
+      ) : questionsData?.data?.length === 0 ? (
+        <div className="loading_container">
+          <img
+            src="/images/NoData.jpg"
+            alt=""
+            style={{ width: '250px', height: '250px' }}
+          />
+          <div style={{ fontWeight: '600' }}>
+            Oops, No Questions Avaliable 😭
+          </div>
+          <div
+            className="navigation_btn"
+            onClick={() => navigate('/dashboard/evaluation')}
+          >
+            Go back to Evaluation
+            <div className="navigation_arrow">
+              <NavigationArrow />
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="multiple_choice_root">
           <div className="multiple_choice_header">
@@ -156,69 +183,69 @@ const MultipleChoice: React.FC = () => {
           </div>
           <div className="question_container">
             <div className="question_out_of">
-              {questionsData?.data?.length > 0 ? (
-                <>
-                  Question {currentQuestionIndex + 1} of{' '}
-                  {questionsData.data.length}
-                </>
-              ) : (
-                <>No questions available</>
-              )}
+              Question {currentQuestionIndex + 1} of {questionsData.data.length}
             </div>
             <div className="question_text">
               {currentQuestion ? currentQuestion.question : ''}
             </div>
             <div className="options">
-              {randomizedOptions.map((option, index) => {
-                const label = ['A', 'B', 'C', 'D'][index];
-                return (
-                  <div
-                    key={index}
-                    className={`option_item ${selectedOption === option ? 'selected_option' : ''}`}
-                    onClick={() => handleOptionClick(option)}
-                  >
-                    <div className="check_icon">
-                      {selectedOption === option ? (
-                        <CheckCircleIcon />
-                      ) : (
-                        <div className="empty_check_circle"></div>
-                      )}
-                    </div>
-                    <div className="options_text">
-                      {label}. {option}
-                    </div>
+              {randomizedOptions.map((option, index) => (
+                <div
+                  key={index}
+                  className={`option_item ${
+                    selectedOption === option ? 'selected_option' : ''
+                  }`}
+                  onClick={() => handleOptionClick(option)}
+                >
+                  <div className="check_icon">
+                    {selectedOption === option ? (
+                      <CheckCircleIcon />
+                    ) : (
+                      <div className="empty_check_circle"></div>
+                    )}
                   </div>
-                );
-              })}
+                  <div className="options_text">
+                    {['A', 'B', 'C', 'D'][index]}. {option}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <div className="question_selectors">
-            <div
-              className={`back_and_next_button ${isFirstQuestion || questionsData?.data?.length < 1 ? 'disabled' : ''}`}
+            <button
+              className={`back_and_next_button ${
+                isFirstQuestion ? 'disabled' : ''
+              }`}
               onClick={handlePreviousQuestion}
-              style={{
-                opacity:
-                  isFirstQuestion || questionsData?.data?.length < 1 ? 0.5 : 1,
-              }}
+              disabled={isFirstQuestion}
             >
               <ArrowLeftIcon />
-            </div>
-            <div
-              className={`question_submit_btn ${questionsData?.data?.length < 1 ? 'disabled' : ''}`}
-              onClick={handleSubmit} // Submit the quiz to calculate the score
+            </button>
+            <button
+              className="question_submit_btn"
+              onClick={handleSubmit}
+              disabled={questionsData?.data?.length < 1 || resultLoading}
             >
-              Submit
-            </div>
-            <div
-              className={`back_and_next_button ${isLastQuestion || questionsData?.data?.length < 1 ? 'disabled' : ''}`}
+              {resultLoading ? <div className="spinner"></div> : 'Submit'}
+            </button>
+            {errMsg && (
+              <div className="error_message">
+                <BiSolidErrorAlt
+                  fontSize={18}
+                  style={{ paddingRight: '5px' }}
+                />
+                {errMsg}
+              </div>
+            )}
+            <button
+              className={`back_and_next_button ${
+                isLastQuestion ? 'disabled' : ''
+              }`}
               onClick={handleNextQuestion}
-              style={{
-                opacity:
-                  isLastQuestion || questionsData?.data?.length < 1 ? 0.5 : 1,
-              }}
+              disabled={isLastQuestion}
             >
               <ArrowRightIcon />
-            </div>
+            </button>
           </div>
         </div>
       )}
