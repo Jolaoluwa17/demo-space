@@ -245,7 +245,7 @@ const ProfileSettings = () => {
     ) {
       formData.append(
         'job',
-        JSON.stringify(entries.map(({ currentlyWorking, ...rest }) => rest))
+        JSON.stringify(entries.map(({ ...rest }) => rest))
       );
     }
 

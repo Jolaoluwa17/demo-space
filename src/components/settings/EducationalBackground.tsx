@@ -30,7 +30,7 @@ interface EducationEntry {
 }
 
 const EducationalBackground: React.FC<Props> = ({
-  educationEntries = [], // Provide a default empty array if undefined
+  educationEntries = [],
   setEducationEntries,
   userDataIsLoading,
   isLoading,
@@ -51,7 +51,7 @@ const EducationalBackground: React.FC<Props> = ({
   ) => {
     const updatedEntries = [...educationEntries];
     updatedEntries[index][field] = value;
-    setEducationEntries && setEducationEntries(updatedEntries); // Ensure the setter is defined
+    setEducationEntries?.(updatedEntries);
   };
 
   const addNewEntry = () => {
@@ -67,7 +67,7 @@ const EducationalBackground: React.FC<Props> = ({
   };
 
   const handleRemoveEntry = (index: number) => {
-    setEducationEntries?.(educationEntries.filter((_, i) => i !== index)); // Safely call setter
+    setEducationEntries?.(educationEntries.filter((_, i) => i !== index));
   };
 
   // Ensure at least one empty entry is present if no data exists

@@ -5,6 +5,7 @@ import TalentPoolIcon from '@/icons/TalentPoolIcon';
 import CoinIcon from '@/icons/CoinIcon';
 import { skillGapPendingData } from '@/utils/skillGapPendingData';
 import { useGetAllUserQuery } from '@/services/features/user/userSlice';
+import { FadeLoader } from 'react-spinners';
 
 interface User {
   id: string;
@@ -77,7 +78,9 @@ const Dashboard = () => {
             <div className="admin_view_all">View all</div>
           </div>
           {isLoading ? (
-            <div className="loadingData">Loading Data...</div>
+            <div className="loadingData">
+              <FadeLoader color="#4274ba" />
+            </div>
           ) : (
             <div className="admin_dashboard_table_container">
               <table className="admin_dashboard_user_table">

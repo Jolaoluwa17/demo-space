@@ -11,7 +11,7 @@
 }
 .skill_gap_details_title,
 .modules_header {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
 }
 .skill_gap_details_overview,
@@ -19,7 +19,7 @@
 .program_structure,
 .duration,
 .modules_header {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 .benefits_data {
   margin-top: 16px;
@@ -40,6 +40,7 @@
   justify-content: center;
   color: white;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 @media (max-width: 450px) {

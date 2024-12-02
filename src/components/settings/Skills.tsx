@@ -3,7 +3,7 @@ import './pages.css';
 import CancelIcon from '../../icons/CancelIcon';
 
 interface Props {
-  skillSet?: string[]; // Default to an empty array if undefined
+  skillSet?: string[];
   setSkillSet?: React.Dispatch<React.SetStateAction<string[]>>;
   userDataIsLoading?: boolean;
   isLoading?: boolean;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Skills: React.FC<Props> = ({
-  skillSet = [], // Default to an empty array if undefined
+  skillSet = [],
   setSkillSet,
   userDataIsLoading,
   isLoading,
@@ -20,7 +20,6 @@ const Skills: React.FC<Props> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredSkills, setFilteredSkills] = useState<string[]>([]);
 
-  // Predefined skills list (example)
   const skillsList = [
     'JavaScript',
     'Python',
@@ -48,7 +47,7 @@ const Skills: React.FC<Props> = ({
     const filtered = skillsList.filter(
       (skill) =>
         skill.toLowerCase().includes(value.toLowerCase()) &&
-        !skillSet.includes(skill) && // Exclude already added skills
+        !skillSet.includes(skill) &&
         value.trim() !== ''
     );
     setFilteredSkills(filtered);
@@ -58,7 +57,7 @@ const Skills: React.FC<Props> = ({
     if (skillSet.length < 10 && !skillSet.includes(skill)) {
       setSkillSet?.([...skillSet, skill]);
       setSearchTerm('');
-      setFilteredSkills([]); // Clear filtered list after selection
+      setFilteredSkills([]);
     }
   };
 
@@ -83,7 +82,7 @@ const Skills: React.FC<Props> = ({
               type="text"
               name="skill"
               className="input"
-              placeholder="Select Skill"
+              placeholder="Search Skill"
               value={searchTerm}
               onChange={handleSearchChange}
               disabled={userDataIsLoading || isLoading}

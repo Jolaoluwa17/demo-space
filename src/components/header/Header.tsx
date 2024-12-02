@@ -80,7 +80,7 @@ const Header: React.FC<Props> = ({ activeLink }) => {
         </div>
       </div>
 
-      <Popup popup={notification}>
+      <Popup popup={notification} closePopup={() => setNotification(false)}>
         <div className="notification_popup">
           <div className="notification_title">
             <span>Notification</span>

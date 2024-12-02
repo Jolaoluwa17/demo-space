@@ -176,7 +176,6 @@
   color: red;
   display: flex;
   justify-content: space-between;
-  width: 90px;
 }
 .next_btn:disabled {
   background-color: grey;

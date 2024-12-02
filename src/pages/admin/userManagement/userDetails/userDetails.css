@@ -14,14 +14,25 @@
   justify-content: center;
   color: #333a41;
 }
+.user_details_user_profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .user_details_user_profile .user_profile {
   width: 144px;
   height: 144px;
   border-radius: 50%;
+  overflow: hidden;
+  background-color: #4274ba;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .user_details_user_profile .name {
   margin-top: 16px;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: 600;
 }
 .user_details_user_profile .edit_profile {
   text-align: center;
@@ -127,4 +138,27 @@
   justify-content: center;
   cursor: pointer;
   color: #ff0000;
+}
+.decision_title {
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+}
+.decision_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+.decision_btn {
+  width: 47%;
+  border: 1px solid #cbcbcc;
+  height: 45px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 600;
 }

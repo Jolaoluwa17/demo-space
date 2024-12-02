@@ -13,6 +13,7 @@ import {
   setCredentials,
 } from '@/services/features/auth/authSlice';
 import { BiSolidErrorAlt } from 'react-icons/bi';
+import CustomSelect from '@/components/customselect/CustomSelect';
 
 interface ErrorResponse {
   status: number;
@@ -22,7 +23,10 @@ interface ErrorResponse {
   };
 }
 
+const userList = ['User', 'Admin'];
+
 const Login = () => {
+  const [typeOfUser, setTypeOfUser] = useState('User');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -64,6 +68,7 @@ const Login = () => {
     const userData = {
       email: email,
       password: password,
+      userType: typeOfUser,
     };
 
     if (rememberMe) {
@@ -119,8 +124,14 @@ const Login = () => {
 
   const navigator = useNavigate();
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' && isFormValid && !isLoading) {
+      handleLogin();
+    }
+  };
+
   return (
-    <div className="login_root">
+    <div className="login_root" onKeyDown={handleKeyDown} tabIndex={0}>
       <div className="login_container">
         <div className="left">
           <div className="techwings_logo_login">
@@ -131,7 +142,16 @@ const Login = () => {
               loading="lazy"
             />
           </div>
-          <div className="login_title">Login</div>
+          <div className="login_title_container">
+            <div className="login_title">Login</div>
+            <div className='usertype_selector' style={{ fontSize: '14px' }}>
+              <CustomSelect
+                options={userList}
+                value={typeOfUser}
+                onChange={(value) => setTypeOfUser(value)}
+              />
+            </div>
+          </div>
           <div className="login_sub_title">
             Please provide the information below to login and access your
             account

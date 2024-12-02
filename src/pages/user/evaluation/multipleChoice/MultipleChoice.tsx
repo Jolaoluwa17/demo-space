@@ -156,7 +156,7 @@ const MultipleChoice: React.FC = () => {
           <FadeLoader color="#4274ba" />
         </div>
       ) : questionsData?.data?.length === 0 ? (
-        <div className="loading_container">
+        <div className="nodata_container">
           <img
             src="/images/NoData.jpg"
             alt=""

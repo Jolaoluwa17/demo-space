@@ -33,6 +33,8 @@ const AdminHeader: React.FC<Props> = ({ activeLink }) => {
     };
   }, [isOpen]);
 
+  const closePopup = () => setNotification(false);
+
   return (
     <header className="header" style={{ border: 'none' }}>
       <h1 className="header_title">{activeLink}</h1>
@@ -58,7 +60,7 @@ const AdminHeader: React.FC<Props> = ({ activeLink }) => {
         </div>
       </div>
 
-      <Popup popup={notification}>
+      <Popup popup={notification} closePopup={closePopup}>
         <div className="notification_popup">
           <div className="notification_title">
             <span>Notification</span>

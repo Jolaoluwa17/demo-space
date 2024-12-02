@@ -34,7 +34,6 @@ import Dashboard from './pages/admin/dashboard/Dashboard';
 import UserManagementRoot from './pages/admin/userManagement/UserManagementRoot';
 import UserManagement from './pages/admin/userManagement/UserManagement';
 import UserDetails from './pages/admin/userManagement/userDetails/UserDetails';
-import CreateUser from './pages/admin/userManagement/createUser/CreateUser';
 import AdminEvaluation from './pages/admin/adminEvaluation/AdminEvaluation';
 import AdminEvaluationRoot from './pages/admin/adminEvaluation/AdminEvaluationRoot';
 import CreateEvaluation from './pages/admin/adminEvaluation/createEvaluation/CreateEvaluation';
@@ -44,6 +43,9 @@ import SkillGapProgram from './pages/admin/skillGapProgram/SkillGapProgram';
 import SkillGapList from './pages/admin/skillGapProgram/skillGapList/SkillGapList';
 import CreateProgram from './pages/admin/skillGapProgram/createProgram/CreateProgram';
 import UserSkillGapDetails from './pages/admin/skillGapProgram/userSkillGapDetails/UserSkillGapDetails';
+import ViewAdmin from './pages/admin/userManagement/viewAdmin/ViewAdmin';
+import CreateAdmin from './pages/admin/userManagement/createAdmin/CreateAdmin';
+import AdminDetails from './pages/admin/userManagement/adminDetails/AdminDetails';
 
 function App() {
   return (
@@ -107,7 +109,9 @@ function App() {
             <Route path="user-management" element={<UserManagementRoot />}>
               <Route index element={<UserManagement />} />
               <Route path="user-details" element={<UserDetails />} />
-              <Route path="create-user" element={<CreateUser />} />
+              <Route path="view-admin" element={<ViewAdmin />} />
+              <Route path="create-admin" element={<CreateAdmin />} />
+              <Route path="admin-details" element={<AdminDetails />} />
             </Route>
             <Route path="evaluation" element={<AdminEvaluationRoot />}>
               <Route index element={<AdminEvaluation />} />

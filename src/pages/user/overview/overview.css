@@ -46,25 +46,13 @@
   margin-top: 16px;
 }
 
-@media (max-width: 450px) {
-  .overview_section_card_container {
-    flex-direction: column;
-  }
-  .overview_section {
-    margin-top: 0px;
-  }
-  .overview_header {
-    display: none;
-  }
-}
-
 /* Skeleton Loader */
 .skeleton_loader_overview_header {
   background-color: #e0e0e0;
   width: 100%;
   height: 118px;
   border-radius: 8px;
-  animation: flicker 1.5s infinite linear;
+  animation: flicker 1s infinite linear;
 }
 .skeleton_loader_overview_section_card {
   background-color: #e0e0e0;
@@ -72,7 +60,7 @@
   height: 125px;
   border-radius: 8px;
   margin-bottom: 24px;
-  animation: flicker 1.5s infinite linear;
+  animation: flicker 1s infinite linear;
 }
 
 /* Flicker Animation */
@@ -85,5 +73,22 @@
   }
   100% {
     opacity: 0.9;
+  }
+}
+
+@media (max-width: 450px) {
+  .overview_section_card_container {
+    flex-direction: column;
+  }
+  .overview_section {
+    margin-top: 0px;
+  }
+  .overview_header,
+  .skeleton_loader_overview_header {
+    display: none;
+  }
+  .skeleton_loader_overview_section_card {
+    width: 100%;
+    height: 112px;
   }
 }

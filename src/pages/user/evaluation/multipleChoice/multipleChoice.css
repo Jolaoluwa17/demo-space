@@ -95,3 +95,24 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.nodata_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 200px;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .nodata_container {
+    padding-top: 150px;
+  }
+}
+@media (max-width: 450px) {
+  .nodata_container {
+    padding-top: 130px;
+  }
+}

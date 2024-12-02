@@ -1,19 +1,21 @@
 import './userManagement.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchInput from '@/components/searchinput/SearchInput';
-import { sampleUserManagement } from '@/utils/sampleUserManagement';
-import { useNavigate } from 'react-router-dom';
-import { IoMdAdd } from 'react-icons/io';
+import { useLocation, useNavigate } from 'react-router-dom';
 import TablePagination from '@/components/tablePagination/TablePagination';
 import SortFilter from '@/components/sortFilter/SortFilter';
 import DateFilter from '@/components/dateFilter/DateFilter';
+import { useGetAllUserQuery } from '@/services/features/user/userSlice';
+import { FadeLoader } from 'react-spinners';
+import { IoCheckmarkDone } from 'react-icons/io5';
+import { HiOutlineXMark } from 'react-icons/hi2';
 
 type User = {
-  userId: string;
-  signupDate: string;
-  name: string;
+  _id: string;
+  createdAt: string;
+  fullName: string;
   email: string;
-  lastLogin: string;
+  status: boolean;
 };
 
 const currentYear = new Date().getFullYear();
@@ -23,52 +25,83 @@ const years = Array.from({ length: currentYear - 2020 + 1 }, (_, i) =>
 );
 
 const UserManagement = () => {
+  const { data, isLoading, refetch } = useGetAllUserQuery({});
+  const location = useLocation();
+
   const [isYear, setYear] = useState(currentYear.toString());
   const [currentMonth, setCurrentMonth] = useState(currentMonthIndex);
   const [currentPage, setCurrentPage] = useState(1);
   const [sort, setSort] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    refetch();
+  }, [location.key, refetch]);
 
   const rowsPerPage = 8;
-  const totalPages = Math.ceil(sampleUserManagement.length / rowsPerPage);
+  const totalPages = Math.ceil(data?.response.length / rowsPerPage);
 
   const handlePageClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
   const sortData = [
-    { name: 'By date', key: 'signupDate' },
-    { name: 'By name', key: 'name' },
+    { name: 'By date', key: 'createdAt' },
+    { name: 'By name', key: 'fullName' },
     { name: 'By email', key: 'email' },
   ];
 
   const getSortedUsers = () => {
     const sortKey = sortData.find((item) => item.name === selectedFilter)
       ?.key as keyof User;
-    if (!sortKey) return sampleUserManagement;
 
-    const sortedData = [...sampleUserManagement].sort((a, b) => {
-      const aValue = a[sortKey];
-      const bValue = b[sortKey];
+    // If sortKey is not found, return the data as is
+    if (!sortKey) return data?.response;
 
-      if (sortOrder === 'asc') {
-        return aValue.localeCompare(bValue);
-      } else {
-        return bValue.localeCompare(aValue);
+    const sortedData = [...(data?.response || [])].sort((a, b) => {
+      const aValue = a[sortKey] ?? '';
+      const bValue = b[sortKey] ?? '';
+
+      // Ensure that both values are strings before calling localeCompare
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        if (sortOrder === 'asc') {
+          return aValue.localeCompare(bValue);
+        } else {
+          return bValue.localeCompare(aValue);
+        }
       }
+
+      return 0;
     });
 
     return sortedData;
   };
 
-  const getPaginatedUsers = () => {
+  const getFilteredUsers = () => {
     const sortedUsers = getSortedUsers();
+    return sortedUsers.filter((user: User) => {
+      const fullName = user.fullName ? user.fullName.toLowerCase() : '';
+      const email = user.email ? user.email.toLowerCase() : '';
+      return (
+        fullName.includes(searchQuery.toLowerCase()) ||
+        email.includes(searchQuery.toLowerCase())
+      );
+    });
+  };
+
+  const getPaginatedUsers = () => {
+    const filteredUsers = getFilteredUsers();
     const startIndex = (currentPage - 1) * rowsPerPage;
-    return sortedUsers.slice(startIndex, startIndex + rowsPerPage);
+    return filteredUsers.slice(startIndex, startIndex + rowsPerPage);
   };
 
   const navigate = useNavigate();
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   return (
     <div className="user_management_root">
@@ -86,15 +119,14 @@ const UserManagement = () => {
           />
           <div
             className="create_user_btn"
-            onClick={() => navigate('create-user')}
+            onClick={() => navigate('view-admin')}
           >
-            <IoMdAdd style={{ marginRight: '5px' }} fontSize={18} />
-            Create User
+            View Admin
           </div>
         </div>
         <div className="bottom_navigation">
           <div className="user_management_search">
-            <SearchInput handleSearch={() => ''} />
+            <SearchInput handleSearch={handleSearch} />
           </div>
           <SortFilter
             selectedFilter={selectedFilter}
@@ -107,41 +139,72 @@ const UserManagement = () => {
           />
         </div>
       </div>
-      <div className="user_management_table">
-        <table>
-          <thead>
-            <tr>
-              <th style={{ borderTopLeftRadius: '12px' }}>User ID</th>
-              <th>Signup Date</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th style={{ borderTopRightRadius: '12px' }}>Last Login</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getPaginatedUsers().map((user, index) => (
-              <tr
-                key={index}
-                onClick={() => navigate('user-details')}
-                style={{ cursor: 'pointer' }}
-              >
-                <td>{user.userId}</td>
-                <td>{user.signupDate}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.lastLogin}</td>
+      {isLoading ? (
+        <div className="loadingData">
+          <FadeLoader color="#4274ba" />
+        </div>
+      ) : (
+        <div className="user_management_table">
+          <table>
+            <thead>
+              <tr>
+                <th style={{ borderTopLeftRadius: '12px' }}>User ID</th>
+                <th>Signup Date</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th style={{ borderTopRightRadius: '12px' }}>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <TablePagination
-          currentPage={currentPage}
-          data={sampleUserManagement}
-          handlePageClick={handlePageClick}
-          totalPages={totalPages}
-          rowsPerPage={rowsPerPage}
-        />
-      </div>
+            </thead>
+            <tbody>
+              {getPaginatedUsers().map((user: User, index: number) => (
+                <tr
+                  key={index}
+                  onClick={() => navigate(`user-details?id=${user._id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <td>{String(index + 1).padStart(3, '0')}</td>
+                  <td>
+                    {new Date(user.createdAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </td>
+                  <td>{user.fullName}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <div
+                      style={{
+                        color:
+                          user.status === true
+                            ? 'green'
+                            : user.status === false
+                              ? 'red'
+                              : '#FFFCE7',
+                        fontSize: '16px',
+                        fontWeight: '550',
+                      }}
+                    >
+                      {user.status === true ? (
+                        <IoCheckmarkDone size={18} />
+                      ) : (
+                        <HiOutlineXMark size={18} />
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <TablePagination
+            currentPage={currentPage}
+            data={data?.response}
+            handlePageClick={handlePageClick}
+            totalPages={totalPages}
+            rowsPerPage={rowsPerPage}
+          />
+        </div>
+      )}
     </div>
   );
 };

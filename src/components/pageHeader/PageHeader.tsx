@@ -1,4 +1,4 @@
-import LeftArrowIcon from '../../icons/LeftArrowIcon';
+import { IoIosArrowBack } from 'react-icons/io';
 import './pageHeader.css';
 
 interface Props {
@@ -11,8 +11,8 @@ const PageHeader: React.FC<Props> = ({ handleBackClick, pageTitle }) => {
     <div className="page_header_root">
       <div className="page_innner_header">
         <div className="page_back_btn" onClick={handleBackClick}>
-          <div className="left_arrow_icon">
-            <LeftArrowIcon />
+          <div className="pageheader_left_arrow_icon">
+            <IoIosArrowBack size={20} />
           </div>
           <div className="page_back_text">Back</div>
         </div>

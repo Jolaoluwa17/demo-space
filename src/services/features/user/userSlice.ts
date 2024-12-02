@@ -16,13 +16,19 @@ export const userSlice = apiSlice.injectEndpoints({
     }),
     updateUserProfile: builder.mutation({
       query: (userData) => {
-        const userId = userData.get('id'); // Access the 'id' from FormData
+        const userId = userData.get('id')
         return {
           url: `user/userprofile/${userId}`,
           method: 'PUT',
           body: userData,
         };
       },
+    }),
+    deleteUser: builder.mutation({
+      query: (userData) => ({
+        url: `user/${userData.id}`,
+        method: 'DELETE',
+      }),
     }),
   }),
   overrideExisting: true,
@@ -32,4 +38,5 @@ export const {
   useGetUserQuery,
   useGetAllUserQuery,
   useUpdateUserProfileMutation,
+  useDeleteUserMutation,
 } = userSlice;

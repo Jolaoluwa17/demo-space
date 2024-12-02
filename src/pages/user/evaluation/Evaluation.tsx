@@ -29,8 +29,10 @@ const Evaluation = () => {
   };
 
   // Updated: Pass item ID to navigate
-  const handleCardClick = (id: string) => {
-    navigate(`/dashboard/evaluation/instructions?id=${id}`);
+  const handleCardClick = (id: string, course: string, description: string) => {
+    navigate(`/dashboard/evaluation/instructions?id=${id}`, {
+      state: { course, description },
+    });
   };
 
   // Filter skills based only on the search term
@@ -68,14 +70,19 @@ const Evaluation = () => {
           </div>
           <div className="evaluation_skills_container">
             {filteredSkills.map(
-              (card: { _id: string; course: string }, index: number) => (
-                <SkillsCard
-                  key={index}
-                  language={card.course}
-                  description={getRandomDescription()}
-                  onClick={() => handleCardClick(card._id)} // Attach ID to handler
-                />
-              )
+              (card: { _id: string; course: string }, index: number) => {
+                const description = getRandomDescription();
+                return (
+                  <SkillsCard
+                    key={index}
+                    language={card.course}
+                    description={description}
+                    onClick={() =>
+                      handleCardClick(card._id, card.course, description)
+                    }
+                  />
+                );
+              }
             )}
           </div>
         </div>

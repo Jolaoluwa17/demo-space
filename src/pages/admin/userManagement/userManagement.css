@@ -48,7 +48,7 @@
 }
 .create_user_btn {
   background-color: #4274ba;
-  padding: 15px 15px;
+  padding: 12px 15px;
   color: white;
   border-radius: 8px;
   font-size: 14px;
@@ -90,4 +90,34 @@
 
 .user_management_table tr:nth-child(odd) {
   background-color: #f9f9f9;
+}
+
+/* View Admin Styling */
+.view_admin {
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+}
+.view_admin_title {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: black;
+  font-weight: 600;
+}
+.back_arrow_icon {
+  height: 24px;
+  width: 24px;
+  border: 1px solid #6a757e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  border-radius: 10px;
+  cursor: pointer;
 }

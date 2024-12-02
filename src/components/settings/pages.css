@@ -80,7 +80,7 @@
   display: flex;
   width: 100%;
   justify-content: flex-end;
-  margin-top: 12px;
+  margin-top: 20px;
 }
 .add_another_entry_2 .content {
   /* width: 142px;
@@ -177,6 +177,7 @@
 .remove_entry_button {
   display: flex;
   align-items: center;
+  font-size: 16px;
 }
 
 @media (max-width: 1024px) {
@@ -198,13 +199,18 @@
 }
 
 @media (max-width: 450px) {
+  .remove_text {
+    display: none;
+  }
   .profile_form_item label,
   .profile_input_item,
-  .profile_pageone_form_item label {
+  .profile_pageone_form_item label,
+  .settings_profile_skill_item {
     font-size: 14px;
   }
   .settings_edit_btn {
     font-size: 14px;
+    margin-top: 20px;
   }
   .settings_profile_searchInput {
     padding: 13.5px 20px 12.5px 15px;

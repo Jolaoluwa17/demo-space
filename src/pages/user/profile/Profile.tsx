@@ -188,7 +188,6 @@ const Profile = () => {
       });
     }
 
-    // Validate and append `entries`
     if (
       entries &&
       entries.some((entry) =>
@@ -199,7 +198,12 @@ const Profile = () => {
     ) {
       formData.append(
         'job',
-        JSON.stringify(entries.map(({ currentlyWorking, ...rest }) => rest))
+        JSON.stringify(
+          entries.map((entry) => {
+            const { ...rest } = entry;
+            return rest;
+          })
+        )
       );
     }
 

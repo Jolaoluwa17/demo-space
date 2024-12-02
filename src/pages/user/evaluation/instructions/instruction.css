@@ -10,16 +10,21 @@
   margin-top: 24px;
 }
 .instructions_title {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
 }
 .instructions_subTitle {
   font-size: 14px;
   color: #838383;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  margin-top: 5px;
 }
 .instructions_text {
   font-size: 16px;
+}
+.instructions_text_container {
+  display: flex;
+  align-items: baseline;
 }
 .start_evaluation_btn_container {
   width: 100%;
@@ -39,6 +44,16 @@
   cursor: pointer;
   color: white;
   font-size: 16px;
+}
+
+@media (max-width: 1024px) {
+  .instructions_title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .instructions_text {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 450px) {

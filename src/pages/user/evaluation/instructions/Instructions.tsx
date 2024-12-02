@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import './instruction.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
 
@@ -6,6 +6,8 @@ const Instructions = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams(); // Extract URL parameters
   const id = searchParams.get('id');
+  const location = useLocation();
+  const { course, description } = location.state || {};
 
   const handleClick = () => {
     // Navigate to the next page, including the id in the URL
@@ -17,7 +19,6 @@ const Instructions = () => {
   };
 
   const instructions = [
-    'This evaluation contains three parts: Multiple Choice Questions, Short-Form Answers, and Coding/Design Tasks.',
     'Read each question carefully before answering.',
     'Ensure you understand the requirements for each task.',
     'Manage your time effectively during the evaluation.',
@@ -29,14 +30,15 @@ const Instructions = () => {
     <div className="instructions_root">
       <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />
       <div className="instructions_content">
-        <div className="instructions_title">HTML/CSS/JavaScript</div>
-        <div className="instructions_subTitle">
-          Test your skills in HTML, CSS, and JavaScript.
-        </div>
+        <div className="instructions_title">{course}</div>
+        <div className="instructions_subTitle">{description}</div>
         {instructions.map((instruction, index) => (
-          <p key={index} className="instructions_text">
-            {index + 1}. {instruction}
-          </p>
+          <div className="instructions_text_container">
+            <p style={{ marginRight: '5px' }}>{index + 1}.</p>
+            <p key={index} className="instructions_text">
+              {instruction}
+            </p>
+          </div>
         ))}
       </div>
       <div className="start_evaluation_btn_container" onClick={handleClick}>

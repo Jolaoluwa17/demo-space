@@ -26,6 +26,10 @@
   position: absolute;
   left: 10px; /* Adds space from the left */
 }
+.pageheader_left_arrow_icon {
+  padding-right: 10px;
+  padding-top: 4px;
+}
 
 .left_arrow_icon {
   width: 14px;

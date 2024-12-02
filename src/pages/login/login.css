@@ -44,6 +44,11 @@
   align-items: center;
   justify-content: center;
 }
+.login_title_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .login_title {
   font-size: 30px;
   font-weight: 600;
@@ -178,6 +183,10 @@
   }
 
   .login_container .right {
+    display: none;
+  }
+
+  .usertype_selector {
     display: none;
   }
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './pages.css';
-import DeleteIcon from '../../icons/DeleteIcon';
 import AddIcon from '../../icons/AddIcon';
 import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 interface Entry {
   title: string;
@@ -96,6 +96,14 @@ const Experience: React.FC<Props> = ({
     setEntries?.(updatedEntries);
   };
 
+  useEffect(() => {
+    const updatedEntries = entries.map((entry) => ({
+      ...entry,
+      currentlyWorking: !entry.endDate,
+    }));
+    setEntries?.(updatedEntries);
+  }, [entries, setEntries]);
+
   return (
     <div className="settings_content">
       <div className="settings_main">
@@ -105,7 +113,6 @@ const Experience: React.FC<Props> = ({
         </div>
 
         {entries.length === 0 ? (
-          // Show a single empty entry if no data exists
           <div className="experience_entry">
             <div className="profile_form_item">
               <label htmlFor="jobTitle-0">Job Title</label>
@@ -182,7 +189,6 @@ const Experience: React.FC<Props> = ({
             </div>
           </div>
         ) : (
-          // Render existing entries
           entries.map((entry, index) => (
             <div key={index} className="experience_entry">
               <div className="profile_form_item">
@@ -193,8 +199,12 @@ const Experience: React.FC<Props> = ({
                       className="remove_entry_button"
                       onClick={() => handleRemoveEntry(index)}
                     >
-                      <DeleteIcon color="red" />
-                      Remove
+                      <RiDeleteBin6Line
+                        color="red"
+                        size={20}
+                        style={{ marginRight: '5px' }}
+                      />
+                      <span className="remove_text">Remove</span>
                     </div>
                   )}
                 </label>
@@ -289,7 +299,7 @@ const Experience: React.FC<Props> = ({
               style={{
                 fontSize: '14px',
                 paddingBottom: '4px',
-                paddingLeft: '10px',
+                paddingLeft: '5px',
               }}
             >
               Add Another Entry
