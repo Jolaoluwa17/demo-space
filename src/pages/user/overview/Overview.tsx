@@ -27,8 +27,10 @@ const Overview = () => {
   const { data: assessmentData, isLoading: assessmentLoading } =
     useGetAllAssessmentsQuery({});
 
-  const handleCardClick = (id: string) => {
-    navigate(`/dashboard/evaluation/instructions?id=${id}`);
+  const handleCardClick = (id: string, course: string, description: string) => {
+    navigate(`/dashboard/evaluation/instructions?id=${id}`, {
+      state: { course, description },
+    });
   };
 
   const getRandomDescription = () => {
@@ -87,14 +89,19 @@ const Overview = () => {
         ) : (
           <div className="overview_section_card_container">
             {assessmentData?.response.map(
-              (card: { _id: string; course: string }, index: number) => (
-                <SkillsCard
-                  key={index}
-                  language={card.course}
-                  description={getRandomDescription()}
-                  onClick={() => handleCardClick(card._id)}
-                />
-              )
+              (card: { _id: string; course: string }, index: number) => {
+                const description = getRandomDescription();
+                return (
+                  <SkillsCard
+                    key={index}
+                    language={card.course}
+                    description={description}
+                    onClick={() =>
+                      handleCardClick(card._id, card.course, description)
+                    }
+                  />
+                );
+              }
             )}
           </div>
         )}
