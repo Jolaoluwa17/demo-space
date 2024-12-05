@@ -13,7 +13,7 @@ function AccordionLeftArrow() {
         </g>
         <path
           d="M30.0312 32.7158L35.2228 27.5006L30.0313 22.2854"
-          stroke="#4274BA"
+          stroke="#007BFF"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"

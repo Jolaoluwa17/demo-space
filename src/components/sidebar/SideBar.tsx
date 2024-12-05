@@ -51,7 +51,7 @@ const Sidebar = () => {
       className="sidebar"
     >
       <div className="sidebar_header">
-        <img src="/images/SideBarTechWingsLogo.svg" alt="" />
+        <img src="/images/proficioNext.svg" alt="" />
       </div>
       <div className="sidebar_links">
         <NavigationLink
@@ -66,7 +66,7 @@ const Sidebar = () => {
             color={
               pathname === `${baseRoute}` ||
               pathname.startsWith(`${baseRoute}/overview`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
           />
@@ -79,7 +79,7 @@ const Sidebar = () => {
           <SidebarEvaluationIcon
             color={
               pathname.startsWith(`${baseRoute}/evaluation`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
           />
@@ -92,7 +92,7 @@ const Sidebar = () => {
           <SidebarProgress
             color={
               pathname.startsWith(`${baseRoute}/progress`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
           />
@@ -105,7 +105,7 @@ const Sidebar = () => {
           <SidebarSkillGapIcon
             color={
               pathname.startsWith(`${baseRoute}/skill-gap`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
           />
@@ -118,7 +118,7 @@ const Sidebar = () => {
           <SidebarProfileIcon
             color={
               pathname.startsWith(`${baseRoute}/profile`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
           />

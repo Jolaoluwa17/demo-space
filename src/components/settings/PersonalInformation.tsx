@@ -117,7 +117,7 @@ const PersonalInformation: React.FC<Props> = ({
           <div
             className="settings_edit_btn"
             style={{
-              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              backgroundColor: isLoading ? 'grey' : '#007BFF',
               cursor: isLoading ? 'not-allowed' : 'pointer',
               pointerEvents: isLoading ? 'none' : 'auto',
             }}

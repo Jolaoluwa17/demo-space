@@ -171,7 +171,7 @@ const EducationalBackground: React.FC<Props> = ({
             onClick={!isLoading ? addNewEntry : undefined}
             style={isLoading ? { color: 'grey', cursor: 'not-allowed' } : {}}
           >
-            <AddIcon color={isLoading ? '#808080' : '#4274BA'} />
+            <AddIcon color={isLoading ? '#808080' : '#007BFF'} />
             <div
               style={{
                 fontSize: '14px',
@@ -188,7 +188,7 @@ const EducationalBackground: React.FC<Props> = ({
           <div
             className="settings_edit_btn"
             style={{
-              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              backgroundColor: isLoading ? 'grey' : '#007BFF',
               cursor: isLoading ? 'not-allowed' : 'pointer',
               pointerEvents: isLoading ? 'none' : 'auto',
             }}

@@ -6,18 +6,45 @@ import CoinIcon from '@/icons/CoinIcon';
 import { skillGapPendingData } from '@/utils/skillGapPendingData';
 import { useGetAllUserQuery } from '@/services/features/user/userSlice';
 import { FadeLoader } from 'react-spinners';
+import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
 
 interface User {
-  id: string;
+  _id: string;
   fullName: string;
   email: string;
   createdAt: string;
 }
 
 const Dashboard = () => {
-  const { data, isLoading } = useGetAllUserQuery({});
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    refetch: refetchUsers,
+  } = useGetAllUserQuery({});
+
+  const { data: resultsData, refetch: refetchResults } = useGetAllResultsQuery(
+    {}
+  );
+  const { data: programsData, refetch: refetchPrograms } =
+    useGetAllProgramsQuery({});
+
   const userCount =
-    data?.response?.filter((user: User) => user.fullName)?.length || 0;
+    userData?.response?.filter((user: User) => user.fullName)?.length || 0;
+
+  const resultsCount = resultsData?.response?.length || 0;
+  const programsCount = programsData?.response?.length || 0;
+
+  const location = useLocation();
+
+  // refetch data everytime the screen is rendered
+  useEffect(() => {
+    refetchUsers();
+    refetchResults();
+    refetchPrograms();
+  }, [location.key, refetchUsers, refetchResults, refetchPrograms]);
 
   const overviewCards = [
     {
@@ -32,7 +59,7 @@ const Dashboard = () => {
       icon: <NotepadIcon />,
       backgroundColor: '#FFCCCC',
       title: 'Evaluations Done',
-      number: 1500,
+      number: resultsCount,
     },
     {
       id: 3,
@@ -46,9 +73,11 @@ const Dashboard = () => {
       icon: <CoinIcon />,
       backgroundColor: '#ECF4FF',
       title: 'Skill Gap Programs',
-      number: 250,
+      number: programsCount,
     },
   ];
+
+  const navigate = useNavigate();
 
   return (
     <div className="admin_dashboard_root">
@@ -75,11 +104,25 @@ const Dashboard = () => {
         <div className="admin_dashboard_left">
           <div className="title">
             <div className="table_header">Recent Signup</div>
-            <div className="admin_view_all">View all</div>
+            <div
+              className="admin_view_all"
+              onClick={() => navigate('user-management')}
+            >
+              View all
+            </div>
           </div>
-          {isLoading ? (
+          {isUserLoading ? (
             <div className="loadingData">
-              <FadeLoader color="#4274ba" />
+              <FadeLoader color="#007BFF" />
+            </div>
+          ) : userData?.response.length === 0 ? (
+            <div className="nodata_container" style={{ paddingTop: '0px' }}>
+              <img
+                src="/images/NoData.png"
+                alt=""
+                style={{ width: '250px', height: '250px' }}
+              />
+              <div style={{ fontWeight: '600' }}>Oops, No Data Avaliable</div>
             </div>
           ) : (
             <div className="admin_dashboard_table_container">
@@ -92,10 +135,10 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.response
+                  {userData?.response
                     ?.filter((user: User) => user.fullName)
                     .map((user: User) => (
-                      <tr key={user.id}>
+                      <tr key={user._id}>
                         <td className="user_table_name">{user.fullName}</td>
                         <td className="user_table_email">{user.email}</td>
                         <td>
@@ -118,7 +161,12 @@ const Dashboard = () => {
         <div className="admin_dashboard_right">
           <div className="title">
             <div className="table_header">Skill Gap</div>
-            <div className="admin_view_all">View all</div>
+            <div
+              className="admin_view_all"
+              onClick={() => navigate('skill-gap-program')}
+            >
+              View all
+            </div>
           </div>
           <div className="admin_dashboard_table_container">
             <table className="admin_dashboard_user_table">

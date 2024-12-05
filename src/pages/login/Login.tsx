@@ -72,10 +72,8 @@ const Login = () => {
     };
 
     if (rememberMe) {
-      // Save email in localStorage if "Remember Me" is checked
       localStorage.setItem('evaluator', email);
     } else {
-      // Remove saved email if "Remember Me" is not checked
       localStorage.removeItem('evaluator');
     }
 
@@ -88,16 +86,25 @@ const Login = () => {
           token: res.token,
           emailVerified: res.user.status ?? false,
           id: res.user._id ?? '',
+          userType: typeOfUser,
         })
       );
-      if (res.user.status === false) {
-        dispatch(setCredentials({ email: email, password: password }));
+      if (typeOfUser === 'User' && res.user.status === false) {
+        dispatch(
+          setCredentials({
+            email: email,
+            password: password,
+            userType: typeOfUser,
+          })
+        );
         handleRequestCode();
         navigator('/auth/verifyaccount');
-      } else if (!res.user.fullName) {
+      } else if (typeOfUser === 'User' && !res.user.fullName) {
         navigator('/user-profile');
-      } else {
+      } else if (typeOfUser === 'User') {
         navigator('/dashboard');
+      } else {
+        navigator('/admin/dashboard');
       }
     } catch (error: unknown) {
       const err = error as ErrorResponse;
@@ -136,7 +143,7 @@ const Login = () => {
         <div className="left">
           <div className="techwings_logo_login">
             <img
-              src="/assets/images/TechWingLogo.svg"
+              src="/images/proficioNext.svg"
               alt="TechWings Global"
               onClick={() => navigator('/')}
               loading="lazy"
@@ -144,11 +151,12 @@ const Login = () => {
           </div>
           <div className="login_title_container">
             <div className="login_title">Login</div>
-            <div className='usertype_selector' style={{ fontSize: '14px' }}>
+            <div className="usertype_selector" style={{ fontSize: '14px' }}>
               <CustomSelect
                 options={userList}
                 value={typeOfUser}
                 onChange={(value) => setTypeOfUser(value)}
+                minWidth="100px"
               />
             </div>
           </div>
@@ -204,7 +212,7 @@ const Login = () => {
           <button
             className="login_btn"
             style={{
-              backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
+              backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
               cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
             }}
             onClick={handleLogin}

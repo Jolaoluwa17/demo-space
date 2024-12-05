@@ -272,6 +272,10 @@ const ProfileSettings = () => {
       setShowToast(true);
       setToastStatus(true);
       console.log(error);
+    } finally {
+      setTimeout(() => {
+        setShowToast(false);
+      }, 4000);
     }
   };
 
@@ -297,8 +301,8 @@ const ProfileSettings = () => {
             style={
               activeTab === tab.name
                 ? {
-                    borderBottom: '2px solid #4274BA',
-                    color: '#4274BA',
+                    borderBottom: '2px solid #007BFF',
+                    color: '#007BFF',
                     backgroundColor: 'white',
                   }
                 : { color: 'rgba(117, 117, 117, 1)' }

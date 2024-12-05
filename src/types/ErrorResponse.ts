@@ -2,7 +2,8 @@ interface ErrorResponse {
   status: number;
   data: {
     error: string;
-    response: string;
+    response?: string;
+    message?: string;
   };
 }
 

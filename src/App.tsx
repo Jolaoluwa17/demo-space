@@ -67,13 +67,17 @@ function App() {
           {/* Settings Route */}
           <Route
             path="/user-profile"
-            element={<ProtectedRoute element={<Profile />} />}
+            element={
+              <ProtectedRoute element={<Profile />} allowedRoles={['User']} />
+            }
           />
 
           {/* Dashboard Routes */}
           <Route
             path="/dashboard"
-            element={<ProtectedRoute element={<Layout />} />}
+            element={
+              <ProtectedRoute element={<Layout />} allowedRoles={['User']} />
+            }
           >
             <Route index element={<Overview />} />
             <Route path="evaluation" element={<EvaluationRoot />}>
@@ -104,7 +108,15 @@ function App() {
           </Route>
 
           {/* Admin Dashboard */}
-          <Route path="admin/dashboard" element={<AdminLayout />}>
+          <Route
+            path="admin/dashboard"
+            element={
+              <ProtectedRoute
+                element={<AdminLayout />}
+                allowedRoles={['Admin']}
+              />
+            }
+          >
             <Route index element={<Dashboard />} />
             <Route path="user-management" element={<UserManagementRoot />}>
               <Route index element={<UserManagement />} />

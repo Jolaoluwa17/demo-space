@@ -314,7 +314,7 @@ const Experience: React.FC<Props> = ({
             onClick={handleUpdateProfile}
             style={{
               backgroundColor:
-                isLoading || isButtonDisabled ? 'grey' : '#4274BA',
+                isLoading || isButtonDisabled ? 'grey' : '#007BFF',
               cursor: isLoading ? 'not-allowed' : 'pointer',
               pointerEvents: isLoading ? 'none' : 'auto',
             }}

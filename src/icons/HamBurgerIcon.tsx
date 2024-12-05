@@ -10,7 +10,7 @@ function HamBurgerIcon() {
       >
         <path
           d="M5 17H19M5 12H19M5 7H19"
-          stroke="#4274BA"
+          stroke="#007BFF"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"

@@ -29,7 +29,7 @@
 }
 
 .table_pagination_controls.active {
-  background-color: #4274ba;
+  background-color: #007BFF;
   color: white;
 }
 .table_pagination_controls:hover {

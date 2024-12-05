@@ -28,8 +28,8 @@ const UserManagement = () => {
   const { data, isLoading, refetch } = useGetAllUserQuery({});
   const location = useLocation();
 
-  const [isYear, setYear] = useState(currentYear.toString());
-  const [currentMonth, setCurrentMonth] = useState(currentMonthIndex);
+  const [isYear, setYear] = useState('All'); // 'All' as default year
+  const [currentMonth, setCurrentMonth] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [sort, setSort] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string>('');
@@ -81,13 +81,28 @@ const UserManagement = () => {
 
   const getFilteredUsers = () => {
     const sortedUsers = getSortedUsers();
+
     return sortedUsers.filter((user: User) => {
       const fullName = user.fullName ? user.fullName.toLowerCase() : '';
       const email = user.email ? user.email.toLowerCase() : '';
-      return (
+      const createdAt = new Date(user.createdAt);
+
+      // Year filter: Show all data if "All" is selected, otherwise filter by selected year
+      const yearMatch =
+        isYear === 'All' ? true : createdAt.getFullYear().toString() === isYear;
+
+      // Month filter: Show all data if "All" is selected, otherwise filter by selected month
+      const monthMatch =
+        currentMonth === 'All'
+          ? true
+          : createdAt.getMonth() === parseInt(currentMonth);
+
+      // Search filter
+      const searchMatch =
         fullName.includes(searchQuery.toLowerCase()) ||
-        email.includes(searchQuery.toLowerCase())
-      );
+        email.includes(searchQuery.toLowerCase());
+
+      return yearMatch && monthMatch && searchMatch;
     });
   };
 
@@ -141,7 +156,16 @@ const UserManagement = () => {
       </div>
       {isLoading ? (
         <div className="loadingData">
-          <FadeLoader color="#4274ba" />
+          <FadeLoader color="#007BFF" />
+        </div>
+      ) : data?.response.length === 0 ? (
+        <div className="nodata_container">
+          <img
+            src="/images/NoData.png"
+            alt=""
+            style={{ width: '250px', height: '250px' }}
+          />
+          <div style={{ fontWeight: '600' }}>Oops, No Data Avaliable</div>
         </div>
       ) : (
         <div className="user_management_table">
@@ -152,7 +176,7 @@ const UserManagement = () => {
                 <th>Signup Date</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th style={{ borderTopRightRadius: '12px' }}>Status</th>
+                <th style={{ borderTopRightRadius: '12px' }}>Verified</th>
               </tr>
             </thead>
             <tbody>

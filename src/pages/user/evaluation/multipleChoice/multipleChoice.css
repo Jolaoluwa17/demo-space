@@ -75,20 +75,22 @@
 }
 .back_and_next_button {
   padding: 6px 6px 0px 6px;
-  background-color: #4274ba;
+  background-color: #007BFF;
   border-radius: 8px;
   cursor: pointer;
+  border: none;
 }
 .question_submit_btn {
   width: 235px;
   color: white;
-  background-color: #4274ba;
+  background-color: #007BFF;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
   cursor: pointer;
+  border: none;
 }
 .back_and_next_button.disabled,
 .question_submit_btn.disabled {
@@ -102,7 +104,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 200px;
+  padding-top: 180px;
   flex-direction: column;
 }
 

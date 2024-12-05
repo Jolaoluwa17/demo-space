@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to right, #4274ba, #00265c);
+  background: linear-gradient(to right, #007BFF, #00265c);
   overflow: hidden;
 }
 .the_future_container {

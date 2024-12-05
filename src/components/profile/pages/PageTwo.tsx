@@ -147,7 +147,7 @@ const PageTwo: React.FC<Props> = ({
               : {}
           }
         >
-          <AddIcon color={!isFormValid || isLoading ? '#808080' : '#4274BA'} />
+          <AddIcon color={!isFormValid || isLoading ? '#808080' : '#007BFF'} />
           <div style={{ fontSize: '14px', paddingBottom: '4px' }}>
             Add Another Entry
           </div>
@@ -160,7 +160,7 @@ const PageTwo: React.FC<Props> = ({
         className={`next_btn`}
         onClick={() => setCurrentPage(3)}
         style={{
-          backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
+          backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
           cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
         }}
         disabled={!isFormValid || isLoading}

@@ -1,6 +1,4 @@
-import LeftArrowIcon from '@/icons/LeftArrowIcon';
 import './dateFilter.css';
-import RightArrowIcon from '@/icons/RightArrowIcon';
 import CustomSelect from '../customselect/CustomSelect';
 
 const monthNames = [
@@ -21,8 +19,8 @@ const monthNames = [
 interface Props {
   isYear: string;
   setYear: React.Dispatch<React.SetStateAction<string>>;
-  currentMonth: number;
-  setCurrentMonth: React.Dispatch<React.SetStateAction<number>>;
+  currentMonth: string; // Change this to string
+  setCurrentMonth: React.Dispatch<React.SetStateAction<string>>;
   currentYear: number;
   currentMonthIndex: number;
   years: string[];
@@ -33,47 +31,42 @@ const DateFilter: React.FC<Props> = ({
   setYear,
   currentMonth,
   setCurrentMonth,
-  currentYear,
-  currentMonthIndex,
   years,
 }) => {
-  const handlePreviousMonth = () => {
-    setCurrentMonth((prev) => {
-      if (prev === 0) {
-        setYear((prevYear) => (parseInt(prevYear) - 1).toString());
-        return 11;
-      }
-      return prev - 1;
-    });
+  const handleMonthChange = (selected: string) => {
+    if (selected === 'All') {
+      setCurrentMonth('All');
+    } else {
+      const monthIndex = monthNames.indexOf(selected); // Convert month name to index
+      setCurrentMonth(monthIndex >= 0 ? monthIndex.toString() : 'All');
+    }
   };
 
-  const handleNextMonth = () => {
-    setCurrentMonth((prev) => {
-      if (parseInt(isYear) === currentYear && prev === currentMonthIndex) {
-        return prev;
-      }
-      if (prev === 11) {
-        setYear((prevYear) => (parseInt(prevYear) + 1).toString());
-        return 0;
-      }
-      return prev + 1;
-    });
+  const handleYearChange = (selected: string) => {
+    setYear(selected);
   };
+
   return (
     <div className="month_year_filter">
-      <div className="left_month_controls" onClick={handlePreviousMonth}>
-        <LeftArrowIcon />
+      <div style={{ paddingRight: '10px', width: '100%' }}>
+        <CustomSelect
+          options={['All', ...monthNames]}
+          value={
+            currentMonth === 'All' ? 'All' : monthNames[parseInt(currentMonth)]
+          }
+          onChange={handleMonthChange}
+          placeholder="Month"
+          minWidth="150px"
+        />
       </div>
-      <div className="right_month_controls" onClick={handleNextMonth}>
-        <RightArrowIcon />
+      <div>
+        <CustomSelect
+          options={['All', ...years]}
+          value={isYear}
+          onChange={handleYearChange}
+          placeholder="Year"
+        />
       </div>
-      <div className="month_indicator">{monthNames[currentMonth]}</div>
-      <CustomSelect
-        options={years}
-        value={isYear}
-        onChange={setYear}
-        placeholder="Year"
-      />
     </div>
   );
 };

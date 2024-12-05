@@ -42,10 +42,10 @@ const AdminDetails = () => {
 
   return (
     <div className="user_details_root">
-      <PageHeader pageTitle="User Details" handleBackClick={handleBackClick} />
+      <PageHeader pageTitle="Admin Details" handleBackClick={handleBackClick} />
       {isLoading ? (
         <div className="loadingData">
-          <FadeLoader color="#4274ba" />
+          <FadeLoader color="#007BFF" />
         </div>
       ) : (
         <div className="user_details_content">
@@ -82,17 +82,21 @@ const AdminDetails = () => {
             }}
             onClick={deleteAdminLoading ? undefined : handleDeleteAdmin}
           >
-            Delete Account
+            {deleteAdminLoading ? (
+              <div className="spinner"></div>
+            ) : (
+              'Delete Account'
+            )}
           </div>
         </div>
       )}
       <Popup popup={showSuccess}>
         <div className="change_password_popup">
-          <img src="/public/images/DeleteAccount.svg" alt="" />
+          <img src="/images/DeleteAccount.svg" alt="" />
           <div className="change_password_popup_text">
             <p>
-              {data?.response.name ? data?.response.name : 'null'}{' '}
-              record deleted successfully
+              {data?.response.name ? data?.response.name : 'null'} record
+              deleted successfully
             </p>
           </div>
         </div>

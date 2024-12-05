@@ -45,7 +45,7 @@ const ForgotPassword = () => {
       <div className="forgotpassword_container">
         <div className="techwings_logo_forgotpassword">
           <img
-            src="/assets/images/TechWingLogo.svg"
+            src="/images/proficioNext.svg"
             alt="login_image"
             onClick={() => navigator('/')}
           />
@@ -85,7 +85,7 @@ const ForgotPassword = () => {
           <button
             className="submit_btn"
             style={{
-              backgroundColor: isFormValid ? '#4274BA' : 'grey',
+              backgroundColor: isFormValid ? '#007BFF' : 'grey',
               cursor: isFormValid ? 'pointer' : 'not-allowed',
             }}
             onClick={handleForgotPassword}

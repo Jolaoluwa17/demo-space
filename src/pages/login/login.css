@@ -38,7 +38,7 @@
   /* border-radius: 150px; */
   position: relative;
   /* overflow: hidden; */
-  /* background-color: #4274ba; */
+  /* background-color: #007BFF; */
   padding: 0px;
   display: flex;
   align-items: center;
@@ -78,7 +78,7 @@
   font-size: 14px;
 }
 .login_form_item input:focus {
-  border-color: #4274ba;
+  border-color: #007BFF;
 }
 .login_password_visibility {
   position: absolute;
@@ -102,7 +102,7 @@
   padding: 12px 0px;
   margin-top: 25px;
   border: none;
-  background-color: #4274ba;
+  background-color: #007BFF;
   color: white;
   border-radius: 5px;
   font-size: 15px;

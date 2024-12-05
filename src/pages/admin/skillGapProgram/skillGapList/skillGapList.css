@@ -14,7 +14,7 @@
   height: 84px;
   border-radius: 8px;
   background-color: white;
-  padding: 8px 14px;
+  padding: 30px 14px;
   display: flex;
   align-items: center;
   margin-bottom: 24px;
@@ -24,10 +24,11 @@
 .program_card .content {
   display: flex;
   align-items: center;
+  max-width: 80%;
 }
 .program_card .content .title {
   color: #333a41;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
 }
@@ -35,7 +36,7 @@
   position: absolute;
   top: 0px;
   height: 100%;
-  background-color: #4274ba;
+  background-color: #007BFF;
   right: 0px;
   border-radius: 8px;
   display: flex;
@@ -45,4 +46,25 @@
   color: white;
   font-size: 14px;
   cursor: pointer;
+}
+.skill_gap_description_admin {
+  font-size: 14px;
+  color: #6a757e;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+.admin_skill_gap_img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
 }

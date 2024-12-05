@@ -48,7 +48,7 @@ const ResetPassword = () => {
     <div className="resetpassword_root">
       <div className="resetpassword_container">
         <div className="techwings_logo_forgotpassword">
-          <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
+          <img src="/images/proficioNext.svg" alt="login_image" />
         </div>
         <div className="resetpassword_form">
           <div
@@ -112,7 +112,7 @@ const ResetPassword = () => {
           <button
             className="submit_btn"
             style={{
-              backgroundColor: isFormValid ? '#4274BA' : 'grey',
+              backgroundColor: isFormValid ? '#007BFF' : 'grey',
               cursor: isFormValid ? 'pointer' : 'not-allowed',
             }}
             onClick={handleResetPassword}

@@ -34,6 +34,8 @@ const Certificate: React.FC<Props> = ({
     }
   }, [certifications, setCertifications]);
 
+  console.log(certifications);
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -130,7 +132,7 @@ const Certificate: React.FC<Props> = ({
                 type="date"
                 name="dateObtained"
                 id={`issueDate-${index}`}
-                value={cert.dateObtained || ''} // Fallback to empty string if cert.dateObtained is null
+                value={cert.dateObtained ? cert.dateObtained.split('T')[0] : ''} // Fallback to empty string if cert.dateObtained is null
                 className="profile_input_item"
                 onChange={(event) => handleInputChange(index, event)}
                 disabled={userDataIsLoading || isLoading}
@@ -156,7 +158,7 @@ const Certificate: React.FC<Props> = ({
           <div
             className="settings_edit_btn"
             style={{
-              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              backgroundColor: isLoading ? 'grey' : '#007BFF',
               cursor: isLoading ? 'not-allowed' : 'pointer',
               pointerEvents: isLoading ? 'none' : 'auto',
             }}

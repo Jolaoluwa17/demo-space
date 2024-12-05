@@ -121,7 +121,7 @@ const ChangePassword = () => {
 
           <Popup popup={popup} closePopup={() => setPopup(false)}>
             <div className="change_password_popup">
-              <img src="/public/images/DeleteAccount.svg" alt="" />
+              <img src="/images/DeleteAccount.svg" alt="" />
               <div className="change_password_popup_text">
                 <p>Successful</p>
                 <div>

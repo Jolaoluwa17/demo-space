@@ -46,7 +46,7 @@ const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
       <div className="main">
         <div className="homeNav_techwings_logo">
           <img
-            src="/images/SideBarTechWingsLogo.svg"
+             src="/images/proficioNext.svg"
             alt=""
             className="homeNav_techwings_logo_main"
           />
@@ -109,7 +109,7 @@ const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
               >
                 <path
                   d="M18 6L6 18M6 6L18 18"
-                  stroke="#4274ba"
+                  stroke="#007BFF"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"

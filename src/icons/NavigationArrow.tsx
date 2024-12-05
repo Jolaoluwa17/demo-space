@@ -10,7 +10,7 @@ function NavigationArrow() {
       >
         <path
           d="M10.1203 3.95312L14.167 7.99979L10.1203 12.0465"
-          stroke="#4274BA"
+          stroke="#007BFF"
           strokeWidth="1.5"
           strokeMiterlimit="10"
           strokeLinecap="round"
@@ -18,7 +18,7 @@ function NavigationArrow() {
         />
         <path
           d="M2.83371 8H14.0537"
-          stroke="#4274BA"
+          stroke="#007BFF"
           strokeWidth="1.5"
           strokeMiterlimit="10"
           strokeLinecap="round"

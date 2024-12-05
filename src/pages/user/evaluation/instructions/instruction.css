@@ -12,6 +12,15 @@
 .instructions_title {
   font-size: 20px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.taken_assessment_indicator {
+  color: red;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
 }
 .instructions_subTitle {
   font-size: 14px;
@@ -35,7 +44,7 @@
 }
 .start_evaluation_btn {
   width: 344px;
-  background-color: #4274ba;
+  background-color: #007bff;
   height: 48px;
   display: flex;
   align-items: center;
@@ -51,7 +60,8 @@
     font-size: 18px;
     font-weight: 600;
   }
-  .instructions_text {
+  .instructions_text,
+  .taken_assessment_indicator {
     font-size: 14px;
   }
 }

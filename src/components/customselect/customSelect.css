@@ -54,6 +54,19 @@
 }
 
 .custom_select_option.selected {
-  background-color: #4274ba;
+  background-color: #007BFF;
   color: #fff;
+}
+
+.custom_select.disabled {
+  pointer-events: none;
+  opacity: 0.5; /* Greys out the component */
+}
+
+.custom_select_trigger.disabled {
+  cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
+.custom_select_options {
+  pointer-events: auto; /* Ensure dropdown is clickable if not disabled */
 }

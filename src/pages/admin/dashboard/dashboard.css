@@ -123,9 +123,4 @@
   margin-bottom: 24px;
   font-size: 14px;
 }
-.loadingData {
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  margin-top: 150px;
-}
+

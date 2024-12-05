@@ -260,7 +260,7 @@ const Profile = () => {
               onClick={!isLoading ? handleBackButtonClick : undefined}
               style={isLoading ? { color: 'grey' } : {}}
             >
-              <ProfileBackArrow color={isLoading ? '#808080' : '#4274BA'} />
+              <ProfileBackArrow color={isLoading ? '#808080' : '#007BFF'} />
               <div style={{ paddingBottom: '6px', paddingLeft: '10px' }}>
                 Back
               </div>
@@ -332,16 +332,6 @@ const Profile = () => {
               isLoading={isLoading}
             />
           )}
-        </div>
-        <div className="profile_footer">
-          <button
-            className="submit_button"
-            disabled={isLoading}
-            onClick={!isLoading ? handleUpdateProfile : undefined}
-            style={isLoading ? { backgroundColor: 'grey' } : {}}
-          >
-            {isLoading ? 'Submitting...' : 'Submit'}
-          </button>
         </div>
       </div>
     </div>

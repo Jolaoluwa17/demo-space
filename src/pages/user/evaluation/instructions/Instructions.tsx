@@ -1,11 +1,22 @@
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import './instruction.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
+import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
+import { useEffect } from 'react';
+import { IoInformationCircleSharp } from 'react-icons/io5';
+
+interface Result {
+  userId: {
+    _id: string;
+  };
+  quizId: string;
+}
 
 const Instructions = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams(); // Extract URL parameters
   const id = searchParams.get('id');
+  const userid = sessionStorage.getItem('id');
   const location = useLocation();
   const { course, description } = location.state || {};
 
@@ -26,23 +37,58 @@ const Instructions = () => {
     'Review your answers before submitting the evaluation.',
   ];
 
+  const { data: resultsData, refetch: refetchResults } = useGetAllResultsQuery(
+    {}
+  );
+
+  useEffect(() => {
+    refetchResults();
+  }, [refetchResults]);
+
+  // Filter results based on the userId
+  const filteredResults =
+    resultsData?.response.filter(
+      (result: Result) => result.userId?._id === userid && result.quizId === id
+    ) || [];
+
+  console.log(filteredResults);
+
   return (
     <div className="instructions_root">
       <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />
       <div className="instructions_content">
-        <div className="instructions_title">{course}</div>
+        <div className="instructions_title">
+          {course}
+          {filteredResults.length > 0 && (
+            <div className="taken_assessment_indicator">
+              <IoInformationCircleSharp
+                size={20}
+                style={{ paddingRight: '5px' }}
+              />
+              Assessment Taken
+            </div>
+          )}
+        </div>
         <div className="instructions_subTitle">{description}</div>
         {instructions.map((instruction, index) => (
-          <div className="instructions_text_container">
+          <div key={index} className="instructions_text_container">
             <p style={{ marginRight: '5px' }}>{index + 1}.</p>
-            <p key={index} className="instructions_text">
-              {instruction}
-            </p>
+            <p className="instructions_text">{instruction}</p>
           </div>
         ))}
       </div>
-      <div className="start_evaluation_btn_container" onClick={handleClick}>
-        <div className="start_evaluation_btn">Start Evaluation</div>
+      <div className="start_evaluation_btn_container">
+        <div
+          className="start_evaluation_btn"
+          style={{
+            backgroundColor: filteredResults.length < 1 ? '' : 'grey',
+            cursor: filteredResults.length < 1 ? 'pointer' : 'not-allowed',
+            color: 'white',
+          }}
+          onClick={filteredResults.length > 0 ? undefined : handleClick}
+        >
+          Start Evaluation
+        </div>
       </div>
     </div>
   );

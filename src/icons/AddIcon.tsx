@@ -2,7 +2,7 @@ interface Props {
   color?: string;
 }
 
-const AddIcon: React.FC<Props> = ({ color = '#4274BA' }) => {
+const AddIcon: React.FC<Props> = ({ color = '#007BFF' }) => {
   return (
     <div>
       <svg

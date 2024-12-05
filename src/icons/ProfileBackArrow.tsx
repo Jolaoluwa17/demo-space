@@ -2,7 +2,7 @@ interface Props {
   color?: string;
 }
 
-const ProfileBackArrow: React.FC<Props> = ({ color = '#4274BA' }) => {
+const ProfileBackArrow: React.FC<Props> = ({ color = '#007BFF' }) => {
   return (
     <div>
       <svg

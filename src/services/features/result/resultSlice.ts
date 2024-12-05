@@ -9,8 +9,14 @@ export const resultSlice = apiSlice.injectEndpoints({
         body: resultData,
       }),
     }),
+    getAllResults: builder.query({
+      query: () => ({
+        url: '/result',
+        method: 'GET',
+      }),
+    }),
   }),
   overrideExisting: true,
 });
 
-export const { useCreateResultMutation } = resultSlice;
+export const { useCreateResultMutation, useGetAllResultsQuery } = resultSlice;

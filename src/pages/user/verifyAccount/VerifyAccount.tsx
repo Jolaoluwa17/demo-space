@@ -40,11 +40,12 @@ const VerifyAccount = () => {
     }
   };
 
-  const [login] = useLoginMutation();
+  const [login, { isLoading: loginLoading }] = useLoginMutation();
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
     const userData = {
+      userType: 'User',
       email: email,
       password: password,
     };
@@ -93,7 +94,7 @@ const VerifyAccount = () => {
       <div className="verify_account_container">
         <div className="left_section">
           <img
-            src="/assets/images/VerifyAccount.svg"
+            src="/images/proficioNext.svg"
             alt="login_image"
             className="verify_account_img"
           />
@@ -119,7 +120,7 @@ const VerifyAccount = () => {
               <input
                 type="text"
                 name="code"
-                placeholder="7789BM6X"
+                placeholder="7789"
                 className="input"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
@@ -148,13 +149,23 @@ const VerifyAccount = () => {
             <button
               className="verify_btn"
               style={{
-                backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
-                cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
+                backgroundColor:
+                  isFormValid && !isLoading && !loginLoading
+                    ? '#007BFF'
+                    : 'grey',
+                cursor:
+                  isFormValid && !isLoading && !loginLoading
+                    ? 'pointer'
+                    : 'not-allowed',
               }}
               onClick={handleVerifyAccount}
-              disabled={!isFormValid || isLoading}
+              disabled={!isFormValid || isLoading || loginLoading}
             >
-              {isLoading ? <div className="spinner"></div> : 'Verify'}
+              {isLoading || loginLoading ? (
+                <div className="spinner"></div>
+              ) : (
+                'Verify'
+              )}
             </button>
           </div>
         </div>

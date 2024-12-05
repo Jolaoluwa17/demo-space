@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './evaluation.css';
 
 import { useNavigate } from 'react-router-dom';
@@ -8,60 +8,68 @@ import { useGetAllAssessmentsQuery } from '@/services/features/quiz/quizSlice';
 import { FadeLoader } from 'react-spinners';
 import descriptionGeneric from '@/utils/descriptionGeneric';
 
-const filterOptions = [
-  'All',
-  'Frontend',
-  'Backend',
-  'Web Development',
-  'Data Science',
-  'DevOps',
-];
-
 const Evaluation = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [categories, setCategories] = useState<string[]>([]); // State to hold unique categories
   const navigate = useNavigate();
 
   const { data: assessmentData, isLoading } = useGetAllAssessmentsQuery({});
 
+  // Update search term
   const handleSearch = (term: string) => {
-    setSearchTerm(term); // Update search term state
+    setSearchTerm(term);
   };
 
-  // Updated: Pass item ID to navigate
+  // Navigate to instructions page
   const handleCardClick = (id: string, course: string, description: string) => {
     navigate(`/dashboard/evaluation/instructions?id=${id}`, {
       state: { course, description },
     });
   };
 
-  // Filter skills based only on the search term
-  const filteredSkills =
-    assessmentData?.response?.filter((card: { course: string }) =>
-      card.course.toLowerCase().includes(searchTerm.toLowerCase())
-    ) || [];
-
+  // Get random description from the description list
   const getRandomDescription = () => {
     const randomIndex = Math.floor(Math.random() * descriptionGeneric.length);
     return descriptionGeneric[randomIndex].description;
   };
 
+  // Extract unique categories when assessment data is loaded
+  useEffect(() => {
+    if (assessmentData?.response) {
+      const allCategories: string[] = assessmentData.response.map(
+        (item: { category: string }) => item.category
+      );
+      const uniqueCategories = ['All', ...new Set(allCategories)];
+      setCategories(uniqueCategories);
+    }
+  }, [assessmentData]);
+
+  // Filter skills based on search term and active filter (category)
+  const filteredSkills =
+    assessmentData?.response
+      ?.filter((card: { course: string; category: string }) =>
+        card.course.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      .filter((card: { category: string }) => {
+        return activeFilter === 'All' || card.category === activeFilter;
+      }) || [];
+
   return (
     <div className="evaluation_root">
       {isLoading ? (
         <div className="loading_container">
-          <FadeLoader color="#4274ba" />
+          <FadeLoader color="#007BFF" />
         </div>
       ) : (
         <div>
           <SearchInput handleSearch={handleSearch} />
           <div className="evaluation_paginator">
-            {filterOptions.map((filter, index) => (
+            {/* Map categories dynamically */}
+            {categories.map((filter, index) => (
               <div
                 key={index}
-                className={`evaluation_pagination_btn ${
-                  activeFilter === filter ? 'page_active' : ''
-                }`}
+                className={`evaluation_pagination_btn ${activeFilter === filter ? 'page_active' : ''}`}
                 onClick={() => setActiveFilter(filter)}
               >
                 {filter}
@@ -69,6 +77,7 @@ const Evaluation = () => {
             ))}
           </div>
           <div className="evaluation_skills_container">
+            {/* Display filtered skills */}
             {filteredSkills.map(
               (card: { _id: string; course: string }, index: number) => {
                 const description = getRandomDescription();

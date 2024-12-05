@@ -99,7 +99,7 @@ const Signup = () => {
       <div className="signup_container">
         <div className="left_section">
           <img
-            src="/assets/images/Signup.png"
+            src="/images/proficioNext.svg"
             alt="signup_image"
             className="signup_img"
             style={{ borderRadius: '10px' }}
@@ -274,7 +274,7 @@ const Signup = () => {
             <button
               className="signup_btn"
               style={{
-                backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
+                backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
                 cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
               }}
               onClick={handleSignup}

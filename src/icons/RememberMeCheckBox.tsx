@@ -8,7 +8,7 @@ function RememberMeCheckBox() {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle cx="10" cy="10" r="10" fill="#4274BA" />
+        <circle cx="10" cy="10" r="10" fill="#007BFF" />
         <path d="M5.5 9.5L9 13L14.5 7.5" stroke="white" strokeWidth="1.5" />
       </svg>
     </div>

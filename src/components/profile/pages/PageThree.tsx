@@ -17,11 +17,41 @@ const PageThree: React.FC<Props> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const [filteredSkills, setFilteredSkills] = useState<string[]>([]);
 
-  // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
+
+    const skillsList = [
+      'JavaScript',
+      'Python',
+      'React',
+      'Node.js',
+      'TypeScript',
+      'CSS',
+      'HTML',
+      'Ruby',
+      'Java',
+      'SQL',
+      'MongoDB',
+      'Git',
+      'Django',
+      'Vue.js',
+      'Angular',
+      'Redux',
+      'React Native',
+      'Flutter',
+    ];
+
+    // Filter skills as the user types (case insensitive matching)
+    const filtered = skillsList.filter(
+      (skill) =>
+        skill.toLowerCase().includes(value.toLowerCase()) &&
+        !skillSet.includes(skill) &&
+        value.trim() !== ''
+    );
+    setFilteredSkills(filtered);
   };
 
   // Handle the 'Enter' key press to add a skill
@@ -34,12 +64,12 @@ const PageThree: React.FC<Props> = ({
       }
     }
   };
-  const handleAddSkill = () => {
-    if (searchTerm.trim() !== '' && skillSet.length < 10) {
-      if (!skillSet.includes(searchTerm.trim())) {
-        setSkillSet([...skillSet, searchTerm.trim()]);
-        setSearchTerm(''); // Clear the input field
-      }
+
+  const handleSkillSelect = (skill: string) => {
+    if (skillSet.length < 10 && !skillSet.includes(skill)) {
+      setSkillSet?.([...skillSet, skill]);
+      setSearchTerm('');
+      setFilteredSkills([]);
     }
   };
 
@@ -61,7 +91,10 @@ const PageThree: React.FC<Props> = ({
       </div>
       <div className="profile_pageone_form_item">
         <label htmlFor="skill">Add your Skill</label>
-        <div className="profile_pageone_searchInput">
+        <div
+          className="profile_pageone_searchInput"
+          style={{ position: 'relative' }}
+        >
           <input
             type="text"
             name="skill"
@@ -71,12 +104,20 @@ const PageThree: React.FC<Props> = ({
             onChange={handleSearchChange}
             onKeyDown={handleKeyDown}
           />
-          <div
-            style={{ color: '#4274ba', fontWeight: '600', cursor: 'pointer' }}
-            onClick={handleAddSkill}
-          >
-            Add
-          </div>
+          {/* Display filtered skill options as a dropdown */}
+          {searchTerm && filteredSkills.length > 0 && (
+            <div className="settings_profile_skills_dropdown">
+              {filteredSkills.map((skill) => (
+                <div
+                  key={skill}
+                  className="settings_profile_skill_item"
+                  onClick={() => handleSkillSelect(skill)}
+                >
+                  {skill}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <div className="skillheader">You can add up to 10 skills</div>
@@ -100,7 +141,7 @@ const PageThree: React.FC<Props> = ({
         className={`next_btn`}
         onClick={() => setCurrentPage(4)}
         style={{
-          backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
+          backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#007BFF',
           cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',
         }}
         disabled={isButtonDisabled || isLoading}

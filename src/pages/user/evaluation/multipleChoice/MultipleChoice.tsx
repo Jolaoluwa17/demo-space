@@ -120,17 +120,26 @@ const MultipleChoice: React.FC = () => {
       }
     });
 
+    const totalQuestions = questionsData?.data.length || 1;
+    const percentageScore = (userScore / totalQuestions) * 100;
+
     const resultData = {
-      score: userScore,
+      score: percentageScore,
       quizId: id,
       userId: userid,
     };
 
     try {
-      await result(resultData).unwrap();
+      const res = await result(resultData).unwrap();
       navigate('/dashboard/evaluation/status', {
         state: { score: userScore, noQuestions: questionsData.data.length },
       });
+      console.log(res);
+      setErrMsg(
+        res.response === 'Result already submitted for this quiz'
+          ? 'Quiz has been done'
+          : ''
+      );
     } catch (error: unknown) {
       const err = error as ErrorResponse;
       setErrMsg(
@@ -138,6 +147,7 @@ const MultipleChoice: React.FC = () => {
           ? 'Score not recorded'
           : 'Something went wrong'
       );
+      console.log(error);
     }
   };
 
@@ -153,7 +163,7 @@ const MultipleChoice: React.FC = () => {
     <div>
       {questionsLoading || assessmentLoading ? (
         <div className="loading_container">
-          <FadeLoader color="#4274ba" />
+          <FadeLoader color="#007BFF" />
         </div>
       ) : questionsData?.data?.length === 0 ? (
         <div className="nodata_container">
@@ -221,20 +231,31 @@ const MultipleChoice: React.FC = () => {
             >
               <ArrowLeftIcon />
             </button>
-            <button
-              className="question_submit_btn"
-              onClick={handleSubmit}
-              disabled={questionsData?.data?.length < 1 || resultLoading}
-            >
-              {resultLoading ? <div className="spinner"></div> : 'Submit'}
-            </button>
-            {errMsg && (
-              <div className="error_message">
-                <BiSolidErrorAlt
-                  fontSize={18}
-                  style={{ paddingRight: '5px' }}
-                />
-                {errMsg}
+            {isLastQuestion && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                }}
+              >
+                <button
+                  className="question_submit_btn"
+                  onClick={handleSubmit}
+                  disabled={questionsData?.data?.length < 1 || resultLoading}
+                >
+                  {resultLoading ? <div className="spinner"></div> : 'Submit'}
+                </button>
+                {errMsg && (
+                  <div className="error_message">
+                    <BiSolidErrorAlt
+                      fontSize={18}
+                      style={{ paddingRight: '5px' }}
+                    />
+                    {errMsg}
+                  </div>
+                )}
               </div>
             )}
             <button

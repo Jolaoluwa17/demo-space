@@ -51,7 +51,7 @@ const UserDetails = () => {
       <PageHeader pageTitle="User Details" handleBackClick={handleBackClick} />
       {isLoading ? (
         <div className="loadingData">
-          <FadeLoader color="#4274ba" />
+          <FadeLoader color="#007BFF" />
         </div>
       ) : (
         <div className="user_details_content">
@@ -72,7 +72,7 @@ const UserDetails = () => {
             </div>
           </div>
           <div className="user_details_section">
-            <div className="section_header" style={{ color: '#4274BA' }}>
+            <div className="section_header" style={{ color: '#007BFF' }}>
               Evaluation
             </div>
             {!data?.response.evaluation ? (
@@ -365,7 +365,7 @@ const UserDetails = () => {
           <div style={{ width: '100%' }}>
             <div className="decision_title">
               Are you sure you want to delete{' '}
-              <span style={{ color: '#4274ba', fontWeight: 'bold' }}>
+              <span style={{ color: '#007BFF', fontWeight: 'bold' }}>
                 {data?.response.fullName ? data?.response.fullName : 'null'}
               </span>{' '}
               as a user
@@ -374,7 +374,7 @@ const UserDetails = () => {
               <div
                 className="decision_btn"
                 style={{
-                  backgroundColor: !deleteUserLoading ? '#4274BA' : 'grey',
+                  backgroundColor: !deleteUserLoading ? '#007BFF' : 'grey',
                   cursor: !deleteUserLoading ? 'pointer' : 'not-allowed',
                   color: !deleteUserLoading ? 'white' : 'grey',
                 }}
@@ -398,7 +398,7 @@ const UserDetails = () => {
           </div>
         ) : (
           <div className="change_password_popup">
-            <img src="/public/images/DeleteAccount.svg" alt="" />
+            <img src="/images/DeleteAccount.svg" alt="" />
             <div className="change_password_popup_text">
               <p>
                 {data?.response.fullName ? data?.response.fullName : 'null'}{' '}

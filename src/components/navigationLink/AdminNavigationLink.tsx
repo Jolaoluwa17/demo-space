@@ -34,7 +34,8 @@ const AdminNavigationLink = ({
         <p
           className="navigation_text"
           style={{
-            color: isActive ? '#4274ba' : '#6A757E',
+            color: isActive ? '#007BFF' : '#6A757E',
+            fontWeight: '600',
           }}
         >
           {name}
@@ -48,7 +49,8 @@ const AdminNavigationLink = ({
         <p
           className="navigation_text"
           style={{
-            color: isActive ? '#4274ba' : '#6A757E',
+            color: isActive ? '#007BFF' : '#6A757E',
+            fontWeight: '600',
           }}
         >
           {name}

@@ -37,6 +37,8 @@ const Skills: React.FC<Props> = ({
     'Vue.js',
     'Angular',
     'Redux',
+    'React Native',
+    'Flutter',
   ];
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,8 +67,9 @@ const Skills: React.FC<Props> = ({
     setSkillSet?.(skillSet.filter((s) => s !== skill));
   };
 
-  // Filter out any empty or invalid skills
-  const validSkills = skillSet.filter((skill) => skill.trim() !== '');
+  // Filter out any empty, null, or invalid skills
+const validSkills = skillSet.filter((skill) => skill && skill.trim() !== '');
+
 
   return (
     <div className="settings_content">
@@ -121,7 +124,7 @@ const Skills: React.FC<Props> = ({
           <div
             className="settings_edit_btn"
             style={{
-              backgroundColor: isLoading ? 'grey' : '#4274BA',
+              backgroundColor: isLoading ? 'grey' : '#007BFF',
               cursor: isLoading ? 'not-allowed' : 'pointer',
               pointerEvents: isLoading ? 'none' : 'auto',
             }}

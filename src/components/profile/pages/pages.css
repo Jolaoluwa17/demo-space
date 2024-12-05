@@ -5,7 +5,7 @@
 }
 .profile_pageone_title {
   font-size: 16px;
-  color: #4274ba;
+  color: #007BFF;
   font-weight: 600;
 }
 .profile_pageone_subTitle {
@@ -27,7 +27,7 @@
   padding: 13.5px 15px 13.5px 15px;
   margin-top: 10px;
   border-radius: 10px;
-  outline-color: #4274ba;
+  outline-color: #007BFF;
   border: 1px solid #cbcbcc;
   font-size: 16px;
   box-sizing: border-box;
@@ -39,7 +39,7 @@
   padding: 13.5px 15px 13.5px 15px;
   margin-top: 10px;
   border-radius: 10px;
-  outline-color: #4274ba;
+  outline-color: #007BFF;
   border: 1px solid #cbcbcc;
   font-size: 16px;
   box-sizing: border-box;
@@ -49,7 +49,7 @@
   padding: 13.5px 15px 12.5px 15px;
   margin-top: 10px;
   border-radius: 10px;
-  outline-color: #4274ba;
+  outline-color: #007BFF;
   border: 1px solid #cbcbcc;
   box-sizing: border-box;
   display: flex;
@@ -65,6 +65,7 @@
 .upload_profile_pic {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-top: 24px;
   cursor: pointer;
 }
@@ -114,7 +115,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #4274ba;
+  color: #007BFF;
   cursor: pointer;
 }
 .skillheader {
@@ -130,7 +131,7 @@
 .skill {
   margin-top: 10px;
   padding: 8px 12px;
-  background-color: #4274ba;
+  background-color: #007BFF;
   color: white;
   display: flex;
   align-items: center;
@@ -198,7 +199,7 @@
 }
 .skip_btn {
   text-align: center;
-  color: #4274ba;
+  color: #007BFF;
   margin-top: 24px;
   cursor: pointer;
 }

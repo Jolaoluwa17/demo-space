@@ -123,7 +123,7 @@ const PageSix: React.FC<Props> = ({
           }
         >
           <AddIcon
-            color={isButtonDisabled || isLoading ? '#808080' : '#4274BA'}
+            color={isButtonDisabled || isLoading ? '#808080' : '#007BFF'}
           />
           <div style={{ fontSize: '14px', paddingBottom: '4px' }}>
             Add Another Entry
@@ -137,7 +137,7 @@ const PageSix: React.FC<Props> = ({
         className={`next_btn`}
         onClick={handleUpdateProfile}
         style={{
-          backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
+          backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#007BFF',
           cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',
         }}
         disabled={isButtonDisabled || isLoading}

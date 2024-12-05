@@ -74,7 +74,7 @@ const PageFour: React.FC<Props> = ({
           className={`next_btn`}
           onClick={() => setCurrentPage(5)}
           style={{
-            backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#4274BA',
+            backgroundColor: isButtonDisabled || isLoading ? 'grey' : '#007BFF',
             cursor: isButtonDisabled || isLoading ? 'not-allowed' : 'pointer',
           }}
           disabled={isButtonDisabled || isLoading}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './status.css';
 import NavigationArrow from '@/icons/NavigationArrow';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Status = () => {
   const location = useLocation();
@@ -18,6 +18,8 @@ const Status = () => {
     }
   }, [userScore, noQuestions]);
 
+  const navigate = useNavigate();
+
   return (
     <div className="status_root">
       {percentage !== null && percentage < 50 ? (
@@ -31,7 +33,10 @@ const Status = () => {
               We recommend you take our Skill Gap Program <br /> to improve your
               skills and try again.
             </div>
-            <div className="navigation_btn">
+            <div
+              className="navigation_btn"
+              onClick={() => navigate('/dashboard')}
+            >
               Go to Skill Gap program
               <div className="navigation_arrow">
                 <NavigationArrow />

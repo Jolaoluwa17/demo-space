@@ -111,7 +111,7 @@ const CreateAdmin = () => {
       </div>
       <Popup popup={showPopup} closePopup={() => setShowPopup(false)}>
         <div className="change_password_popup">
-          <img src="/public/images/DeleteAccount.svg" alt="" />
+          <img src="/images/DeleteAccount.svg" alt="" />
           <div className="change_password_popup_text">
             <p>{name} has been created successfully</p>
           </div>

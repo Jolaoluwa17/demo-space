@@ -25,7 +25,7 @@ const UserSkillGapDetails = () => {
           <div className="name">Olusanya Jolaoluwa</div>
         </div>
         <div className="user_details_section">
-          <div className="section_header" style={{ color: '#4274BA' }}>
+          <div className="section_header" style={{ color: '#007BFF' }}>
             Skill Gap Program
           </div>
           <div className="section_item">
@@ -45,7 +45,7 @@ const UserSkillGapDetails = () => {
           </div>
         </div>
         <div className="user_details_section">
-          <div className="section_header" style={{ color: '#4274BA' }}>
+          <div className="section_header" style={{ color: '#007BFF' }}>
             Evaluation
           </div>
           <div className="section_item">

@@ -74,11 +74,16 @@ const Pageone: React.FC<Props> = ({
       </div>
       {image === null && (
         <div className="upload_profile_pic" onClick={handleFileUpload}>
-          <UploadIcon />
-          <div className="upload_profile_pic_text">
-            Click here to add a Profile photo{' '}
-            <span style={{ color: '#4274ba', fontWeight: '600' }}>Browse</span>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <UploadIcon />
+            <div className="upload_profile_pic_text">
+              Click here to add a Profile photo{' '}
+              <span style={{ color: '#007BFF', fontWeight: '600' }}>
+                Browse
+              </span>
+            </div>
           </div>
+          <div style={{ color: 'red' }}>* optional</div>
         </div>
       )}
       <input
@@ -107,7 +112,7 @@ const Pageone: React.FC<Props> = ({
         className={`next_btn`}
         onClick={() => setCurrentPage(2)}
         style={{
-          backgroundColor: isFormValid && !isLoading ? '#4274BA' : 'grey',
+          backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
           cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
         }}
         disabled={!isFormValid || isLoading}

@@ -1,12 +1,13 @@
 import { useGetUserQuery } from '@/services/features/user/userSlice';
 import './overview.css';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SkillsCard from '@/components/skillscard/SkillsCard';
-import SkillGapProgramData from '@/utils/SkillGapProgramData';
 import SkillProgramCard from '@/components/skillscard/SkillProgramCard';
 import { useGetAllAssessmentsQuery } from '@/services/features/quiz/quizSlice';
 import descriptionGeneric from '@/utils/descriptionGeneric';
+import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
+import { useEffect } from 'react';
 
 interface UserType {
   response: {
@@ -24,8 +25,16 @@ const Overview = () => {
     isLoading: boolean;
   };
 
-  const { data: assessmentData, isLoading: assessmentLoading } =
-    useGetAllAssessmentsQuery({});
+  const {
+    data: assessmentData,
+    isLoading: assessmentLoading,
+    refetch: refetchAssessment,
+  } = useGetAllAssessmentsQuery({});
+  const {
+    data: programsData,
+    isLoading: programsDataLoading,
+    refetch: refecthProgramsData,
+  } = useGetAllProgramsQuery({});
 
   const handleCardClick = (id: string, course: string, description: string) => {
     navigate(`/dashboard/evaluation/instructions?id=${id}`, {
@@ -33,10 +42,22 @@ const Overview = () => {
     });
   };
 
+  const handleSkillClick = (id: string) => {
+    navigate(`/dashboard/skill-gap/details?id=${id}`);
+  };
+
   const getRandomDescription = () => {
     const randomIndex = Math.floor(Math.random() * descriptionGeneric.length);
     return descriptionGeneric[randomIndex].description;
   };
+
+  const location = useLocation();
+
+  // refetch data everytime the screen is rendered
+  useEffect(() => {
+    refecthProgramsData();
+    refetchAssessment();
+  }, [location.key, refecthProgramsData, refetchAssessment]);
 
   return (
     <div className="overview_root">
@@ -65,7 +86,7 @@ const Overview = () => {
             style={
               assessmentLoading
                 ? { color: 'grey', cursor: 'not-allowed' }
-                : { color: '#4274BA', cursor: 'pointer' }
+                : { color: '#007BFF', cursor: 'pointer' }
             }
             onClick={
               assessmentLoading
@@ -89,13 +110,17 @@ const Overview = () => {
         ) : (
           <div className="overview_section_card_container">
             {assessmentData?.response.map(
-              (card: { _id: string; course: string }, index: number) => {
+              (
+                card: { _id: string; course: string; category: string },
+                index: number
+              ) => {
                 const description = getRandomDescription();
                 return (
                   <SkillsCard
                     key={index}
                     language={card.course}
                     description={description}
+                    category={card.category}
                     onClick={() =>
                       handleCardClick(card._id, card.course, description)
                     }
@@ -111,7 +136,7 @@ const Overview = () => {
         <div className="overview_section_title">
           <div>Start a Skill Gap Program</div>
           <div
-            style={{ color: '#4274BA', cursor: 'pointer' }}
+            style={{ color: '#007BFF', cursor: 'pointer' }}
             onClick={() => navigate('/dashboard/skill-gap')}
           >
             See More
@@ -120,16 +145,34 @@ const Overview = () => {
         <div className="overview_section_subTitle">
           Enhance your skills with our comprehensive programs.
         </div>
-        <div className="overview_section_card_container">
-          {SkillGapProgramData.map((card, index) => (
-            <SkillProgramCard
-              key={index}
-              imgSrc={card.imgSrc}
-              language={card.language}
-              description={card.description}
-            />
-          ))}
-        </div>
+        {programsDataLoading ? (
+          <div className="overview_section_card_container">
+            <div className="skeleton_loader_overview_section_card"></div>
+            <div className="skeleton_loader_overview_section_card"></div>
+            <div className="skeleton_loader_overview_section_card"></div>
+            <div className="skeleton_loader_overview_section_card"></div>
+          </div>
+        ) : (
+          <div className="overview_section_card_container">
+            {programsData?.response.map(
+              (
+                card: {
+                  _id: string;
+                  title: string;
+                  discreption: string;
+                },
+                index: number
+              ) => (
+                <SkillProgramCard
+                  key={index}
+                  language={card.title}
+                  description={card.discreption}
+                  onClick={() => handleSkillClick(card._id)}
+                />
+              )
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

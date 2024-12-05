@@ -64,7 +64,7 @@ export default function UserDropdown() {
               sx={{
                 width: 36,
                 height: 36,
-                backgroundColor: '#4274BA',
+                backgroundColor: '#007BFF',
                 color: 'white',
               }}
             >

@@ -1,13 +1,14 @@
 import NotepadIcon from '@/icons/NotepadIcon';
 import './skillGapProgram.css';
 import { IoMdCheckmark } from 'react-icons/io';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { adminSkillGapProgramData } from '@/utils/adminSkillGapProgramData';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import TablePagination from '@/components/tablePagination/TablePagination';
 import SearchInput from '@/components/searchinput/SearchInput';
 import DateFilter from '@/components/dateFilter/DateFilter';
 import SortFilter from '@/components/sortFilter/SortFilter';
+import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
 
 const currentYear = new Date().getFullYear();
 const currentMonthIndex = new Date().getMonth();
@@ -16,12 +17,19 @@ const years = Array.from({ length: currentYear - 2020 + 1 }, (_, i) =>
 );
 
 const SkillGapProgram = () => {
-  const [isYear, setYear] = useState(currentYear.toString());
-  const [currentMonth, setCurrentMonth] = useState(currentMonthIndex);
+  const { data, refetch } = useGetAllProgramsQuery({});
+  const location = useLocation();
+
+  // refetch data everytime the screen is rendered
+  useEffect(() => {
+    refetch();
+  }, [location.key, refetch]);
+  const [isYear, setYear] = useState('All'); // 'All' as default year
+  const [currentMonth, setCurrentMonth] = useState('All');
   const overviewCards = [
     {
       id: 1,
-      icon: <NotepadIcon color="#4274BA" />,
+      icon: <NotepadIcon color="#007BFF" />,
       backgroundColor: '#D5F1F6',
       title: 'Total Talent pool members',
       number: 50,
@@ -31,7 +39,7 @@ const SkillGapProgram = () => {
       icon: <IoMdCheckmark fontSize={20} color="#16A312" />,
       backgroundColor: '#D0FBD2',
       title: 'Skill Gap programs ',
-      number: 15,
+      number: data?.response?.length || 0,
     },
   ];
 

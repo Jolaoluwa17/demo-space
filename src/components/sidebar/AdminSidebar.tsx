@@ -41,6 +41,7 @@ const AdminSidebar = () => {
     dispatch(logout());
     navigator('/auth/login');
   };
+
   return (
     <motion.nav
       variants={containerVariants}
@@ -48,8 +49,8 @@ const AdminSidebar = () => {
       className="sidebar admin_sidebar"
       style={{ border: 'none' }}
     >
-      <div className="sidebar_header">
-        <img src="/images/SideBarTechWingsLogo.svg" alt="" />
+      <div className="sidebar_header" style={{ marginLeft: '20px' }}>
+        <img src="/images/proficioNext.svg" alt="" />
       </div>
       <div
         className="sidebar_links"
@@ -67,7 +68,7 @@ const AdminSidebar = () => {
             color={
               pathname === `${baseRoute}` ||
               pathname.startsWith(`${baseRoute}/overview`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
             colorTwo={
@@ -86,7 +87,7 @@ const AdminSidebar = () => {
           <UserIcon
             color={
               pathname.startsWith(`${baseRoute}/user-management`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
           />
@@ -99,7 +100,7 @@ const AdminSidebar = () => {
           <EvaluationIcon
             color={
               pathname.startsWith(`${baseRoute}/evaluation`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
           />
@@ -112,7 +113,7 @@ const AdminSidebar = () => {
           <SkillGapProgramIcon
             color={
               pathname.startsWith(`${baseRoute}/skill-gap-program`)
-                ? '#4274BA'
+                ? '#007BFF'
                 : '#7d868e'
             }
           />
@@ -121,7 +122,10 @@ const AdminSidebar = () => {
       <div className="admin_logout_btn_container">
         <div className="admin_logout_btn" onClick={handleLogout}>
           <AdminLogOutIcon />
-          <div style={{ paddingLeft: '20px', paddingBottom: '6px' }}>
+          <div
+            style={{ paddingLeft: '20px', paddingBottom: '6px' }}
+            onClick={handleLogout}
+          >
             Log Out
           </div>
         </div>

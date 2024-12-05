@@ -37,13 +37,13 @@ const History = () => {
             <div
               style={{
                 paddingRight: '5px',
-                color: '#4274BA',
+                color: '#007BFF',
                 fontWeight: 'normal',
               }}
             >
               History
             </div>
-            <SidebarProgress color={'#4274BA'} />
+            <SidebarProgress color={'#007BFF'} />
           </div>
         </div>
       </div>

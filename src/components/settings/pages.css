@@ -9,7 +9,7 @@
   max-width: 1108px;
 }
 .settings_page_header {
-  color: #4274ba;
+  color: #007BFF;
   font-size: 16px;
 }
 .settings_page_subHeader {
@@ -23,7 +23,7 @@
   border-radius: 50%;
   margin-top: 16px;
   position: relative;
-  background-color: #4274ba;
+  background-color: #007BFF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +47,7 @@
   margin-top: 10px;
   border: 1px #e7ebe6 solid;
   border-radius: 10px;
-  outline-color: #4274ba;
+  outline-color: #007BFF;
   font-size: 15px;
   appearance: none;
   background-color: white;
@@ -61,7 +61,7 @@
   align-items: center;
   justify-content: center;
   color: white;
-  background-color: #4274ba;
+  background-color: #007BFF;
   border-radius: 8px;
   cursor: pointer;
   font-size: 12px;
@@ -88,7 +88,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #4274ba;
+  color: #007BFF;
   cursor: pointer;
 }
 .profile_form_item label {
@@ -103,7 +103,7 @@
   padding: 13.5px 10px 12.5px 15px;
   margin-top: 10px;
   border-radius: 10px;
-  outline-color: #4274ba;
+  outline-color: #007BFF;
   border: 1px solid #cbcbcc;
   box-sizing: border-box;
   display: flex;
@@ -169,7 +169,7 @@
   padding: 13.5px 15px 13.5px 15px;
   margin-top: 10px;
   border-radius: 10px;
-  outline-color: #4274ba;
+  outline-color: #007BFF;
   border: 1px solid #e7ebe6;
   font-size: 16px;
   box-sizing: border-box;

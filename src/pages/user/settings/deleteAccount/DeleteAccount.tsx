@@ -104,7 +104,7 @@ const DeleteAccount = () => {
 
           <Popup popup={popup}>
             <div className="delete_account_popup">
-              <img src="/public/images/DeleteAccount.svg" alt="" />
+              <img src="/images/DeleteAccount.svg" alt="" />
               <div className="delete_account_popup_text">
                 <p>We hope to see you soon</p>
                 <div>
