@@ -2,6 +2,7 @@ import './pages.css';
 import CustomSelect from '../customselect/CustomSelect'; // Adjust the import path as necessary
 import AddIcon from '../../icons/AddIcon';
 import DeleteIcon from '../../icons/DeleteIcon';
+import { useEffect } from 'react';
 
 interface Props {
   educationEntries?: EducationEntry[];
@@ -44,6 +45,20 @@ const EducationalBackground: React.FC<Props> = ({
     return `${year}-${month}-${day}`;
   };
 
+  // Ensure the state is initialized with at least one empty entry
+  useEffect(() => {
+    if (educationEntries.length === 0 && setEducationEntries) {
+      setEducationEntries([
+        {
+          institutionName: '',
+          degreeObtained: '',
+          degreeType: '',
+          graduationDate: getCurrentDate(),
+        },
+      ]);
+    }
+  }, [educationEntries, setEducationEntries]);
+
   const handleInputChange = (
     index: number,
     field: keyof EducationEntry,
@@ -67,21 +82,9 @@ const EducationalBackground: React.FC<Props> = ({
   };
 
   const handleRemoveEntry = (index: number) => {
-    setEducationEntries?.(educationEntries.filter((_, i) => i !== index));
+    const updatedEntries = educationEntries.filter((_, i) => i !== index);
+    setEducationEntries?.(updatedEntries.length > 0 ? updatedEntries : []);
   };
-
-  // Ensure at least one empty entry is present if no data exists
-  const entriesToDisplay =
-    educationEntries.length > 0
-      ? educationEntries
-      : [
-          {
-            institutionName: '',
-            degreeObtained: '',
-            degreeType: '',
-            graduationDate: getCurrentDate(),
-          },
-        ];
 
   return (
     <div className="settings_content">
@@ -91,7 +94,7 @@ const EducationalBackground: React.FC<Props> = ({
           Tell us about your academic qualifications.
         </div>
 
-        {entriesToDisplay.map((entry, index) => (
+        {educationEntries.map((entry, index) => (
           <div key={index} className="profile_form_item_group">
             <div className="profile_form_item">
               <div>
@@ -153,8 +156,8 @@ const EducationalBackground: React.FC<Props> = ({
                 name={`graduationDate_${index}`}
                 value={
                   entry.graduationDate
-                    ? new Date(entry.graduationDate).toISOString().split('T')[0]
-                    : getCurrentDate() // Fallback to current date if graduationDate is invalid
+                    ? new Date(entry.graduationDate).toISOString().split('T')[0] // Formats the date to "YYYY-MM-DD"
+                    : getCurrentDate() // Fallback to the current date
                 }
                 onChange={(e) =>
                   handleInputChange(index, 'graduationDate', e.target.value)

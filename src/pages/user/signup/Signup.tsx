@@ -99,7 +99,7 @@ const Signup = () => {
       <div className="signup_container">
         <div className="left_section">
           <img
-            src="/images/proficioNext.svg"
+            src="/assets/images/Signup.svg"
             alt="signup_image"
             className="signup_img"
             style={{ borderRadius: '10px' }}
@@ -109,7 +109,7 @@ const Signup = () => {
         <div className="right_section">
           <div className="techwings_logo">
             <img
-              src="/assets/images/TechWingLogo.svg"
+              src="/images/proficioNext.svg"
               alt="techwings_logo"
               onClick={() => navigator('/')}
               loading="lazy"
