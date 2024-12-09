@@ -15,8 +15,18 @@ export const resultSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getResultByUserId: builder.query({
+      query: (id) => ({
+        url: `/result/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
   overrideExisting: true,
 });
 
-export const { useCreateResultMutation, useGetAllResultsQuery } = resultSlice;
+export const {
+  useCreateResultMutation,
+  useGetAllResultsQuery,
+  useGetResultByUserIdQuery,
+} = resultSlice;

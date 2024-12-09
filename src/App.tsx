@@ -92,7 +92,7 @@ function App() {
             <Route path="progress" element={<ProgressRoot />}>
               <Route index element={<Progress />} />
               <Route path="history" element={<History />} />
-              <Route path="question/:id" element={<Questions />} />
+              <Route path="question" element={<Questions />} />
             </Route>
             <Route path="skill-gap" element={<SkillGapRoot />}>
               <Route index element={<SkillGap />} />

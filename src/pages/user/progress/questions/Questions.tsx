@@ -1,48 +1,45 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import './questions.css';
-import { combinedQuestionsData } from '@/utils/CombinedQuestionsData';
 import PageHeader from '@/components/pageHeader/PageHeader';
 import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import ArrowLeftIcon from '@/icons/ArrowLeftIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
+import { useGetQuizQuestionQuery } from '@/services/features/quiz/quizSlice';
+import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
+import { FadeLoader } from 'react-spinners';
 
-// Combined Questions Component
 const Questions: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const questionId = id ? parseInt(id, 10) : null;
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get('id');
+  const location = useLocation();
+  const { course, description, questionId } = location.state || {};
 
-  // Memoize all questions (since only multiple-choice questions remain)
-  const allQuestions = useMemo(() => combinedQuestionsData, []);
+  const {
+    data: questionsData,
+    isLoading: questionsLoading,
+    error,
+  } = useGetQuizQuestionQuery(id);
+
+  const { data, isLoading } = useGetAllResultsQuery({});
+  const userResults = data?.response.filter(
+    (result: { quizId: string }) => result.quizId === id
+  );
+
+  const userAnswers = userResults?.[0]?.answer || [];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-  const [answers, setAnswers] = useState<{ [key: number]: string }>({});
+  const navigate = useNavigate();
 
-  // Effect to initialize the current question index based on URL params
-  useEffect(() => {
-    if (questionId !== null) {
-      const index = allQuestions.findIndex((q) => q.id === questionId);
-      if (index !== -1) {
-        setCurrentQuestionIndex(index);
-      }
-    }
-  }, [questionId, allQuestions]);
+  const handleBackClick = () => {
+    navigate(`/dashboard/progress/history?id=${id}`, {
+      state: { course, description, questionId },
+    });
+  };
 
-  // Effect to pre-fill the user's answer if available
-  useEffect(() => {
-    const currentQuestion = allQuestions[currentQuestionIndex];
-    if (currentQuestion && currentQuestion.userAnswer) {
-      setAnswers((prevAnswers) => ({
-        ...prevAnswers,
-        [currentQuestionIndex]: currentQuestion.userAnswer,
-      }));
-    }
-  }, [currentQuestionIndex, allQuestions]);
-
-  // Handle navigation between questions
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < allQuestions.length - 1) {
+    if (currentQuestionIndex < (questionsData?.data.length || 0) - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     }
   };
@@ -53,59 +50,83 @@ const Questions: React.FC = () => {
     }
   };
 
-  const currentQuestion = allQuestions[currentQuestionIndex];
+  if (questionsLoading || isLoading) {
+    return (
+      <div className="loading_container">
+        <FadeLoader color="#007BFF" />
+      </div>
+    );
+  }
 
+  if (error || !questionsData?.data) {
+    return (
+      <div className="nodata_container">
+        <img
+          src="/images/NoData.jpg"
+          alt=""
+          style={{ width: '250px', height: '250px' }}
+        />
+        <div style={{ fontWeight: '600' }}>Error Loading Questions 😭</div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questionsData.data[currentQuestionIndex];
   const isFirstQuestion = currentQuestionIndex === 0;
-  const isLastQuestion = currentQuestionIndex === allQuestions.length - 1;
+  const isLastQuestion = currentQuestionIndex === questionsData.data.length - 1;
 
-  const navigate = useNavigate();
+  // Randomize values, but keep labels in order (A, B, C, D)
+  const values = [
+    currentQuestion.optionA,
+    currentQuestion.optionB,
+    currentQuestion.optionC,
+    currentQuestion.answer,
+  ];
 
-  const handleBackClick = () => {
-    navigate('/dashboard/progress/history');
-  };
+  const randomizedValues = values.slice().sort(() => Math.random() - 0.5);
+
+  const options = [
+    { label: 'A', value: randomizedValues[0] },
+    { label: 'B', value: randomizedValues[1] },
+    { label: 'C', value: randomizedValues[2] },
+    { label: 'D', value: randomizedValues[3] },
+  ];
 
   return (
     <div className="questions_root">
       <PageHeader pageTitle="Questions" handleBackClick={handleBackClick} />
       <div className="question_container">
         <div className="question_out_of">
-          Question {currentQuestionIndex + 1} of {allQuestions.length}
+          Question {currentQuestionIndex + 1} of {questionsData.data.length}
         </div>
         <div>
           <div className="question_text">{currentQuestion.question}</div>
           <div className="options">
-            {currentQuestion.options &&
-              currentQuestion.options.map((option, index) => {
-                const label = ['A', 'B', 'C', 'D'][index] || '';
-                const isCorrect = option === currentQuestion.correctAnswer;
-                const isUserAnswer = option === answers[currentQuestionIndex];
+            {options.map(({ label, value }) => {
+              // Check if the value is the correct answer
+              const isCorrectAnswer = value === currentQuestion.answer;
 
-                return (
-                  <div
-                    key={index}
-                    className={`question_option_item ${
-                      isUserAnswer
-                        ? isCorrect
-                          ? 'correct_option'
-                          : 'wrong_option'
-                        : isCorrect
-                          ? 'highlight_correct'
-                          : ''
-                    }`}
-                  >
-                    <div className="check_icon">
-                      {isUserAnswer ? (
-                        <CheckCircleIcon />
-                      ) : (
-                        <div className="empty_check_circle"></div>
-                      )}
-                    </div>
-                    <div className="options_text">
-                      {label}. {option}
-                    </div>
+              // Get the user's selected answer for the current question
+              const isUserAnswer = userAnswers[currentQuestionIndex] === value;
+
+              return (
+                <div
+                  key={label}
+                  className={`question_option_item 
+        ${isUserAnswer && !isCorrectAnswer ? 'wrong_option' : ''} 
+        ${isCorrectAnswer ? 'highlight_correct' : ''}
+      `}
+                >
+                  <div className="check_icon">
+                    {/* Show check icon only if the user selected the option */}
+                    {isUserAnswer && <CheckCircleIcon />}
                   </div>
-                );
-              })}
+                  <div className="options_text">
+                    {label}. {value}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

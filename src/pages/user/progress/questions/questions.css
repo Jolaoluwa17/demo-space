@@ -76,6 +76,15 @@
   background-color: #ffc3c3; /* Red background for wrong answer */
   color: black;
 }
+.question_option_item.highlight_correct {
+  background-color: #d2ffcc; /* Green background for correct answer */
+  color: black;
+}
+
+.question_option_item.wrong_option {
+  background-color: #ffc3c3; /* Red background for wrong answer */
+  color: black;
+}
 .question_answer_input {
   width: 70%;
   padding: 10px 10px;

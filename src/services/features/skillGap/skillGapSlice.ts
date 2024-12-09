@@ -41,6 +41,24 @@ export const skillGapSlice = apiSlice.injectEndpoints({
         body: programData,
       }),
     }),
+    getAllInternship: builder.query({
+      query: () => ({
+        url: 'appliedintership',
+        method: 'GET',
+      }),
+    }),
+    acceptSkillGap: builder.mutation({
+      query: (internshipData) => ({
+        url: `/appliedintership/${internshipData.id}`,
+        method: 'PUT',
+      }),
+    }),
+    declineSkillGap: builder.mutation({
+      query: (internshipData) => ({
+        url: `/appliedintership/decline/${internshipData.id}`,
+        method: 'PUT',
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -52,4 +70,7 @@ export const {
   useDeleteProgramMutation,
   useUpdateProgramMutation,
   useApplyForInternshipMutation,
+  useGetAllInternshipQuery,
+  useAcceptSkillGapMutation,
+  useDeclineSkillGapMutation,
 } = skillGapSlice;

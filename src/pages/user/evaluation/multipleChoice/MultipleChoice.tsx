@@ -45,6 +45,7 @@ const MultipleChoice: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [time, setTime] = useState<number>(10 * 60);
   const [randomizedOptions, setRandomizedOptions] = useState<string[]>([]);
+  const [answers, setAnswers] = useState<string[]>([]);
   const [errMsg, setErrMsg] = useState<string>('');
   const [result, { isLoading: resultLoading }] = useCreateResultMutation();
   const userid = sessionStorage.getItem('id');
@@ -93,6 +94,13 @@ const MultipleChoice: React.FC = () => {
       ...prevState,
       [currentQuestionIndex]: option,
     }));
+
+    // Update the answers array with the actual text
+    setAnswers((prevAnswers) => {
+      const updatedAnswers = [...prevAnswers];
+      updatedAnswers[currentQuestionIndex] = option; // Add the selected text to the corresponding index
+      return updatedAnswers;
+    });
   };
 
   const handleNextQuestion = () => {
@@ -127,6 +135,7 @@ const MultipleChoice: React.FC = () => {
       score: percentageScore,
       quizId: id,
       userId: userid,
+      answer: answers,
     };
 
     try {

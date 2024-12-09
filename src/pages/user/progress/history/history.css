@@ -38,12 +38,12 @@
 .history_title {
   margin-top: 24px;
   width: 100%;
-  height: 132px;
-  background-color: #007BFF;
+  background-color: #007bff;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   padding: 24px;
   box-sizing: border-box;
+  border-radius: 5px;
 }
 .img_holder {
   width: 84px;
@@ -52,10 +52,14 @@
   border-radius: 8px;
 }
 .history_skill_text {
-  font-size: 20px;
+  font-size: 30px;
   color: white;
   font-weight: 600;
-  margin-left: 16px;
+  /* margin-left: 16px; */
+}
+.history_skill_description {
+  margin-top: 10px;
+  color: white;
 }
 .history_overview {
   width: 100%;

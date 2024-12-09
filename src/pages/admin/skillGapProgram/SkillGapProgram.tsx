@@ -8,7 +8,11 @@ import TablePagination from '@/components/tablePagination/TablePagination';
 import SearchInput from '@/components/searchinput/SearchInput';
 import DateFilter from '@/components/dateFilter/DateFilter';
 import SortFilter from '@/components/sortFilter/SortFilter';
-import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
+import {
+  useGetAllProgramsQuery,
+  useGetAllInternshipQuery,
+} from '@/services/features/skillGap/skillGapSlice';
+import { FadeLoader } from 'react-spinners';
 
 const currentYear = new Date().getFullYear();
 const currentMonthIndex = new Date().getMonth();
@@ -18,7 +22,10 @@ const years = Array.from({ length: currentYear - 2020 + 1 }, (_, i) =>
 
 const SkillGapProgram = () => {
   const { data, refetch } = useGetAllProgramsQuery({});
+  const [searchTerm, setSearchTerm] = useState('');
   const location = useLocation();
+  const { data: getApply, isLoading: internshipLoading } =
+    useGetAllInternshipQuery({});
 
   // refetch data everytime the screen is rendered
   useEffect(() => {
@@ -52,9 +59,38 @@ const SkillGapProgram = () => {
     setCurrentPage(pageNumber);
   };
 
-  const getPaginatedUsers = () => {
+  const handleSearch = (value: string) => {
+    setSearchTerm(value.toLowerCase());
+    setCurrentPage(1); // Reset to the first page on a new search
+  };
+
+  const getFilteredAndPaginatedData = () => {
+    if (!getApply?.response || !Array.isArray(getApply.response)) {
+      return [];
+    }
+
+    // Filter data based on the search term
+    const filteredData = getApply.response.filter(
+      (item: {
+        userId: { fullName: string; email: string };
+        internshipId: { title: string };
+      }) => {
+        const userFullName = item.userId?.fullName?.toLowerCase() || '';
+        const internshipTitle = item.internshipId?.title?.toLowerCase() || '';
+        const userEmail = item.userId?.email?.toLowerCase() || '';
+
+        return (
+          userFullName.includes(searchTerm) ||
+          internshipTitle.includes(searchTerm) ||
+          userEmail.includes(searchTerm)
+        );
+      }
+    );
+
+    // Paginate the filtered data
     const startIndex = (currentPage - 1) * rowsPerPage;
-    return adminSkillGapProgramData.slice(startIndex, startIndex + rowsPerPage);
+    const endIndex = startIndex + rowsPerPage;
+    return filteredData.slice(startIndex, endIndex);
   };
 
   const navigate = useNavigate();
@@ -98,86 +134,111 @@ const SkillGapProgram = () => {
           ))}
         </div>
       </div>
-      <div className="skill_gap_program_table">
-        <div className="top_filters_navigation">
-          <div className="serach_input_tag">
-            <SearchInput handleSearch={() => ''} />
+      {internshipLoading ? (
+        <div className="loadingData">
+          <FadeLoader color="#007BFF" />
+        </div>
+      ) : (
+        <div className="skill_gap_program_table">
+          <div className="top_filters_navigation">
+            <div className="serach_input_tag">
+              <SearchInput handleSearch={handleSearch} />
+            </div>
+            <DateFilter
+              isYear={isYear}
+              setYear={setYear}
+              currentMonth={currentMonth}
+              setCurrentMonth={setCurrentMonth}
+              currentYear={currentYear}
+              currentMonthIndex={currentMonthIndex}
+              years={years}
+            />
+            <SortFilter
+              selectedFilter={selectedFilter}
+              setSelectedFilter={setSelectedFilter}
+              sort={sort}
+              setSort={setSort}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              sortData={sortData}
+            />
           </div>
-          <DateFilter
-            isYear={isYear}
-            setYear={setYear}
-            currentMonth={currentMonth}
-            setCurrentMonth={setCurrentMonth}
-            currentYear={currentYear}
-            currentMonthIndex={currentMonthIndex}
-            years={years}
-          />
-          <SortFilter
-            selectedFilter={selectedFilter}
-            setSelectedFilter={setSelectedFilter}
-            sort={sort}
-            setSort={setSort}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
-            sortData={sortData}
+          <table>
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Program</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {getFilteredAndPaginatedData().map(
+                (
+                  user: {
+                    userId: { fullName: string; email: string; _id: string };
+                    status: string;
+                    internshipId: { title: string };
+                    createdAt: string;
+                  },
+                  index: number
+                ) => (
+                  <tr
+                    key={index}
+                    onClick={() =>
+                      navigate(`user-details?id=${user.userId._id}`)
+                    }
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <td>{String(index + 1).padStart(3, '0')}</td>
+                    <td>{user.userId.fullName}</td>
+                    <td>{user.internshipId.title}</td>
+                    <td>{user.userId.email}</td>
+                    <td>
+                      {' '}
+                      {new Date(user.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </td>
+                    <td style={{ padding: '0px' }}>
+                      <div
+                        style={{
+                          border:
+                            user.status === 'Accepted'
+                              ? '1px solid #00FF00'
+                              : user.status === 'Rejected'
+                                ? '1px solid #FF0000'
+                                : '1px solid #FFDD00',
+                          backgroundColor:
+                            user.status === 'Accepted'
+                              ? '#EDFFED'
+                              : user.status === 'Rejected'
+                                ? '#FFF4F4'
+                                : '#FFFCE7',
+                        }}
+                        className="status_column"
+                      >
+                        {user.status}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+          <TablePagination
+            currentPage={currentPage}
+            data={adminSkillGapProgramData}
+            handlePageClick={handlePageClick}
+            totalPages={totalPages}
+            rowsPerPage={rowsPerPage}
           />
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Name</th>
-              <th>Program</th>
-              <th>Email</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getPaginatedUsers().map((user, index) => (
-              <tr
-                key={index}
-                onClick={() => navigate('user-details')}
-                style={{ cursor: 'pointer' }}
-              >
-                <td>{user.userId}</td>
-                <td>{user.name}</td>
-                <td>{user.program}</td>
-                <td>{user.email}</td>
-                <td>{user.date}</td>
-                <td style={{ padding: '0px' }}>
-                  <div
-                    style={{
-                      border:
-                        user.status === 'Accepted'
-                          ? '1px solid #00FF00'
-                          : user.status === 'Rejected'
-                            ? '1px solid #FF0000'
-                            : '1px solid #FFDD00',
-                      backgroundColor:
-                        user.status === 'Accepted'
-                          ? '#EDFFED'
-                          : user.status === 'Rejected'
-                            ? '#FFF4F4'
-                            : '#FFFCE7',
-                    }}
-                    className="status_column"
-                  >
-                    {user.status}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <TablePagination
-          currentPage={currentPage}
-          data={adminSkillGapProgramData}
-          handlePageClick={handlePageClick}
-          totalPages={totalPages}
-          rowsPerPage={rowsPerPage}
-        />
-      </div>
+      )}
     </div>
   );
 };

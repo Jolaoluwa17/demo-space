@@ -133,15 +133,15 @@ const UserDetails = () => {
             {data?.response.education.length === 0 ||
             data?.response.education.every(
               (education: {
-                institutionName: string;
-                degreeObtained: string;
-                degreeType: string;
-                graduationDate: string;
+                institutionName?: string;
+                degreeObtained?: string;
+                degreeType?: string;
+                graduationDate?: string;
               }) =>
-                !education.institutionName.trim() ||
-                !education.degreeObtained.trim() ||
-                !education.degreeType.trim() ||
-                !education.graduationDate.trim()
+                !education.institutionName?.trim() ||
+                !education.degreeObtained?.trim() ||
+                !education.degreeType?.trim() ||
+                !education.graduationDate?.trim()
             ) ? (
               <div className="section_item">No Data Avaliable</div>
             ) : (
@@ -191,12 +191,12 @@ const UserDetails = () => {
             <div className="skills_item_container">
               {data?.response.skillSet.length === 0 ||
               data?.response.skillSet.every(
-                (item: string) => !item || item.trim() === '' || item === 'null'
+                (item: string) => !item || item?.trim() === '' || item === 'null'
               ) ? (
                 <div className="section_item">No Data Available</div>
               ) : (
                 data?.response.skillSet.map((skill: string, index: number) =>
-                  skill && skill.trim() !== '' && skill !== null ? (
+                  skill && skill?.trim() !== '' && skill !== null ? (
                     <div className="skills_item" key={index}>
                       {skill}
                     </div>
@@ -212,7 +212,7 @@ const UserDetails = () => {
             <div className="skills_item_container">
               {data?.response.areaOfInterest.length === 0 ||
               data?.response.areaOfInterest.every(
-                (item: string) => !item || item.trim() === '' || item === 'null'
+                (item: string) => !item || item?.trim() === '' || item === 'null'
               ) ? (
                 <div className="section_item">No Data Available</div>
               ) : (
@@ -231,16 +231,16 @@ const UserDetails = () => {
             {data?.response.job.length === 0 ||
             data?.response.job.every(
               (job: {
-                title: string;
-                companyName: string;
-                description: string;
-                startDate: string;
-                endDate: string;
+                title?: string;
+                companyName?: string;
+                description?: string;
+                startDate?: string;
+                endDate?: string;
               }) =>
-                !job.title.trim() ||
-                !job.description.trim() ||
-                !job.companyName.trim() ||
-                !job.startDate.trim()
+                !job.title?.trim() ||
+                !job.description?.trim() ||
+                !job.companyName?.trim() ||
+                !job.startDate?.trim()
             ) ? (
               <div className="section_item">No Data Avaliable</div>
             ) : (
@@ -307,13 +307,13 @@ const UserDetails = () => {
             {data?.response.certifications.length === 0 ||
             data?.response.certifications.every(
               (certifications: {
-                name: string;
-                issuedBy: string;
-                dateObtained: string;
+                name?: string;
+                issuedBy?: string;
+                dateObtained?: string;
               }) =>
-                !certifications.name.trim() ||
-                !certifications.issuedBy.trim() ||
-                !certifications.dateObtained.trim()
+                !certifications.name?.trim() ||
+                !certifications.issuedBy?.trim() ||
+                !certifications.dateObtained?.trim()
             ) ? (
               <div className="section_item">No Data Avaliable</div>
             ) : (
