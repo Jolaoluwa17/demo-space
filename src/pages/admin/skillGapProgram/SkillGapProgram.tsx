@@ -193,9 +193,9 @@ const SkillGapProgram = () => {
                     style={{ cursor: 'pointer' }}
                   >
                     <td>{String(index + 1).padStart(3, '0')}</td>
-                    <td>{user.userId.fullName}</td>
+                    <td>{user.userId?.fullName}</td>
                     <td>{user.internshipId.title}</td>
-                    <td>{user.userId.email}</td>
+                    <td>{user.userId?.email}</td>
                     <td>
                       {' '}
                       {new Date(user.createdAt).toLocaleDateString('en-US', {

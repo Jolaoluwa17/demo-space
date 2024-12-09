@@ -19,10 +19,17 @@ const Progress = () => {
   const { data: resultsData, isLoading: resultDataLoading } =
     useGetResultByUserIdQuery(userId);
 
+  console.log(resultsData);
+
   const getRandomDescription = () => {
     const randomIndex = Math.floor(Math.random() * descriptionGeneric.length);
     return descriptionGeneric[randomIndex].description;
   };
+
+  const filteredResults =
+    resultsData?.response.filter(
+      (item: any) => item.userId && item.userId._id === userId
+    ) || [];
 
   return (
     <div className="progress_root">
@@ -44,7 +51,7 @@ const Progress = () => {
             </div>
           </div>
         ) : (
-          resultsData?.response.map(
+          filteredResults.map(
             (
               card: {
                 quizId: { _id: string; course: string; category: string };
