@@ -3,13 +3,15 @@ import './dashboard.css';
 import NotepadIcon from '@/icons/NotepadIcon';
 import TalentPoolIcon from '@/icons/TalentPoolIcon';
 import CoinIcon from '@/icons/CoinIcon';
-import { skillGapPendingData } from '@/utils/skillGapPendingData';
 import { useGetAllUserQuery } from '@/services/features/user/userSlice';
 import { FadeLoader } from 'react-spinners';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
+import {
+  useGetAllInternshipQuery,
+  useGetAllProgramsQuery,
+} from '@/services/features/skillGap/skillGapSlice';
 
 interface User {
   _id: string;
@@ -78,6 +80,17 @@ const Dashboard = () => {
   ];
 
   const navigate = useNavigate();
+
+  const { data: getApply, isLoading: internshipLoading } =
+    useGetAllInternshipQuery({});
+
+  const filteredData =
+    getApply?.response
+      .filter(
+        (item: { userId: string | null; internshipId: string | null }) =>
+          item.userId !== null && item.internshipId !== null
+      )
+      .filter((item: { status: string }) => item.status === 'pending') || [];
 
   return (
     <div className="admin_dashboard_root">
@@ -168,42 +181,70 @@ const Dashboard = () => {
               View all
             </div>
           </div>
-          <div className="admin_dashboard_table_container">
-            <table className="admin_dashboard_user_table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Program</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {skillGapPendingData.map((user) => (
-                  <tr key={user.id}>
-                    <td className="user_table_name">{user.name}</td>
-                    <td className="user_table_email">{user.program}</td>
-                    <td style={{ padding: '0px' }}>
-                      <div
-                        style={{
-                          border: '1px solid #FFDD00',
-                          backgroundColor: '#FFFCE7',
-                          width: '100px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          borderRadius: '20px',
-                          fontSize: '12px',
-                          padding: '5px 0px',
-                        }}
-                      >
-                        {user.status}
-                      </div>
-                    </td>
+          {internshipLoading ? (
+            <div className="loadingData">
+              <FadeLoader color="#007BFF" />
+            </div>
+          ) : filteredData.length === 0 ? (
+            <div className="nodata_container" style={{ paddingTop: '0px' }}>
+              <img
+                src="/images/NoData.png"
+                alt=""
+                style={{ width: '250px', height: '250px' }}
+              />
+              <div style={{ fontWeight: '600' }}>Oops, No Data Avaliable</div>
+            </div>
+          ) : (
+            <div className="admin_dashboard_table_container">
+              <table className="admin_dashboard_user_table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {filteredData.map(
+                    (
+                      user: {
+                        status: string;
+                        userId: { fullName: string };
+                        internshipId: { title: string };
+                      },
+                      index: number
+                    ) => (
+                      <tr key={index}>
+                        <td className="user_table_name">
+                          {user.userId.fullName}
+                        </td>
+                        <td className="user_table_email">
+                          {user.internshipId.title}
+                        </td>
+                        <td style={{ padding: '0px' }}>
+                          <div
+                            style={{
+                              border: '1px solid #FFDD00',
+                              backgroundColor: '#FFFCE7',
+                              width: '100px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: '20px',
+                              fontSize: '12px',
+                              padding: '5px 0px',
+                            }}
+                          >
+                            {user.status}
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>

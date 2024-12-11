@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './pages.css';
 import AddIcon from '../../icons/AddIcon';
 import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
-import { RiDeleteBin6Line } from 'react-icons/ri';
+import { FiMinusCircle } from 'react-icons/fi';
 
 interface Entry {
   title: string;
@@ -190,21 +190,26 @@ const Experience: React.FC<Props> = ({
           </div>
         ) : (
           entries.map((entry, index) => (
-            <div key={index} className="experience_entry">
+            <div
+              key={index}
+              className="experience_entry"
+              style={{
+                marginBottom: index < entries.length - 1 ? '100px' : '0',
+              }}
+            >
               <div className="profile_form_item">
                 <label htmlFor={`jobTitle-${index}`}>
                   Job Title
                   {index > 0 && (
                     <div
-                      className="remove_entry_button"
+                      className="remove_entry_main"
                       onClick={() => handleRemoveEntry(index)}
                     >
-                      <RiDeleteBin6Line
-                        color="red"
-                        size={20}
-                        style={{ marginRight: '5px' }}
+                      <FiMinusCircle
+                        style={{ paddingRight: '10px' }}
+                        className="minus_circle_icon"
                       />
-                      <span className="remove_text">Remove</span>
+                      Remove Entry
                     </div>
                   )}
                 </label>

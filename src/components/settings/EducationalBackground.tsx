@@ -1,7 +1,7 @@
 import './pages.css';
-import CustomSelect from '../customselect/CustomSelect'; // Adjust the import path as necessary
+import CustomSelect from '../customselect/CustomSelect';
 import AddIcon from '../../icons/AddIcon';
-import DeleteIcon from '../../icons/DeleteIcon';
+import { FiMinusCircle } from 'react-icons/fi';
 import { useEffect } from 'react';
 
 interface Props {
@@ -95,18 +95,27 @@ const EducationalBackground: React.FC<Props> = ({
         </div>
 
         {educationEntries.map((entry, index) => (
-          <div key={index} className="profile_form_item_group">
+          <div
+            key={index}
+            className="profile_form_item_group"
+            style={{
+              marginBottom: index < educationEntries.length - 1 ? '100px' : '0',
+            }}
+          >
             <div className="profile_form_item">
               <div>
                 <label htmlFor={`institution_${index}`}>
                   Institution Name{' '}
                   {index > 0 && (
                     <div
-                      className="remove_entry_button"
+                      className="remove_entry_main"
                       onClick={() => handleRemoveEntry(index)}
                     >
-                      <DeleteIcon color="red" />
-                      Remove
+                      <FiMinusCircle
+                        style={{ paddingRight: '10px' }}
+                        className='minus_circle_icon'
+                      />
+                      Remove Entry
                     </div>
                   )}
                 </label>
@@ -156,8 +165,8 @@ const EducationalBackground: React.FC<Props> = ({
                 name={`graduationDate_${index}`}
                 value={
                   entry.graduationDate
-                    ? new Date(entry.graduationDate).toISOString().split('T')[0] // Formats the date to "YYYY-MM-DD"
-                    : getCurrentDate() // Fallback to the current date
+                    ? new Date(entry.graduationDate).toISOString().split('T')[0]
+                    : getCurrentDate()
                 }
                 onChange={(e) =>
                   handleInputChange(index, 'graduationDate', e.target.value)

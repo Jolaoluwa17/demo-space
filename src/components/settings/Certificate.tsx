@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
 import './pages.css';
-import DeleteIcon from '../../icons/DeleteIcon';
 import AddIcon from '../../icons/AddIcon';
+import { FiMinusCircle } from 'react-icons/fi';
 
 interface Props {
   certifications?: Certification[];
@@ -88,17 +88,27 @@ const Certificate: React.FC<Props> = ({
           List any certifications you have obtained.
         </div>
         {certificationsToDisplay.map((cert, index) => (
-          <div key={index} className="certificate_entry">
+          <div
+            key={index}
+            className="certificate_entry"
+            style={{
+              marginBottom:
+                index < certificationsToDisplay.length - 1 ? '100px' : '0',
+            }}
+          >
             <div className="profile_form_item">
               <label htmlFor={`certificate-${index}`}>
                 Certification Name
                 {index > 0 && (
                   <div
-                    className="remove_entry_button"
+                    className="remove_entry_main"
                     onClick={() => handleRemoveEntry(index)}
                   >
-                    <DeleteIcon color="red" />
-                    Remove
+                    <FiMinusCircle
+                      style={{ paddingRight: '10px' }}
+                      className="minus_circle_icon"
+                    />
+                    Remove Entry
                   </div>
                 )}
               </label>

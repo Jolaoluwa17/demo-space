@@ -3,11 +3,13 @@ import './details.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
 import {
   useApplyForInternshipMutation,
+  useGetAllInternshipQuery,
   useGetSpecificProgramQuery,
 } from '@/services/features/skillGap/skillGapSlice';
 import { FadeLoader } from 'react-spinners';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BiSolidErrorAlt } from 'react-icons/bi';
+import { IoInformationCircleSharp } from 'react-icons/io5';
 
 const Details = () => {
   const navigate = useNavigate();
@@ -51,16 +53,54 @@ const Details = () => {
     }
   };
 
+  const { data: getApply, isLoading: internshipApplyLoading } =
+    useGetAllInternshipQuery({});
+
+  const filteredInternships = getApply?.response?.filter(
+    (item: { userId: { _id: string }; internshipId: { _id: string } }) =>
+      item.userId?._id === userid && item.internshipId?._id === id
+  );
+
+  const [status, setStatus] = useState('');
+
+  useEffect(() => {
+    if (filteredInternships?.[0]?.status === 'pending') {
+      setStatus('Application is pending');
+    } else if (filteredInternships?.[0]?.status === 'accepted') {
+      setStatus('Application accepted');
+    } else {
+      setStatus('Unknown status');
+    }
+  }, [filteredInternships, getApply]);
+
   return (
     <div className="details_root">
       <PageHeader pageTitle="Details" handleBackClick={handleBackClick} />
-      {isLoading ? (
+      {isLoading || internshipApplyLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />
         </div>
       ) : (
         <div className="skill_gap_details">
           <div className="skill_gap_details_title">{data?.response.title}</div>
+          {filteredInternships?.[0]?.status === 'pending' && (
+            <div
+              className="taken_assessment_indicator"
+              style={{
+                color:
+                  filteredInternships?.[0]?.status === 'pending'
+                    ? '#ffb703'
+                    : '',
+                marginTop: '5px',
+              }}
+            >
+              <IoInformationCircleSharp
+                size={20}
+                style={{ paddingRight: '5px' }}
+              />
+              {status}
+            </div>
+          )}
           <div className="skill_gap_details_overview">
             {extractField(data?.response.discreption, 'Description')}
           </div>
@@ -97,10 +137,23 @@ const Details = () => {
           <div className="enroll_now_container">
             <div
               className="enroll_now"
-              onClick={!internshipLoading ? handleApplication : undefined}
+              onClick={
+                !internshipLoading &&
+                filteredInternships?.[0]?.status !== 'pending'
+                  ? handleApplication
+                  : undefined
+              }
               style={{
-                backgroundColor: !internshipLoading ? '' : 'grey',
-                cursor: !internshipLoading ? 'pointer' : 'not-allowed',
+                backgroundColor:
+                  !internshipLoading &&
+                  filteredInternships?.[0]?.status !== 'pending'
+                    ? ''
+                    : 'grey',
+                cursor:
+                  !internshipLoading &&
+                  filteredInternships?.[0]?.status !== 'pending'
+                    ? 'pointer'
+                    : 'not-allowed',
                 color: 'white',
                 fontWeight: '600',
               }}

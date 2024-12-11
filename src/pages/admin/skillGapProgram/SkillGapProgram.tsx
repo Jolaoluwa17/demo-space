@@ -69,11 +69,12 @@ const SkillGapProgram = () => {
       return [];
     }
 
-    // Filter data based on the search term
-    const filteredData = getApply.response.filter(
+    // Filter by search term
+    let filteredData = getApply.response.filter(
       (item: {
         userId: { fullName: string; email: string };
         internshipId: { title: string };
+        createdAt: string;
       }) => {
         const userFullName = item.userId?.fullName?.toLowerCase() || '';
         const internshipTitle = item.internshipId?.title?.toLowerCase() || '';
@@ -86,6 +87,21 @@ const SkillGapProgram = () => {
         );
       }
     );
+
+    // Filter by selected month and year
+    if (isYear !== 'All' || currentMonth !== 'All') {
+      filteredData = filteredData.filter((item: { createdAt: string }) => {
+        const itemDate = new Date(item.createdAt);
+        const itemYear = itemDate.getFullYear().toString();
+        const itemMonth = itemDate.getMonth().toString();
+
+        const isYearMatch = isYear === 'All' || itemYear === isYear;
+        const isMonthMatch =
+          currentMonth === 'All' || itemMonth === currentMonth;
+
+        return isYearMatch && isMonthMatch;
+      });
+    }
 
     // Paginate the filtered data
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -232,7 +248,7 @@ const SkillGapProgram = () => {
           </table>
           <TablePagination
             currentPage={currentPage}
-            data={adminSkillGapProgramData}
+            data={getFilteredAndPaginatedData()}
             handlePageClick={handlePageClick}
             totalPages={totalPages}
             rowsPerPage={rowsPerPage}

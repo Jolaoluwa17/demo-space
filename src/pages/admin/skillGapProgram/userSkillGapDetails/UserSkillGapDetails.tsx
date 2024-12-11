@@ -1,7 +1,7 @@
 import PageHeader from '@/components/pageHeader/PageHeader';
 import '@/pages/admin/userManagement/userDetails/userDetails.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IoCheckmark, IoPersonSharp } from 'react-icons/io5';
+import { IoCheckmark, IoCheckmarkDone, IoPersonSharp } from 'react-icons/io5';
 import { BiX } from 'react-icons/bi';
 import { useGetUserQuery } from '@/services/features/user/userSlice';
 import { FadeLoader } from 'react-spinners';
@@ -10,6 +10,7 @@ import {
   useDeclineSkillGapMutation,
   useGetAllInternshipQuery,
 } from '@/services/features/skillGap/skillGapSlice';
+import { HiOutlineXMark } from 'react-icons/hi2';
 
 const UserSkillGapDetails = () => {
   const navigate = useNavigate();
@@ -31,8 +32,6 @@ const UserSkillGapDetails = () => {
   const filteredInternships = getApply?.response?.filter(
     (item: { userId: { _id: string } }) => item.userId?._id === userId
   );
-
-  console.log(filteredInternships);
 
   const [accept, { isLoading: acceptLoading }] = useAcceptSkillGapMutation();
 
@@ -112,7 +111,6 @@ const UserSkillGapDetails = () => {
                             !acceptLoading && !declineLoading
                               ? 'pointer'
                               : 'not-allowed',
-                          color: 'white',
                         }}
                       >
                         <IoCheckmark
@@ -177,100 +175,269 @@ const UserSkillGapDetails = () => {
             <div className="section_header">Personal Information</div>
             <div className="section_item">
               <div className="item_title">UserId</div>
-              <div>USER789</div>
+              <div>{data?.response._id}</div>
             </div>
             <div className="section_item">
               <div className="item_title">Phone Number</div>
-              <div>null</div>
+              <div>
+                {data?.response.phoneNumber
+                  ? data?.response.phoneNumber
+                  : 'null'}
+              </div>
             </div>
             <div className="section_item">
               <div className="item_title">Email</div>
-              <div>j.olusanya@gmail.com</div>
+              <div>{data?.response.email ? data?.response.email : 'null'}</div>
             </div>
             <div className="section_item">
               <div className="item_title">Date Registered</div>
-              <div>2024-10-09</div>
+              <div>
+                {new Date(data?.response.createdAt).toLocaleDateString(
+                  'en-US',
+                  {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  }
+                )}
+              </div>
             </div>
             <div className="section_item">
-              <div className="item_title">Last Login</div>
-              <div>2024-10-09</div>
+              <div className="item_title">Verified</div>
+              <div>
+                {data?.response.status === true ? (
+                  <IoCheckmarkDone size={18} color="green" />
+                ) : (
+                  <HiOutlineXMark size={18} color="red" />
+                )}
+              </div>
             </div>
           </div>
           <div className="user_details_section">
             <div className="section_header">Educational Background</div>
-            <div className="section_item">
-              <div className="item_title">Institution</div>
-              <div>Babcock University</div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">Degree Obtained</div>
-              <div>B.Sc in Software Engineering</div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">Degree Type</div>
-              <div>Bachelor's Degree</div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">Graduation Date</div>
-              <div>2024-10-09</div>
-            </div>
+            {data?.response.education.length === 0 ||
+            data?.response.education.every(
+              (education: {
+                institutionName?: string;
+                degreeObtained?: string;
+                degreeType?: string;
+                graduationDate?: string;
+              }) =>
+                !education.institutionName?.trim() ||
+                !education.degreeObtained?.trim() ||
+                !education.degreeType?.trim() ||
+                !education.graduationDate?.trim()
+            ) ? (
+              <div className="section_item">No Data Avaliable</div>
+            ) : (
+              data?.response.education.map(
+                (
+                  education: {
+                    institutionName: string;
+                    degreeObtained: string;
+                    degreeType: string;
+                    graduationDate: string;
+                  },
+                  index: number
+                ) => (
+                  <div key={index}>
+                    <div className="section_item">
+                      <div className="item_title">Institution</div>
+                      <div>{education.institutionName}</div>
+                    </div>
+                    <div className="section_item">
+                      <div className="item_title">Degree Obtained</div>
+                      <div>{education.degreeObtained}</div>
+                    </div>
+                    <div className="section_item">
+                      <div className="item_title">Degree Type</div>
+                      <div>{education.degreeType}</div>
+                    </div>
+                    <div className="section_item">
+                      <div className="item_title">Graduation Date</div>
+                      <div>
+                        {new Date(education.graduationDate).toLocaleDateString(
+                          'en-US',
+                          {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )
+              )
+            )}
           </div>
           <div className="user_details_section">
             <div className="section_header">Skills (Up to 10)</div>
             <div className="skills_item_container">
-              <div className="skills_item">Javascript</div>
-              <div className="skills_item">HTML</div>
-              <div className="skills_item">CSS</div>
+              {data?.response.skillSet.length === 0 ||
+              data?.response.skillSet.every(
+                (item: string) =>
+                  !item || item?.trim() === '' || item === 'null'
+              ) ? (
+                <div className="section_item">No Data Available</div>
+              ) : (
+                data?.response.skillSet.map((skill: string, index: number) =>
+                  skill && skill?.trim() !== '' && skill !== null ? (
+                    <div className="skills_item" key={index}>
+                      {skill}
+                    </div>
+                  ) : (
+                    <div className="section_item">No Data Available</div>
+                  )
+                )
+              )}
             </div>
           </div>
           <div className="user_details_section">
             <div className="section_header">Areas of interest (Up to 10)</div>
             <div className="skills_item_container">
-              <div className="skills_item">Javascript</div>
-              <div className="skills_item">HTML</div>
-              <div className="skills_item">CSS</div>
+              {data?.response.areaOfInterest.length === 0 ||
+              data?.response.areaOfInterest.every(
+                (item: string) =>
+                  !item || item?.trim() === '' || item === 'null'
+              ) ? (
+                <div className="section_item">No Data Available</div>
+              ) : (
+                data?.response.areaOfInterest.map(
+                  (data: string, index: number) => (
+                    <div className="skills_item" key={index}>
+                      {data}
+                    </div>
+                  )
+                )
+              )}
             </div>
           </div>
           <div className="user_details_section">
             <div className="section_header">Experience</div>
-            <div className="section_item">
-              <div className="item_title">Job Title</div>
-              <div>Software Engineer</div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">Company</div>
-              <div>TechWings Global</div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">Job Description</div>
-              <div className="item_content">
-                Developed web applications using React and Node.js, led a team
-                of 3 developers, and improved performance
-              </div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">Start Date</div>
-              <div>2024-10-09</div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">End Date</div>
-              <div>2024-10-09</div>
-            </div>
+            {data?.response.job.length === 0 ||
+            data?.response.job.every(
+              (job: {
+                title?: string;
+                companyName?: string;
+                description?: string;
+                startDate?: string;
+                endDate?: string;
+              }) =>
+                !job.title?.trim() ||
+                !job.description?.trim() ||
+                !job.companyName?.trim() ||
+                !job.startDate?.trim()
+            ) ? (
+              <div className="section_item">No Data Avaliable</div>
+            ) : (
+              data?.response.job.map(
+                (
+                  job: {
+                    title: string;
+                    companyName: string;
+                    description: string;
+                    startDate: string;
+                    endDate: string;
+                  },
+                  index: number
+                ) => (
+                  <div key={index}>
+                    <div className="section_item">
+                      <div className="item_title">Job Title</div>
+                      <div>{job.title}</div>
+                    </div>
+                    <div className="section_item">
+                      <div className="item_title">Company</div>
+                      <div>{job.companyName}</div>
+                    </div>
+                    <div className="section_item">
+                      <div className="item_title">Job Description</div>
+                      <div className="item_content">{job.description}</div>
+                    </div>
+                    <div className="section_item">
+                      <div className="item_title">Start Date</div>
+                      <div>
+                        {new Date(job.startDate).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </div>
+                    </div>
+                    {job.endDate ? (
+                      <div className="section_item">
+                        <div className="item_title">End Date</div>
+                        <div>
+                          {new Date(job.endDate).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="section_item">
+                        <div className="item_title">Currently Working</div>
+                        <div>
+                          <IoCheckmarkDone size={18} color="green" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              )
+            )}
           </div>
           <div className="user_details_section">
             <div className="section_header">Certifications</div>
-            <div className="section_item">
-              <div className="item_title">Certification Name</div>
-              <div>AWS Certified Solutions Architect</div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">Issuing Organization</div>
-              <div>TechWings Global</div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">Issuing Date</div>
-              <div>2024-10-09</div>
-            </div>
+            {data?.response.certifications.length === 0 ||
+            data?.response.certifications.every(
+              (certifications: {
+                name?: string;
+                issuedBy?: string;
+                dateObtained?: string;
+              }) =>
+                !certifications.name?.trim() ||
+                !certifications.issuedBy?.trim() ||
+                !certifications.dateObtained?.trim()
+            ) ? (
+              <div className="section_item">No Data Avaliable</div>
+            ) : (
+              data?.response.certifications.map(
+                (
+                  certification: {
+                    name: string;
+                    issuedBy: string;
+                    dateObtained: string;
+                  },
+                  index: number
+                ) => (
+                  <div key={index}>
+                    <div className="section_item">
+                      <div className="item_title">Certification Name</div>
+                      <div>{certification.name}</div>
+                    </div>
+                    <div className="section_item">
+                      <div className="item_title">Issuing Organization</div>
+                      <div>{certification.issuedBy}</div>
+                    </div>
+                    <div className="section_item">
+                      <div className="item_title">Issuing Date</div>
+                      <div>
+                        {new Date(
+                          certification.dateObtained
+                        ).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )
+              )
+            )}
           </div>
         </div>
       )}

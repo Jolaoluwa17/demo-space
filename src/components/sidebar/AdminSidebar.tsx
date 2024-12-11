@@ -106,7 +106,7 @@ const AdminSidebar = () => {
           />
         </AdminNavigationLink>
         <AdminNavigationLink
-          name="Skill Gap Programs"
+          name="Skill Gap"
           isActive={pathname.startsWith(`${baseRoute}/skill-gap-program`)}
           link={`${baseRoute}/skill-gap-program`}
         >
