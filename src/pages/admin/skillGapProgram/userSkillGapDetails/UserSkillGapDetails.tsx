@@ -11,6 +11,8 @@ import {
   useGetAllInternshipQuery,
 } from '@/services/features/skillGap/skillGapSlice';
 import { HiOutlineXMark } from 'react-icons/hi2';
+import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
+import { useEffect } from 'react';
 
 const UserSkillGapDetails = () => {
   const navigate = useNavigate();
@@ -24,10 +26,13 @@ const UserSkillGapDetails = () => {
   const queryParams = new URLSearchParams(location.search);
   const userId = queryParams.get('id');
 
-  const { data, isLoading } = useGetUserQuery(userId);
+  const { data, isLoading, refetch } = useGetUserQuery(userId);
 
-  const { data: getApply, isLoading: internshipLoading } =
-    useGetAllInternshipQuery({});
+  const {
+    data: getApply,
+    isLoading: internshipLoading,
+    refetch: refetchInternship,
+  } = useGetAllInternshipQuery({});
 
   const filteredInternships = getApply?.response?.filter(
     (item: { userId: { _id: string } }) => item.userId?._id === userId
@@ -41,7 +46,8 @@ const UserSkillGapDetails = () => {
     };
     try {
       await accept(internshipData).unwrap();
-      console.log('accepted');
+      refetchInternship();
+      refetchResult();
     } catch (error) {
       console.log(error);
     }
@@ -55,15 +61,35 @@ const UserSkillGapDetails = () => {
     };
     try {
       await decline(internshipData).unwrap();
+      refetchInternship();
+      refetchResult();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const {
+    data: resultsData,
+    isLoading: resultDataLoading,
+    refetch: refetchResult,
+  } = useGetAllResultsQuery({});
+
+  const filteredResults =
+    resultsData?.response.filter(
+      (item: { userId: { _id: string } }) =>
+        item.userId && item.userId._id === userId
+    ) || [];
+
+  useEffect(() => {
+    refetchResult();
+    refetch();
+    refetchInternship();
+  }, [location.key, refetchResult, refetch, refetchInternship]);
+
   return (
     <div className="user_details_root">
       <PageHeader pageTitle="User Details" handleBackClick={handleBackClick} />
-      {isLoading || internshipLoading ? (
+      {isLoading || internshipLoading || resultDataLoading ? (
         <div className="loadingData">
           <FadeLoader color="#007BFF" />
         </div>
@@ -130,15 +156,15 @@ const UserSkillGapDetails = () => {
                       className="rejected_tag"
                       style={{
                         border:
-                          data.status === 'accepted'
+                          data.status === 'Approved'
                             ? '1px solid #00FF00'
-                            : data.status === 'rejected'
+                            : data.status === 'Denied'
                               ? '1px solid #FF0000'
                               : '1px solid #FFDD00',
                         backgroundColor:
-                          data.status === 'accepted'
+                          data.status === 'Approved'
                             ? '#EDFFED'
-                            : data.status === 'rejected'
+                            : data.status === 'Denied'
                               ? '#FFF4F4'
                               : '#FFFCE7',
                       }}
@@ -149,27 +175,34 @@ const UserSkillGapDetails = () => {
                 </div>
               )
             )}
-            {/* <div className="section_item">
-              <div className="item_title">React JS</div>
-              <div className="rejected_tag">Rejected</div>
-            </div> */}
           </div>
           <div className="user_details_section">
             <div className="section_header" style={{ color: '#007BFF' }}>
               Evaluation
             </div>
-            <div className="section_item">
-              <div className="item_title">HTML/CSS/JavaScript</div>
-              <div style={{ color: '#16A312', fontWeight: '600' }}>
-                85 / 100 (Passed)
-              </div>
-            </div>
-            <div className="section_item">
-              <div className="item_title">React JS</div>
-              <div style={{ color: '#FF0000', fontWeight: '600' }}>
-                21 / 100 (failed)
-              </div>
-            </div>
+            {!filteredResults ? (
+              <div className="section_item">No Data Avaliable</div>
+            ) : (
+              filteredResults.map(
+                (
+                  result: { score: number; quizId: { course: string } },
+                  index: number
+                ) => (
+                  <div className="section_item" key={index}>
+                    <div className="item_title">{result.quizId.course}</div>
+                    {result.score > 69 ? (
+                      <div style={{ color: '#16A312', fontWeight: '600' }}>
+                        {result.score} / 100 (Passed)
+                      </div>
+                    ) : (
+                      <div style={{ color: '#FF0000', fontWeight: '600' }}>
+                        {result.score.toFixed(0)} / 100 (failed)
+                      </div>
+                    )}
+                  </div>
+                )
+              )
+            )}
           </div>
           <div className="user_details_section">
             <div className="section_header">Personal Information</div>

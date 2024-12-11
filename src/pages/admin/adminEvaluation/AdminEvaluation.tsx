@@ -90,7 +90,7 @@ const AdminEvaluation = () => {
     // Filter results by quiz ID and return the count
     return (
       resultsData?.response?.filter(
-        (result: { quizId: string }) => result.quizId === quizId
+        (result: { quizId: { _id: string } }) => result.quizId._id === quizId
       ).length || 0
     );
   };
@@ -98,7 +98,7 @@ const AdminEvaluation = () => {
   const calculatePassRate = (quizId: string) => {
     const quizResults =
       resultsData?.response?.filter(
-        (result: { quizId: string }) => result.quizId === quizId
+        (result: { quizId: { _id: string } }) => result.quizId._id === quizId
       ) || [];
 
     const totalParticipants = quizResults.length;

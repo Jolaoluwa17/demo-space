@@ -69,12 +69,20 @@ const SkillGapProgram = () => {
       return [];
     }
 
-    // Filter by search term
+    // Filter out items with null userId or internshipId
     let filteredData = getApply.response.filter(
+      (item: {
+        userId: { fullName: string; email: string } | null;
+        internshipId: { title: string } | null;
+        createdAt: string;
+      }) => item.userId !== null && item.internshipId !== null
+    );
+
+    // Filter by search term
+    filteredData = filteredData.filter(
       (item: {
         userId: { fullName: string; email: string };
         internshipId: { title: string };
-        createdAt: string;
       }) => {
         const userFullName = item.userId?.fullName?.toLowerCase() || '';
         const internshipTitle = item.internshipId?.title?.toLowerCase() || '';
@@ -224,15 +232,15 @@ const SkillGapProgram = () => {
                       <div
                         style={{
                           border:
-                            user.status === 'Accepted'
+                            user.status === 'Approved'
                               ? '1px solid #00FF00'
-                              : user.status === 'Rejected'
+                              : user.status === 'Denied'
                                 ? '1px solid #FF0000'
                                 : '1px solid #FFDD00',
                           backgroundColor:
-                            user.status === 'Accepted'
+                            user.status === 'Approved'
                               ? '#EDFFED'
-                              : user.status === 'Rejected'
+                              : user.status === 'Denied'
                                 ? '#FFF4F4'
                                 : '#FFFCE7',
                         }}

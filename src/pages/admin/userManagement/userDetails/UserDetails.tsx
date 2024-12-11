@@ -10,7 +10,8 @@ import { HiOutlineXMark } from 'react-icons/hi2';
 import { FadeLoader } from 'react-spinners';
 import { IoPersonSharp } from 'react-icons/io5';
 import Popup from '@/modals/popup/Popup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -24,7 +25,19 @@ const UserDetails = () => {
   const queryParams = new URLSearchParams(location.search);
   const userId = queryParams.get('id');
 
-  const { data, isLoading } = useGetUserQuery(userId);
+  const { data, isLoading, refetch } = useGetUserQuery(userId);
+
+  const {
+    data: resultsData,
+    isLoading: resultDataLoading,
+    refetch: refetchResult,
+  } = useGetAllResultsQuery({});
+
+  const filteredResults =
+    resultsData?.response.filter(
+      (item: { userId: { _id: string } }) =>
+        item.userId && item.userId._id === userId
+    ) || [];
 
   const [deleteUser, { isLoading: deleteUserLoading }] =
     useDeleteUserMutation();
@@ -44,12 +57,18 @@ const UserDetails = () => {
     }
   };
 
+  // refetch data everytime the screen is rendered
+  useEffect(() => {
+    refetchResult();
+    refetch();
+  }, [location.key, refetchResult, refetch]);
+
   const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="user_details_root">
       <PageHeader pageTitle="User Details" handleBackClick={handleBackClick} />
-      {isLoading ? (
+      {isLoading || resultDataLoading ? (
         <div className="loadingData">
           <FadeLoader color="#007BFF" />
         </div>
@@ -75,15 +94,28 @@ const UserDetails = () => {
             <div className="section_header" style={{ color: '#007BFF' }}>
               Evaluation
             </div>
-            {!data?.response.evaluation ? (
+            {!filteredResults ? (
               <div className="section_item">No Data Avaliable</div>
             ) : (
-              <div className="section_item">
-                <div className="item_title">HTML/CSS/JavaScript</div>
-                <div style={{ color: '#16A312', fontWeight: '600' }}>
-                  85 / 100 (Passed)
-                </div>
-              </div>
+              filteredResults.map(
+                (
+                  result: { score: number; quizId: { course: string } },
+                  index: number
+                ) => (
+                  <div className="section_item" key={index}>
+                    <div className="item_title">{result.quizId.course}</div>
+                    {result.score > 69 ? (
+                      <div style={{ color: '#16A312', fontWeight: '600' }}>
+                        {result.score} / 100 (Passed)
+                      </div>
+                    ) : (
+                      <div style={{ color: '#FF0000', fontWeight: '600' }}>
+                        {result.score.toFixed(0)} / 100 (failed)
+                      </div>
+                    )}
+                  </div>
+                )
+              )
             )}
           </div>
           <div className="user_details_section">
@@ -191,7 +223,8 @@ const UserDetails = () => {
             <div className="skills_item_container">
               {data?.response.skillSet.length === 0 ||
               data?.response.skillSet.every(
-                (item: string) => !item || item?.trim() === '' || item === 'null'
+                (item: string) =>
+                  !item || item?.trim() === '' || item === 'null'
               ) ? (
                 <div className="section_item">No Data Available</div>
               ) : (
@@ -212,7 +245,8 @@ const UserDetails = () => {
             <div className="skills_item_container">
               {data?.response.areaOfInterest.length === 0 ||
               data?.response.areaOfInterest.every(
-                (item: string) => !item || item?.trim() === '' || item === 'null'
+                (item: string) =>
+                  !item || item?.trim() === '' || item === 'null'
               ) ? (
                 <div className="section_item">No Data Available</div>
               ) : (

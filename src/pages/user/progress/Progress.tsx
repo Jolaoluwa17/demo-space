@@ -2,7 +2,7 @@ import './progress.css';
 
 import { useNavigate } from 'react-router-dom';
 import SkillsCard from '@/components/skillscard/SkillsCard';
-import { useGetResultByUserIdQuery } from '@/services/features/result/resultSlice';
+import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 import descriptionGeneric from '@/utils/descriptionGeneric';
 import { FadeLoader } from 'react-spinners';
 
@@ -17,9 +17,7 @@ const Progress = () => {
   };
 
   const { data: resultsData, isLoading: resultDataLoading } =
-    useGetResultByUserIdQuery(userId);
-
-  console.log(resultsData);
+    useGetAllResultsQuery({});
 
   const getRandomDescription = () => {
     const randomIndex = Math.floor(Math.random() * descriptionGeneric.length);
