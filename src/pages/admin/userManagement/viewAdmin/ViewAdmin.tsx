@@ -10,7 +10,7 @@ interface AdminUser {
   name: string;
   email: string;
   role: string;
-  lastLogin: string;
+  lastSeen: string;
   _id: string;
 }
 
@@ -95,9 +95,9 @@ const ViewAdmin = () => {
                 >
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>Admin</td>
+                  <td>{user.role}</td>
                   <td>
-                    {new Date(user.lastLogin).toLocaleDateString('en-US', {
+                    {new Date(user.lastSeen).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric',

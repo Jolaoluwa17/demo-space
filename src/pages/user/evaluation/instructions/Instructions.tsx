@@ -10,24 +10,25 @@ interface Result {
   userId: {
     _id: string;
   };
-  quizId: string;
+  quizId: {
+    _id: string;
+  };
 }
 
 const Instructions = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams(); // Extract URL parameters
+  const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
   const userid = sessionStorage.getItem('id');
   const location = useLocation();
   const { course, description } = location.state || {};
 
   const handleClick = () => {
-    // Navigate to the next page, including the id in the URL
     navigate(`/dashboard/evaluation/multiple-choice?id=${id}`);
   };
 
   const handleBackClick = () => {
-    navigate('/dashboard/evaluation'); // Navigate to the Evaluation page
+    navigate('/dashboard/evaluation');
   };
 
   const instructions = [
@@ -51,7 +52,8 @@ const Instructions = () => {
   // Filter results based on the userId
   const filteredResults =
     resultsData?.response.filter(
-      (result: Result) => result.userId?._id === userid && result.quizId === id
+      (result: Result) =>
+        result.userId?._id === userid && result.quizId?._id === id
     ) || [];
 
   return (

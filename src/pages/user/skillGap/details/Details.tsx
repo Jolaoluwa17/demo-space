@@ -10,6 +10,11 @@ import { FadeLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 import { IoInformationCircleSharp } from 'react-icons/io5';
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+} from 'date-fns';
 
 const Details = () => {
   const navigate = useNavigate();
@@ -62,14 +67,47 @@ const Details = () => {
   );
 
   const [status, setStatus] = useState('');
+  const [canReapply, setCanReapply] = useState(false);
 
   useEffect(() => {
-    if (filteredInternships?.[0]?.status === 'pending') {
-      setStatus('Application is pending');
-    } else if (filteredInternships?.[0]?.status === 'accepted') {
-      setStatus('Application accepted');
+    const calculateRemainingTime = (createdAt: string) => {
+      const now = new Date();
+      const deniedDate = new Date(createdAt);
+      const sevenDaysLater = new Date(deniedDate);
+      sevenDaysLater.setDate(deniedDate.getDate() + 7);
+
+      const remainingDays = differenceInDays(sevenDaysLater, now);
+      const remainingHours = differenceInHours(sevenDaysLater, now) % 24;
+      const remainingMinutes = differenceInMinutes(sevenDaysLater, now) % 60;
+
+      return { remainingDays, remainingHours, remainingMinutes };
+    };
+
+    if (filteredInternships?.[0]?.status === 'Denied') {
+      const createdAt = filteredInternships?.[0]?.createdAt;
+      const daysSinceDenied = differenceInDays(new Date(), new Date(createdAt));
+      setCanReapply(daysSinceDenied >= 7);
+
+      if (daysSinceDenied < 7) {
+        const { remainingDays, remainingHours, remainingMinutes } =
+          calculateRemainingTime(createdAt);
+
+        setStatus(
+          `Application was denied. You can reapply in ${remainingDays} days, ${remainingHours} hours, and ${remainingMinutes} minutes.`
+        );
+      } else {
+        setStatus('Application was denied. You can reapply now.');
+      }
     } else {
-      setStatus('Unknown status');
+      setCanReapply(false);
+
+      if (filteredInternships?.[0]?.status === 'pending') {
+        setStatus('Application is pending');
+      } else if (filteredInternships?.[0]?.status === 'Approved') {
+        setStatus('Application accepted. Check email for more info');
+      } else {
+        setStatus('Unknown status');
+      }
     }
   }, [filteredInternships, getApply]);
 
@@ -83,14 +121,16 @@ const Details = () => {
       ) : (
         <div className="skill_gap_details">
           <div className="skill_gap_details_title">{data?.response.title}</div>
-          {filteredInternships?.[0]?.status === 'pending' && (
+          {filteredInternships?.[0]?.status && (
             <div
               className="taken_assessment_indicator"
               style={{
                 color:
                   filteredInternships?.[0]?.status === 'pending'
                     ? '#ffb703'
-                    : '',
+                    : filteredInternships?.[0]?.status === 'Approved'
+                      ? '#28a745' // Green color for "Approved"
+                      : '',
                 marginTop: '5px',
               }}
             >
@@ -139,19 +179,25 @@ const Details = () => {
               className="enroll_now"
               onClick={
                 !internshipLoading &&
-                filteredInternships?.[0]?.status !== 'pending'
+                filteredInternships?.[0]?.status !== 'pending' &&
+                filteredInternships?.[0]?.status !== 'Approved' &&
+                canReapply === true
                   ? handleApplication
                   : undefined
               }
               style={{
                 backgroundColor:
                   !internshipLoading &&
-                  filteredInternships?.[0]?.status !== 'pending'
+                  filteredInternships?.[0]?.status !== 'pending' &&
+                  filteredInternships?.[0]?.status !== 'Approved' &&
+                  canReapply === true
                     ? ''
                     : 'grey',
                 cursor:
                   !internshipLoading &&
-                  filteredInternships?.[0]?.status !== 'pending'
+                  filteredInternships?.[0]?.status !== 'pending' &&
+                  filteredInternships?.[0]?.status !== 'Approved' &&
+                  canReapply === true
                     ? 'pointer'
                     : 'not-allowed',
                 color: 'white',

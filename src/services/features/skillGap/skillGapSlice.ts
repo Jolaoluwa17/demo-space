@@ -49,7 +49,7 @@ export const skillGapSlice = apiSlice.injectEndpoints({
     }),
     acceptSkillGap: builder.mutation({
       query: (internshipData) => ({
-        url: `/appliedintership/${internshipData.id}`,
+        url: `/appliedintership/accept/${internshipData.id}`,
         method: 'PUT',
       }),
     }),
