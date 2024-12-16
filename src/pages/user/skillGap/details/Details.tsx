@@ -84,7 +84,7 @@ const Details = () => {
     };
 
     if (filteredInternships?.[0]?.status === 'Denied') {
-      const createdAt = filteredInternships?.[0]?.createdAt;
+      const createdAt = filteredInternships?.[0]?.updatedAt;
       const daysSinceDenied = differenceInDays(new Date(), new Date(createdAt));
       setCanReapply(daysSinceDenied >= 7);
 
@@ -129,7 +129,7 @@ const Details = () => {
                   filteredInternships?.[0]?.status === 'pending'
                     ? '#ffb703'
                     : filteredInternships?.[0]?.status === 'Approved'
-                      ? '#28a745' // Green color for "Approved"
+                      ? '#28a745'
                       : '',
                 marginTop: '5px',
               }}

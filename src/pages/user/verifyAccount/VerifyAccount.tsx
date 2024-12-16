@@ -94,14 +94,14 @@ const VerifyAccount = () => {
       <div className="verify_account_container">
         <div className="left_section">
           <img
-            src="/images/proficioNext.svg"
+            src="/assets/images/VerifyAccount.svg"
             alt="login_image"
             className="verify_account_img"
           />
         </div>
         <div className="right_section">
           <div className="techwings_logo">
-            <img src="/assets/images/TechWingLogo.svg" alt="login_image" />
+            <img src="/images/proficioNext.svg" alt="login_image" />
           </div>
           <div className="verify_account_form">
             <div className="back_to_signup">

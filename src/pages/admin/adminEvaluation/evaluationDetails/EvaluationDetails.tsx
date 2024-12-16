@@ -11,7 +11,9 @@ import { FadeLoader } from 'react-spinners';
 
 // Define the Result interface
 interface Result {
-  quizId: string;
+  quizId: {
+    _id: string;
+  };
   userId: {
     fullName: string;
     email: string;
@@ -54,8 +56,10 @@ const EvaluationDetails = () => {
 
   // Filter results by quizId and non-null userId
   const filteredResults = resultsData?.response.filter(
-    (result: Result) => result.quizId === id && result.userId !== null
+    (result: Result) => result.quizId._id === id && result.userId !== null
   );
+
+  console.log(filteredResults);
 
   // Apply grade filter
   const applyGradeFilter = (data: Result[]): Result[] => {
@@ -95,6 +99,7 @@ const EvaluationDetails = () => {
     const startIndex = (currentPage - 1) * rowsPerPage;
     return getFilteredUsers().slice(startIndex, startIndex + rowsPerPage);
   };
+
 
   return (
     <div className="evaluation_details_root">

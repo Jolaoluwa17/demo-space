@@ -56,6 +56,8 @@ const Instructions = () => {
         result.userId?._id === userid && result.quizId?._id === id
     ) || [];
 
+  console.log(filteredResults);
+
   return (
     <div className="instructions_root">
       <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />

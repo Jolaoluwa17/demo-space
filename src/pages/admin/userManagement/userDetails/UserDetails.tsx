@@ -106,7 +106,7 @@ const UserDetails = () => {
                     <div className="item_title">{result.quizId.course}</div>
                     {result.score > 69 ? (
                       <div style={{ color: '#16A312', fontWeight: '600' }}>
-                        {result.score} / 100 (Passed)
+                        {result.score.toFixed(0)} / 100 (Passed)
                       </div>
                     ) : (
                       <div style={{ color: '#FF0000', fontWeight: '600' }}>
