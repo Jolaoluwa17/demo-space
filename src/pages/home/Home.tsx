@@ -1,12 +1,13 @@
-import AboutUs from '../../components/home/aboutus/AboutUs';
-import AppFeatures from '../../components/home/appFeatures/AppFeatures';
-import ExpandPotential from '../../components/home/expandPotential/ExpandPotential';
-import HeroSection from '../../components/home/heroSection/HeroSection';
-import AskQuestions from '../../components/home/questions/Questions';
-import TheFuture from '../../components/home/theFuture/TheFuture';
 import { LuCopyright } from 'react-icons/lu';
-import './home.css';
 import { useRef } from 'react';
+
+import './home.css';
+import TheFuture from '@/components/home/theFuture/TheFuture';
+import AboutUs from '@/components/home/aboutus/AboutUs';
+import AppFeatures from '@/components/home/appFeatures/AppFeatures';
+import ExpandPotential from '@/components/home/expandPotential/ExpandPotential';
+import HeroSection from '@/components/home/heroSection/HeroSection';
+import AskQuestions from '@/components/home/questions/Questions';
 
 const Home = () => {
   const featuresRef = useRef<HTMLDivElement | null>(null);

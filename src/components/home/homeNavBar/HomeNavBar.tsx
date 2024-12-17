@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import './homeNavBar.css';
 import { useNavigate } from 'react-router-dom';
-import HamBurgerIcon from '../../../icons/HamBurgerIcon';
+import { motion } from 'framer-motion';
+
+import './homeNavBar.css';
+import HamBurgerIcon from '@/icons/HamBurgerIcon';
 
 interface Props {
   featuresBtn: (value: unknown) => void;
@@ -46,7 +47,7 @@ const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
       <div className="main">
         <div className="homeNav_techwings_logo">
           <img
-             src="/images/proficioNext.svg"
+            src="/images/proficioNext.svg"
             alt=""
             className="homeNav_techwings_logo_main"
           />
@@ -71,6 +72,16 @@ const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
                 transition={{ duration: 0.5 }}
                 onClick={(e) => e.stopPropagation()}
               >
+                <div
+                  className="get_started_options_tab_admin"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate('/admin/login');
+                    setIsGetStartedOpen(false);
+                  }}
+                >
+                  Admin
+                </div>
                 <div
                   className="get_started_options_tab"
                   onClick={(e) => {

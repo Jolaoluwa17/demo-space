@@ -46,6 +46,7 @@ import UserSkillGapDetails from './pages/admin/skillGapProgram/userSkillGapDetai
 import ViewAdmin from './pages/admin/userManagement/viewAdmin/ViewAdmin';
 import CreateAdmin from './pages/admin/userManagement/createAdmin/CreateAdmin';
 import AdminDetails from './pages/admin/userManagement/adminDetails/AdminDetails';
+import AdminLogin from './pages/login/AdminLogin';
 
 function App() {
   return (
@@ -58,12 +59,14 @@ function App() {
           {/* Authentication Routes */}
           <Route path="auth" element={<AuthLayout />}>
             <Route path="login" element={<Login />} />
+
             <Route path="signup" element={<Signup />} />
             <Route path="verifyaccount" element={<VerifyAccount />} />
             <Route path="forgotpassword" element={<ForgotPassword />} />
             <Route path="resetpassword" element={<ResetPassword />} />
           </Route>
 
+          <Route path="/admin/login" element={<AdminLogin />} />
           {/* Settings Route */}
           <Route
             path="/user-profile"

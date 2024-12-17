@@ -26,7 +26,7 @@
 }
 .home_nav_getStarted {
   padding: 8px 15px;
-  background-color: #007BFF;
+  background-color: #007bff;
   border-radius: 20px;
   border: none;
   font-size: 15px;
@@ -47,13 +47,15 @@
   box-sizing: border-box;
   overflow: hidden;
 }
-.get_started_options_tab {
+.get_started_options_tab,
+.get_started_options_tab_admin {
   height: 20px;
   padding: 10px;
   font-weight: 600;
 }
-.get_started_options_tab:hover {
-  background-color: #007BFF;
+.get_started_options_tab:hover,
+.get_started_options_tab_admin:hover {
+  background-color: #007bff;
   color: white;
   cursor: pointer;
 }
@@ -66,6 +68,9 @@
   .home_nav_btn,
   .home_nav_getStarted {
     font-size: 14px;
+  }
+  .get_started_options_tab_admin {
+    display: none;
   }
 }
 
@@ -85,7 +90,7 @@
   }
   .home_mobile_nav_bar_options {
     display: block;
-    background-color: #007BFF;
+    background-color: #007bff;
     width: 100%;
     position: absolute;
     display: flex;

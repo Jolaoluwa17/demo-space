@@ -1,6 +1,7 @@
-import HomeNavBar from '../homeNavBar/HomeNavBar';
-import './heroSection.css';
 import { IoLogoGooglePlaystore, IoLogoApple } from 'react-icons/io5';
+
+import './heroSection.css';
+import HomeNavBar from '../homeNavBar/HomeNavBar';
 
 interface Props {
   featuresBtn: (value: unknown) => void;
