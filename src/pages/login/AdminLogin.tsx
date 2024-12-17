@@ -1,22 +1,16 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BiSolidErrorAlt } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import './login.css';
+import ErrorResponse from '@/types/ErrorResponse';
+import { useLoginMutation } from '@/services/features/auth/authApiSlice';
+import { setAuthState } from '@/services/features/auth/authSlice';
+import { BiSolidErrorAlt } from 'react-icons/bi';
 import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
-import {
-  useLoginMutation,
-  useRequestCodeMutation,
-} from '@/services/features/auth/authApiSlice';
-import {
-  setAuthState,
-  setCredentials,
-} from '@/services/features/auth/authSlice';
-import ErrorResponse from '@/types/ErrorResponse';
 
-const Login = () => {
+const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -58,7 +52,7 @@ const Login = () => {
     const userData = {
       email: email,
       password: password,
-      userType: 'User',
+      userType: 'Admin',
     };
 
     if (rememberMe) {
@@ -76,24 +70,11 @@ const Login = () => {
           token: res.token,
           emailVerified: res.user.status ?? false,
           id: res.user._id ?? '',
-          userType: 'User',
+          userType: 'Admin',
         })
       );
-      if (res.user.status === false) {
-        dispatch(
-          setCredentials({
-            email: email,
-            password: password,
-            userType: 'User',
-          })
-        );
-        handleRequestCode();
-        navigator('/auth/verifyaccount');
-      } else if (!res.user.fullName) {
-        navigator('/user-profile');
-      } else {
-        navigator('/dashboard');
-      }
+
+      navigator('/admin/dashboard');
     } catch (error: unknown) {
       const err = error as ErrorResponse;
 
@@ -102,17 +83,6 @@ const Login = () => {
       } else {
         setErrMsg('Something went wrong');
       }
-      console.log(error);
-    }
-  };
-
-  const [requestCode] = useRequestCodeMutation();
-
-  const handleRequestCode = async () => {
-    const userData = { email: email };
-    try {
-      await requestCode(userData).unwrap();
-    } catch (error: unknown) {
       console.log(error);
     }
   };
@@ -126,10 +96,10 @@ const Login = () => {
   };
 
   return (
-    <div className="login_root" onKeyDown={handleKeyDown} tabIndex={0}>
-      <div className="login_container">
-        <div className="left">
-          <div className="techwings_logo_login">
+    <div className="login_root_admin" onKeyDown={handleKeyDown} tabIndex={0}>
+      <div className="login_container_admin">
+        <div className="left_admin">
+          <div className="techwings_logo_login_admin">
             <img
               src="/images/proficioNext.svg"
               alt="TechWings Global"
@@ -138,7 +108,7 @@ const Login = () => {
             />
           </div>
           <div className="login_title_container">
-            <div className="login_title">Login</div>
+            <div className="login_title">Admin Login</div>
           </div>
           <div className="login_sub_title">
             Please provide the information below to login and access your
@@ -181,13 +151,6 @@ const Login = () => {
               />
               <div style={{ marginLeft: '8px' }}>Remember me</div>
             </div>
-            <div
-              className="forgot_password_btn"
-              style={{ color: '#FF8682', cursor: 'pointer', fontSize: '14px' }}
-              onClick={() => navigator('/auth/forgotpassword')}
-            >
-              Forgot Password
-            </div>
           </div>
           <button
             className="login_btn"
@@ -206,44 +169,11 @@ const Login = () => {
               {errMsg}
             </div>
           )}
-          <div className="donot_have_acc">
-            Don't have an account?{' '}
-            <span
-              style={{ color: '#FF8682', cursor: 'pointer', fontWeight: '600' }}
-              onClick={() => navigator('/auth/signup')}
-            >
-              Sign up
-            </span>
-          </div>
-          {/* <div className="or_login">
-            <hr />
-            <div style={{ padding: '0px 10px', textAlign: 'center' }}>
-              Or login with
-            </div>
-            <hr />
-          </div> */}
-          {/* <div className="login_options">
-            <div className="login_options_button">
-              <img src="/assets/images/Google.svg" alt="login_image" />
-            </div>
-            <div className="login_options_button">
-              <img src="/assets/images/Apple.svg" alt="login_image" />
-            </div>
-          </div> */}
           <div className="image_container"></div>
-        </div>
-        <div className="right">
-          <img
-            src="/assets/images/Login.png"
-            alt="login_image"
-            className="login_img"
-            style={{ borderRadius: '10px', position: 'inherit' }}
-            loading="lazy"
-          />
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default AdminLogin;
