@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import './resetPassword.css';
 import LeftArrow from '@/icons/LeftArrow';
@@ -8,8 +8,9 @@ import EyeClosed from '@/icons/EyeClosed';
 import { useResetPasswordMutation } from '@/services/features/auth/authApiSlice';
 
 const ResetPassword = () => {
-  // const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -35,9 +36,14 @@ const ResetPassword = () => {
   const [resetPassword] = useResetPasswordMutation();
 
   const handleResetPassword = async () => {
-    const userData = { password: password };
+    const userData = {
+      token: token,
+      password: password,
+      confirmpassword: confirmPassword,
+    };
     try {
-      await resetPassword(userData).unwrap();
+      const res = await resetPassword(userData).unwrap();
+      console.log(res);
       // navigator('/auth/login')
     } catch (error: unknown) {
       console.log(error);

@@ -12,6 +12,7 @@ import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 
 const Questions: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const userId = sessionStorage.getItem('id');
   const id = searchParams.get('id');
   const location = useLocation();
   const { course, description, questionId } = location.state || {};
@@ -24,7 +25,8 @@ const Questions: React.FC = () => {
 
   const { data, isLoading } = useGetAllResultsQuery({});
   const userResults = data?.response.filter(
-    (result: { quizId: { _id: string } }) => result.quizId?._id === id
+    (result: { quizId: { _id: string }; userId: { _id: string } }) =>
+      result.quizId?._id === id && result.userId?._id === userId
   );
 
   const userAnswers = userResults?.[0]?.answer || [];

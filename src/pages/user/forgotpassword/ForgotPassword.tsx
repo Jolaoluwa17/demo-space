@@ -26,7 +26,7 @@ const ForgotPassword = () => {
   };
 
   const navigator = useNavigate();
-  const [forgotPassword] = useForgotPasswordMutation();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
   const [err, setErr] = useState<string>('');
 
   const handleForgotPassword = async () => {
@@ -88,13 +88,13 @@ const ForgotPassword = () => {
           <button
             className="submit_btn"
             style={{
-              backgroundColor: isFormValid ? '#007BFF' : 'grey',
-              cursor: isFormValid ? 'pointer' : 'not-allowed',
+              backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
+              cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
             }}
             onClick={handleForgotPassword}
-            disabled={!isFormValid}
+            disabled={!isFormValid || isLoading}
           >
-            Submit
+            {isLoading ? <div className="spinner"></div> : 'Submit'}
           </button>
           <div className="or_forgotpassword">
             <hr />

@@ -11,6 +11,7 @@ import { useGetQuizQuestionQuery } from '@/services/features/quiz/quizSlice';
 const History = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const userId = sessionStorage.getItem('id');
   const id = searchParams.get('id');
   const location = useLocation();
   const { course, description } = location.state || {};
@@ -23,7 +24,8 @@ const History = () => {
 
   const { data, isLoading } = useGetAllResultsQuery({});
   const userResults = data?.response.filter(
-    (result: { quizId: { _id: string } }) => result.quizId?._id === id
+    (result: { quizId: { _id: string }; userId: { _id: string } }) =>
+      result.quizId?._id === id && result.userId?._id === userId
   );
 
   const { data: questionsData, isLoading: questionsLoading } =
