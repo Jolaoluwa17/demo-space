@@ -7,9 +7,37 @@ import { LuMail } from 'react-icons/lu';
 import { SlLock } from 'react-icons/sl';
 import { IoPersonOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
+import { useState } from 'react';
+import Popup from '@/modals/popup/Popup';
+import { useDeleteUserMutation } from '@/services/features/user/userSlice';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/services/features/auth/authSlice';
 
 const Settings = () => {
   const navigate = useNavigate();
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const dispatch = useDispatch();
+  const userid = sessionStorage.getItem('id');
+
+  const [deleteUser, { isLoading: deleteUserLoading }] =
+    useDeleteUserMutation();
+
+  const handleDeleteUser = async () => {
+    const userData = { id: userid };
+    try {
+      await deleteUser(userData).unwrap();
+      setShowSuccess(true);
+
+      setTimeout(() => {
+        dispatch(logout());
+        navigate('/auth/login');
+      }, 3000);
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="settings_root">
@@ -77,7 +105,7 @@ const Settings = () => {
         <div
           className="settings_base_option_button2"
           style={{ backgroundColor: 'red' }}
-          onClick={() => navigate('/dashboard/profile/delete-account')}
+          onClick={() => setShowPopup(true)}
         >
           <div className="first_section">
             <MdDelete size={27} color="white" />
@@ -90,6 +118,48 @@ const Settings = () => {
           </div>
         </div>
       </div>
+
+      <Popup popup={showPopup}>
+        {!showSuccess ? (
+          <div style={{ width: '100%' }}>
+            <div className="decision_title">
+              Are you sure you want to delete your account
+            </div>
+            <div className="decision_container">
+              <div
+                className="decision_btn"
+                style={{
+                  backgroundColor: !deleteUserLoading ? '#007BFF' : 'grey',
+                  cursor: !deleteUserLoading ? 'pointer' : 'not-allowed',
+                  color: !deleteUserLoading ? 'white' : 'grey',
+                }}
+                onClick={deleteUserLoading ? undefined : handleDeleteUser}
+              >
+                {deleteUserLoading ? <div className="spinner"></div> : 'Yes'}
+              </div>
+              <div
+                className="decision_btn"
+                style={{
+                  cursor: !deleteUserLoading ? 'pointer' : 'not-allowed',
+                  color: !deleteUserLoading ? 'black' : 'grey',
+                }}
+                onClick={
+                  deleteUserLoading ? undefined : () => setShowPopup(false)
+                }
+              >
+                {deleteUserLoading ? <div className="spinner"></div> : 'No'}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="delete_account_popup">
+            <img src="/images/DeleteAccount.svg" alt="" />
+            <div className="delete_account_text">
+              <p>Account Deleted Successfully</p>
+            </div>
+          </div>
+        )}
+      </Popup>
     </div>
   );
 };

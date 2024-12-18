@@ -51,7 +51,13 @@ const Sidebar = () => {
       className="sidebar"
     >
       <div className="sidebar_header">
-        <img src="/images/proficioNext.svg" alt="" />
+        <img
+          src="/images/ProficioNextLogo.png"
+          alt=""
+          className="proficioNext_logo_size"
+          onClick={() => navigator('/')}
+          loading="lazy"
+        />
       </div>
       <div className="sidebar_links">
         <NavigationLink

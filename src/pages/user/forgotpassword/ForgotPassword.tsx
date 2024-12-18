@@ -45,9 +45,11 @@ const ForgotPassword = () => {
       <div className="forgotpassword_container">
         <div className="techwings_logo_forgotpassword">
           <img
-            src="/images/proficioNext.svg"
-            alt="login_image"
+            src="/images/ProficioNextLogo.png"
+            alt=""
+            className="proficioNext_logo_size"
             onClick={() => navigator('/')}
+            loading="lazy"
           />
         </div>
         <div className="forgotpassword_form">

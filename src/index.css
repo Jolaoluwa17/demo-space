@@ -75,3 +75,17 @@ body {
   padding-top: 200px;
   flex-direction: column;
 }
+
+.proficioNext_logo_size {
+  width: 250px;
+  height: 150px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .proficioNext_logo_size {
+    width: 170px;
+    height: 100px;
+  }
+}
+

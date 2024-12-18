@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@/icons/AddIcon';
 import './pages.css';
-import DeleteIcon from '@/icons/DeleteIcon';
+import { FiMinusCircle } from 'react-icons/fi';
 
 interface Props {
   setCurrentPage: (page: number) => void;
@@ -74,17 +74,26 @@ const PageTwo: React.FC<Props> = ({
       </div>
 
       {educationEntries.map((entry, index) => (
-        <div key={index} className="education_entry">
+        <div
+          key={index}
+          className="education_entry"
+          style={{
+            marginBottom: index < educationEntries.length - 1 ? '100px' : '0',
+          }}
+        >
           <div className="profile_pageone_form_item">
             <label htmlFor={`institution-${index}`}>
               Institution Name
               {index > 0 && (
                 <div
-                  className="remove_entry_button"
+                  className="remove_entry_main"
                   onClick={() => handleRemoveEntry(index)}
                 >
-                  <DeleteIcon color="red" />
-                  Remove
+                  <FiMinusCircle
+                    style={{ paddingRight: '10px' }}
+                    className="minus_circle_icon"
+                  />
+                  Remove Entry
                 </div>
               )}
             </label>

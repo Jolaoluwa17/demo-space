@@ -14,9 +14,9 @@ import {
   setAuthState,
   setCredentials,
 } from '@/services/features/auth/authSlice';
-import ErrorResponse from '@/types/ErrorResponse';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -88,21 +88,15 @@ const Login = () => {
           })
         );
         handleRequestCode();
-        navigator('/auth/verifyaccount');
+        navigate('/auth/verifyaccount');
       } else if (!res.user.fullName) {
-        navigator('/user-profile');
+        navigate('/user-profile');
       } else {
-        navigator('/dashboard');
+        navigate('/dashboard');
       }
-    } catch (error: unknown) {
-      const err = error as ErrorResponse;
-
-      if (err?.status === 404) {
-        setErrMsg('Invalid email or password');
-      } else {
-        setErrMsg('Something went wrong');
-      }
+    } catch (error) {
       console.log(error);
+      setErrMsg('Invalid email or password');
     }
   };
 
@@ -117,8 +111,6 @@ const Login = () => {
     }
   };
 
-  const navigator = useNavigate();
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' && isFormValid && !isLoading) {
       handleLogin();
@@ -131,9 +123,10 @@ const Login = () => {
         <div className="left">
           <div className="techwings_logo_login">
             <img
-              src="/images/proficioNext.svg"
-              alt="TechWings Global"
-              onClick={() => navigator('/')}
+              src="/images/ProficioNextLogo.png"
+              alt=""
+              className="proficioNext_logo_size"
+              onClick={() => navigate('/')}
               loading="lazy"
             />
           </div>
@@ -184,7 +177,7 @@ const Login = () => {
             <div
               className="forgot_password_btn"
               style={{ color: '#FF8682', cursor: 'pointer', fontSize: '14px' }}
-              onClick={() => navigator('/auth/forgotpassword')}
+              onClick={() => navigate('/auth/forgotpassword')}
             >
               Forgot Password
             </div>
@@ -210,7 +203,7 @@ const Login = () => {
             Don't have an account?{' '}
             <span
               style={{ color: '#FF8682', cursor: 'pointer', fontWeight: '600' }}
-              onClick={() => navigator('/auth/signup')}
+              onClick={() => navigate('/auth/signup')}
             >
               Sign up
             </span>

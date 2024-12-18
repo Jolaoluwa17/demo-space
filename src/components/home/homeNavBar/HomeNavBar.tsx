@@ -47,9 +47,9 @@ const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
       <div className="main">
         <div className="homeNav_techwings_logo">
           <img
-            src="/images/proficioNext.svg"
+            src="/images/ProficioNextLogo.png"
             alt=""
-            className="homeNav_techwings_logo_main"
+            className="proficioNext_logo_size"
           />
         </div>
         <div className="home_nav_btn_container">
@@ -72,16 +72,6 @@ const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
                 transition={{ duration: 0.5 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <div
-                  className="get_started_options_tab_admin"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate('/admin/login');
-                    setIsGetStartedOpen(false);
-                  }}
-                >
-                  Admin
-                </div>
                 <div
                   className="get_started_options_tab"
                   onClick={(e) => {

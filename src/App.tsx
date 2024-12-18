@@ -29,24 +29,6 @@ import DeleteAccount from './pages/user/settings/deleteAccount/DeleteAccount';
 import ChangePassword from './pages/user/settings/changePassword/ChangePassword';
 import Home from './pages/home/Home';
 import ProtectedRoute from './services/ProtectRoute';
-import AdminLayout from './components/layout/AdminLayout';
-import Dashboard from './pages/admin/dashboard/Dashboard';
-import UserManagementRoot from './pages/admin/userManagement/UserManagementRoot';
-import UserManagement from './pages/admin/userManagement/UserManagement';
-import UserDetails from './pages/admin/userManagement/userDetails/UserDetails';
-import AdminEvaluation from './pages/admin/adminEvaluation/AdminEvaluation';
-import AdminEvaluationRoot from './pages/admin/adminEvaluation/AdminEvaluationRoot';
-import CreateEvaluation from './pages/admin/adminEvaluation/createEvaluation/CreateEvaluation';
-import EvaluationDetails from './pages/admin/adminEvaluation/evaluationDetails/EvaluationDetails';
-import SkillGapProgramRoot from './pages/admin/skillGapProgram/SkillGapProgramRoot';
-import SkillGapProgram from './pages/admin/skillGapProgram/SkillGapProgram';
-import SkillGapList from './pages/admin/skillGapProgram/skillGapList/SkillGapList';
-import CreateProgram from './pages/admin/skillGapProgram/createProgram/CreateProgram';
-import UserSkillGapDetails from './pages/admin/skillGapProgram/userSkillGapDetails/UserSkillGapDetails';
-import ViewAdmin from './pages/admin/userManagement/viewAdmin/ViewAdmin';
-import CreateAdmin from './pages/admin/userManagement/createAdmin/CreateAdmin';
-import AdminDetails from './pages/admin/userManagement/adminDetails/AdminDetails';
-import AdminLogin from './pages/login/AdminLogin';
 
 function App() {
   return (
@@ -66,7 +48,6 @@ function App() {
             <Route path="resetpassword" element={<ResetPassword />} />
           </Route>
 
-          <Route path="/admin/login" element={<AdminLogin />} />
           {/* Settings Route */}
           <Route
             path="/user-profile"
@@ -107,40 +88,6 @@ function App() {
               <Route path="profile-settings" element={<ProfileSettings />} />
               <Route path="delete-account" element={<DeleteAccount />} />
               <Route path="change-password" element={<ChangePassword />} />
-            </Route>
-          </Route>
-
-          {/* Admin Dashboard */}
-          <Route
-            path="admin/dashboard"
-            element={
-              <ProtectedRoute
-                element={<AdminLayout />}
-                allowedRoles={['Admin']}
-              />
-            }
-          >
-            <Route index element={<Dashboard />} />
-            <Route path="user-management" element={<UserManagementRoot />}>
-              <Route index element={<UserManagement />} />
-              <Route path="user-details" element={<UserDetails />} />
-              <Route path="view-admin" element={<ViewAdmin />} />
-              <Route path="create-admin" element={<CreateAdmin />} />
-              <Route path="admin-details" element={<AdminDetails />} />
-            </Route>
-            <Route path="evaluation" element={<AdminEvaluationRoot />}>
-              <Route index element={<AdminEvaluation />} />
-              <Route path="create-evaluation" element={<CreateEvaluation />} />
-              <Route
-                path="evaluation-details"
-                element={<EvaluationDetails />}
-              />
-            </Route>
-            <Route path="skill-gap-program" element={<SkillGapProgramRoot />}>
-              <Route index element={<SkillGapProgram />} />
-              <Route path="programs" element={<SkillGapList />} />
-              <Route path="create-program" element={<CreateProgram />} />
-              <Route path="user-details" element={<UserSkillGapDetails />} />
             </Route>
           </Route>
         </Routes>

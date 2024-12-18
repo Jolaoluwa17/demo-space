@@ -34,8 +34,6 @@ const Certificate: React.FC<Props> = ({
     }
   }, [certifications, setCertifications]);
 
-  console.log(certifications);
-
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();

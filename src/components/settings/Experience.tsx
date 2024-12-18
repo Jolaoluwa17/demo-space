@@ -51,7 +51,6 @@ const Experience: React.FC<Props> = ({
 
   const handleAddEntry = () => {
     setEntries?.([
-      // Adding a new entry with empty values
       ...entries,
       {
         title: '',
@@ -59,7 +58,7 @@ const Experience: React.FC<Props> = ({
         companyName: '',
         startDate: getCurrentDate(),
         endDate: getCurrentDate(1),
-        currentlyWorking: false,
+        currentlyWorking: false, // Properly initialize
       },
     ]);
   };
@@ -101,7 +100,15 @@ const Experience: React.FC<Props> = ({
       ...entry,
       currentlyWorking: !entry.endDate,
     }));
-    setEntries?.(updatedEntries);
+
+    const hasChanges = updatedEntries.some(
+      (updatedEntry, index) =>
+        updatedEntry.currentlyWorking !== entries[index]?.currentlyWorking
+    );
+
+    if (hasChanges) {
+      setEntries?.(updatedEntries);
+    }
   }, [entries, setEntries]);
 
   return (
@@ -263,18 +270,20 @@ const Experience: React.FC<Props> = ({
                   disabled={userDataIsLoading}
                 />
               </div>
-              <div className="profile_form_item">
-                <label htmlFor={`endDate-${index}`}>End Date</label>
-                <input
-                  type="date"
-                  name="endDate"
-                  id={`endDate-${index}`}
-                  value={entry.endDate ? entry.endDate.substring(0, 10) : ''}
-                  className="profile_input_item"
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={entry.currentlyWorking || userDataIsLoading}
-                />
-              </div>
+              {!entry.currentlyWorking && (
+                <div className="profile_form_item">
+                  <label htmlFor={`endDate-${index}`}>End Date</label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    id={`endDate-${index}`}
+                    value={entry.endDate ? entry.endDate.substring(0, 10) : ''}
+                    className="profile_input_item"
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={entry.currentlyWorking || userDataIsLoading}
+                  />
+                </div>
+              )}
               <div className="currently_working_here">
                 <div
                   onClick={() => handleCheckboxChange(index)}

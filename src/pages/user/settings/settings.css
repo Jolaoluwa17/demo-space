@@ -65,6 +65,52 @@
   font-weight: 600;
   color: #6a757e;
 }
+.decision_title {
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+}
+.decision_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+.decision_btn {
+  width: 47%;
+  border: 1px solid #cbcbcc;
+  height: 45px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+.delete_account_popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 40px 94px;
+  box-sizing: border-box;
+}
+.delete_account_text {
+  width: 100%;
+}
+.delete_account_popup p {
+  font-weight: 600;
+  text-align: center;
+  color: #333a41;
+}
+.delete_account_popup div {
+  text-align: center;
+  width: 100%;
+  color: #6a757e;
+  font-weight: 600;
+}
 
 @media (max-width: 768px) {
   .settings_base_option_button2,

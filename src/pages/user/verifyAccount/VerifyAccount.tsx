@@ -49,6 +49,7 @@ const VerifyAccount = () => {
       email: email,
       password: password,
     };
+    console.log(userData);
     try {
       const res = await login(userData).unwrap();
       dispatch(
@@ -56,9 +57,11 @@ const VerifyAccount = () => {
           isAuthenticated: true,
           token: res.token,
           id: res.user._id ?? '',
+          userType: 'User',
         })
       );
       navigate('/user-profile');
+      console.log(res);
     } catch (error: unknown) {
       console.log(error);
     }
@@ -101,7 +104,13 @@ const VerifyAccount = () => {
         </div>
         <div className="right_section">
           <div className="techwings_logo">
-            <img src="/images/proficioNext.svg" alt="login_image" />
+            <img
+              src="/images/ProficioNextLogo.png"
+              alt=""
+              className="proficioNext_logo_size"
+              onClick={() => navigate('/')}
+              loading="lazy"
+            />
           </div>
           <div className="verify_account_form">
             <div className="back_to_signup">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@/icons/AddIcon';
 import './pages.css';
-import DeleteIcon from '@/icons/DeleteIcon';
+import { FiMinusCircle } from 'react-icons/fi';
 
 interface Certification {
   name: string;
@@ -63,17 +63,25 @@ const PageSix: React.FC<Props> = ({
         List any certifications you have obtained.
       </div>
       {certifications.map((cert, index) => (
-        <div key={index}>
+        <div
+          key={index}
+          style={{
+            marginBottom: index < certifications.length - 1 ? '100px' : '0',
+          }}
+        >
           <div className="profile_pageone_form_item">
             <label htmlFor={`certificate-${index}`}>
               Certificate Name
               {index > 0 && (
                 <div
-                  className="remove_entry_button"
+                  className="remove_entry_main"
                   onClick={() => handleRemoveEntry(index)}
                 >
-                  <DeleteIcon color="red" />
-                  Remove
+                  <FiMinusCircle
+                    style={{ paddingRight: '10px' }}
+                    className="minus_circle_icon"
+                  />
+                  Remove Entry
                 </div>
               )}
             </label>

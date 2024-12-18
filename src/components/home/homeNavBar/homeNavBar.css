@@ -1,5 +1,9 @@
 .home_nav_bar_root {
   width: 100%;
+  position: -webkit-sticky; /* For Safari support */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 .home_nav_bar_root .main {
   display: flex;
@@ -8,11 +12,16 @@
   align-items: center;
   box-sizing: border-box;
   width: 100%;
+  position: relative;
 }
 .home_nav_btn_container {
   display: flex;
   align-items: center;
   gap: 24px;
+}
+.homeNav_techwings_logo {
+  width: 250px;
+  height: 150px;
 }
 .mobile_home_nav_btn_container,
 .home_mobile_nav_bar_options {
@@ -75,14 +84,16 @@
 }
 
 @media (max-width: 450px) {
-  .homeNav_techwings_logo_main {
-    width: 137px;
+  .homeNav_techwings_logo {
+    width: 150px;
+    height: 100px;
   }
   .home_nav_btn_container {
     display: none;
   }
   .home_nav_bar_root .main {
-    padding: 20px 24px;
+    /* padding: 20px 24px; */
+    padding: 0px 24px;
     box-sizing: border-box;
   }
   .mobile_home_nav_btn_container {

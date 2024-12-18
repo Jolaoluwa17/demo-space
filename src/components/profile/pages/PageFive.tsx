@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@/icons/AddIcon';
 import './pages.css';
-import DeleteIcon from '@/icons/DeleteIcon';
 import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
+import { FiMinusCircle } from 'react-icons/fi';
 
 interface Entry {
   title: string;
@@ -90,17 +90,26 @@ const PageFive: React.FC<Props> = ({
         Provide your work experience details.
       </div>
       {entries.map((entry, index) => (
-        <div key={index} className="education_entry">
+        <div
+          key={index}
+          className="education_entry"
+          style={{
+            marginBottom: index < entries.length - 1 ? '100px' : '0',
+          }}
+        >
           <div className="profile_pageone_form_item">
             <label htmlFor={`title-${index}`}>
               Job Title
               {index > 0 && (
                 <div
-                  className="remove_entry_button"
+                  className="remove_entry_main"
                   onClick={() => handleRemoveEntry(index)}
                 >
-                  <DeleteIcon color="red" />
-                  Remove
+                  <FiMinusCircle
+                    style={{ paddingRight: '10px' }}
+                    className="minus_circle_icon"
+                  />
+                  Remove Entry
                 </div>
               )}
             </label>
@@ -146,18 +155,20 @@ const PageFive: React.FC<Props> = ({
               onChange={(event) => handleInputChange(index, event)}
             />
           </div>
-          <div className="profile_pageone_form_item">
-            <label htmlFor={`endDate-${index}`}>End Date</label>
-            <input
-              type="date"
-              name="endDate"
-              id={`endDate-${index}`}
-              value={entry.endDate}
-              className="profile_pageone_input"
-              onChange={(event) => handleInputChange(index, event)}
-              disabled={entry.currentlyWorking} // Disable if currently working
-            />
-          </div>
+          {!entry.currentlyWorking && (
+            <div className="profile_pageone_form_item">
+              <label htmlFor={`endDate-${index}`}>End Date</label>
+              <input
+                type="date"
+                name="endDate"
+                id={`endDate-${index}`}
+                value={entry.endDate}
+                className="profile_pageone_input"
+                onChange={(event) => handleInputChange(index, event)}
+              />
+            </div>
+          )}
+
           <div className="currently_working_here">
             <div
               onClick={() => handleCheckboxChange(index)}

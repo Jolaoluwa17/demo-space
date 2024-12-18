@@ -109,8 +109,9 @@ const Signup = () => {
         <div className="right_section">
           <div className="techwings_logo">
             <img
-              src="/images/proficioNext.svg"
-              alt="techwings_logo"
+              src="/images/ProficioNextLogo.png"
+              alt=""
+              className="proficioNext_logo_size"
               onClick={() => navigator('/')}
               loading="lazy"
             />

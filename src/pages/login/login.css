@@ -5,7 +5,7 @@
   justify-content: center;
   padding: 85px 100px 50px 100px;
   box-sizing: border-box;
-  height: 100vh;
+  height: 100%;
 }
 .login_root_admin {
   width: 100%;
@@ -207,13 +207,16 @@
     height: 100%;
     padding: 30px 30px;
   }
-
   .login_container .right {
     display: none;
   }
-
   .usertype_selector {
     display: none;
+  }
+  .techwings_logo_login {
+    position: absolute;
+    left: 5px;
+    top: -60px;
   }
 }
 
@@ -235,11 +238,6 @@
 @media (max-width: 425px) {
   .login_root {
     padding: 85px 10px 50px 10px;
-  }
-  .techwings_logo_login {
-    position: absolute;
-    left: 10px;
-    top: -60px;
   }
   .login_container .left {
     padding: 30px 20px;
