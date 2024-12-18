@@ -1,5 +1,5 @@
-import RightArrowIcon from '../../icons/RightArrowIcon';
 import './skillsCard.css';
+import RightArrowIcon from '@/icons/RightArrowIcon';
 
 interface Props {
   imgSrc?: string;

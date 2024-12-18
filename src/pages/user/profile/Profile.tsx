@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import './profile.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ProfileBackArrow from '@/icons/ProfileBackArrow';
+
+import './profile.css';
 import Pagination from '@/components/pagination/Pagination';
 import Pageone from '@/components/profile/pages/Pageone';
 import PageTwo from '@/components/profile/pages/PageTwo';
@@ -9,6 +9,7 @@ import PageSix from '@/components/profile/pages/PageSix';
 import PageFive from '@/components/profile/pages/PageFive';
 import PageFour from '@/components/profile/pages/PageFour';
 import PageThree from '@/components/profile/pages/PageThree';
+import ProfileBackArrow from '@/icons/ProfileBackArrow';
 import { useUpdateUserProfileMutation } from '@/services/features/user/userSlice';
 
 interface EducationEntry {

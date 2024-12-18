@@ -1,5 +1,5 @@
-import SearchIcon from '../../icons/SearchIcon';
 import './searchInput.css';
+import SearchIcon from '@/icons/SearchIcon';
 
 interface Props {
   handleSearch: (searchTerm: string) => void;

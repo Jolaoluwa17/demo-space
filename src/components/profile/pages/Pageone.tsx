@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import UploadIcon from '@/icons/UploadIcon';
+
 import './pages.css';
+import UploadIcon from '@/icons/UploadIcon';
 import DeleteIcon from '@/icons/DeleteIcon';
 
 interface Props {

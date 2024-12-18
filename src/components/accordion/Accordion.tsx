@@ -1,7 +1,8 @@
 import { useState, FC } from 'react';
+
 import './accordion.css';
-import AccordionDownArrow from '../../icons/AccordionDownArrow';
-import AccordionLeftArrow from '../../icons/AccordionLeftArrow';
+import AccordionDownArrow from '@/icons/AccordionDownArrow';
+import AccordionLeftArrow from '@/icons/AccordionLeftArrow';
 
 // Type definition for the items prop
 interface AccordionItemProps {

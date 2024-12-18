@@ -1,8 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
-
-import './profileSettings.css';
-
 import {
   BsPerson,
   BsBook,
@@ -11,6 +9,8 @@ import {
   BsBriefcase,
   BsAward,
 } from 'react-icons/bs';
+
+import './profileSettings.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
 import PersonalInformation from '@/components/settings/PersonalInformation';
 import EducationalBackground from '@/components/settings/EducationalBackground';
@@ -18,12 +18,11 @@ import Skills from '@/components/settings/Skills';
 import AreaOfInterest from '@/components/settings/AreaOfInterest';
 import Experience from '@/components/settings/Experience';
 import Certificate from '@/components/settings/Certificate';
-import { useEffect, useState } from 'react';
+import ToastNotification from '@/components/toastNotification/ToastNotification';
 import {
   useGetUserQuery,
   useUpdateUserProfileMutation,
 } from '@/services/features/user/userSlice';
-import ToastNotification from '@/components/toastNotification/ToastNotification';
 
 interface EducationEntry {
   institutionName: string;

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './pages.css';
-import AddIcon from '../../icons/AddIcon';
-import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
+import { useState, useEffect } from 'react';
 import { FiMinusCircle } from 'react-icons/fi';
+
+import './pages.css';
+import AddIcon from '@/icons/AddIcon';
+import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
 
 interface Entry {
   title: string;
@@ -58,7 +59,7 @@ const Experience: React.FC<Props> = ({
         companyName: '',
         startDate: getCurrentDate(),
         endDate: getCurrentDate(1),
-        currentlyWorking: false, // Properly initialize
+        currentlyWorking: false,
       },
     ]);
   };
@@ -110,6 +111,10 @@ const Experience: React.FC<Props> = ({
       setEntries?.(updatedEntries);
     }
   }, [entries, setEntries]);
+
+  const placeholderEntry = {
+    currentlyWorking: false,
+  };
 
   return (
     <div className="settings_content">
@@ -186,7 +191,7 @@ const Experience: React.FC<Props> = ({
                   height: '15px',
                 }}
               >
-                {false ? (
+                {placeholderEntry ? (
                   <RememberMeCheckBox />
                 ) : (
                   <div className="pages_empty_checkbox"></div>

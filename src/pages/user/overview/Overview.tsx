@@ -1,13 +1,13 @@
-import { useGetUserQuery } from '@/services/features/user/userSlice';
-import './overview.css';
-
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useGetUserQuery } from '@/services/features/user/userSlice';
+
+import './overview.css';
 import SkillsCard from '@/components/skillscard/SkillsCard';
 import SkillProgramCard from '@/components/skillscard/SkillProgramCard';
+import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
 import { useGetAllAssessmentsQuery } from '@/services/features/quiz/quizSlice';
 import descriptionGeneric from '@/utils/descriptionGeneric';
-import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
-import { useEffect } from 'react';
 
 interface UserType {
   response: {

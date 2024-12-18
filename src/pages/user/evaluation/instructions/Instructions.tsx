@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
+import { IoInformationCircleSharp } from 'react-icons/io5';
+
 import './instruction.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
-import { useEffect } from 'react';
-import { IoInformationCircleSharp } from 'react-icons/io5';
-import { FadeLoader } from 'react-spinners';
 
 interface Result {
   userId: {

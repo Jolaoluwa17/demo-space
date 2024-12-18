@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
+
 import './sortFilter.css';
 import Modal from '@/modals/modal/Modal';
-import { useState } from 'react';
 
 interface Props {
   selectedFilter: string;

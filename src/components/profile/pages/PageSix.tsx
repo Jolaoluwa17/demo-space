@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import AddIcon from '@/icons/AddIcon';
-import './pages.css';
 import { FiMinusCircle } from 'react-icons/fi';
+
+import './pages.css';
+import AddIcon from '@/icons/AddIcon';
 
 interface Certification {
   name: string;

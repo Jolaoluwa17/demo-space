@@ -1,10 +1,10 @@
-import './progress.css';
-
 import { useNavigate } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
+
+import './progress.css';
 import SkillsCard from '@/components/skillscard/SkillsCard';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 import descriptionGeneric from '@/utils/descriptionGeneric';
-import { FadeLoader } from 'react-spinners';
 
 const Progress = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Progress = () => {
           <div className="loading_container">
             <FadeLoader color="#007BFF" />
           </div>
-        ) : resultsData?.response.length === 0 ? (
+        ) : filteredResults.length === 0 ? (
           <div className="nodata_container">
             <img
               src="/images/NoData.jpg"

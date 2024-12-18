@@ -1,6 +1,7 @@
 import { useState } from 'react';
+
 import './pages.css';
-import CancelIcon from '../../icons/CancelIcon';
+import CancelIcon from '@/icons/CancelIcon';
 
 interface Props {
   skillSet?: string[];
@@ -68,8 +69,7 @@ const Skills: React.FC<Props> = ({
   };
 
   // Filter out any empty, null, or invalid skills
-const validSkills = skillSet.filter((skill) => skill && skill.trim() !== '');
-
+  const validSkills = skillSet.filter((skill) => skill && skill.trim() !== '');
 
   return (
     <div className="settings_content">

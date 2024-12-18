@@ -1,5 +1,5 @@
-import CheckAboutUsIcon from '../../../icons/CheckAboutUsIcon';
 import './aboutUs.css';
+import CheckAboutUsIcon from '@/icons/CheckAboutUsIcon';
 
 const AboutUs = () => {
   const aboutUsCards = [

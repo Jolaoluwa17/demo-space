@@ -16,7 +16,7 @@ export const userSlice = apiSlice.injectEndpoints({
     }),
     updateUserProfile: builder.mutation({
       query: (userData) => {
-        const userId = userData.get('id')
+        const userId = userData.get('id');
         return {
           url: `user/userprofile/${userId}`,
           method: 'PUT',

@@ -1,16 +1,16 @@
-import { motion, useAnimationControls } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { motion, useAnimationControls } from 'framer-motion';
 
 import './sideBar.css';
 import NavigationLink from '../navigationLink/NavigationLink';
-import SidebarOverviewIcon from '../../icons/SidebarOverviewIcon';
-import LogOutIcon from '../../icons/LogOutIcon';
-import SidebarEvaluationIcon from '../../icons/SidebarEvaluationIcon';
-import SidebarProgress from '../../icons/SidebarProgress';
-import SidebarSkillGapIcon from '../../icons/SidebarSkillGapIcon';
-import SidebarProfileIcon from '../../icons/SidebarProfileIcon';
-import { logout } from '../../services/features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+import SidebarOverviewIcon from '@/icons/SidebarOverviewIcon';
+import LogOutIcon from '@/icons/LogOutIcon';
+import SidebarEvaluationIcon from '@/icons/SidebarEvaluationIcon';
+import SidebarProgress from '@/icons/SidebarProgress';
+import SidebarSkillGapIcon from '@/icons/SidebarSkillGapIcon';
+import SidebarProfileIcon from '@/icons/SidebarProfileIcon';
+import { logout } from '@/services/features/auth/authSlice';
 
 const containerVariants = {
   close: {

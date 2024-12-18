@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
 
 import './skillGap.css';
-import { useLocation, useNavigate } from 'react-router-dom';
 import SearchInput from '@/components/searchinput/SearchInput';
 import SkillProgramCard from '@/components/skillscard/SkillProgramCard';
 import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
-import { FadeLoader } from 'react-spinners';
 
 const SkillGap = () => {
   const {

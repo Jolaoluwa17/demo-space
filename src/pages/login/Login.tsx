@@ -217,17 +217,17 @@ const Login = () => {
           </div> */}
           {/* <div className="login_options">
             <div className="login_options_button">
-              <img src="/assets/images/Google.svg" alt="login_image" />
+              <img src="/images/Google.svg" alt="login_image" />
             </div>
             <div className="login_options_button">
-              <img src="/assets/images/Apple.svg" alt="login_image" />
+              <img src="/images/Apple.svg" alt="login_image" />
             </div>
           </div> */}
           <div className="image_container"></div>
         </div>
         <div className="right">
           <img
-            src="/assets/images/Login.png"
+            src="/images/Login.png"
             alt="login_image"
             className="login_img"
             style={{ borderRadius: '10px', position: 'inherit' }}

@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import './forgotPassword.css';
 import { useNavigate } from 'react-router-dom';
 import { BiSolidErrorAlt } from 'react-icons/bi';
+
+import './forgotPassword.css';
 import { useForgotPasswordMutation } from '@/services/features/auth/authApiSlice';
 import LeftArrow from '@/icons/LeftArrow';
 
@@ -102,10 +103,10 @@ const ForgotPassword = () => {
           </div>
           <div className="other_forgotpassword_options">
             <div className="forgotpassword_options">
-              <img src="/assets/images/Google.svg" alt="login_image" />
+              <img src="/images/Google.svg" alt="login_image" />
             </div>
             <div className="forgotpassword_options">
-              <img src="/assets/images/Apple.svg" alt="login_image" />
+              <img src="/images/Apple.svg" alt="login_image" />
             </div>
           </div>
         </div>

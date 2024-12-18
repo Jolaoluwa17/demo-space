@@ -1,19 +1,17 @@
-// CircularBar.tsx
-import React from 'react';
 import './circularBar.css';
 
 interface CircularBarProps {
-  percentage: number; // Percentage to be displayed (0 to 100)
-  circleWidth: number; // Diameter of the circle
-  strokeWidth?: number; // Width of the stroke
+  percentage: number;
+  circleWidth: number;
+  strokeWidth?: number;
 }
 
 const CircularBar: React.FC<CircularBarProps> = ({
   circleWidth,
   percentage,
-  strokeWidth = 8, // Default stroke width
+  strokeWidth = 8,
 }) => {
-  const radius = circleWidth / 2 - strokeWidth; // Adjust radius for stroke width
+  const radius = circleWidth / 2 - strokeWidth;
   const dashArray = 2 * Math.PI * radius;
   const dashOffset = dashArray - (dashArray * percentage) / 100;
 

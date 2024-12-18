@@ -1,4 +1,5 @@
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
 
 import './history.css';
 import LeftArrowIcon from '@/icons/LeftArrowIcon';
@@ -6,7 +7,6 @@ import SidebarProgress from '@/icons/SidebarProgress';
 import RightArrowIcon from '@/icons/RightArrowIcon';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 import { useGetQuizQuestionQuery } from '@/services/features/quiz/quizSlice';
-import { FadeLoader } from 'react-spinners';
 
 const History = () => {
   const navigate = useNavigate();
@@ -23,9 +23,8 @@ const History = () => {
 
   const { data, isLoading } = useGetAllResultsQuery({});
   const userResults = data?.response.filter(
-    (result: { quizId: {_id: string} }) => result.quizId._id === id
+    (result: { quizId: { _id: string } }) => result.quizId._id === id
   );
-
 
   const { data: questionsData, isLoading: questionsLoading } =
     useGetQuizQuestionQuery(id);

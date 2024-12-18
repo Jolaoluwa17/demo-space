@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import './verifyAccount.css';
 import { useNavigate } from 'react-router-dom';
-
-import { BiSolidErrorAlt } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
+import { BiSolidErrorAlt } from 'react-icons/bi';
+
+import './verifyAccount.css';
+import LeftArrow from '@/icons/LeftArrow';
 import {
   useLoginMutation,
   useRequestCodeMutation,
   useVerifyAccountMutation,
 } from '@/services/features/auth/authApiSlice';
 import { RootState } from '@/services/store';
-import LeftArrow from '@/icons/LeftArrow';
 import { setAuthState } from '@/services/features/auth/authSlice';
 
 const VerifyAccount = () => {
@@ -97,7 +97,7 @@ const VerifyAccount = () => {
       <div className="verify_account_container">
         <div className="left_section">
           <img
-            src="/assets/images/VerifyAccount.svg"
+            src="/images/VerifyAccount.svg"
             alt="login_image"
             className="verify_account_img"
           />

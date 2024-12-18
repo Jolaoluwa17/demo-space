@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
+import { FiMinusCircle } from 'react-icons/fi';
+
 import './pages.css';
 import CustomSelect from '../customselect/CustomSelect';
-import AddIcon from '../../icons/AddIcon';
-import { FiMinusCircle } from 'react-icons/fi';
-import { useEffect } from 'react';
+import AddIcon from '@/icons/AddIcon';
 
 interface Props {
   educationEntries?: EducationEntry[];
@@ -113,7 +114,7 @@ const EducationalBackground: React.FC<Props> = ({
                     >
                       <FiMinusCircle
                         style={{ paddingRight: '10px' }}
-                        className='minus_circle_icon'
+                        className="minus_circle_icon"
                       />
                       Remove Entry
                     </div>

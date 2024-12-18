@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import Login from './pages/login/Login';
+import ProtectedRoute from './middleware/ProtectRoute';
+
 import Signup from './pages/user/signup/Signup';
 import VerifyAccount from './pages/user/verifyAccount/VerifyAccount';
 import ForgotPassword from './pages/user/forgotpassword/ForgotPassword';
@@ -25,10 +28,8 @@ import { Providers } from './services/Provider';
 import Settings from './pages/user/settings/Settings';
 import ProfileSettings from './pages/user/settings/profileSettings/ProfileSettings';
 import SettingsRoot from './pages/user/settings/SettingsRoot';
-import DeleteAccount from './pages/user/settings/deleteAccount/DeleteAccount';
 import ChangePassword from './pages/user/settings/changePassword/ChangePassword';
 import Home from './pages/home/Home';
-import ProtectedRoute from './services/ProtectRoute';
 
 function App() {
   return (
@@ -66,11 +67,8 @@ function App() {
             <Route index element={<Overview />} />
             <Route path="evaluation" element={<EvaluationRoot />}>
               <Route index element={<Evaluation />} />
-              {/* <Route path="sub-test" element={<SubTest />} /> */}
               <Route path="instructions" element={<Instructions />} />
               <Route path="multiple-choice" element={<MultipleChoice />} />
-              {/* <Route path="short-answer" element={<ShortAnswer />} /> */}
-              {/* <Route path="coding-tasks" element={<Coding />} /> */}
               <Route path="status" element={<Status />} />
             </Route>
             <Route path="progress" element={<ProgressRoot />}>
@@ -86,7 +84,6 @@ function App() {
             <Route path="profile" element={<SettingsRoot />}>
               <Route index element={<Settings />} />
               <Route path="profile-settings" element={<ProfileSettings />} />
-              <Route path="delete-account" element={<DeleteAccount />} />
               <Route path="change-password" element={<ChangePassword />} />
             </Route>
           </Route>

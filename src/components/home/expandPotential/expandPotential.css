@@ -1,7 +1,7 @@
 .expand_potential_root {
   width: 100%;
   height: 915px;
-  background: linear-gradient(to bottom, #22272e 0%, #04152d 80%, #007BFF 100%);
+  background: linear-gradient(to bottom, #22272e 0%, #04152d 80%, #007bff 100%);
   padding: 93px 120px;
   box-sizing: border-box;
   position: relative;
@@ -14,7 +14,7 @@
 }
 .expand_potential_title {
   padding: 8px 12px;
-  background: linear-gradient(to right, #007BFF99 0%, #00000000 70%);
+  background: linear-gradient(to right, #007bff99 0%, #00000000 70%);
   color: white;
   border-radius: 10px;
   font-weight: 600;

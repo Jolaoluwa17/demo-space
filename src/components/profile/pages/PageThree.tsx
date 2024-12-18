@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import CancelIcon from '@/icons/CancelIcon';
+
 import './pages.css';
+import CancelIcon from '@/icons/CancelIcon';
 
 interface Props {
   setCurrentPage: (page: number) => void;

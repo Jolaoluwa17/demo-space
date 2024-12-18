@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import './shortAnswer.css';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import './shortAnswer.css';
 import { combinedQuestionsData } from '@/utils/CombinedQuestionsData';
 import ArrowLeftIcon from '@/icons/ArrowLeftIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';

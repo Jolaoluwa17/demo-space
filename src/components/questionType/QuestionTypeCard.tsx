@@ -1,7 +1,7 @@
-// QuestionTypeCard.tsx
 import React from 'react';
-import RightArrowIcon from '../../icons/RightArrowIcon';
+
 import './questionTypeCard.css';
+import RightArrowIcon from '@/icons/RightArrowIcon';
 
 interface QuestionTypeCardProps {
   title: string;

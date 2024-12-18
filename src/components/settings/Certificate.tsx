@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import './pages.css';
-import AddIcon from '../../icons/AddIcon';
+import AddIcon from '@/icons/AddIcon';
 import { FiMinusCircle } from 'react-icons/fi';
 
 interface Props {

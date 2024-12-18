@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import './coding.css';
-import { Editor, OnMount } from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
+import { Editor, OnMount } from '@monaco-editor/react';
+
+import './coding.css';
+import LanguageSelector from '@/components/languageselector/LanguageSelector';
 import { languages } from '@/utils/Constants';
 import { executeCode } from '@/services/codeEditorApi';
-import LanguageSelector from '@/components/languageselector/LanguageSelector';
 
 interface Language {
   value: string;

@@ -1,9 +1,10 @@
-import { BellIcon } from '@heroicons/react/24/outline';
 import { useEffect, useRef, useState } from 'react';
+
 import './header.css';
+import { BellIcon } from '@heroicons/react/24/outline';
 import UserDropdown from '../userDropdown/UserDropdown';
-import Popup from '../../modals/popup/Popup';
-import Xicon from '../../icons/Xicon';
+import Popup from '@/modals/popup/Popup';
+import Xicon from '@/icons/Xicon';
 import { useGetUserQuery } from '@/services/features/user/userSlice';
 
 interface Props {

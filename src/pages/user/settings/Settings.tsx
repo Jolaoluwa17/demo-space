@@ -1,16 +1,16 @@
-import './settings.css';
-
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RightArrowIcon from '@/icons/RightArrowIcon';
+import { useDispatch } from 'react-redux';
 import { FiTwitter, FiInstagram, FiHeadphones } from 'react-icons/fi';
 import { LuMail } from 'react-icons/lu';
 import { SlLock } from 'react-icons/sl';
 import { IoPersonOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
-import { useState } from 'react';
+
+import './settings.css';
+import RightArrowIcon from '@/icons/RightArrowIcon';
 import Popup from '@/modals/popup/Popup';
 import { useDeleteUserMutation } from '@/services/features/user/userSlice';
-import { useDispatch } from 'react-redux';
 import { logout } from '@/services/features/auth/authSlice';
 
 const Settings = () => {

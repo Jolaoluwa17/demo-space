@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import './signup.css';
-
 import { useNavigate } from 'react-router-dom';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
+import { IoClose, IoCheckmarkDoneOutline } from 'react-icons/io5';
+
+import './signup.css';
 import { useSignUpMutation } from '@/services/features/auth/authApiSlice';
 import { setCredentials } from '@/services/features/auth/authSlice';
 import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
-import { IoClose, IoCheckmarkDoneOutline } from 'react-icons/io5';
 
 interface ErrorResponse {
   status: number;
@@ -99,7 +99,7 @@ const Signup = () => {
       <div className="signup_container">
         <div className="left_section">
           <img
-            src="/assets/images/Signup.svg"
+            src="/images/Signup.png"
             alt="signup_image"
             className="signup_img"
             style={{ borderRadius: '10px' }}
@@ -305,10 +305,10 @@ const Signup = () => {
 
             <div className="other_signup_options">
               <div className="signup_options">
-                <img src="/assets/images/Google.svg" alt="Google signup" />
+                <img src="/images/Google.svg" alt="Google signup" />
               </div>
               <div className="signup_options">
-                <img src="/assets/images/Apple.svg" alt="Apple signup" />
+                <img src="/images/Apple.svg" alt="Apple signup" />
               </div>
             </div>
           </div>

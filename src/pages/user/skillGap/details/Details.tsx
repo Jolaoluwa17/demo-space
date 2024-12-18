@@ -1,13 +1,6 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import './details.css';
-import PageHeader from '@/components/pageHeader/PageHeader';
-import {
-  useApplyForInternshipMutation,
-  useGetAllInternshipQuery,
-  useGetSpecificProgramQuery,
-} from '@/services/features/skillGap/skillGapSlice';
-import { FadeLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 import { IoInformationCircleSharp } from 'react-icons/io5';
 import {
@@ -15,6 +8,14 @@ import {
   differenceInHours,
   differenceInMinutes,
 } from 'date-fns';
+
+import './details.css';
+import PageHeader from '@/components/pageHeader/PageHeader';
+import {
+  useApplyForInternshipMutation,
+  useGetAllInternshipQuery,
+  useGetSpecificProgramQuery,
+} from '@/services/features/skillGap/skillGapSlice';
 
 const Details = () => {
   const navigate = useNavigate();

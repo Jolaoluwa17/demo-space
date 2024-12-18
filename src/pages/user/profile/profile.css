@@ -37,7 +37,7 @@
   margin-top: 24px;
   width: 100%;
   height: 48px;
-  background-color: #007BFF;
+  background-color: #007bff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,7 +54,7 @@
 .profile_back_btn_inner {
   display: flex;
   align-items: center;
-  color: #007BFF;
+  color: #007bff;
   cursor: pointer;
   width: 70px;
   justify-content: space-between;

@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import './resetPassword.css';
-
 import { useNavigate } from 'react-router-dom';
-import { useResetPasswordMutation } from '@/services/features/auth/authApiSlice';
+
+import './resetPassword.css';
 import LeftArrow from '@/icons/LeftArrow';
 import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
+import { useResetPasswordMutation } from '@/services/features/auth/authApiSlice';
 
 const ResetPassword = () => {
   // const [otp, setOtp] = useState('');
@@ -48,7 +48,13 @@ const ResetPassword = () => {
     <div className="resetpassword_root">
       <div className="resetpassword_container">
         <div className="techwings_logo_forgotpassword">
-          <img src="/images/proficioNext.svg" alt="login_image" />
+          <img
+            src="/images/ProficioNextLogo.png"
+            alt=""
+            className="proficioNext_logo_size"
+            onClick={() => navigator('/')}
+            loading="lazy"
+          />
         </div>
         <div className="resetpassword_form">
           <div

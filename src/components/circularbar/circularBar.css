@@ -13,7 +13,7 @@
 
 .circle_progress {
   fill: none;
-  stroke: #007BFF; /* Progress color */
+  stroke: #007bff; /* Progress color */
   stroke-linecap: round; /* Make stroke ends rounded */
   transition: stroke-dashoffset 0.5s ease;
 }

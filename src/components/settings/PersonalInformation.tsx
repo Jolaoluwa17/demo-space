@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
-import EditProfileIcon from '../../icons/EditProfileIcon';
-import './pages.css';
 import { IoPersonSharp } from 'react-icons/io5';
+
+import './pages.css';
+import EditProfileIcon from '@/icons/EditProfileIcon';
 
 interface Props {
   fullName?: string;

@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 .page_active {
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
   cursor: default;
 }

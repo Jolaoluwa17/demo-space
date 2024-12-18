@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './toastNotification.css';
+import { useEffect, useState } from 'react';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { BiXCircle } from 'react-icons/bi';
+
+import './toastNotification.css';
 
 interface ToastProps {
   message: string;

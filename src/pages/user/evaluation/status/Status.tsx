@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import './status.css';
 import NavigationArrow from '@/icons/NavigationArrow';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 const Status = () => {
   const location = useLocation();

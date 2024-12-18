@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { IoPersonSharp } from 'react-icons/io5';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -8,10 +10,9 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
+
 import './userDropdown.css';
-import { useNavigate } from 'react-router-dom';
 import { useGetUserQuery } from '@/services/features/user/userSlice';
-import { IoPersonSharp } from 'react-icons/io5';
 
 interface UserType {
   response: {

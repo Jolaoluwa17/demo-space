@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+
 import './layout.css';
 import Header from '../header/Header';
 import Sidebar from '../sidebar/SideBar';

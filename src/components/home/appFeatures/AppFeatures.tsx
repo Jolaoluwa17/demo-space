@@ -1,10 +1,10 @@
-import AppFeaturesAnalysisIcon from '../../../icons/AppFeaturesAnalysisIcon';
-import AppFeaturesEvaluation from '../../../icons/AppFeaturesEvaluation';
-import AppFeaturesEyeIcon from '../../../icons/AppFeaturesEyeIcon';
-import AppFeaturesPhoneIcon from '../../../icons/AppFeaturesPhoneIcon';
-import AppFeaturesRetinaIcon from '../../../icons/AppFeaturesRetinaIcon';
-import AppFeaturesUserIcon from '../../../icons/AppFeaturesUserIcon';
 import './appFeatures.css';
+import AppFeaturesAnalysisIcon from '@/icons/AppFeaturesAnalysisIcon';
+import AppFeaturesEvaluation from '@/icons/AppFeaturesEvaluation';
+import AppFeaturesEyeIcon from '@/icons/AppFeaturesEyeIcon';
+import AppFeaturesPhoneIcon from '@/icons/AppFeaturesPhoneIcon';
+import AppFeaturesRetinaIcon from '@/icons/AppFeaturesRetinaIcon';
+import AppFeaturesUserIcon from '@/icons/AppFeaturesUserIcon';
 
 const AppFeatures = () => {
   const appFeaturesLeftData = [

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
 
 import './questions.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
@@ -8,7 +9,6 @@ import ArrowLeftIcon from '@/icons/ArrowLeftIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
 import { useGetQuizQuestionQuery } from '@/services/features/quiz/quizSlice';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
-import { FadeLoader } from 'react-spinners';
 
 const Questions: React.FC = () => {
   const [searchParams] = useSearchParams();

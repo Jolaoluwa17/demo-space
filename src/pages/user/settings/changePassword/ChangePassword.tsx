@@ -1,10 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import './changePassword.css';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import './changePassword.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
+import Popup from '@/modals/popup/Popup';
 import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
-import Popup from '@/modals/popup/Popup';
 
 const ChangePassword = () => {
   const navigate = useNavigate();

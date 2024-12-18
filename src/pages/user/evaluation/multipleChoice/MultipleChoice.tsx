@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './multipleChoice.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
+import { BiSolidErrorAlt } from 'react-icons/bi';
+
+import './multipleChoice.css';
 import {
   useGetAllAssessmentsQuery,
   useGetQuizQuestionQuery,
@@ -8,11 +11,9 @@ import {
 import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import ArrowLeftIcon from '@/icons/ArrowLeftIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
+import NavigationArrow from '@/icons/NavigationArrow';
 import { useCreateResultMutation } from '@/services/features/result/resultSlice';
 import ErrorResponse from '@/types/ErrorResponse';
-import { BiSolidErrorAlt } from 'react-icons/bi';
-import { FadeLoader } from 'react-spinners';
-import NavigationArrow from '@/icons/NavigationArrow';
 
 interface Assessment {
   _id: string;

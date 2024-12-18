@@ -13,7 +13,7 @@
 }
 .navigation-link.active {
   background-color: #ecf4ff;
-  border-left: 5px solid #007BFF;
+  border-left: 5px solid #007bff;
 }
 .navigation-link span {
   width: 20px;

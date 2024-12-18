@@ -20,9 +20,9 @@
 }
 .ask_question_title {
   padding: 8px 12px;
-  background: linear-gradient(to right, #007BFF1a 0%, #fafafa9e 80%);
+  background: linear-gradient(to right, #007bff1a 0%, #fafafa9e 80%);
   border-radius: 10px;
-  color: #007BFF;
+  color: #007bff;
   font-weight: 600;
 }
 .ask_question_subTitle {

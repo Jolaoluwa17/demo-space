@@ -1,4 +1,5 @@
-import Accordion from '../../accordion/Accordion';
+import Accordion from '@/components/accordion/Accordion';
+
 import './questions.css';
 
 const AskQuestions = () => {

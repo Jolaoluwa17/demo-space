@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import './evaluation.css';
+import { FadeLoader } from 'react-spinners';
 
+import './evaluation.css';
 import { useNavigate } from 'react-router-dom';
 import SearchInput from '@/components/searchinput/SearchInput';
 import SkillsCard from '@/components/skillscard/SkillsCard';
 import { useGetAllAssessmentsQuery } from '@/services/features/quiz/quizSlice';
-import { FadeLoader } from 'react-spinners';
 import descriptionGeneric from '@/utils/descriptionGeneric';
 
 const Evaluation = () => {

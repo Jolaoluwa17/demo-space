@@ -1,5 +1,5 @@
-import { LuCopyright } from 'react-icons/lu';
 import { useRef } from 'react';
+import { LuCopyright } from 'react-icons/lu';
 
 import './home.css';
 import TheFuture from '@/components/home/theFuture/TheFuture';

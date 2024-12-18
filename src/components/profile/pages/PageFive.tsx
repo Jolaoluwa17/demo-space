@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import AddIcon from '@/icons/AddIcon';
+import { useState, useEffect } from 'react';
+import { FiMinusCircle } from 'react-icons/fi';
+
 import './pages.css';
 import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
-import { FiMinusCircle } from 'react-icons/fi';
+import AddIcon from '@/icons/AddIcon';
 
 interface Entry {
   title: string;

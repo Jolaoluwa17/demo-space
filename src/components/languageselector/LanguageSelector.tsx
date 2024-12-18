@@ -1,5 +1,5 @@
 import './languageSelector.css';
-import { languages } from '../../utils/Constants';
+import { languages } from '@/utils/Constants';
 
 interface Props {
   language: string;
