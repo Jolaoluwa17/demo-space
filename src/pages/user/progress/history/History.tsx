@@ -23,7 +23,7 @@ const History = () => {
 
   const { data, isLoading } = useGetAllResultsQuery({});
   const userResults = data?.response.filter(
-    (result: { quizId: { _id: string } }) => result.quizId._id === id
+    (result: { quizId: { _id: string } }) => result.quizId?._id === id
   );
 
   const { data: questionsData, isLoading: questionsLoading } =

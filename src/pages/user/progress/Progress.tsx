@@ -26,8 +26,10 @@ const Progress = () => {
 
   const filteredResults =
     resultsData?.response.filter(
-      (item: { userId: { _id: string } }) =>
-        item.userId && item.userId._id === userId
+      (item: {
+        userId: { _id: string } | null;
+        quizId: { _id: string } | null;
+      }) => item.quizId && item.userId && item.userId._id === userId
     ) || [];
 
   return (

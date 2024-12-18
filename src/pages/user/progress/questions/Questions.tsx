@@ -24,7 +24,7 @@ const Questions: React.FC = () => {
 
   const { data, isLoading } = useGetAllResultsQuery({});
   const userResults = data?.response.filter(
-    (result: { quizId: string }) => result.quizId === id
+    (result: { quizId: { _id: string } }) => result.quizId?._id === id
   );
 
   const userAnswers = userResults?.[0]?.answer || [];
