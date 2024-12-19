@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 import { IoInformationCircleSharp } from 'react-icons/io5';
@@ -59,8 +59,17 @@ const Details = () => {
     }
   };
 
-  const { data: getApply, isLoading: internshipApplyLoading } =
-    useGetAllInternshipQuery({});
+  const {
+    data: getApply,
+    isLoading: internshipApplyLoading,
+    refetch: internshipRefetch,
+  } = useGetAllInternshipQuery({});
+
+  const location = useLocation();
+
+  useEffect(() => {
+    internshipRefetch();
+  }, [location.key, internshipRefetch]);
 
   const filteredInternships = getApply?.response?.filter(
     (item: { userId: { _id: string }; internshipId: { _id: string } }) =>
@@ -180,25 +189,28 @@ const Details = () => {
               className="enroll_now"
               onClick={
                 !internshipLoading &&
-                filteredInternships?.[0]?.status !== 'pending' &&
-                filteredInternships?.[0]?.status !== 'Approved' &&
-                canReapply === true
+                (!filteredInternships?.length ||
+                  (filteredInternships?.[0]?.status !== 'pending' &&
+                    filteredInternships?.[0]?.status !== 'Approved' &&
+                    canReapply))
                   ? handleApplication
                   : undefined
               }
               style={{
                 backgroundColor:
                   !internshipLoading &&
-                  filteredInternships?.[0]?.status !== 'pending' &&
-                  filteredInternships?.[0]?.status !== 'Approved' &&
-                  canReapply === true
+                  (!filteredInternships?.length ||
+                    (filteredInternships?.[0]?.status !== 'pending' &&
+                      filteredInternships?.[0]?.status !== 'Approved' &&
+                      canReapply))
                     ? ''
                     : 'grey',
                 cursor:
                   !internshipLoading &&
-                  filteredInternships?.[0]?.status !== 'pending' &&
-                  filteredInternships?.[0]?.status !== 'Approved' &&
-                  canReapply === true
+                  (!filteredInternships?.length ||
+                    (filteredInternships?.[0]?.status !== 'pending' &&
+                      filteredInternships?.[0]?.status !== 'Approved' &&
+                      canReapply))
                     ? 'pointer'
                     : 'not-allowed',
                 color: 'white',

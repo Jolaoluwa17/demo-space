@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FadeLoader } from 'react-spinners';
 
 import './evaluation.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SearchInput from '@/components/searchinput/SearchInput';
 import SkillsCard from '@/components/skillscard/SkillsCard';
 import { useGetAllAssessmentsQuery } from '@/services/features/quiz/quizSlice';
@@ -14,7 +14,17 @@ const Evaluation = () => {
   const [categories, setCategories] = useState<string[]>([]); // State to hold unique categories
   const navigate = useNavigate();
 
-  const { data: assessmentData, isLoading } = useGetAllAssessmentsQuery({});
+  const {
+    data: assessmentData,
+    isLoading,
+    refetch,
+  } = useGetAllAssessmentsQuery({});
+
+  const location = useLocation();
+
+  useEffect(() => {
+    refetch();
+  }, [location.key, refetch]);
 
   // Update search term
   const handleSearch = (term: string) => {

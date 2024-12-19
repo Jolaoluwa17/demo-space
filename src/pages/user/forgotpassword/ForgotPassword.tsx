@@ -5,6 +5,7 @@ import { BiSolidErrorAlt } from 'react-icons/bi';
 import './forgotPassword.css';
 import { useForgotPasswordMutation } from '@/services/features/auth/authApiSlice';
 import LeftArrow from '@/icons/LeftArrow';
+import { IoInformationCircleSharp } from 'react-icons/io5';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -37,6 +38,7 @@ const ForgotPassword = () => {
       // navigator('/auth/resetpassword');
       console.log(res);
       setIsSuccess(true);
+      setEmail('');
     } catch (error: unknown) {
       setErr('Something went wrong');
       console.log(error);
@@ -98,7 +100,15 @@ const ForgotPassword = () => {
           >
             {isLoading ? <div className="spinner"></div> : 'Reset Password'}
           </button>
-          {success && <div>Password Reset Link sent</div>}
+          {success && (
+            <div className='success_sent_link'>
+              <IoInformationCircleSharp
+                size={20}
+                style={{ paddingRight: '5px' }}
+              />
+              Password Reset Link Sent
+            </div>
+          )}
           <div className="or_forgotpassword">
             <hr />
             <div>Or login with</div>

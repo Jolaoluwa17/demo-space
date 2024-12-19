@@ -34,7 +34,7 @@ const Instructions = () => {
   };
 
   const handleBackClick = () => {
-    navigate('/dashboard/evaluation');
+    navigate(-1);
   };
 
   const instructions = [
@@ -114,7 +114,7 @@ const Instructions = () => {
                   <span style={{ color: '#28a745' }}>Assessment taken</span>
                 ) : (
                   timeLeft && (
-                    <span>
+                    <span style={{ fontWeight: '600' }}>
                       You can take the quiz again in{' '}
                       {`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m`}
                     </span>
