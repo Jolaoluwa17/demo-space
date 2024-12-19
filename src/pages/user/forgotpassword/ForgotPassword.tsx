@@ -10,6 +10,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<boolean>(true);
   const isFormValid = !emailError;
+  const [success, setIsSuccess] = useState(false);
 
   const validateEmail = (email: string) => {
     // Basic email validation regex
@@ -35,6 +36,7 @@ const ForgotPassword = () => {
       const res = await forgotPassword(userData).unwrap();
       // navigator('/auth/resetpassword');
       console.log(res);
+      setIsSuccess(true);
     } catch (error: unknown) {
       setErr('Something went wrong');
       console.log(error);
@@ -65,7 +67,7 @@ const ForgotPassword = () => {
           </div>
           <div className="forgotpassword_title">Forgot your password?</div>
           <p>
-            Don’t worry, happens to all of us. Enter your email below to recover
+            Don't worry, happens to all of us. Enter your email below to recover
             your password.
           </p>
           <div className="form_item">
@@ -94,8 +96,9 @@ const ForgotPassword = () => {
             onClick={handleForgotPassword}
             disabled={!isFormValid || isLoading}
           >
-            {isLoading ? <div className="spinner"></div> : 'Submit'}
+            {isLoading ? <div className="spinner"></div> : 'Reset Password'}
           </button>
+          {success && <div>Password Reset Link sent</div>}
           <div className="or_forgotpassword">
             <hr />
             <div>Or login with</div>

@@ -33,7 +33,7 @@ const ResetPassword = () => {
 
   const navigator = useNavigate();
 
-  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const [resetPassword] = useResetPasswordMutation();
 
   const handleResetPassword = async () => {
     const userData = {
@@ -124,13 +124,13 @@ const ResetPassword = () => {
           <button
             className="submit_btn"
             style={{
-              backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
-              cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
+              backgroundColor: isFormValid ? '#007BFF' : 'grey',
+              cursor: isFormValid ? 'pointer' : 'not-allowed',
             }}
             onClick={handleResetPassword}
-            disabled={!isFormValid || isLoading}
+            disabled={!isFormValid}
           >
-            {isLoading ? <div className="spinner"></div> : 'Set Password'}
+            Set password
           </button>
         </div>
       </div>
