@@ -1,10 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 
 import './progress.css';
 import SkillsCard from '@/components/skillscard/SkillsCard';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 import descriptionGeneric from '@/utils/descriptionGeneric';
+import { useEffect } from 'react';
 
 const Progress = () => {
   const navigate = useNavigate();
@@ -16,8 +17,17 @@ const Progress = () => {
     });
   };
 
-  const { data: resultsData, isLoading: resultDataLoading } =
-    useGetAllResultsQuery({});
+  const {
+    data: resultsData,
+    isLoading: resultDataLoading,
+    refetch: resultRefetch,
+  } = useGetAllResultsQuery({});
+
+  const location = useLocation();
+
+  useEffect(() => {
+    resultRefetch();
+  }, [location.key, resultRefetch]);
 
   const getRandomDescription = () => {
     const randomIndex = Math.floor(Math.random() * descriptionGeneric.length);
