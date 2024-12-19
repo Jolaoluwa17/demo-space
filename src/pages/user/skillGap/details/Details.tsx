@@ -53,6 +53,7 @@ const Details = () => {
     try {
       await applyForInternship(programData).unwrap();
       navigate('/dashboard/skill-gap/status');
+      internshipRefetch();
     } catch (error) {
       setErrMsg('Something went wrong');
       console.log(error);

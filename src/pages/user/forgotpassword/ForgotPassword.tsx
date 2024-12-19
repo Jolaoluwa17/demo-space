@@ -92,16 +92,20 @@ const ForgotPassword = () => {
           <button
             className="submit_btn"
             style={{
-              backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
-              cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
+              backgroundColor:
+                isFormValid && !isLoading && !success ? '#007BFF' : 'grey',
+              cursor:
+                isFormValid && !isLoading && !success
+                  ? 'pointer'
+                  : 'not-allowed',
             }}
             onClick={handleForgotPassword}
-            disabled={!isFormValid || isLoading}
+            disabled={!isFormValid || isLoading || success}
           >
             {isLoading ? <div className="spinner"></div> : 'Reset Password'}
           </button>
           {success && (
-            <div className='success_sent_link'>
+            <div className="success_sent_link">
               <IoInformationCircleSharp
                 size={20}
                 style={{ paddingRight: '5px' }}

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FiTwitter, FiInstagram, FiHeadphones } from 'react-icons/fi';
 import { LuMail } from 'react-icons/lu';
-import { SlLock } from 'react-icons/sl';
 import { IoPersonOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 
@@ -52,19 +51,6 @@ const Settings = () => {
             <div className="first_section">
               <IoPersonOutline size={25} color="#6a757e" />
               <div className="settings_base_option_text">Profile Setting</div>
-            </div>
-            <RightArrowIcon />
-          </div>
-        </div>
-        <div className="settings_base_option">
-          <div className="settings_label">Security</div>
-          <div
-            className="settings_base_option_button"
-            onClick={() => navigate('/dashboard/profile/change-password')}
-          >
-            <div className="first_section">
-              <SlLock size={25} color="#6a757e" />
-              <div className="settings_base_option_text">Change Password</div>
             </div>
             <RightArrowIcon />
           </div>

@@ -42,9 +42,8 @@ const ResetPassword = () => {
       confirmpassword: confirmPassword,
     };
     try {
-      const res = await resetPassword(userData).unwrap();
-      console.log(res);
-      // navigator('/auth/login')
+      await resetPassword(userData).unwrap();
+      navigator('/auth/login');
     } catch (error: unknown) {
       console.log(error);
     }
