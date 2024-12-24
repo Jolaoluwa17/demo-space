@@ -1,16 +1,13 @@
 import { IoLogoGooglePlaystore, IoLogoApple } from 'react-icons/io5';
 
 import './heroSection.css';
-import HomeNavBar from '../homeNavBar/HomeNavBar';
 
-interface Props {
-  featuresBtn: (value: unknown) => void;
-}
 
-const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
+
+const HeroSection = () => {
   return (
     <div className="hero_section_root">
-      <HomeNavBar featuresBtn={featuresBtn} />
+      
       <div className="hero_section_content">
         <div className="content_container">
           <div className="content_title">
@@ -23,10 +20,12 @@ const HeroSection: React.FC<Props> = ({ featuresBtn }) => {
           <div className="download_our">Download our app</div>
           <div className="download_btn_container">
             <div className="download_btn">
-              <IoLogoApple fontSize={30} /> COMING SOON
+              <IoLogoApple fontSize={30} />
+              COMING SOON
             </div>
             <div className="download_btn">
-              <IoLogoGooglePlaystore fontSize={28} /> COMING SOON
+              <IoLogoGooglePlaystore fontSize={28} />
+              COMING SOON
             </div>
           </div>
         </div>

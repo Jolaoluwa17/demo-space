@@ -7,9 +7,10 @@ import HamBurgerIcon from '@/icons/HamBurgerIcon';
 
 interface Props {
   featuresBtn: (value: unknown) => void;
+  homeBtn: (value: unknown) => void;
 }
 
-const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
+const HomeNavBar: React.FC<Props> = ({ featuresBtn, homeBtn }) => {
   const [isGetStartedOpen, setIsGetStartedOpen] = useState(false);
   const getStartedRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -42,19 +43,53 @@ const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const toggleMenu = () => setShowMenu(!showMenu);
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setIsScrolled(true); // User has scrolled, change background
+    } else {
+      setIsScrolled(false); // Reset when scrolled back to top
+    }
+  };
+
+  useEffect(() => {
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="home_nav_bar_root">
+    <div
+      className={`home_nav_bar_root ${isScrolled ? 'scrolled' : 'transparent'}`}
+    >
       <div className="main">
         <div className="homeNav_techwings_logo">
-          <img
-            src="/images/ProficioNextLogo.png"
-            alt=""
-            className="proficioNext_logo_size"
-          />
+          <div className="logo_absolute">
+            <img
+              src="/images/ProficioNextLogo.png"
+              alt=""
+              className="proficioNext_logo_size"
+            />
+          </div>
         </div>
         <div className="home_nav_btn_container">
-          <div className="home_nav_btn">Home</div>
-          <div className="home_nav_btn" onClick={featuresBtn}>
+          <div
+            className="home_nav_btn"
+            style={{ color: isScrolled ? 'black' : '' }}
+            onClick={homeBtn}
+          >
+            Home
+          </div>
+          <div
+            className="home_nav_btn"
+            style={{ color: isScrolled ? 'black' : '' }}
+            onClick={featuresBtn}
+          >
             Features
           </div>
           <div className="get_started_container" ref={getStartedRef}>
@@ -132,7 +167,7 @@ const HomeNavBar: React.FC<Props> = ({ featuresBtn }) => {
           className="home_mobile_nav_bar_options_btn"
           onClick={() => {
             setShowMenu(false);
-            navigate('/');
+            homeBtn(null);
           }}
         >
           Home

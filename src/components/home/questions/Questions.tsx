@@ -2,7 +2,11 @@ import Accordion from '@/components/accordion/Accordion';
 
 import './questions.css';
 
-const AskQuestions = () => {
+interface Props {
+  contactBtn: (value: unknown) => void;
+}
+
+const AskQuestions: React.FC<Props> = ({ contactBtn }) => {
   const accordionItems = [
     {
       title: 'How do I sign up for the evaluator app ?',
@@ -44,7 +48,10 @@ const AskQuestions = () => {
           <div className="ask_question_subTitle_sub">
             Feel free to reach out to us if you have more questions for us.
           </div>
-          <div className="ask_question_contact_me_container">
+          <div
+            className="ask_question_contact_me_container"
+            onClick={contactBtn}
+          >
             <div className="ask_question_contact_me">Contact us</div>
           </div>
         </div>

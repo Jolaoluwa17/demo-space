@@ -1,13 +1,22 @@
 .home_nav_bar_root {
   width: 100%;
-  position: -webkit-sticky; /* For Safari support */
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  z-index: 999;
+}
+.transparent {
+  background: transparent;
+}
+
+.scrolled {
+  background: rgba(255, 255, 255, 0.7);
+  /* background: rgba(0, 0, 0, 0.3); */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .home_nav_bar_root .main {
   display: flex;
-  padding: 20px 72px;
+  padding: 0px 72px;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
@@ -21,7 +30,11 @@
 }
 .homeNav_techwings_logo {
   width: 250px;
-  height: 150px;
+  height: 100px;
+}
+.logo_absolute {
+  position: absolute;
+  top: -30px;
 }
 .mobile_home_nav_btn_container,
 .home_mobile_nav_bar_options {
@@ -29,7 +42,7 @@
 }
 .home_nav_btn {
   color: white;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -38,7 +51,7 @@
   background-color: #007bff;
   border-radius: 20px;
   border: none;
-  font-size: 15px;
+  font-size: 16px;
   color: white;
   font-weight: 600;
   cursor: pointer;
@@ -71,8 +84,12 @@
 
 @media (max-width: 768px) {
   .home_nav_bar_root .main {
-    padding: 20px 42px;
+    padding: 0px 42px;
     box-sizing: border-box;
+  }
+  .logo_absolute {
+    position: absolute;
+    top: 0px;
   }
   .home_nav_btn,
   .home_nav_getStarted {
@@ -86,7 +103,12 @@
 @media (max-width: 450px) {
   .homeNav_techwings_logo {
     width: 150px;
-    height: 100px;
+    height: 80px;
+  }
+  .logo_absolute {
+    position: absolute;
+    top: -13px;
+    left: 0px;
   }
   .home_nav_btn_container {
     display: none;
@@ -101,12 +123,13 @@
   }
   .home_mobile_nav_bar_options {
     display: block;
-    background-color: #007bff;
+    background-color: #0d1321;
     width: 100%;
     position: absolute;
     display: flex;
     flex-direction: column;
     padding: 10px 0px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
   .home_mobile_nav_bar_options_btn {
     /* background-color: red; */

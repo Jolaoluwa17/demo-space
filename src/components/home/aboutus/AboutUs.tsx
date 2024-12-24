@@ -1,5 +1,5 @@
 import './aboutUs.css';
-import CheckAboutUsIcon from '@/icons/CheckAboutUsIcon';
+import { IoCheckmarkCircleSharp } from 'react-icons/io5';
 
 const AboutUs = () => {
   const aboutUsCards = [
@@ -54,7 +54,7 @@ const AboutUs = () => {
         <div className="about_us_card_container">
           {aboutUsCards.map((card, index) => (
             <div className="about_us_card" key={index}>
-              <CheckAboutUsIcon />
+              <IoCheckmarkCircleSharp size={23} color="#007BFF" style={{flexShrink: 0}} />
               <div className="about_us_card_content">
                 <div className="title">{card.title}</div>
                 <div className="subTitle">{card.subTitle}</div>

@@ -35,7 +35,6 @@ const ForgotPassword = () => {
     const userData = { email: email };
     try {
       const res = await forgotPassword(userData).unwrap();
-      // navigator('/auth/resetpassword');
       console.log(res);
       setIsSuccess(true);
       setEmail('');

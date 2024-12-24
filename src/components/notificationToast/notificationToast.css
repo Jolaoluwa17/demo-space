@@ -1,0 +1,25 @@
+.notification_toast_root {
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 8px;
+  max-width: 350px;
+  justify-content: space-between;
+  width: 100%;
+}
+.notification_toast_text {
+  font-size: 15px;
+  color: #141011;
+  max-width: 200px;
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.notification-toast-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}

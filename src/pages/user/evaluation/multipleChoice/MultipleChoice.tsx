@@ -15,6 +15,14 @@ import NavigationArrow from '@/icons/NavigationArrow';
 import { useCreateResultMutation } from '@/services/features/result/resultSlice';
 import ErrorResponse from '@/types/ErrorResponse';
 
+declare interface NetworkInformation {
+  downlink: number;
+  effectiveType: string;
+  rtt: number;
+  saveData: boolean;
+  type: string;
+}
+
 interface Assessment {
   _id: string;
   duration: number;
@@ -38,8 +46,6 @@ const MultipleChoice: React.FC = () => {
   const { data: questionsData, isLoading: questionsLoading } =
     useGetQuizQuestionQuery(id);
 
-  // console.log(questionsData);
-
   const [selectedOptions, setSelectedOptions] = useState<{
     [key: number]: string | null;
   }>({});
@@ -50,6 +56,12 @@ const MultipleChoice: React.FC = () => {
   const [errMsg, setErrMsg] = useState<string>('');
   const [result, { isLoading: resultLoading }] = useCreateResultMutation();
   const userid = sessionStorage.getItem('id');
+
+  // State to manage the internet status
+  const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
+
+  // Handle internet speed
+  const [internetSpeed, setInternetSpeed] = useState<string>('');
 
   useEffect(() => {
     if (assessmentData) {
@@ -63,11 +75,14 @@ const MultipleChoice: React.FC = () => {
   }, [assessmentData, id]);
 
   useEffect(() => {
+    // Timer effect
     const timer = setInterval(() => {
-      setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+      if (isOnline && time > 0) {
+        setTime((prevTime) => prevTime - 1);
+      }
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isOnline, time]); // The timer depends on the online status and time
 
   useEffect(() => {
     const currentQuestion = questionsData?.data[currentQuestionIndex];
@@ -81,6 +96,42 @@ const MultipleChoice: React.FC = () => {
       setRandomizedOptions(options.sort(() => Math.random() - 0.5));
     }
   }, [questionsData, currentQuestionIndex]);
+
+  useEffect(() => {
+    // Update internet speed when the browser is online or offline
+    const updateSpeed = () => {
+      if ('connection' in navigator) {
+        const connection = (
+          navigator as Navigator & { connection?: NetworkInformation }
+        ).connection;
+        if (connection) {
+          const downlink = connection.downlink || 0;
+          setInternetSpeed(`${downlink} MB/S`);
+        }
+      }
+    };
+
+    // Update speed when online
+    updateSpeed();
+
+    const handleOnlineStatus = () => {
+      setIsOnline(true);
+      updateSpeed();
+    };
+
+    const handleOfflineStatus = () => {
+      setIsOnline(false);
+      setInternetSpeed('0 MB/S');
+    };
+
+    window.addEventListener('online', handleOnlineStatus);
+    window.addEventListener('offline', handleOfflineStatus);
+
+    return () => {
+      window.removeEventListener('online', handleOnlineStatus);
+      window.removeEventListener('offline', handleOfflineStatus);
+    };
+  }, []);
 
   const formatTime = (timeInSeconds: number) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -99,7 +150,7 @@ const MultipleChoice: React.FC = () => {
     // Update the answers array with the actual text
     setAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
-      updatedAnswers[currentQuestionIndex] = option; // Add the selected text to the corresponding index
+      updatedAnswers[currentQuestionIndex] = option;
       return updatedAnswers;
     });
   };
@@ -201,6 +252,13 @@ const MultipleChoice: React.FC = () => {
             <div>Questions</div>
             <div className="timer">{formatTime(time)}</div>
           </div>
+          <div>
+            <p>
+              {isOnline
+                ? `Internet speed is ${internetSpeed}`
+                : 'You are offline'}
+            </p>
+          </div>
           <div className="question_container">
             <div className="question_out_of">
               Question {currentQuestionIndex + 1} of {questionsData.data.length}
@@ -233,11 +291,9 @@ const MultipleChoice: React.FC = () => {
           </div>
           <div className="question_selectors">
             <button
-              className={`back_and_next_button ${
-                isFirstQuestion ? 'disabled' : ''
-              }`}
+              className={`back_and_next_button ${isFirstQuestion ? 'disabled' : ''}`}
               onClick={handlePreviousQuestion}
-              disabled={isFirstQuestion}
+              disabled={isFirstQuestion || !isOnline}
             >
               <ArrowLeftIcon />
             </button>
@@ -269,11 +325,9 @@ const MultipleChoice: React.FC = () => {
               </div>
             )}
             <button
-              className={`back_and_next_button ${
-                isLastQuestion ? 'disabled' : ''
-              }`}
+              className={`back_and_next_button ${!isOnline ? 'disabled' : ''}`}
               onClick={handleNextQuestion}
-              disabled={isLastQuestion}
+              disabled={!selectedOption || !isOnline}
             >
               <ArrowRightIcon />
             </button>
