@@ -114,12 +114,12 @@
     display: none;
   }
   .home_nav_bar_root .main {
-    /* padding: 20px 24px; */
-    padding: 0px 24px;
+    /* padding: 0px 24px; */
     box-sizing: border-box;
   }
   .mobile_home_nav_btn_container {
     display: block;
+    /* padding-right: 24px; */
   }
   .home_mobile_nav_bar_options {
     display: block;
