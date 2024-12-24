@@ -67,7 +67,7 @@ const ContactUs = () => {
             <IoMailOutline size={50} color="#007BFF" />
             <div className="item_text">support@techwingsglobal.com</div>
           </div>
-          <div className="contact_us_left_item" style={{ border: 'none' }}>
+          <div className="contact_us_left_item">
             <FiPhone size={50} color="#007BFF" />
             <div className="item_text">(219) 555-0114</div>
           </div>
