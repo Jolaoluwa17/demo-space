@@ -17,4 +17,7 @@
   .expand_potential_component {
     display: none;
   }
+  .home_footer {
+    font-size: 14px;
+  }
 }

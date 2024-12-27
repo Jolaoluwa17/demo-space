@@ -44,10 +44,11 @@
 .hero_section_content .download_btn_container {
   display: flex;
   justify-content: space-between;
-  width: 384px;
+  width: 420px;
   height: 56px;
   align-items: center;
   margin-top: 12px;
+  /* background-color: red; */
 }
 .hero_section_content .download_btn {
   height: 100%;
@@ -250,6 +251,10 @@
 @media (max-width: 768px) {
   .hero_section_root {
     height: 668px;
+  }
+  .hero_section_content .download_btn_container {
+    width: 300px;
+    height: 70px;
   }
 }
 

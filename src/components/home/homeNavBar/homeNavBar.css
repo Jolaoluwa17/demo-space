@@ -82,6 +82,17 @@
   cursor: pointer;
 }
 
+@media (max-width: 790px) {
+  .home_nav_bar_root .main {
+    padding: 0px 42px;
+    box-sizing: border-box;
+  }
+  .logo_absolute {
+    position: absolute;
+    left: 21px;
+  }
+}
+
 @media (max-width: 768px) {
   .home_nav_bar_root .main {
     padding: 0px 42px;

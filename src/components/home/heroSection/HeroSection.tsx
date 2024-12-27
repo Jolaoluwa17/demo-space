@@ -1,13 +1,8 @@
-import { IoLogoGooglePlaystore, IoLogoApple } from 'react-icons/io5';
-
 import './heroSection.css';
-
-
 
 const HeroSection = () => {
   return (
     <div className="hero_section_root">
-      
       <div className="hero_section_content">
         <div className="content_container">
           <div className="content_title">
@@ -19,13 +14,11 @@ const HeroSection = () => {
           </div>
           <div className="download_our">Download our app</div>
           <div className="download_btn_container">
-            <div className="download_btn">
-              <IoLogoApple fontSize={30} />
-              COMING SOON
+            <div className="the_future_download_btn">
+              <img src="/images/AppStore.svg" alt="" className="btn_img" />
             </div>
-            <div className="download_btn">
-              <IoLogoGooglePlaystore fontSize={28} />
-              COMING SOON
+            <div className="the_future_download_btn">
+              <img src="/images/PlayStore.svg" alt="" className="btn_img" />
             </div>
           </div>
         </div>
