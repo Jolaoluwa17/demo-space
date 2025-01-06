@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BiSolidErrorAlt } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
 import { IoClose, IoCheckmarkDoneOutline } from 'react-icons/io5';
+import { IoEye, IoEyeOff } from 'react-icons/io5';
+import { FcGoogle } from 'react-icons/fc';
+import { BiSolidErrorAlt } from 'react-icons/bi';
 
 import './signup.css';
 import { useSignUpMutation } from '@/services/features/auth/authApiSlice';
 import { setCredentials } from '@/services/features/auth/authSlice';
-import EyeOpen from '@/icons/Eye';
-import EyeClosed from '@/icons/EyeClosed';
 
 interface ErrorResponse {
   status: number;
@@ -96,33 +96,16 @@ const Signup = () => {
 
   return (
     <div className="signup_root">
-      <div className="signup_container">
-        <div className="left_section">
-          <img
-            src="/images/Signup.png"
-            alt="signup_image"
-            className="signup_img"
-            style={{ borderRadius: '10px' }}
-            loading="lazy"
-          />
-        </div>
-        <div className="right_section">
-          <div className="techwings_logo">
-            <img
-              src="/images/ProficioNextLogo.png"
-              alt=""
-              className="proficioNext_logo_size"
-              onClick={() => navigator('/')}
-              loading="lazy"
-            />
+      <div className="left"></div>
+      <div className="right">
+        <div className="right_signup_content">
+          <div className="signup_title">Sign up</div>
+          <div className="signup_subTitle">
+            Let's get you all started up so you can access your personal
+            account.
           </div>
           <div className="signup_form">
-            <div className="login_title">Sign up</div>
-            <p>
-              Let’s get you all set up so you can access your personal account.
-            </p>
-
-            <div className="form_item">
+            <div className="signup_form_item">
               <label htmlFor="email">Enter Email</label>
               <input
                 type="email"
@@ -134,26 +117,38 @@ const Signup = () => {
                 disabled={isLoading}
               />
             </div>
-
-            <div className="form_item">
-              <label htmlFor="password">Enter Password</label>
-              <div className="password_input">
+            <div className="signup_form_item">
+              <label htmlFor="email">Enter Password</label>
+              <div style={{ position: 'relative' }}>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   placeholder="************"
-                  className="input"
                   value={password}
                   onChange={handlePasswordChange}
                   disabled={isLoading}
                   style={samePassword ? {} : { border: '1px solid red' }}
                 />
-                <div onClick={handleHiddenTrigger} className="see_password">
-                  {showPassword ? <EyeOpen /> : <EyeClosed />}
+                <div
+                  onClick={handleHiddenTrigger}
+                  className="password_visibility"
+                >
+                  {showPassword ? (
+                    <IoEye
+                      className="password_visibility_icon"
+                      color="#818181"
+                    />
+                  ) : (
+                    <IoEyeOff
+                      className="password_visibility_icon"
+                      color="#818181"
+                    />
+                  )}
                 </div>
               </div>
             </div>
 
+            {/* Password Validator */}
             <div className="password_validator">
               <div
                 className="password_indicator_option"
@@ -212,14 +207,13 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="form_item">
-              <label htmlFor="password">Confirm Password</label>
-              <div className="password_input">
+            <div className="signup_form_item">
+              <label htmlFor="email">Confirm Password</label>
+              <div style={{ position: 'relative' }}>
                 <input
                   type={showConfirmPassword ? 'text' : 'password'}
                   name="password"
                   placeholder="************"
-                  className="input"
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
                   disabled={isLoading}
@@ -227,28 +221,38 @@ const Signup = () => {
                 />
                 <div
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="see_password"
+                  className="password_visibility"
                 >
-                  {showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
+                  {showConfirmPassword ? (
+                    <IoEye
+                      className="password_visibility_icon"
+                      color="#818181"
+                    />
+                  ) : (
+                    <IoEyeOff
+                      className="password_visibility_icon"
+                      color="#818181"
+                    />
+                  )}
                 </div>
               </div>
             </div>
-
             {err && (
-              <div className="error_message">
+              <div
+                className="error_message"
+                style={{ marginTop: '-10px', marginBottom: '16px' }}
+              >
                 <BiSolidErrorAlt fontSize={18} />
                 <div style={{ paddingLeft: '5px' }}>{err}</div>
               </div>
             )}
-
-            <div className="TOS">
+            <div className="TOS_container">
               <input
                 type="checkbox"
-                style={{ cursor: 'pointer' }}
                 checked={termsAccepted}
                 onChange={handleTermsChange}
               />
-              <div style={{ marginLeft: '8px' }}>
+              <div className="TOS">
                 I agree to all the{' '}
                 <span
                   style={{
@@ -271,9 +275,8 @@ const Signup = () => {
                 </span>
               </div>
             </div>
-
             <button
-              className="signup_btn"
+              className="create_acc_btn"
               style={{
                 backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
                 cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
@@ -283,33 +286,25 @@ const Signup = () => {
             >
               {isLoading ? <div className="spinner"></div> : 'Create Account'}
             </button>
-
             <div className="already_have_acc">
               Already have an account?{' '}
               <span
                 style={{
                   color: '#FF8682',
-                  fontWeight: '600',
                   cursor: 'pointer',
+                  fontWeight: '600',
                 }}
-                onClick={() => navigator('/auth/login')}
               >
                 Login
               </span>
             </div>
-            <div className="or_signup">
+            <div className="or_sign_up_with">
               <hr />
-              <div style={{ textAlign: 'center' }}>Or Sign up with</div>
+              <span>or sign up with</span>
               <hr />
             </div>
-
-            <div className="other_signup_options">
-              <div className="signup_options">
-                <img src="/images/Google.svg" alt="Google signup" />
-              </div>
-              <div className="signup_options">
-                <img src="/images/Apple.svg" alt="Apple signup" />
-              </div>
+            <div className="google_sign">
+              <FcGoogle size={20} />
             </div>
           </div>
         </div>
