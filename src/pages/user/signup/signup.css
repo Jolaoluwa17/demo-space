@@ -170,6 +170,13 @@
 }
 
 @media (max-width: 450px) {
+  .signup_root {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
   .signup_root .left {
     width: 0%;
   }
@@ -178,5 +185,18 @@
   }
   .right_signup_content {
     max-width: 350px;
+  }
+  .signup_title {
+    font-size: 20px;
+  }
+  .signup_subTitle,
+  .TOS,
+  .already_have_acc,
+  .or_sign_up_with span {
+    font-size: 12px;
+  }
+  .signup_form_item label,
+  .signup_form_item input {
+    font-size: 14px;
   }
 }
