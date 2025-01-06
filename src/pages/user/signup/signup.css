@@ -212,9 +212,10 @@
   .signup_techwings_logo {
     display: block;
     width: 250px;
-    background-color: red;
     position: relative;
     margin-bottom: 40px;
+    padding-top: 20px;
+    margin-top: 20px;
   }
   .signup_logo_absolute {
     position: absolute;
