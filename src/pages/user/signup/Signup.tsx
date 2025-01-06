@@ -99,6 +99,15 @@ const Signup = () => {
       <div className="left"></div>
       <div className="right">
         <div className="right_signup_content">
+          <div className="signup_techwings_logo">
+            <div className="signup_logo_absolute">
+              <img
+                src="/images/ProficioNextLogo.png"
+                alt=""
+                className="proficioNext_logo_size"
+              />
+            </div>
+          </div>
           <div className="signup_title">Sign up</div>
           <div className="signup_subTitle">
             Let's get you all started up so you can access your personal

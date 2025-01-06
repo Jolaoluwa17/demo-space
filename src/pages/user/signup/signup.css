@@ -132,6 +132,9 @@
   justify-content: center;
   border-radius: 6px;
 }
+.signup_techwings_logo {
+  display: none;
+}
 
 @media (max-width: 1280px) {
   .right_signup_content {
@@ -190,6 +193,8 @@
   }
   .right_signup_content {
     max-width: 350px;
+    padding: 0px 24px;
+    width: 100%;
   }
   .signup_title {
     font-size: 28px;
@@ -203,6 +208,18 @@
   .signup_form_item label,
   .signup_form_item input {
     font-size: 14px;
+  }
+  .signup_techwings_logo {
+    display: block;
+    width: 250px;
+    background-color: red;
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .signup_logo_absolute {
+    position: absolute;
+    top: -30px;
+    left: -20px;
   }
 }
 
