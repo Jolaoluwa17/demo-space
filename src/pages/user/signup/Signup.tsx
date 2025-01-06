@@ -294,6 +294,7 @@ const Signup = () => {
                   cursor: 'pointer',
                   fontWeight: '600',
                 }}
+                onClick={() => navigator('/auth/login')}
               >
                 Login
               </span>
