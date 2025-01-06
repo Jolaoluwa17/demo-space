@@ -4,8 +4,7 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('/fonts/Montserrat/Montserrat-VariableFont_wght.ttf')
-    format('truetype');
+  src: url('/fonts/Gantari-VariableFont_wght.ttf') format('truetype');
 }
 
 html,
@@ -13,6 +12,8 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  letter-spacing: 0.5px;
+  /* user-select: none; */
 }
 
 #root {
