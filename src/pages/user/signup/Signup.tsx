@@ -257,7 +257,6 @@ const Signup = () => {
                 <span
                   style={{
                     color: '#FF8682',
-                    fontWeight: '600',
                     cursor: 'pointer',
                   }}
                 >
@@ -267,7 +266,6 @@ const Signup = () => {
                 <span
                   style={{
                     color: '#FF8682',
-                    fontWeight: '600',
                     cursor: 'pointer',
                   }}
                 >
@@ -292,7 +290,6 @@ const Signup = () => {
                 style={{
                   color: '#FF8682',
                   cursor: 'pointer',
-                  fontWeight: '600',
                 }}
                 onClick={() => navigator('/auth/login')}
               >
