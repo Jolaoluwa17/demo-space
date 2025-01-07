@@ -73,7 +73,7 @@ const VerifyAccount = () => {
     const userData = { email: email };
     try {
       await requestCode(userData).unwrap();
-      setCountdown(120); // Start countdown for 2 minutes (120 seconds)
+      setCountdown(120);
     } catch (error: unknown) {
       console.log(error);
       setErr('Something went wrong');
