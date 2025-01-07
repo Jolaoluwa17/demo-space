@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiSolidErrorAlt } from 'react-icons/bi';
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import { IoInformationCircleSharp } from 'react-icons/io5';
 
 import './forgotPassword.css';
 import { useForgotPasswordMutation } from '@/services/features/auth/authApiSlice';
-import LeftArrow from '@/icons/LeftArrow';
-import { IoInformationCircleSharp } from 'react-icons/io5';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -46,19 +46,19 @@ const ForgotPassword = () => {
 
   return (
     <div className="forgotpassword_root">
+      <div className="techwings_logo_forgotpassword">
+        <img
+          src="/images/ProficioNextLogo.png"
+          alt=""
+          className="proficioNext_logo_size"
+          onClick={() => navigator('/')}
+          loading="lazy"
+        />
+      </div>
       <div className="forgotpassword_container">
-        <div className="techwings_logo_forgotpassword">
-          <img
-            src="/images/ProficioNextLogo.png"
-            alt=""
-            className="proficioNext_logo_size"
-            onClick={() => navigator('/')}
-            loading="lazy"
-          />
-        </div>
         <div className="forgotpassword_form">
           <div className="back_to_signup">
-            <LeftArrow />
+            <FaArrowLeftLong />
             <div
               style={{ marginLeft: '12px' }}
               onClick={() => navigator('/auth/login')}
@@ -114,15 +114,12 @@ const ForgotPassword = () => {
           )}
           <div className="or_forgotpassword">
             <hr />
-            <div>Or login with</div>
+            <div>or login with</div>
             <hr />
           </div>
           <div className="other_forgotpassword_options">
             <div className="forgotpassword_options">
               <img src="/images/Google.svg" alt="login_image" />
-            </div>
-            <div className="forgotpassword_options">
-              <img src="/images/Apple.svg" alt="login_image" />
             </div>
           </div>
         </div>

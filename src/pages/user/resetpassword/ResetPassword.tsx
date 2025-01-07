@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import {
+  IoCheckmarkDoneOutline,
+  IoClose,
+  IoEye,
+  IoEyeOff,
+} from 'react-icons/io5';
 
 import './resetPassword.css';
-import LeftArrow from '@/icons/LeftArrow';
-import EyeOpen from '@/icons/Eye';
-import EyeClosed from '@/icons/EyeClosed';
 import { useResetPasswordMutation } from '@/services/features/auth/authApiSlice';
 
 const ResetPassword = () => {
@@ -15,7 +19,21 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const samePassword = password === confirmPassword;
-  const isFormValid = samePassword && password !== '' && confirmPassword !== '';
+  // Password validation conditions
+  const hasMinLength = password.length >= 8;
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>_]/.test(password);
+  const isFormValid =
+    hasMinLength &&
+    hasUppercase &&
+    hasLowercase &&
+    hasNumber &&
+    hasSpecialChar &&
+    samePassword &&
+    password !== '' &&
+    confirmPassword !== '';
 
   const handleHiddenTrigger = () => {
     setShowPassword(!showPassword);
@@ -51,40 +69,29 @@ const ResetPassword = () => {
 
   return (
     <div className="resetpassword_root">
+      <div className="techwings_logo_forgotpassword">
+        <img
+          src="/images/ProficioNextLogo.png"
+          alt=""
+          className="proficioNext_logo_size"
+          onClick={() => navigator('/')}
+          loading="lazy"
+        />
+      </div>
       <div className="resetpassword_container">
-        <div className="techwings_logo_forgotpassword">
-          <img
-            src="/images/ProficioNextLogo.png"
-            alt=""
-            className="proficioNext_logo_size"
-            onClick={() => navigator('/')}
-            loading="lazy"
-          />
-        </div>
         <div className="resetpassword_form">
           <div
             className="back_to_signup"
             onClick={() => navigator('/auth/login')}
           >
-            <LeftArrow />
+            <FaArrowLeftLong />
             <div style={{ marginLeft: '12px' }}>Back to login</div>
           </div>
           <div className="resetpassword_title">Set a password</div>
           <p>
-            Your previous password has been reseted. Please set a new password
-            for your <br /> account.
+            Your password has been reset. Please create a new password to secure
+            your account.
           </p>
-          {/* <div className="form_item">
-            <label htmlFor="code">Enter Reset Code</label>
-            <input
-              type="text"
-              name="code"
-              placeholder="123456"
-              className="input"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-            />
-          </div> */}
           <div className="form_item">
             <label htmlFor="password">Enter Password</label>
             <div className="password_input">
@@ -97,10 +104,77 @@ const ResetPassword = () => {
                 onChange={handlePasswordChange}
               />
               <div onClick={handleHiddenTrigger} className="see_password">
-                {showPassword ? <EyeOpen /> : <EyeClosed />}
+                {showPassword ? (
+                  <IoEye className="password_visibility_icon" color="#818181" />
+                ) : (
+                  <IoEyeOff
+                    className="password_visibility_icon"
+                    color="#818181"
+                  />
+                )}
               </div>
             </div>
           </div>
+
+          {/* Password Validator */}
+          <div className="password_validator" style={{ marginTop: '20px' }}>
+            <div
+              className="password_indicator_option"
+              style={{ color: hasMinLength ? 'green' : 'red' }}
+            >
+              {hasMinLength ? (
+                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
+              ) : (
+                <IoClose style={{ paddingRight: '5px' }} />
+              )}
+              8 Characters
+            </div>
+            <div
+              className="password_indicator_option"
+              style={{ color: hasUppercase ? 'green' : 'red' }}
+            >
+              {hasUppercase ? (
+                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
+              ) : (
+                <IoClose style={{ paddingRight: '5px' }} />
+              )}
+              An Uppercase Letter
+            </div>
+            <div
+              className="password_indicator_option"
+              style={{ color: hasLowercase ? 'green' : 'red' }}
+            >
+              {hasLowercase ? (
+                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
+              ) : (
+                <IoClose style={{ paddingRight: '5px' }} />
+              )}
+              A Lowercase Letter
+            </div>
+            <div
+              className="password_indicator_option"
+              style={{ color: hasSpecialChar ? 'green' : 'red' }}
+            >
+              {hasSpecialChar ? (
+                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
+              ) : (
+                <IoClose style={{ paddingRight: '5px' }} />
+              )}
+              A Special Character
+            </div>
+            <div
+              className="password_indicator_option"
+              style={{ color: hasNumber ? 'green' : 'red' }}
+            >
+              {hasNumber ? (
+                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
+              ) : (
+                <IoClose style={{ paddingRight: '5px' }} />
+              )}
+              A Number
+            </div>
+          </div>
+
           <div className="form_item">
             <label htmlFor="password">Confirm Password</label>
             <div className="password_input">
@@ -116,7 +190,14 @@ const ResetPassword = () => {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="see_password"
               >
-                {showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
+                {showConfirmPassword ? (
+                  <IoEye className="password_visibility_icon" color="#818181" />
+                ) : (
+                  <IoEyeOff
+                    className="password_visibility_icon"
+                    color="#818181"
+                  />
+                )}
               </div>
             </div>
           </div>

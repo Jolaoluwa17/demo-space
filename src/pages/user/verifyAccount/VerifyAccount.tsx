@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 
-import './verifyAccount.css';
-import LeftArrow from '@/icons/LeftArrow';
+import '../signup/signup.css';
 import {
   useLoginMutation,
   useRequestCodeMutation,
@@ -12,16 +11,17 @@ import {
 } from '@/services/features/auth/authApiSlice';
 import { RootState } from '@/services/store';
 import { setAuthState } from '@/services/features/auth/authSlice';
+import { FaArrowLeftLong } from 'react-icons/fa6';
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState('');
-  const isFormValid = otp !== '';
+  const isFormValid = otp.length === 4;
 
   const navigate = useNavigate();
 
   const [verifyAccount, { isLoading }] = useVerifyAccountMutation();
   const [err, setErr] = useState<string>('');
-  const [countdown, setCountdown] = useState(0); // Countdown state in seconds
+  const [countdown, setCountdown] = useState(120); // Countdown state in seconds
 
   const email = useSelector((state: RootState) => state.auth.email);
   const password = useSelector((state: RootState) => state.auth.password);
@@ -92,90 +92,122 @@ const VerifyAccount = () => {
     }
   }, [countdown]);
 
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const value = e.target.value;
+    if (/^\d$/.test(value)) {
+      // Allow only a single digit
+      const newOtp = otp.substring(0, index) + value + otp.substring(index + 1);
+      setOtp(newOtp);
+
+      // Move to the next input if available
+      const inputs = document.querySelectorAll(
+        '.verify_account_otp_input'
+      ) as NodeListOf<HTMLInputElement>;
+      if (index < 3) inputs[index + 1].focus();
+    }
+  };
+
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    if (e.key === 'Backspace') {
+      const newOtp = otp.substring(0, index) + '' + otp.substring(index + 1);
+      setOtp(newOtp);
+
+      // Move to the previous input if available
+      const inputs = document.querySelectorAll(
+        '.verify_account_otp_input'
+      ) as NodeListOf<HTMLInputElement>;
+      if (index > 0) inputs[index - 1].focus();
+    }
+  };
+
   return (
-    <div className="verify_account_root">
-      <div className="verify_account_container">
-        <div className="left_section">
-          <img
-            src="/images/VerifyAccount.svg"
-            alt="login_image"
-            className="verify_account_img"
-          />
-        </div>
-        <div className="right_section">
-          <div className="techwings_logo">
-            <img
-              src="/images/ProficioNextLogo.png"
-              alt=""
-              className="proficioNext_logo_size"
-              onClick={() => navigate('/')}
-              loading="lazy"
-            />
-          </div>
-          <div className="verify_account_form">
-            <div className="back_to_signup">
-              <LeftArrow />
-              <div
-                style={{ marginLeft: '12px' }}
-                onClick={() => navigate('/auth/signup')}
-              >
-                Back to sign up
-              </div>
-            </div>
-            <div className="verify_account_title">Verify code</div>
-            <p>An authentication code has been sent to your email.</p>
-            <div className="form_item">
-              <label htmlFor="code">Enter Code</label>
-              <input
-                type="text"
-                name="code"
-                placeholder="7789"
-                className="input"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
+    <div className="signup_root">
+      <div className="left"></div>
+      <div className="right">
+        <div className="right_verifyAccount_content">
+          <div className="signup_techwings_logo">
+            <div className="signup_logo_absolute">
+              <img
+                src="/images/ProficioNextLogo.png"
+                alt=""
+                className="proficioNext_logo_size"
               />
             </div>
-            {err && (
-              <div className="error_message">
-                <BiSolidErrorAlt fontSize={18} />
-                <div style={{ paddingLeft: '5px' }}>{err}</div>
-              </div>
-            )}
-            <div className="resend_code">
-              Already have an account?{' '}
-              <span
-                style={{
-                  color: countdown === 0 ? '#FF8682' : 'grey',
-                  fontWeight: '600',
-                  cursor: countdown === 0 ? 'pointer' : 'not-allowed',
-                  marginLeft: '8px',
-                }}
-                onClick={countdown === 0 ? handleRequestCode : undefined}
-              >
-                {countdown === 0 ? 'Resend' : `Resend in ${countdown}s`}
-              </span>
-            </div>
-            <button
-              className="verify_btn"
+          </div>
+          <div className="signup_title">Verify Account</div>
+          <div className="signup_subTitle" style={{ marginBottom: '20px' }}>
+            An authentication code has been sent to your email.
+          </div>
+          <div className="verify_account_otp_container">
+            {[...Array(4)].map((_, index) => (
+              <input
+                key={index}
+                type="text"
+                maxLength={1}
+                className="verify_account_otp_input"
+                inputMode="numeric"
+                value={otp[index] || ''} // Get character at index
+                onChange={(e) => handleInputChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+              />
+            ))}
+          </div>
+          <div
+            className="already_have_acc"
+            style={{ textAlign: 'left', marginTop: '20px' }}
+          >
+            Didn't receive the email?{' '}
+            <span
               style={{
-                backgroundColor:
-                  isFormValid && !isLoading && !loginLoading
-                    ? '#007BFF'
-                    : 'grey',
-                cursor:
-                  isFormValid && !isLoading && !loginLoading
-                    ? 'pointer'
-                    : 'not-allowed',
+                color: countdown === 0 ? '#FF8682' : 'grey',
+                cursor: countdown === 0 ? 'pointer' : 'not-allowed',
+                marginLeft: '5px',
               }}
-              onClick={handleVerifyAccount}
-              disabled={!isFormValid || isLoading || loginLoading}
+              onClick={countdown === 0 ? handleRequestCode : undefined}
             >
-              {isLoading || loginLoading ? (
-                <div className="spinner"></div>
-              ) : (
-                'Verify'
-              )}
-            </button>
+              {countdown === 0
+                ? ' Click to resend'
+                : `Resend in ${Math.floor(countdown / 60)}:${String(countdown % 60).padStart(2, '0')}`}
+            </span>
+          </div>
+          <button
+            className="create_acc_btn"
+            style={{
+              backgroundColor:
+                isFormValid && !isLoading && !loginLoading ? '#007BFF' : 'grey',
+              cursor:
+                isFormValid && !isLoading && !loginLoading
+                  ? 'pointer'
+                  : 'not-allowed',
+            }}
+            onClick={handleVerifyAccount}
+            disabled={!isFormValid || isLoading || loginLoading}
+          >
+            {isLoading || loginLoading ? (
+              <div className="spinner"></div>
+            ) : (
+              'Verify'
+            )}
+          </button>
+          {err && (
+            <div className="error_message">
+              <BiSolidErrorAlt fontSize={18} />
+              <div style={{ paddingLeft: '5px' }}>{err}</div>
+            </div>
+          )}
+
+          <div
+            className="verify_account_back_to_login"
+            onClick={() => navigate('/auth/login')}
+          >
+            <FaArrowLeftLong />
+            <div style={{ marginLeft: '12px' }}>Back to login</div>
           </div>
         </div>
       </div>
