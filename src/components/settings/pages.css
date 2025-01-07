@@ -34,11 +34,23 @@
   bottom: 5px;
   right: 5px;
 }
+.profile_form_item_main_1 {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
 .profile_form_item {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   position: relative;
+}
+.profile_form_item_1 {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 49%;
 }
 .profile_input_item {
   width: 100%;
@@ -54,6 +66,10 @@
   background-color: white;
   text-align: left;
   color: inherit;
+}
+.profile_input_item:disabled {
+  background-color: #f0f0f0;
+  color: grey;
 }
 
 .settings_edit_btn {
@@ -103,7 +119,8 @@
   color: #007bff;
   cursor: pointer;
 }
-.profile_form_item label {
+.profile_form_item label,
+.profile_form_item_1 label {
   font-weight: 600;
   font-size: 16px;
   display: flex;
@@ -217,11 +234,21 @@
   .minus_circle_icon {
     font-size: 18px;
   }
+  .profile_form_item_main_1 {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+  }
   .profile_form_item label,
+  .profile_form_item_1 label,
   .profile_input_item,
   .profile_pageone_form_item label,
   .settings_profile_skill_item {
     font-size: 14px;
+  }
+  .profile_form_item_1 {
+    width: 100%;
   }
   .settings_edit_btn {
     font-size: 14px;

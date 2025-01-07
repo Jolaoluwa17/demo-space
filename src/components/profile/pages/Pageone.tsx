@@ -6,8 +6,8 @@ import DeleteIcon from '@/icons/DeleteIcon';
 
 interface Props {
   setCurrentPage: (page: number) => void;
-  fullName: string;
-  setFullName: (fullName: string) => void;
+  fullName: string; // Full Name from the backend
+  setFullName: (fullName: string) => void; // Function to update fullName in the parent
   phoneNo: string;
   setPhoneNo: (phoneNo: string) => void;
   isLoading: boolean;
@@ -35,7 +35,24 @@ const Pageone: React.FC<Props> = ({
   handleFileChange,
   handleFileUpload,
 }) => {
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
+
+  // Split the fullName into firstName and lastName
+  useEffect(() => {
+    if (fullName) {
+      const nameParts = fullName.split(' ');
+      setLastName(nameParts[0]); // Last name is the first part
+      setFirstName(nameParts.slice(1).join(' ')); // First name is the remaining part
+    }
+  }, [fullName]);
+
+  // Update fullName in the parent whenever firstName or lastName changes
+  useEffect(() => {
+    const updatedFullName = `${lastName} ${firstName}`;
+    setFullName(updatedFullName);
+  }, [firstName, lastName, setFullName]);
 
   const handleRemoveImage = () => {
     setImage(null);
@@ -44,8 +61,10 @@ const Pageone: React.FC<Props> = ({
 
   // Form validation
   useEffect(() => {
-    setIsFormValid(fullName.trim() !== '' && phoneNo.trim() !== '');
-  }, [fullName, phoneNo]);
+    setIsFormValid(
+      firstName.trim() !== '' && lastName.trim() !== '' && phoneNo.trim() !== ''
+    );
+  }, [firstName, lastName, phoneNo]);
 
   return (
     <div className="profile_pageone_root">
@@ -53,16 +72,32 @@ const Pageone: React.FC<Props> = ({
       <div className="profile_pageone_subTitle">
         This information will be used to create your personal profile.
       </div>
+
+      {/* First Name Input */}
       <div className="profile_pageone_form_item">
-        <label htmlFor="fullName">Enter Full Name</label>
+        <label htmlFor="firstName">Enter First Name</label>
         <input
           type="text"
-          name="fullName"
+          name="firstName"
           className="profile_pageone_input"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
         />
       </div>
+
+      {/* Last Name Input */}
+      <div className="profile_pageone_form_item">
+        <label htmlFor="lastName">Enter Last Name</label>
+        <input
+          type="text"
+          name="lastName"
+          className="profile_pageone_input"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+      </div>
+
+      {/* Phone Number Input */}
       <div className="profile_pageone_form_item">
         <label htmlFor="phoneNo">Enter Phone Number</label>
         <input
@@ -73,6 +108,8 @@ const Pageone: React.FC<Props> = ({
           onChange={(e) => setPhoneNo(e.target.value)}
         />
       </div>
+
+      {/* Image Upload */}
       {image === null && (
         <div className="upload_profile_pic" onClick={handleFileUpload}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -109,6 +146,8 @@ const Pageone: React.FC<Props> = ({
           </div>
         </div>
       )}
+
+      {/* Next Button */}
       <button
         className={`next_btn`}
         onClick={() => setCurrentPage(2)}

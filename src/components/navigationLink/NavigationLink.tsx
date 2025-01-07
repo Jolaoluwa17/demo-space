@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-
 import './navigationLink.css';
 
 interface Props {
@@ -10,6 +9,7 @@ interface Props {
   isOpen?: boolean;
   link?: string;
   hidden?: boolean;
+  disabled?: boolean;
 }
 
 const NavigationLink = ({
@@ -19,34 +19,22 @@ const NavigationLink = ({
   name,
   isActive,
   hidden,
+  disabled,
 }: Props) => {
   const commonClasses = `navigation-link ${isActive ? 'active' : ''} ${
     hidden ? 'hidden-class' : ''
-  }`;
+  } ${disabled ? 'disabled' : ''}`; 
 
-  if (link) {
+  if (disabled) {
+    // Render a span instead of Link when disabled
     return (
-      <Link
-        to={link}
+      <div
         className={commonClasses}
         onClick={onClick}
-        style={{ textDecoration: 'none' }}
+        style={{
+          pointerEvents: 'none', // Ensure no interactions if disabled
+        }}
       >
-        <span className="navigation-icon">{children}</span>
-        <p
-          className="navigation_text"
-          style={{
-            color: isActive ? '#007BFF' : '#6A757E',
-            fontWeight: '600',
-          }}
-        >
-          {name}
-        </p>
-      </Link>
-    );
-  } else {
-    return (
-      <div className={commonClasses} onClick={onClick}>
         <span className="navigation-icon">{children}</span>
         <p
           className="navigation_text"
@@ -60,6 +48,27 @@ const NavigationLink = ({
       </div>
     );
   }
+
+  // Render the Link when not disabled
+  return (
+    <Link
+      to={link || '#'}
+      className={commonClasses}
+      onClick={onClick}
+      style={{ textDecoration: 'none' }}
+    >
+      <span className="navigation-icon">{children}</span>
+      <p
+        className="navigation_text"
+        style={{
+          color: isActive ? '#007BFF' : '#6A757E',
+          fontWeight: '600',
+        }}
+      >
+        {name}
+      </p>
+    </Link>
+  );
 };
 
 export default NavigationLink;

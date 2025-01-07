@@ -39,6 +39,9 @@ const PersonalInformation: React.FC<Props> = ({
     fileInputRef.current?.click();
   };
 
+  // Split fullName into first and last name
+  const [firstName, lastName] = fullName?.split(' ') || ['', ''];
+
   return (
     <div className="settings_content">
       <div className="settings_main">
@@ -74,22 +77,41 @@ const PersonalInformation: React.FC<Props> = ({
           disabled={userDataIsLoading || isLoading}
         />
 
-        {/* Full Name Input */}
-        <div className="profile_form_item">
-          <label htmlFor="fullName">Enter Full Name</label>
-          <input
-            type="text"
-            className="profile_input_item"
-            name="fullName"
-            value={fullName || ''}
-            onChange={(e) => setFullName?.(e.target.value)}
-            disabled={userDataIsLoading || isLoading}
-          />
+        {/* Full Name Inputs */}
+        <div className="profile_form_item_main_1">
+          <div className="profile_form_item_1">
+            <label htmlFor="lastName">First Name</label>
+            <input
+              type="text"
+              className="profile_input_item"
+              name="lastName"
+              value={lastName}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFullName?.(`${firstName} ${value}`);
+              }}
+              disabled={userDataIsLoading || isLoading}
+            />
+          </div>
+          <div className="profile_form_item_1">
+            <label htmlFor="firstName">Last Name</label>
+            <input
+              type="text"
+              className="profile_input_item"
+              name="firstName"
+              value={firstName}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFullName?.(`${value} ${lastName}`);
+              }}
+              disabled={userDataIsLoading || isLoading}
+            />
+          </div>
         </div>
 
         {/* Phone Number Input */}
         <div className="profile_form_item">
-          <label htmlFor="phoneNo">Enter Phone No.</label>
+          <label htmlFor="phoneNo">Phone No.</label>
           <input
             type="text"
             className="profile_input_item"
@@ -102,7 +124,7 @@ const PersonalInformation: React.FC<Props> = ({
 
         {/* Email Input */}
         <div className="profile_form_item">
-          <label htmlFor="email">Enter Email Address</label>
+          <label htmlFor="email">Email Address</label>
           <input
             type="text"
             className="profile_input_item"

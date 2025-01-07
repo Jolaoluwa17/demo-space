@@ -42,7 +42,9 @@ const Instructions = () => {
     'Ensure you understand the requirements for each task.',
     'Manage your time effectively during the evaluation.',
     'If you encounter any issues, contact the support team immediately.',
-    'Review your answers before submitting the evaluation.',
+    'Review your answers before submitting.',
+    'Ensure your internet connection is stable. If it goes offline, you will be stuck on the current question, and the timer will continue counting down.',
+    'A notification will pop up if your internet connection is lost or restored.',
   ];
 
   const {

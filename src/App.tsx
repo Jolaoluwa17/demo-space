@@ -30,8 +30,11 @@ import ProfileSettings from './pages/user/settings/profileSettings/ProfileSettin
 import SettingsRoot from './pages/user/settings/SettingsRoot';
 import ChangePassword from './pages/user/settings/changePassword/ChangePassword';
 import Home from './pages/home/Home';
+import { useState } from 'react';
 
 function App() {
+  const [examInProgress, setExamInProgress] = useState(false);
+
   return (
     <Providers>
       <BrowserRouter>
@@ -42,7 +45,6 @@ function App() {
           {/* Authentication Routes */}
           <Route path="auth" element={<AuthLayout />}>
             <Route path="login" element={<Login />} />
-
             <Route path="signup" element={<Signup />} />
             <Route path="verifyaccount" element={<VerifyAccount />} />
             <Route path="forgotpassword" element={<ForgotPassword />} />
@@ -61,14 +63,25 @@ function App() {
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute element={<Layout />} allowedRoles={['User']} />
+              <ProtectedRoute
+                element={<Layout examInProgress={examInProgress} />}
+                allowedRoles={['User']}
+              />
             }
           >
             <Route index element={<Overview />} />
             <Route path="evaluation" element={<EvaluationRoot />}>
               <Route index element={<Evaluation />} />
               <Route path="instructions" element={<Instructions />} />
-              <Route path="multiple-choice" element={<MultipleChoice />} />
+              <Route
+                path="multiple-choice"
+                element={
+                  <MultipleChoice
+                    examInProgress={examInProgress}
+                    setExamInProgress={setExamInProgress}
+                  />
+                }
+              />
               <Route path="status" element={<Status />} />
             </Route>
             <Route path="progress" element={<ProgressRoot />}>

@@ -169,6 +169,7 @@
     background-color: white;
     z-index: 99;
     box-sizing: border-box;
+    padding-left: 24px;
   }
   .header_title {
     display: none;
@@ -179,8 +180,7 @@
   }
   .header_right_section {
     width: 100%;
-    justify-content: space-between;
-    flex-direction: row-reverse;
+    justify-content: flex-start;
   }
   .profile-role {
     font-size: 14px;

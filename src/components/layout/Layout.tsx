@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
 import './layout.css';
@@ -6,10 +5,12 @@ import Header from '../header/Header';
 import Sidebar from '../sidebar/SideBar';
 
 interface LayoutProps {
-  children?: ReactNode; // Make children optional since it's coming from Outlet
+  examInProgress: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = () => {
+const Layout: React.FC<LayoutProps> = ({
+  examInProgress,
+}) => {
   const userName = 'Emmanuel Alabi';
   const location = useLocation();
   const pathname = location.pathname.substring(1);
@@ -36,7 +37,9 @@ const Layout: React.FC<LayoutProps> = () => {
   return (
     <div className="layout_root">
       <div className="sidebar_mobile_container">
-        <Sidebar />
+        <Sidebar
+          examInProgress={examInProgress}
+        />
       </div>
       <div className={`content_wrapper open`}>
         <Header activeLink={activeLink} userName={userName} />

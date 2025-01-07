@@ -37,7 +37,7 @@ interface Certification {
 const Profile = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(2);
   const totalPages = 6;
 
   const getTabFromPage = (page: number) => {

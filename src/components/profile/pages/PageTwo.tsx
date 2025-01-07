@@ -3,6 +3,18 @@ import { FiMinusCircle } from 'react-icons/fi';
 
 import './pages.css';
 import AddIcon from '@/icons/AddIcon';
+import CustomSelect from '@/components/customselect/CustomSelect';
+
+const degreeOptions = [
+  'Associate Degree',
+  "Bachelor's Degree",
+  "Master's Degree",
+  'Doctoral Degree',
+  'Diploma',
+  'Certificate',
+  'Professional Degree',
+  'Other',
+];
 
 interface Props {
   setCurrentPage: (page: number) => void;
@@ -110,14 +122,13 @@ const PageTwo: React.FC<Props> = ({
           </div>
           <div className="profile_pageone_form_item">
             <label htmlFor={`degree-${index}`}>Degree Obtained</label>
-            <input
-              type="text"
-              name={`degree-${index}`}
-              className="profile_pageone_input"
-              value={entry.degreeObtained}
-              onChange={(e) =>
-                handleInputChange(index, 'degreeObtained', e.target.value)
+            <CustomSelect
+              options={degreeOptions}
+              value={entry.degreeType}
+              onChange={(value) =>
+                handleInputChange(index, 'degreeType', value)
               }
+              placeholder="Select your degree type"
             />
           </div>
           <div className="profile_pageone_form_item">

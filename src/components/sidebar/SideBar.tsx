@@ -31,7 +31,11 @@ const containerVariants = {
   },
 };
 
-const Sidebar = () => {
+interface Props {
+  examInProgress: boolean;
+}
+
+const Sidebar: React.FC<Props> = ({ examInProgress }) => {
   const containerControls = useAnimationControls();
   const location = useLocation();
   const pathname = location.pathname;
@@ -48,14 +52,13 @@ const Sidebar = () => {
     <motion.nav
       variants={containerVariants}
       animate={containerControls}
-      className="sidebar"
+      className="sidebar "
     >
       <div className="sidebar_header">
         <img
           src="/images/ProficioNextLogo.png"
-          alt=""
+          alt="Proficio Next "
           className="proficioNext_logo_size"
-          onClick={() => navigator('/')}
           loading="lazy"
         />
       </div>
@@ -67,6 +70,7 @@ const Sidebar = () => {
             pathname.startsWith(`${baseRoute}/overview`)
           }
           link={`${baseRoute}`}
+          disabled={examInProgress}
         >
           <SidebarOverviewIcon
             color={
@@ -81,6 +85,7 @@ const Sidebar = () => {
           name="Evaluation"
           isActive={pathname.startsWith(`${baseRoute}/evaluation`)}
           link={`${baseRoute}/evaluation`}
+          disabled={examInProgress}
         >
           <SidebarEvaluationIcon
             color={
@@ -94,6 +99,7 @@ const Sidebar = () => {
           name="Progress"
           isActive={pathname.startsWith(`${baseRoute}/progress`)}
           link={`${baseRoute}/progress`}
+          disabled={examInProgress}
         >
           <SidebarProgress
             color={
@@ -107,6 +113,7 @@ const Sidebar = () => {
           name="Skill Gap"
           isActive={pathname.startsWith(`${baseRoute}/skill-gap`)}
           link={`${baseRoute}/skill-gap`}
+          disabled={examInProgress}
         >
           <SidebarSkillGapIcon
             color={
@@ -120,6 +127,7 @@ const Sidebar = () => {
           name="Profile"
           isActive={pathname.startsWith(`${baseRoute}/profile`)}
           link={`${baseRoute}/profile`}
+          disabled={examInProgress}
         >
           <SidebarProfileIcon
             color={
@@ -131,7 +139,14 @@ const Sidebar = () => {
         </NavigationLink>
       </div>
       <div className="logout_btn_container">
-        <div className="logout_btn" onClick={handleLogout}>
+        <div
+          className="logout_btn"
+          onClick={examInProgress ? undefined : handleLogout}
+          style={{
+            cursor: examInProgress ? 'not-allowed' : '',
+            opacity: examInProgress ? '0.5' : '',
+          }}
+        >
           <LogOutIcon />
           <div style={{ paddingLeft: '20px', paddingBottom: '6px' }}>
             Log Out
