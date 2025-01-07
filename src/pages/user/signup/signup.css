@@ -318,6 +318,13 @@
   }
 }
 
+@media (max-width: 425px) {
+  .verify_account_otp_input {
+    width: 46px;
+    height: 50px;
+  }
+}
+
 @media (max-width: 375px) {
   .right_verifyAccount_content,
   .right_signup_content {
