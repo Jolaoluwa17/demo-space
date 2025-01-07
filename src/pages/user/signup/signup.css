@@ -335,3 +335,10 @@
     height: 50px;
   }
 }
+
+/* Login styling */
+.other_login_options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

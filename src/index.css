@@ -82,6 +82,12 @@ body {
   cursor: pointer;
 }
 
+.back_to_signup {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .proficioNext_logo_size {
     width: 210px;

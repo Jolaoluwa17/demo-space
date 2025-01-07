@@ -4,8 +4,6 @@ import { BiSolidErrorAlt } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
 
 import './login.css';
-import EyeOpen from '@/icons/Eye';
-import EyeClosed from '@/icons/EyeClosed';
 import {
   useLoginMutation,
   useRequestCodeMutation,
@@ -14,6 +12,8 @@ import {
   setAuthState,
   setCredentials,
 } from '@/services/features/auth/authSlice';
+import { IoEye, IoEyeOff } from 'react-icons/io5';
+import { FcGoogle } from 'react-icons/fc';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -118,123 +118,129 @@ const Login = () => {
   };
 
   return (
-    <div className="login_root" onKeyDown={handleKeyDown} tabIndex={0}>
-      <div className="login_container">
-        <div className="left">
-          <div className="techwings_logo_login">
-            <img
-              src="/images/ProficioNextLogo.png"
-              alt=""
-              className="proficioNext_logo_size"
-              onClick={() => navigate('/')}
-              loading="lazy"
-            />
+    <div className="signup_root" onKeyDown={handleKeyDown} tabIndex={0}>
+      <div className="right">
+        <div className="right_signup_content">
+          <div className="signup_techwings_logo">
+            <div className="signup_logo_absolute">
+              <img
+                src="/images/ProficioNextLogo.png"
+                alt=""
+                className="proficioNext_logo_size"
+              />
+            </div>
           </div>
-          <div className="login_title_container">
-            <div className="login_title">Login</div>
-          </div>
-          <div className="login_sub_title">
+          <div className="signup_title">Login</div>
+          <div className="signup_subTitle">
             Please provide the information below to login and access your
             account
           </div>
-          <div className="login_form_item">
-            <label htmlFor="">Enter Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => handleEmailChange(e.target.value)}
-              placeholder="ysemiraefe@gmail.com"
-              disabled={isLoading}
-            />
-          </div>
-          <div className="login_form_item">
-            <label htmlFor="">Enter Password</label>
-            <div style={{ position: 'relative' }}>
+          <div className="signup_form">
+            <div className="signup_form_item">
+              <label htmlFor="email">Enter Email</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={handlePasswordChange}
-                placeholder="************"
+                type="email"
+                name="email"
+                placeholder="ysemiraefe@gmail.com"
+                className="input"
+                value={email}
+                onChange={(e) => handleEmailChange(e.target.value)}
                 disabled={isLoading}
               />
-              <div
-                className="login_password_visibility"
-                onClick={handleHiddenTrigger}
-              >
-                {showPassword ? <EyeOpen /> : <EyeClosed />}
+            </div>
+            <div className="signup_form_item">
+              <label htmlFor="email">Enter Password</label>
+              <div style={{ position: 'relative' }}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  placeholder="************"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  disabled={isLoading}
+                />
+                <div
+                  onClick={handleHiddenTrigger}
+                  className="password_visibility"
+                >
+                  {showPassword ? (
+                    <IoEye
+                      className="password_visibility_icon"
+                      color="#818181"
+                    />
+                  ) : (
+                    <IoEyeOff
+                      className="password_visibility_icon"
+                      color="#818181"
+                    />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="login_configurations">
-            <div className="remember_me">
-              <input
-                type="checkbox"
-                style={{ cursor: 'pointer' }}
-                onChange={handleRememberMeChange}
-              />
-              <div style={{ marginLeft: '8px' }}>Remember me</div>
+            {errMsg && (
+              <div
+                className="error_message"
+                style={{ marginTop: '-10px', marginBottom: '20px' }}
+              >
+                <BiSolidErrorAlt
+                  fontSize={18}
+                  style={{ paddingRight: '5px' }}
+                />
+                {errMsg}
+              </div>
+            )}
+
+            <div className="other_login_options">
+              <div className="TOS_container">
+                <input type="checkbox" onChange={handleRememberMeChange} />
+                <div className="TOS">Rememeber me</div>
+              </div>
+              <div
+                className="TOS"
+                style={{ color: '#FF8682', cursor: 'pointer' }}
+                onClick={() => navigate('/auth/forgotpassword')}
+              >
+                Forgot Password
+              </div>
             </div>
+            <button
+              className="create_acc_btn"
+              style={{
+                backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
+                cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
+              }}
+              onClick={handleLogin}
+              disabled={!isFormValid || isLoading}
+            >
+              {isLoading ? <div className="spinner"></div> : 'Login'}
+            </button>
             <div
-              className="forgot_password_btn"
-              style={{ color: '#FF8682', cursor: 'pointer', fontSize: '14px' }}
-              onClick={() => navigate('/auth/forgotpassword')}
+              className="already_have_acc"
+              style={{ marginTop: '30px', marginBottom: '30px' }}
             >
-              Forgot Password
+              Don't have an account?{' '}
+              <span
+                style={{
+                  color: '#FF8682',
+                  cursor: 'pointer',
+                }}
+                onClick={() => navigate('/auth/signup')}
+              >
+                Signup
+              </span>
+            </div>
+            <div className="or_sign_up_with" style={{ marginBottom: '30px' }}>
+              <hr />
+              <span>or login with</span>
+              <hr />
+            </div>
+            <div className="google_sign">
+              <FcGoogle size={20} />
             </div>
           </div>
-          <button
-            className="login_btn"
-            style={{
-              backgroundColor: isFormValid && !isLoading ? '#007BFF' : 'grey',
-              cursor: isFormValid && !isLoading ? 'pointer' : 'not-allowed',
-            }}
-            onClick={handleLogin}
-            disabled={!isFormValid || isLoading}
-          >
-            {isLoading ? <div className="spinner"></div> : 'Login'}
-          </button>
-          {errMsg && (
-            <div className="error_message">
-              <BiSolidErrorAlt fontSize={18} style={{ paddingRight: '5px' }} />
-              {errMsg}
-            </div>
-          )}
-          <div className="donot_have_acc">
-            Don't have an account?{' '}
-            <span
-              style={{ color: '#FF8682', cursor: 'pointer', fontWeight: '600' }}
-              onClick={() => navigate('/auth/signup')}
-            >
-              Sign up
-            </span>
-          </div>
-          {/* <div className="or_login">
-            <hr />
-            <div style={{ padding: '0px 10px', textAlign: 'center' }}>
-              Or login with
-            </div>
-            <hr />
-          </div> */}
-          {/* <div className="login_options">
-            <div className="login_options_button">
-              <img src="/images/Google.svg" alt="login_image" />
-            </div>
-            <div className="login_options_button">
-              <img src="/images/Apple.svg" alt="login_image" />
-            </div>
-          </div> */}
-          <div className="image_container"></div>
-        </div>
-        <div className="right">
-          <img
-            src="/images/Login.png"
-            alt="login_image"
-            className="login_img"
-            style={{ borderRadius: '10px', position: 'inherit' }}
-            loading="lazy"
-          />
         </div>
       </div>
+      <div className="left"></div>
     </div>
   );
 };
