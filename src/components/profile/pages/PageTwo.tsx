@@ -124,9 +124,9 @@ const PageTwo: React.FC<Props> = ({
             <label htmlFor={`degree-${index}`}>Degree Obtained</label>
             <CustomSelect
               options={degreeOptions}
-              value={entry.degreeType}
+              value={entry.degreeObtained}
               onChange={(value) =>
-                handleInputChange(index, 'degreeType', value)
+                handleInputChange(index, 'degreeObtained', value)
               }
               placeholder="Select your degree type"
             />

@@ -37,7 +37,7 @@ interface Certification {
 const Profile = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 6;
 
   const getTabFromPage = (page: number) => {
@@ -82,33 +82,30 @@ const Profile = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const tab = queryParams.get('tab');
-
-    if (tab) {
+    const currentTab = getTabFromPage(currentPage);
+  
+    if (tab && tab !== currentTab) {
       const page = getPageFromTab(tab);
       setCurrentPage(page);
-    } else {
+    } else if (!tab) {
       navigate(`/user-profile?tab=personal-information`, { replace: true });
     }
-  }, [location.search, navigate]);
+  }, [location.search, navigate, currentPage]);
 
-  // Sync URL with currentPage when currentPage changes
-  useEffect(() => {
-    const currentTab = getTabFromPage(currentPage);
-    const currentSearchParams = new URLSearchParams(location.search);
-    const existingTab = currentSearchParams.get('tab');
-
-    if (existingTab !== currentTab) {
-      navigate(`/user-profile?tab=${currentTab}`, { replace: true });
-    }
-  }, [currentPage, navigate, location.search]);
-
+  // Modify the page change handler to update URL directly
   const handlePageChange = (page: number) => {
+    const newTab = getTabFromPage(page);
+    navigate(`/user-profile?tab=${newTab}`, { replace: true });
     setCurrentPage(page);
   };
 
+  // Modify back button handler to use the same pattern
   const handleBackButtonClick = () => {
     if (currentPage > 1) {
-      handlePageChange(currentPage - 1);
+      const newPage = currentPage - 1;
+      const newTab = getTabFromPage(newPage);
+      navigate(`/user-profile?tab=${newTab}`, { replace: true });
+      setCurrentPage(newPage);
     }
   };
 
@@ -278,7 +275,7 @@ const Profile = () => {
         <div className="content">
           {currentPage === 1 && (
             <Pageone
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={handlePageChange}
               fullName={fullName}
               setFullName={setFullName}
               phoneNo={phoneNo}
@@ -295,7 +292,7 @@ const Profile = () => {
           )}
           {currentPage === 2 && (
             <PageTwo
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={handlePageChange}
               educationEntries={educationEntries}
               setEducationEntries={setEducationEntries}
               isLoading={isLoading}
@@ -303,7 +300,7 @@ const Profile = () => {
           )}
           {currentPage === 3 && (
             <PageThree
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={handlePageChange}
               skillSet={skillSet}
               setSkillSet={setSkillSet}
               isLoading={isLoading}
@@ -311,7 +308,7 @@ const Profile = () => {
           )}
           {currentPage === 4 && (
             <PageFour
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={handlePageChange}
               areaOfInterest={areaOfInterest}
               setAreaOfInterest={setAreaOfInterest}
               isLoading={isLoading}
@@ -319,7 +316,7 @@ const Profile = () => {
           )}
           {currentPage === 5 && (
             <PageFive
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={handlePageChange}
               entries={entries}
               setEntries={setEntries}
               isLoading={isLoading}

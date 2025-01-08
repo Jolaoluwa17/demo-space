@@ -87,7 +87,7 @@ const Signup = () => {
       console.log(error);
       const err = error as ErrorResponse;
       setErr(
-        err.data.response === 'User already exists'
+        err.data.error === 'User with this email already exists.'
           ? 'User already exists'
           : 'Something went wrong'
       );

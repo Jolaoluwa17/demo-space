@@ -39,7 +39,7 @@ const Pageone: React.FC<Props> = ({
   const [lastName, setLastName] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
-  // Split the fullName into firstName and lastName
+  // Initialize firstName and lastName from fullName once
   useEffect(() => {
     if (fullName) {
       const nameParts = fullName.split(' ');
@@ -48,11 +48,15 @@ const Pageone: React.FC<Props> = ({
     }
   }, [fullName]);
 
-  // Update fullName in the parent whenever firstName or lastName changes
-  useEffect(() => {
-    const updatedFullName = `${lastName} ${firstName}`;
-    setFullName(updatedFullName);
-  }, [firstName, lastName, setFullName]);
+  const handleFirstNameChange = (value: string) => {
+    setFirstName(value);
+    setFullName(`${lastName} ${value}`); // Update fullName in the parent
+  };
+
+  const handleLastNameChange = (value: string) => {
+    setLastName(value);
+    setFullName(`${value} ${firstName}`); // Update fullName in the parent
+  };
 
   const handleRemoveImage = () => {
     setImage(null);
@@ -81,7 +85,7 @@ const Pageone: React.FC<Props> = ({
           name="firstName"
           className="profile_pageone_input"
           value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) => handleFirstNameChange(e.target.value)}
         />
       </div>
 
@@ -93,7 +97,7 @@ const Pageone: React.FC<Props> = ({
           name="lastName"
           className="profile_pageone_input"
           value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) => handleLastNameChange(e.target.value)}
         />
       </div>
 

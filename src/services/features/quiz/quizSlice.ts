@@ -9,9 +9,10 @@ export const quizSlice = apiSlice.injectEndpoints({
       }),
     }),
     getQuizQuestion: builder.query({
-      query: (id) => ({
-        url: `question/${id}`,
+      query: ({ userId, quizId }) => ({
+        url: `question/${quizId}`,
         method: 'GET',
+        params: { userId, quizId },
       }),
     }),
     createQuiz: builder.mutation({

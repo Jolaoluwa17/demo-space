@@ -87,6 +87,21 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
   const [success, setIsSuccess] = useState(false);
   const [onlineStatusMessage, setOnlineStatusMessage] = useState<string>('');
 
+  const [shouldClear, setShouldClear] = useState(true);
+
+  useEffect(() => {
+    if (shouldClear) {
+      const countDownTimer = sessionStorage.getItem('countdownTime');
+      const answers = sessionStorage.getItem('answers');
+
+      if (countDownTimer || answers) {
+        sessionStorage.removeItem('countdownTime');
+        sessionStorage.removeItem('answers');
+      }
+      setShouldClear(false);
+    }
+  }, [shouldClear]);
+
   // Initialize assessment duration
   useEffect(() => {
     if (assessmentData) {
@@ -102,8 +117,10 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
 
   // Timer effect that updates both state and sessionStorage
   useEffect(() => {
-    // Store the current time in sessionStorage when the time updates
-    sessionStorage.setItem('countdownTime', time.toString());
+    if (!shouldClear) {
+      // Only set storage if we're not clearing
+      sessionStorage.setItem('countdownTime', time.toString());
+    }
 
     const timer = setInterval(() => {
       if (time > 0) {
@@ -112,7 +129,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [time]);
+  }, [time, shouldClear]);
 
   // Initialize current question index
   useEffect(() => {
@@ -280,22 +297,9 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       updatedAnswers[currentQuestionIndex] = option;
 
       sessionStorage.setItem('answers', JSON.stringify(updatedAnswers));
-      localStorage.setItem('answers', JSON.stringify(updatedAnswers));
-      localStorage.setItem('quizId', JSON.stringify(id));
       return updatedAnswers;
     });
   };
-
-  useEffect(() => {
-    // Check if the timestamp exists in localStorage
-    const storedTimestamp = localStorage.getItem('answersTimestamp');
-
-    // If the timestamp is not set, store the current timestamp
-    if (!storedTimestamp) {
-      const timestamp = Date.now();
-      localStorage.setItem('answersTimestamp', JSON.stringify(timestamp));
-    }
-  }, []);
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex === null) return;
@@ -317,7 +321,10 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
   };
 
   const handleSubmit = async () => {
+    console.log('handle submit starting');
     if (!questionsData?.data) return;
+
+    console.log('handle submit active');
 
     let userScore = 0;
     questionsData.data.forEach((question: Question, index: number) => {
@@ -337,11 +344,14 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       answer: answers,
     };
 
+    console.log(resultData);
+
     try {
       const res = await result(resultData).unwrap();
       navigate('/dashboard/evaluation/status', {
         state: { score: userScore, noQuestions: totalQuestions },
       });
+      console.log('submitted successfully');
       setErrMsg(
         res.response === 'Result already submitted for this quiz'
           ? 'Quiz has been done'
@@ -358,57 +368,6 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       console.error(error);
     }
   };
-
-  // useEffect to submit answers if the user leaves the website
-  useEffect(() => {
-    // Check if answers and timestamp exist in localStorage
-    const storedAnswers = localStorage.getItem('answers');
-    const storedTimestamp = localStorage.getItem('answersTimestamp');
-    const quizId = localStorage.getItem('quizId');
-
-    console.log(quizId);
-
-    if (
-      storedAnswers &&
-      storedTimestamp &&
-      quizId &&
-      !isNaN(Number(quizId)) === !isNaN(Number(id))
-    ) {
-      console.log('hi');
-      const parsedAnswers = JSON.parse(storedAnswers);
-      const timestamp = JSON.parse(storedTimestamp);
-      const currentTime = Date.now();
-      console.log('valid quiz id');
-
-      // Check if the timestamp is expired based on the duration of the assessment
-      if (assessmentData) {
-        const selectedAssessment = assessmentData.response.find(
-          (item: Assessment) => item._id === id
-        );
-
-        if (selectedAssessment) {
-          const expirationTime = selectedAssessment.duration * 60 * 1000;
-          const timeDifference = currentTime - timestamp; // Calculate the time difference between current time and the saved timestamp
-
-          // If the time difference is greater than the expiration time, it's expired
-          if (timeDifference > expirationTime) {
-            console.log('time difference valid');
-            console.log(parsedAnswers);
-            setAnswers(parsedAnswers);
-            setSelectedOptions(parsedAnswers);
-            handleSubmit();
-            // Optionally, clear answers if expired
-            localStorage.removeItem('answers');
-            localStorage.removeItem('answersTimestamp');
-          } else {
-            // Restore answers if not expired
-            // Pass answers to the state
-            setAnswers(parsedAnswers);
-          }
-        }
-      }
-    }
-  }, [id]);
 
   if (questionsLoading || assessmentLoading || currentQuestionIndex === null) {
     return (

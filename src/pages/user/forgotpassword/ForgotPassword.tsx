@@ -6,6 +6,7 @@ import { IoInformationCircleSharp } from 'react-icons/io5';
 
 import './forgotPassword.css';
 import { useForgotPasswordMutation } from '@/services/features/auth/authApiSlice';
+import ErrorResponse from '@/types/ErrorResponse';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -39,8 +40,12 @@ const ForgotPassword = () => {
       setIsSuccess(true);
       setEmail('');
     } catch (error: unknown) {
-      setErr('Something went wrong');
-      console.log(error);
+      const err = error as ErrorResponse;
+      setErr(
+        err.data.error === 'User with the given email not found'
+          ? 'User already exists'
+          : 'Something went wrong'
+      );
     }
   };
 
