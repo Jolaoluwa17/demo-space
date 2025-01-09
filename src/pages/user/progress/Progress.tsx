@@ -35,12 +35,34 @@ const Progress = () => {
   };
 
   const filteredResults =
-    resultsData?.response.filter(
-      (item: {
-        userId: { _id: string } | null;
-        quizId: { _id: string } | null;
-      }) => item.quizId && item.userId && item.userId._id === userId
-    ) || [];
+    resultsData?.response
+      .filter(
+        (item: {
+          userId: { _id: string } | null;
+          quizId: { _id: string } | null;
+        }) => item.quizId && item.userId && item.userId._id === userId
+      )
+      .reduce(
+        (
+          uniqueItems: {
+            quizId: { _id: string; course: string; category: string };
+            userId: { _id: string };
+          }[],
+          currentItem: {
+            quizId: { _id: string; course: string; category: string };
+            userId: { _id: string };
+          }
+        ) => {
+          const isDuplicate = uniqueItems.some(
+            (item) => item.quizId._id === currentItem.quizId._id
+          );
+          if (!isDuplicate) {
+            uniqueItems.push(currentItem);
+          }
+          return uniqueItems;
+        },
+        []
+      ) || [];
 
   return (
     <div className="progress_root">
@@ -76,6 +98,7 @@ const Progress = () => {
                   language={card.quizId.course}
                   description={description}
                   category={card.quizId.category}
+                  disabled={true}
                   onClick={() =>
                     handleCardClick(
                       card.quizId._id,
