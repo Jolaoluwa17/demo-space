@@ -14,6 +14,7 @@ const Status = () => {
 
   const { data: totalAttemptData, isLoading: totalAttemptsLoading } =
     useTotalAttemptsQuery({ userId: userId, quizId: quizId });
+  console.log(totalAttemptData);
 
   const [percentage, setPercentage] = useState<number | null>(null);
 
@@ -50,16 +51,15 @@ const Status = () => {
               ) : (
                 <div className="status_statement">
                   You have another opportunity to improve your performance. Take
-                  <br />
                   some time to review and retake the quiz to improve your score.
                 </div>
               )}
               {totalAttemptData.response.noOfRetake === 3 ? (
                 <div
                   className="navigation_btn"
-                  onClick={() => navigate('/dashboard')}
+                  onClick={() => navigate('/dashboard/skill-gap')}
                 >
-                  Go to dashboard
+                  Go to Skill Gap program
                   <div className="navigation_arrow">
                     <NavigationArrow />
                   </div>
@@ -67,9 +67,9 @@ const Status = () => {
               ) : (
                 <div
                   className="navigation_btn"
-                  onClick={() => navigate('/dashboard/skill-gap')}
+                  onClick={() => navigate('/dashboard')}
                 >
-                  Go to Skill Gap program
+                  Go to dashboard
                   <div className="navigation_arrow">
                     <NavigationArrow />
                   </div>

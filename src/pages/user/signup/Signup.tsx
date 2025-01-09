@@ -160,7 +160,11 @@ const Signup = () => {
                   value={password}
                   onChange={handlePasswordChange}
                   disabled={isLoading}
-                  style={samePassword ? {} : { border: '1px solid red' }}
+                  style={
+                    samePassword
+                      ? {}
+                      : { border: '1px solid red', outline: 'none' }
+                  }
                 />
                 <div
                   onClick={handleHiddenTrigger}
@@ -180,23 +184,25 @@ const Signup = () => {
                 </div>
               </div>
             </div>
-            <div
-              className="password_indicator_option"
-              style={{
-                color:
-                  hasMinLength &&
-                  hasUppercase &&
-                  hasLowercase &&
-                  hasSpecialChar &&
-                  hasNumber
-                    ? 'green'
-                    : 'red',
-              }}
-            >
-              Your password must be at least 8 characters long, have at least 1
-              capital letter, have at least 1 lowercase letter, have at least 1
-              special character, and must have at least 1 number
-            </div>
+            {password.length > 0 && (
+              <div
+                className="password_indicator_option"
+                style={{
+                  color:
+                    hasMinLength &&
+                    hasUppercase &&
+                    hasLowercase &&
+                    hasSpecialChar &&
+                    hasNumber
+                      ? 'green'
+                      : 'red',
+                }}
+              >
+                Your password must be at least 8 characters long, have at least
+                1 capital letter, have at least 1 lowercase letter, have at
+                least 1 special character, and must have at least 1 number
+              </div>
+            )}
             <div className="signup_form_item">
               <label htmlFor="email">Confirm Password</label>
               <div style={{ position: 'relative' }}>
@@ -207,7 +213,11 @@ const Signup = () => {
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
                   disabled={isLoading}
-                  style={samePassword ? {} : { border: '1px solid red' }}
+                  style={
+                    samePassword
+                      ? {}
+                      : { border: '1px solid red', outline: 'none' }
+                  }
                 />
                 <div
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}

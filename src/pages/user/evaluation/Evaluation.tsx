@@ -65,8 +65,6 @@ const Evaluation = () => {
         return activeFilter === 'All' || card.category === activeFilter;
       }) || [];
 
-  console.log(filteredSkills);
-
   return (
     <div className="evaluation_root">
       {isLoading ? (

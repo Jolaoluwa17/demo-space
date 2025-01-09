@@ -21,6 +21,13 @@ export const resultSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getResultByUserIdAndQuizId: builder.query({
+      query: ({ userId, quizId }) => ({
+        url: `result/userresult/${userId}`,
+        method: 'GET',
+        params: { userId, quizId },
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -29,4 +36,5 @@ export const {
   useCreateResultMutation,
   useGetAllResultsQuery,
   useGetResultByUserIdQuery,
+  useGetResultByUserIdAndQuizIdQuery,
 } = resultSlice;
