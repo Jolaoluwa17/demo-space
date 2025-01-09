@@ -90,7 +90,10 @@ const Status = () => {
                 receive an email with login details to access <br /> VetPro, our
                 job portal website.
               </div>
-              <div className="navigation_btn">
+              <div
+                className="navigation_btn"
+                onClick={() => navigate('/dashboard')}
+              >
                 Back to home
                 <div className="navigation_arrow">
                   <NavigationArrow />
