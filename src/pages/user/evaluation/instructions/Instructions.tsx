@@ -37,6 +37,7 @@ const Instructions = () => {
     'Review your answers before submitting.',
     'Ensure your internet connection is stable. If it goes offline, you will be stuck on the current question, and the timer will continue counting down.',
     'A notification will pop up if your internet connection is lost or restored.',
+    'Do not refresh your page during the quiz. If the page refreshes, one of your attempts to take the quiz will be used.',
   ];
 
   const quizAttempt = [
