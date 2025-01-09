@@ -11,6 +11,7 @@ import {
 import './instruction.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
+import { useTotalAttemptsQuery } from '@/services/features/quiz/quizSlice';
 
 interface Result {
   userId: {
@@ -47,15 +48,33 @@ const Instructions = () => {
     'A notification will pop up if your internet connection is lost or restored.',
   ];
 
+  const quizAttempt = [
+    'Every participant has a maximum of 3 attempts to complete the quiz.',
+    'If the Start Evaluation button is clicked and you leave the website before submitting, one of your attempts will be used, and your score for that quiz will be recorded as 0.',
+  ];
+
   const {
     data: resultsData,
     refetch: refetchResults,
     isLoading,
   } = useGetAllResultsQuery({});
 
+  const { data: totalAttemptData, isLoading: totalAttemptsLoading } =
+    useTotalAttemptsQuery({ userId: userid, quizId: id });
+
   useEffect(() => {
     refetchResults();
   }, [refetchResults]);
+
+  useEffect(() => {
+    const countDownTimer = sessionStorage.getItem('countdownTime');
+    const answers = sessionStorage.getItem('answers');
+
+    if (countDownTimer || answers) {
+      sessionStorage.removeItem('countdownTime');
+      sessionStorage.removeItem('answers');
+    }
+  }, []);
 
   // Filter results based on the userId
   const filteredResults =
@@ -69,7 +88,7 @@ const Instructions = () => {
     if (!resultDate) return null;
 
     const targetDate = new Date(resultDate);
-    targetDate.setDate(targetDate.getDate() + 30); // Add 30 days
+    targetDate.setMonth(targetDate.getMonth() + 3); // Add 3 months
 
     const now = new Date();
     if (targetDate <= now) return null; // Timer expired
@@ -86,15 +105,25 @@ const Instructions = () => {
   return (
     <div className="instructions_root">
       <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />
-      {isLoading ? (
+      {isLoading || totalAttemptsLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />
         </div>
       ) : (
         <div>
           <div className="instructions_content">
-            <div className="instructions_title">{course}</div>
-            {filteredResults.length > 0 && (
+            <div className="instruction_title_container">
+              <div className="instructions_title">{course}</div>
+              <div className="no_of_attempts_left">
+                No. of attempts left:{' '}
+                <span style={{ fontWeight: '600' }}>
+                  {!totalAttemptData
+                    ? '0'
+                    : 3 - totalAttemptData.response.noOfRetake}
+                </span>
+              </div>
+            </div>
+            {totalAttemptData.response.noOfRetake === 3 && (
               <div
                 className="taken_assessment_indicator"
                 style={{
@@ -107,29 +136,41 @@ const Instructions = () => {
                   style={{
                     paddingRight: '5px',
                     color:
-                      Number(filteredResults[0]?.score) < 69
+                      Number(3 - totalAttemptData.response.noOfRetake) < 1
                         ? 'red'
                         : '#28a745',
                   }}
                 />
-                {filteredResults[0]?.score > 69 ? (
-                  <span style={{ color: '#28a745' }}>Assessment taken</span>
-                ) : (
-                  timeLeft && (
-                    <span style={{ fontWeight: '600' }}>
-                      You can take the quiz again in{' '}
-                      {`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m`}
-                    </span>
-                  )
+                {totalAttemptData.response.noOfRetake === 3 && timeLeft && (
+                  <span style={{ fontWeight: '600' }}>
+                    Assessment limit maxed out time left before retake{' '}
+                    {`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m`}
+                  </span>
                 )}
               </div>
             )}
 
             <div className="instructions_subTitle">{description}</div>
+            <div
+              style={{ fontSize: '18px', fontWeight: '600', marginTop: '30px' }}
+            >
+              Instructions for the Evaluation:
+            </div>
             {instructions.map((instruction, index) => (
               <div key={index} className="instructions_text_container">
-                <p style={{ marginRight: '5px' }}>{index + 1}.</p>
-                <p className="instructions_text">{instruction}</p>
+                <div style={{ marginRight: '5px' }}>{index + 1}.</div>
+                <div className="instructions_text">{instruction}</div>
+              </div>
+            ))}
+            <div
+              style={{ fontSize: '18px', fontWeight: '600', marginTop: '30px' }}
+            >
+              Important: Quiz Attempt Limit
+            </div>
+            {quizAttempt.map((instruction, index) => (
+              <div key={index} className="instructions_text_container">
+                <div style={{ marginRight: '5px' }}>{index + 1}.</div>
+                <div className="instructions_text">{instruction}</div>
               </div>
             ))}
           </div>
@@ -138,23 +179,19 @@ const Instructions = () => {
               className="start_evaluation_btn"
               style={{
                 backgroundColor:
-                  filteredResults.length < 1 ||
                   !timeLeft ||
-                  filteredResults[0]?.score > 69
+                  Number(3 - totalAttemptData.response.noOfRetake) > 0
                     ? ''
                     : 'grey',
                 cursor:
-                  filteredResults.length < 1 ||
                   !timeLeft ||
-                  filteredResults[0]?.score > 69
+                  Number(3 - totalAttemptData.response.noOfRetake) > 0
                     ? 'pointer'
                     : 'not-allowed',
                 color: 'white',
               }}
               onClick={
-                filteredResults.length > 0 &&
-                timeLeft &&
-                filteredResults[0]?.score < 70
+                timeLeft && Number(3 - totalAttemptData.response.noOfRetake) < 1
                   ? undefined
                   : handleClick
               }

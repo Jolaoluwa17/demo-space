@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { IoClose, IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import { FcGoogle } from 'react-icons/fc';
 import { BiSolidErrorAlt } from 'react-icons/bi';
@@ -96,14 +95,24 @@ const Signup = () => {
 
   return (
     <div className="signup_root">
-      <div className="left"></div>
+      <div className="left">
+        <div className="right_P_side">
+          <img src="/images/rightPSide.svg" alt="" />
+        </div>
+        <div className="left_P_side">
+          <img src="/images/leftPSide.svg" alt="" />
+        </div>
+      </div>
       <div className="right">
         <div className="right_signup_content">
           <div className="signup_techwings_logo">
-            <div className="signup_logo_absolute">
+            <div
+              className="signup_logo_absolute"
+              onClick={() => navigator('/')}
+            >
               <img
                 src="/images/ProficioNextLogo.png"
-                alt=""
+                alt="Proficio Logo"
                 className="proficioNext_logo_size"
               />
             </div>
@@ -156,66 +165,23 @@ const Signup = () => {
                 </div>
               </div>
             </div>
-
-            {/* Password Validator */}
-            <div className="password_validator">
-              <div
-                className="password_indicator_option"
-                style={{ color: hasMinLength ? 'green' : 'red' }}
-              >
-                {hasMinLength ? (
-                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-                ) : (
-                  <IoClose style={{ paddingRight: '5px' }} />
-                )}
-                8 Characters
-              </div>
-              <div
-                className="password_indicator_option"
-                style={{ color: hasUppercase ? 'green' : 'red' }}
-              >
-                {hasUppercase ? (
-                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-                ) : (
-                  <IoClose style={{ paddingRight: '5px' }} />
-                )}
-                An Uppercase Letter
-              </div>
-              <div
-                className="password_indicator_option"
-                style={{ color: hasLowercase ? 'green' : 'red' }}
-              >
-                {hasLowercase ? (
-                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-                ) : (
-                  <IoClose style={{ paddingRight: '5px' }} />
-                )}
-                A Lowercase Letter
-              </div>
-              <div
-                className="password_indicator_option"
-                style={{ color: hasSpecialChar ? 'green' : 'red' }}
-              >
-                {hasSpecialChar ? (
-                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-                ) : (
-                  <IoClose style={{ paddingRight: '5px' }} />
-                )}
-                A Special Character
-              </div>
-              <div
-                className="password_indicator_option"
-                style={{ color: hasNumber ? 'green' : 'red' }}
-              >
-                {hasNumber ? (
-                  <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-                ) : (
-                  <IoClose style={{ paddingRight: '5px' }} />
-                )}
-                A Number
-              </div>
+            <div
+              className="password_indicator_option"
+              style={{
+                color:
+                  hasMinLength &&
+                  hasUppercase &&
+                  hasLowercase &&
+                  hasSpecialChar &&
+                  hasNumber
+                    ? 'green'
+                    : 'red',
+              }}
+            >
+              Your password must be at least 8 characters long, have at least 1
+              capital letter, have at least 1 lowercase letter, have at least 1
+              special character, and must have at least 1 number
             </div>
-
             <div className="signup_form_item">
               <label htmlFor="email">Confirm Password</label>
               <div style={{ position: 'relative' }}>

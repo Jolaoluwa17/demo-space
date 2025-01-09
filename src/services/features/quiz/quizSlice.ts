@@ -35,6 +35,13 @@ export const quizSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    totalAttempts: builder.query({
+      query: ({ userId, quizId }) => ({
+        url: `userquiz/${quizId}`,
+        method: 'GET',
+        params: { userId, quizId },
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -45,4 +52,5 @@ export const {
   useCreateQuizMutation,
   useCreateQuizQuestionMutation,
   useDeleteQuizMutation,
+  useTotalAttemptsQuery
 } = quizSlice;

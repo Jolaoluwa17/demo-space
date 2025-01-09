@@ -9,12 +9,20 @@
   border-radius: 14px;
   margin-top: 24px;
 }
+.instruction_title_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .instructions_title {
   font-size: 20px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.no_of_attempts_left {
+  font-size: 16px;
 }
 .taken_assessment_indicator {
   color: red;
@@ -34,6 +42,7 @@
 .instructions_text_container {
   display: flex;
   align-items: baseline;
+  margin-top: 10px;
 }
 .start_evaluation_btn_container {
   width: 100%;

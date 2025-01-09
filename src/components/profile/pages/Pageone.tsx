@@ -125,7 +125,7 @@ const Pageone: React.FC<Props> = ({
               </span>
             </div>
           </div>
-          <div style={{ color: 'red' }}>* optional</div>
+          <div style={{ color: 'red', fontSize: '14px' }}>* optional</div>
         </div>
       )}
       <input

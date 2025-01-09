@@ -87,21 +87,6 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
   const [success, setIsSuccess] = useState(false);
   const [onlineStatusMessage, setOnlineStatusMessage] = useState<string>('');
 
-  const [shouldClear, setShouldClear] = useState(true);
-
-  useEffect(() => {
-    if (shouldClear) {
-      const countDownTimer = sessionStorage.getItem('countdownTime');
-      const answers = sessionStorage.getItem('answers');
-
-      if (countDownTimer || answers) {
-        sessionStorage.removeItem('countdownTime');
-        sessionStorage.removeItem('answers');
-      }
-      setShouldClear(false);
-    }
-  }, [shouldClear]);
-
   // Initialize assessment duration
   useEffect(() => {
     if (assessmentData) {
@@ -117,10 +102,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
 
   // Timer effect that updates both state and sessionStorage
   useEffect(() => {
-    if (!shouldClear) {
-      // Only set storage if we're not clearing
-      sessionStorage.setItem('countdownTime', time.toString());
-    }
+    sessionStorage.setItem('countdownTime', time.toString());
 
     const timer = setInterval(() => {
       if (time > 0) {
@@ -129,7 +111,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [time, shouldClear]);
+  }, [time]);
 
   // Initialize current question index
   useEffect(() => {
@@ -349,7 +331,12 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     try {
       const res = await result(resultData).unwrap();
       navigate('/dashboard/evaluation/status', {
-        state: { score: userScore, noQuestions: totalQuestions },
+        state: {
+          score: userScore,
+          noQuestions: totalQuestions,
+          quizId: id,
+          userId: userid,
+        },
       });
       console.log('submitted successfully');
       setErrMsg(
@@ -361,11 +348,12 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     } catch (error: unknown) {
       const err = error as ErrorResponse;
       setErrMsg(
-        err?.data.error === 'Validation Error'
+        err?.data.response ===
+          'You can only create a new result for this quiz after 12/9/2024'
           ? 'Score not recorded'
           : 'Something went wrong'
       );
-      console.error(error);
+      console.log(error);
     }
   };
 

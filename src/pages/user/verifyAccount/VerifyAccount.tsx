@@ -128,14 +128,21 @@ const VerifyAccount = () => {
 
   return (
     <div className="signup_root">
-      <div className="left"></div>
+      <div className="left">
+        <div className="right_P_side">
+          <img src="/images/rightPSide.svg" alt="" />
+        </div>
+        <div className="left_P_side">
+          <img src="/images/leftPSide.svg" alt="" />
+        </div>
+      </div>
       <div className="right">
         <div className="right_verifyAccount_content">
           <div className="signup_techwings_logo">
-            <div className="signup_logo_absolute">
+            <div className="signup_logo_absolute" onClick={() => navigate('/')}>
               <img
                 src="/images/ProficioNextLogo.png"
-                alt=""
+                alt="ProficioNext Logo"
                 className="proficioNext_logo_size"
               />
             </div>

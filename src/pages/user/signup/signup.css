@@ -7,6 +7,17 @@
   width: 40%;
   height: 100%;
   background-color: #007bff;
+  position: relative;
+}
+.right_P_side {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.left_P_side {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
 }
 .signup_root .right {
   width: 60%;
@@ -20,8 +31,11 @@
 .right_signup_content {
   max-width: 640px;
   width: 100%;
-  max-height: 750px;
+  max-height: 720px;
   height: 100%;
+}
+.right_signup_content.right_login_content {
+  max-height: 600px;
 }
 .signup_title {
   font-size: 40px;
@@ -68,17 +82,12 @@
   font-size: 22px;
   cursor: pointer;
 }
-.password_validator {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 18px;
-  font-size: 14px;
-}
 .password_indicator_option {
   display: flex;
   align-items: center;
   font-size: 14px;
+  margin-bottom: 18px;
+  margin-top: -10px;
 }
 .TOS_container {
   display: flex;
@@ -189,16 +198,22 @@
   .signup_root .left {
     width: 0%;
   }
+  .right_P_side,
+  .left_P_side {
+    display: none;
+  }
   .signup_root .right {
     width: 100%;
   }
   .right_signup_content {
     max-width: 350px;
-    padding: 0px 24px;
+    padding: 0px 0px 24px 0px;
     width: 100%;
   }
+
   .signup_title {
     font-size: 28px;
+    margin-top: -50px;
   }
   .signup_subTitle,
   .TOS,
@@ -220,7 +235,7 @@
   }
   .signup_logo_absolute {
     position: absolute;
-    top: -30px;
+    top: -70px;
     left: -22px;
   }
 }
@@ -308,7 +323,7 @@
   .right_verifyAccount_content {
     max-width: 350px;
     width: 100%;
-    max-height: 550px;
+    max-height: 400px;
     height: 100%;
     padding: 0px 24px;
   }
