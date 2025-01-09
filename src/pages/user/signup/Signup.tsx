@@ -97,10 +97,25 @@ const Signup = () => {
     <div className="signup_root">
       <div className="left">
         <div className="right_P_side">
-          <img src="/images/rightPSide.svg" alt="" />
+          <img
+            src="/images/rightPSide.svg"
+            alt="design"
+            className="P_side_main"
+          />
         </div>
         <div className="left_P_side">
-          <img src="/images/leftPSide.svg" alt="" />
+          <img
+            src="/images/leftPSide.svg"
+            alt="design"
+            className="P_side_main"
+          />
+        </div>
+        <div className="proficio_next_logo_large">
+          <img
+            src="/images/ProfiocioNextLogo.png"
+            alt="Proficio Logo"
+            style={{ height: '100%' }}
+          />
         </div>
       </div>
       <div className="right">

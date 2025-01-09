@@ -8,6 +8,9 @@
   height: 100%;
   background-color: #007bff;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .right_P_side {
   position: absolute;
@@ -16,8 +19,12 @@
 }
 .left_P_side {
   position: absolute;
-  bottom: 0px;
+  bottom: -5px;
   left: 0px;
+}
+.proficio_next_logo_large {
+  height: 300px;
+  position: relative;
 }
 .signup_root .right {
   width: 60%;
@@ -150,6 +157,29 @@
   .right_signup_content {
     max-width: 540px;
   }
+  .proficio_next_logo_large {
+    height: 250px;
+  }
+  .right_P_side {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
+  .P_side_main {
+    height: 150px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .proficio_next_logo_large {
+    height: 200px;
+  }
+}
+
+@media (max-width: 1085px) {
+  .P_side_main {
+    height: 120px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -184,6 +214,12 @@
   .right_signup_content {
     max-width: 380px;
   }
+  .proficio_next_logo_large {
+    height: 150px;
+  }
+  .P_side_main {
+    height: 100px;
+  }
   .or_sign_up_with hr {
     width: 30%;
   }
@@ -199,7 +235,8 @@
     width: 0%;
   }
   .right_P_side,
-  .left_P_side {
+  .left_P_side,
+  .proficio_next_logo_large {
     display: none;
   }
   .signup_root .right {
@@ -262,7 +299,7 @@
 /* Verify Account Styling */
 .right_verifyAccount_content {
   max-width: 430px;
-  max-height: 450px;
+  max-height: 400px;
   width: 100%;
   height: 100%;
 }
@@ -297,7 +334,6 @@
   .right_verifyAccount_content {
     max-width: 350px;
     width: 100%;
-    max-height: 450px;
     height: 100%;
   }
   .verify_account_back_to_login {
@@ -323,7 +359,6 @@
   .right_verifyAccount_content {
     max-width: 350px;
     width: 100%;
-    max-height: 400px;
     height: 100%;
     padding: 0px 24px;
   }
