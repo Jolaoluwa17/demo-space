@@ -65,6 +65,8 @@ const Evaluation = () => {
         return activeFilter === 'All' || card.category === activeFilter;
       }) || [];
 
+  console.log(filteredSkills);
+
   return (
     <div className="evaluation_root">
       {isLoading ? (
@@ -89,13 +91,17 @@ const Evaluation = () => {
           <div className="evaluation_skills_container">
             {/* Display filtered skills */}
             {filteredSkills.map(
-              (card: { _id: string; course: string }, index: number) => {
+              (
+                card: { _id: string; course: string; category: string },
+                index: number
+              ) => {
                 const description = getRandomDescription();
                 return (
                   <SkillsCard
                     key={index}
                     language={card.course}
                     description={description}
+                    category={card.category}
                     onClick={() =>
                       handleCardClick(card._id, card.course, description)
                     }
