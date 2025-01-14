@@ -62,14 +62,12 @@ const ForgotPassword = () => {
       </div>
       <div className="forgotpassword_container">
         <div className="forgotpassword_form">
-          <div className="back_to_signup">
+          <div
+            className="back_to_signup underline_link"
+            onClick={() => navigator('/auth/login')}
+          >
             <FaArrowLeftLong />
-            <div
-              style={{ marginLeft: '12px' }}
-              onClick={() => navigator('/auth/login')}
-            >
-              Back to login
-            </div>
+            <div style={{ marginLeft: '12px' }}>Back to login</div>
           </div>
           <div className="forgotpassword_title">Forgot your password?</div>
           <p>

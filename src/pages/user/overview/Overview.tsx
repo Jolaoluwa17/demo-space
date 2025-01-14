@@ -20,20 +20,25 @@ const Overview = () => {
   const navigate = useNavigate();
   const userid = sessionStorage.getItem('id');
 
-  const { data, isLoading } = useGetUserQuery(userid ? userid : '') as {
+  const { data, isLoading, isError } = useGetUserQuery(
+    userid ? userid : ''
+  ) as {
     data: UserType | undefined;
     isLoading: boolean;
+    isError: boolean;
   };
 
   const {
     data: assessmentData,
     isLoading: assessmentLoading,
     refetch: refetchAssessment,
+    isError: assessmentError,
   } = useGetAllAssessmentsQuery({});
   const {
     data: programsData,
     isLoading: programsDataLoading,
     refetch: refecthProgramsData,
+    isError: programDataError,
   } = useGetAllProgramsQuery({});
 
   const handleCardClick = (id: string, course: string, description: string) => {
@@ -61,7 +66,7 @@ const Overview = () => {
 
   return (
     <div className="overview_root">
-      {isLoading ? (
+      {isLoading || isError ? (
         <div className="skeleton_loader_overview_header"></div>
       ) : (
         <div className="overview_header">
@@ -100,7 +105,7 @@ const Overview = () => {
         <div className="overview_section_subTitle">
           Assess your abilities and identify areas for growth.
         </div>
-        {assessmentLoading ? (
+        {assessmentLoading || assessmentError ? (
           <div className="overview_section_card_container">
             <div className="skeleton_loader_overview_section_card"></div>
             <div className="skeleton_loader_overview_section_card"></div>
@@ -145,7 +150,7 @@ const Overview = () => {
         <div className="overview_section_subTitle">
           Enhance your skills with our comprehensive programs.
         </div>
-        {programsDataLoading ? (
+        {programsDataLoading || programDataError ? (
           <div className="overview_section_card_container">
             <div className="skeleton_loader_overview_section_card"></div>
             <div className="skeleton_loader_overview_section_card"></div>

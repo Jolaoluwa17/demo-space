@@ -5,8 +5,14 @@ import './pages.css';
 import EditProfileIcon from '@/icons/EditProfileIcon';
 
 interface Props {
-  fullName?: string;
-  setFullName?: (fullName: string) => void;
+  firstName: string;
+  setFirstName: (firstName: string) => void;
+  lastName: string;
+  setLastName: (lastName: string) => void;
+  linkedIn: string;
+  setLinkedIn: (linkedIn: string) => void;
+  github: string;
+  setGitHub: (github: string) => void;
   phoneNo?: string;
   setPhoneNo?: (phoneNo: string) => void;
   email?: string;
@@ -20,8 +26,14 @@ interface Props {
 }
 
 const PersonalInformation: React.FC<Props> = ({
-  fullName,
-  setFullName,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  linkedIn,
+  setLinkedIn,
+  github,
+  setGitHub,
   phoneNo,
   setPhoneNo,
   email,
@@ -38,9 +50,6 @@ const PersonalInformation: React.FC<Props> = ({
   const triggerFileUpload = () => {
     fileInputRef.current?.click();
   };
-
-  // Split fullName into first and last name
-  const [firstName, lastName] = fullName?.split(' ') || ['', ''];
 
   return (
     <div className="settings_content">
@@ -80,30 +89,24 @@ const PersonalInformation: React.FC<Props> = ({
         {/* Full Name Inputs */}
         <div className="profile_form_item_main_1">
           <div className="profile_form_item_1">
-            <label htmlFor="lastName">First Name</label>
-            <input
-              type="text"
-              className="profile_input_item"
-              name="lastName"
-              value={lastName}
-              onChange={(e) => {
-                const value = e.target.value;
-                setFullName?.(`${firstName} ${value}`);
-              }}
-              disabled={userDataIsLoading || isLoading}
-            />
-          </div>
-          <div className="profile_form_item_1">
-            <label htmlFor="firstName">Last Name</label>
+            <label htmlFor="firstName">First Name</label>
             <input
               type="text"
               className="profile_input_item"
               name="firstName"
-              value={firstName}
-              onChange={(e) => {
-                const value = e.target.value;
-                setFullName?.(`${value} ${lastName}`);
-              }}
+              value={firstName} // Attach `firstName` value
+              onChange={(e) => setFirstName(e.target.value)} // Update `firstName` value
+              disabled={userDataIsLoading || isLoading}
+            />
+          </div>
+          <div className="profile_form_item_1">
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              type="text"
+              className="profile_input_item"
+              name="lastName"
+              value={lastName} // Attach `lastName` value
+              onChange={(e) => setLastName(e.target.value)} // Update `lastName` value
               disabled={userDataIsLoading || isLoading}
             />
           </div>
@@ -118,6 +121,30 @@ const PersonalInformation: React.FC<Props> = ({
             name="phoneNo"
             value={phoneNo || ''}
             onChange={(e) => setPhoneNo?.(e.target.value)}
+            disabled={userDataIsLoading || isLoading}
+          />
+        </div>
+
+        <div className="profile_form_item">
+          <label htmlFor="github">GitHub</label>
+          <input
+            type="text"
+            className="profile_input_item"
+            name="github"
+            value={github || ''}
+            onChange={(e) => setGitHub?.(e.target.value)}
+            disabled={userDataIsLoading || isLoading}
+          />
+        </div>
+
+        <div className="profile_form_item">
+          <label htmlFor="linkedIn">LinkedIn</label>
+          <input
+            type="text"
+            className="profile_input_item"
+            name="linkedIn"
+            value={linkedIn || ''}
+            onChange={(e) => setLinkedIn?.(e.target.value)}
             disabled={userDataIsLoading || isLoading}
           />
         </div>

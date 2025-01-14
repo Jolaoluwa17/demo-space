@@ -21,6 +21,7 @@ const Progress = () => {
     data: resultsData,
     isLoading: resultDataLoading,
     refetch: resultRefetch,
+    isError: resultError,
   } = useGetAllResultsQuery({});
 
   const location = useLocation();
@@ -71,6 +72,17 @@ const Progress = () => {
         {resultDataLoading ? (
           <div className="loading_container">
             <FadeLoader color="#007BFF" />
+          </div>
+        ) : resultError ? (
+          <div className="nodata_container">
+            <img
+              src="/images/NoData.jpg"
+              alt="No Data"
+              style={{ width: '250px', height: '250px' }}
+            />
+            <div style={{ fontWeight: '600' }}>
+              Oops, No history at this time 😭
+            </div>
           </div>
         ) : filteredResults.length === 0 ? (
           <div className="nodata_container">

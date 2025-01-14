@@ -196,7 +196,7 @@ const Login = () => {
                 <div className="TOS">Rememeber me</div>
               </div>
               <div
-                className="TOS"
+                className="TOS underline_link"
                 style={{ color: '#FF8682', cursor: 'pointer' }}
                 onClick={() => navigate('/auth/forgotpassword')}
               >
@@ -224,6 +224,7 @@ const Login = () => {
                   color: '#FF8682',
                   cursor: 'pointer',
                 }}
+                className="underline_link"
                 onClick={() => navigate('/auth/signup')}
               >
                 Signup
@@ -255,7 +256,11 @@ const Login = () => {
             className="P_side_main"
           />
         </div>
-        <div className="proficio_next_logo_large">
+        <div
+          className="proficio_next_logo_large"
+          onClick={() => navigate('/')}
+          style={{ cursor: 'pointer' }}
+        >
           <img
             src="/images/ProfiocioNextLogo.png"
             alt="Proficio Logo"

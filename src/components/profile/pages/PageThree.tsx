@@ -135,9 +135,6 @@ const PageThree: React.FC<Props> = ({
           </div>
         ))}
       </div>
-      <div className="skip_btn" onClick={() => setCurrentPage(4)}>
-        Skip
-      </div>
       <button
         className={`next_btn`}
         onClick={() => setCurrentPage(4)}

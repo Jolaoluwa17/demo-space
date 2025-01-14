@@ -18,6 +18,7 @@ const Evaluation = () => {
     data: assessmentData,
     isLoading,
     refetch,
+    isError,
   } = useGetAllAssessmentsQuery({});
 
   const location = useLocation();
@@ -67,19 +68,43 @@ const Evaluation = () => {
 
   return (
     <div className="evaluation_root">
+      <SearchInput handleSearch={handleSearch} />
       {isLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />
         </div>
+      ) : isError ? ( // Check if there is an error
+        <div className="nodata_container">
+          <img
+            src="/images/NoData.jpg"
+            alt="No Data"
+            style={{ width: '250px', height: '250px' }}
+          />
+          <div style={{ fontWeight: '600' }}>
+            Oops, Failed to fetch assessment 😭
+          </div>
+        </div>
+      ) : filteredSkills.length === 0 ? ( // Check for no results
+        <div className="nodata_container">
+          <img
+            src="/images/NoData.jpg"
+            alt="No Data"
+            style={{ width: '250px', height: '250px' }}
+          />
+          <div style={{ fontWeight: '600' }}>
+            Oops, No programs available at this time 😭
+          </div>
+        </div>
       ) : (
         <div>
-          <SearchInput handleSearch={handleSearch} />
           <div className="evaluation_paginator">
             {/* Map categories dynamically */}
             {categories.map((filter, index) => (
               <div
                 key={index}
-                className={`evaluation_pagination_btn ${activeFilter === filter ? 'page_active' : ''}`}
+                className={`evaluation_pagination_btn ${
+                  activeFilter === filter ? 'page_active' : ''
+                }`}
                 onClick={() => setActiveFilter(filter)}
               >
                 {filter}

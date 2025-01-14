@@ -38,7 +38,7 @@ const Status = () => {
             <div className="status_container">
               <img src="/images/failure.svg" alt="failure" />
               <div className="status_grade_percentage_fail">
-                {percentage}/100
+                {percentage.toFixed(0)}/100
               </div>
               <div className="status_text">
                 Don't Worry! You didn't pass this time.
@@ -82,7 +82,8 @@ const Status = () => {
             <div className="status_container">
               <img src="/images/success.svg" alt="success" />
               <div className="status_grade_percentage_pass">
-                {percentage}/100
+                {percentage !== null ? `${percentage.toFixed(0)}` : 'N/A'}
+                /100
               </div>
               <div className="status_text">Congratulations!</div>
               <div className="status_statement">
@@ -94,7 +95,7 @@ const Status = () => {
                 className="navigation_btn"
                 onClick={() => navigate('/dashboard')}
               >
-                Back to home
+                Back to dashboard
                 <div className="navigation_arrow">
                   <NavigationArrow />
                 </div>

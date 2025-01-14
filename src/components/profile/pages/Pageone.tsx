@@ -6,8 +6,14 @@ import DeleteIcon from '@/icons/DeleteIcon';
 
 interface Props {
   setCurrentPage: (page: number) => void;
-  fullName: string; // Full Name from the backend
-  setFullName: (fullName: string) => void; // Function to update fullName in the parent
+  firstName: string;
+  setFirstName: (firstName: string) => void;
+  lastName: string;
+  setLastName: (lastName: string) => void;
+  linkedIn: string;
+  setLinkedIn: (linkedIn: string) => void;
+  github: string;
+  setGitHub: (github: string) => void;
   phoneNo: string;
   setPhoneNo: (phoneNo: string) => void;
   isLoading: boolean;
@@ -22,8 +28,14 @@ interface Props {
 
 const Pageone: React.FC<Props> = ({
   setCurrentPage,
-  fullName,
-  setFullName,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  linkedIn,
+  setLinkedIn,
+  github,
+  setGitHub,
   phoneNo,
   setPhoneNo,
   isLoading,
@@ -35,28 +47,7 @@ const Pageone: React.FC<Props> = ({
   handleFileChange,
   handleFileUpload,
 }) => {
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
-
-  // Initialize firstName and lastName from fullName once
-  useEffect(() => {
-    if (fullName) {
-      const nameParts = fullName.split(' ');
-      setLastName(nameParts[0]); // Last name is the first part
-      setFirstName(nameParts.slice(1).join(' ')); // First name is the remaining part
-    }
-  }, [fullName]);
-
-  const handleFirstNameChange = (value: string) => {
-    setFirstName(value);
-    setFullName(`${lastName} ${value}`); // Update fullName in the parent
-  };
-
-  const handleLastNameChange = (value: string) => {
-    setLastName(value);
-    setFullName(`${value} ${firstName}`); // Update fullName in the parent
-  };
 
   const handleRemoveImage = () => {
     setImage(null);
@@ -66,15 +57,20 @@ const Pageone: React.FC<Props> = ({
   // Form validation
   useEffect(() => {
     setIsFormValid(
-      firstName.trim() !== '' && lastName.trim() !== '' && phoneNo.trim() !== ''
+      firstName.trim() !== '' &&
+        lastName.trim() !== '' &&
+        phoneNo.trim() !== '' &&
+        (github.trim() !== '' || linkedIn.trim() !== '')
     );
-  }, [firstName, lastName, phoneNo]);
+  }, [firstName, lastName, phoneNo, github, linkedIn]);
 
   return (
     <div className="profile_pageone_root">
       <div className="profile_pageone_title">Personal Information</div>
       <div className="profile_pageone_subTitle">
-        This information will be used to create your personal profile.
+        This information will be used to create your personal profile. Please
+        either enter a github link or linkedIn link as this will further help us
+        to reach out to you
       </div>
 
       {/* First Name Input */}
@@ -85,7 +81,7 @@ const Pageone: React.FC<Props> = ({
           name="firstName"
           className="profile_pageone_input"
           value={firstName}
-          onChange={(e) => handleFirstNameChange(e.target.value)}
+          onChange={(e) => setFirstName(e.target.value)}
         />
       </div>
 
@@ -97,7 +93,7 @@ const Pageone: React.FC<Props> = ({
           name="lastName"
           className="profile_pageone_input"
           value={lastName}
-          onChange={(e) => handleLastNameChange(e.target.value)}
+          onChange={(e) => setLastName(e.target.value)}
         />
       </div>
 
@@ -110,6 +106,30 @@ const Pageone: React.FC<Props> = ({
           className="profile_pageone_input"
           value={phoneNo}
           onChange={(e) => setPhoneNo(e.target.value)}
+        />
+      </div>
+
+      {/* LinkedIn Input */}
+      <div className="profile_pageone_form_item">
+        <label htmlFor="linkedIn">LinkedIn</label>
+        <input
+          type="text"
+          name="linkedIn"
+          className="profile_pageone_input"
+          value={linkedIn}
+          onChange={(e) => setLinkedIn(e.target.value)}
+        />
+      </div>
+
+      {/* GitHub Input */}
+      <div className="profile_pageone_form_item">
+        <label htmlFor="github">GitHub</label>
+        <input
+          type="text"
+          name="github"
+          className="profile_pageone_input"
+          value={github}
+          onChange={(e) => setGitHub(e.target.value)}
         />
       </div>
 

@@ -80,7 +80,7 @@ const Signup = () => {
     const userData = { email, password };
     try {
       await signup(userData).unwrap();
-      dispatch(setCredentials({ email, password }));
+      dispatch(setCredentials({ email, password, userType: 'User' }));
       navigator('/auth/verifyaccount');
     } catch (error: unknown) {
       console.log(error);
@@ -110,7 +110,11 @@ const Signup = () => {
             className="P_side_main"
           />
         </div>
-        <div className="proficio_next_logo_large">
+        <div
+          className="proficio_next_logo_large"
+          onClick={() => navigator('/')}
+          style={{ cursor: 'pointer' }}
+        >
           <img
             src="/images/ProfiocioNextLogo.png"
             alt="Proficio Logo"
@@ -259,6 +263,7 @@ const Signup = () => {
                     color: '#FF8682',
                     cursor: 'pointer',
                   }}
+                  className="underline_link"
                 >
                   Terms
                 </span>{' '}
@@ -268,6 +273,7 @@ const Signup = () => {
                     color: '#FF8682',
                     cursor: 'pointer',
                   }}
+                  className="underline_link"
                 >
                   Privacy Policies
                 </span>
@@ -291,6 +297,7 @@ const Signup = () => {
                   color: '#FF8682',
                   cursor: 'pointer',
                 }}
+                className="underline_link"
                 onClick={() => navigator('/auth/login')}
               >
                 Login

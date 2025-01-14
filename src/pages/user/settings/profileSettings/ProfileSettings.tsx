@@ -90,7 +90,10 @@ const ProfileSettings = () => {
     refetch,
   } = useGetUserQuery(userid ? userid : '');
 
-  const [fullName, setFullName] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [github, setGitHub] = useState<string>('');
+  const [linkedIn, setLinkedIn] = useState<string>('');
   const [phoneNo, setPhoneNo] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [image, setImage] = useState<string | null>(null);
@@ -133,7 +136,10 @@ const ProfileSettings = () => {
     if (data?.response) {
       const response = data.response;
 
-      setFullName(response.fullName || '');
+      setFirstName(response.firstName || '');
+      setLastName(response.lastName || '');
+      setLinkedIn(response.linkedIn || '');
+      setGitHub(response.github || '');
       setPhoneNo(response.phoneNumber || '');
       setEmail(response.email || '');
       setImage(response.profileImg || null);
@@ -193,9 +199,17 @@ const ProfileSettings = () => {
 
     const formData = new FormData();
 
-    // Only append non-empty fields
-    if (fullName.trim()) {
-      formData.append('fullName', fullName);
+    if (firstName.trim()) {
+      formData.append('firstName', firstName);
+    }
+    if (lastName.trim()) {
+      formData.append('lastName', lastName);
+    }
+    if (linkedIn.trim()) {
+      formData.append('linkedIn', linkedIn);
+    }
+    if (github.trim()) {
+      formData.append('github', github);
     }
     if (phoneNo.trim()) {
       formData.append('phoneNumber', phoneNo);
@@ -317,8 +331,14 @@ const ProfileSettings = () => {
       <div className="settings_content_container">
         {activeTab === 'Personal Information' && (
           <PersonalInformation
-            fullName={fullName}
-            setFullName={setFullName}
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            linkedIn={linkedIn}
+            setLinkedIn={setLinkedIn}
+            github={github}
+            setGitHub={setGitHub}
             phoneNo={phoneNo}
             setPhoneNo={setPhoneNo}
             email={email}

@@ -58,6 +58,7 @@ const VerifyAccount = () => {
           token: res.token,
           id: res.user._id ?? '',
           userType: 'User',
+          emailVerified: res.user.emailVerified ?? false, // Ensure emailVerified is included
         })
       );
       navigate('/user-profile');
@@ -143,7 +144,11 @@ const VerifyAccount = () => {
             className="P_side_main"
           />
         </div>
-        <div className="proficio_next_logo_large">
+        <div
+          className="proficio_next_logo_large"
+          onClick={() => navigate('/')}
+          style={{ cursor: 'pointer' }}
+        >
           <img
             src="/images/ProfiocioNextLogo.png"
             alt="Proficio Logo"
@@ -225,7 +230,7 @@ const VerifyAccount = () => {
           )}
 
           <div
-            className="verify_account_back_to_login"
+            className="verify_account_back_to_login underline_link"
             onClick={() => navigate('/auth/login')}
           >
             <FaArrowLeftLong />

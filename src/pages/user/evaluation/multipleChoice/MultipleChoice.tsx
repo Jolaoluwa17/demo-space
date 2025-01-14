@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 import { BiSolidErrorAlt } from 'react-icons/bi';
@@ -8,6 +8,7 @@ import './multipleChoice.css';
 import {
   useGetAllAssessmentsQuery,
   useGetQuizQuestionQuery,
+  useTotalAttemptsQuery,
 } from '@/services/features/quiz/quizSlice';
 import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import ArrowLeftIcon from '@/icons/ArrowLeftIcon';
@@ -16,6 +17,7 @@ import NavigationArrow from '@/icons/NavigationArrow';
 import { useCreateResultMutation } from '@/services/features/result/resultSlice';
 import ErrorResponse from '@/types/ErrorResponse';
 import NotificationToast from '@/components/notificationToast/NotificationToast';
+import { usePageLeaveWarning } from '@/components/pageLeaveWarning/usePageLeavingWarning';
 
 declare interface NetworkInformation {
   downlink: number;
@@ -54,15 +56,18 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
   }, [setExamInProgress]);
 
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
   const questionId = searchParams.get('questionId');
   const userid = sessionStorage.getItem('id');
 
   const { data: assessmentData, isLoading: assessmentLoading } =
     useGetAllAssessmentsQuery({});
-  const { data: questionsData, isLoading: questionsLoading } =
-    useGetQuizQuestionQuery({ userId: userid, quizId: id });
+  const {
+    data: questionsData,
+    isLoading: questionsLoading,
+    isError: questionError,
+  } = useGetQuizQuestionQuery({ userId: userid, quizId: id });
 
   const [isInitialized, setIsInitialized] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<{
@@ -72,12 +77,8 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     number | null
   >(null);
   const initialTime = 10 * 60;
-  const [time, setTime] = useState<number>(() => {
-    const storedTime = sessionStorage.getItem('countdownTime');
-    return storedTime ? parseInt(storedTime, 10) : initialTime;
-  });
+  const [time, setTime] = useState<number>(initialTime);
   const [randomizedOptions, setRandomizedOptions] = useState<string[]>([]);
-  const [answers, setAnswers] = useState<string[]>([]);
   const [errMsg, setErrMsg] = useState<string>('');
   const [result, { isLoading: resultLoading }] = useCreateResultMutation();
 
@@ -86,6 +87,19 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
   const [internetSpeed, setInternetSpeed] = useState<string>('');
   const [success, setIsSuccess] = useState(false);
   const [onlineStatusMessage, setOnlineStatusMessage] = useState<string>('');
+
+  // in the case the user refreshes 3 times it navigates them back to instruction page.
+  useEffect(() => {
+    if (questionError) {
+      navigate('/dashboard/evaluation');
+    }
+  }, [questionError, navigate]);
+
+  // warning message asking the user if they want to refresh
+  usePageLeaveWarning(
+    true,
+    'Are you sure you want to leave? Your quiz progress will be lost!'
+  );
 
   // Initialize assessment duration
   useEffect(() => {
@@ -100,18 +114,16 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     }
   }, [assessmentData, id]);
 
-  // Timer effect that updates both state and sessionStorage
+  const {
+    data: totalAttemptData,
+    isLoading: totalAttemptsLoading,
+    refetch: refetchTotalAttempts,
+    isError: totalAttemptsError,
+  } = useTotalAttemptsQuery({ userId: userid, quizId: id });
+
   useEffect(() => {
-    sessionStorage.setItem('countdownTime', time.toString());
-
-    const timer = setInterval(() => {
-      if (time > 0) {
-        setTime((prevTime) => prevTime - 1);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [time]);
+    refetchTotalAttempts();
+  }, [refetchTotalAttempts]);
 
   // Initialize current question index
   useEffect(() => {
@@ -132,21 +144,71 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     }
   }, [questionsData, questionId, isInitialized]);
 
-  // Update options when question changes
+  const QUESTIONS_PER_ATTEMPT = 10;
+  let attemptIndex = 0;
+
+  // Check if there is an error or no response for total attempts
+  if (totalAttemptsError || !totalAttemptData?.response) {
+    // First attempt if there's an error or no response
+    attemptIndex = 0;
+  } else if (totalAttemptData?.response?.noOfRetake === 1) {
+    // Second attempt if noOfRetake is 1
+    attemptIndex = 1;
+  } else if (totalAttemptData?.response?.noOfRetake === 2) {
+    // Third attempt if noOfRetake is 2
+    attemptIndex = 2;
+  }
+
+  const questionsToShow = useMemo(() => {
+    if (questionsData?.data) {
+      const startIndex = attemptIndex * QUESTIONS_PER_ATTEMPT;
+      const endIndex = startIndex + QUESTIONS_PER_ATTEMPT;
+      return questionsData.data.slice(startIndex, endIndex);
+    } else {
+      console.log('Questions data is not available or empty.');
+      return [];
+    }
+  }, [questionsData, attemptIndex, QUESTIONS_PER_ATTEMPT]);
+
+  const [isShuffled, setIsShuffled] = useState(false);
+
   useEffect(() => {
-    if (currentQuestionIndex !== null && questionsData?.data) {
-      const currentQuestion = questionsData.data[currentQuestionIndex];
+    if (
+      currentQuestionIndex !== null &&
+      questionsToShow.length !== 0 &&
+      !isShuffled
+    ) {
+      const currentQuestion = questionsToShow[currentQuestionIndex];
       if (currentQuestion) {
+        // Extract the options for the current question
         const options = [
           currentQuestion.optionA,
           currentQuestion.optionB,
           currentQuestion.optionC,
           currentQuestion.answer,
-        ].filter(Boolean);
-        setRandomizedOptions(options.sort(() => Math.random() - 0.5));
+        ].filter(Boolean); // Remove any undefined or null options
+
+        // Shuffle the options (using a helper function to avoid mutation)
+        const shuffledOptions = [...options];
+        for (let i = shuffledOptions.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledOptions[i], shuffledOptions[j]] = [
+            shuffledOptions[j],
+            shuffledOptions[i],
+          ];
+        }
+
+        // Set the randomized options and mark as shuffled
+        setRandomizedOptions(shuffledOptions);
+        setIsShuffled(true); // Prevent further shuffling until a new question is selected
       }
     }
-  }, [questionsData, currentQuestionIndex]);
+  }, [currentQuestionIndex, questionsToShow, isShuffled]);
+
+  // Reset shuffling state when question changes (optional)
+  useEffect(() => {
+    setIsShuffled(false); // Reset the shuffling state when a new question is selected
+  }, [currentQuestionIndex]);
 
   // Internet status management
   useEffect(() => {
@@ -193,52 +255,6 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     };
   }, []);
 
-  // Update URL when question changes
-  useEffect(() => {
-    if (
-      currentQuestionIndex !== null &&
-      questionsData?.data &&
-      questionsData.data[currentQuestionIndex] &&
-      isInitialized
-    ) {
-      const currentQuestionId = questionsData.data[currentQuestionIndex]._id;
-      setSearchParams(
-        (prev) => {
-          const newParams = new URLSearchParams(prev);
-          newParams.set('id', id || '');
-          newParams.set('questionId', currentQuestionId);
-          return newParams;
-        },
-        { replace: true }
-      );
-    }
-  }, [currentQuestionIndex, questionsData, setSearchParams, id, isInitialized]);
-
-  // Load saved answers
-  useEffect(() => {
-    const savedAnswers = sessionStorage.getItem('answers');
-    if (savedAnswers && questionsData?.data) {
-      const parsedAnswers = JSON.parse(savedAnswers);
-
-      const initializedAnswers = Array(questionsData.data.length).fill(null);
-      parsedAnswers.forEach((answer: string, index: number) => {
-        if (index < questionsData.data.length) {
-          initializedAnswers[index] = answer;
-        }
-      });
-
-      setAnswers(initializedAnswers);
-
-      const newSelectedOptions: { [key: number]: string | null } = {};
-      initializedAnswers.forEach((answer, index) => {
-        if (answer) {
-          newSelectedOptions[index] = answer;
-        }
-      });
-      setSelectedOptions(newSelectedOptions);
-    }
-  }, [questionsData]);
-
   // Anti-copy mechanism
   useEffect(() => {
     const handleCopy = (event: ClipboardEvent) => {
@@ -258,6 +274,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     return () => document.removeEventListener('copy', handleCopy);
   }, []);
 
+  // format time to minutes and seconds
   const formatTime = (timeInSeconds: number) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
@@ -266,6 +283,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       .padStart(2, '0')}`;
   };
 
+  // function to select an option
   const handleOptionClick = (option: string) => {
     if (currentQuestionIndex === null) return;
 
@@ -273,16 +291,9 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       ...prevState,
       [currentQuestionIndex]: option,
     }));
-
-    setAnswers((prevAnswers) => {
-      const updatedAnswers = [...prevAnswers];
-      updatedAnswers[currentQuestionIndex] = option;
-
-      sessionStorage.setItem('answers', JSON.stringify(updatedAnswers));
-      return updatedAnswers;
-    });
   };
 
+  // function to go to next question
   const handleNextQuestion = () => {
     if (currentQuestionIndex === null) return;
 
@@ -294,6 +305,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     }
   };
 
+  // function to go to next question
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex === null) return;
 
@@ -302,31 +314,33 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     }
   };
 
-  const handleSubmit = async () => {
-    console.log('handle submit starting');
-    if (!questionsData?.data) return;
-
-    console.log('handle submit active');
+  // function to submit quiz
+  const handleSubmit = useCallback(async () => {
+    if (!questionsToShow || questionsToShow.length === 0) {
+      setErrMsg('No questions to submit.');
+      return;
+    }
 
     let userScore = 0;
-    questionsData.data.forEach((question: Question, index: number) => {
-      const selectedAnswer = selectedOptions[index];
+
+    // Loop through questionsToShow instead of questionsData.data
+    questionsToShow.forEach((question: Question, index: number) => {
+      const selectedAnswer = selectedOptions[index]; // Ensure selectedOptions aligns with questionsToShow
       if (selectedAnswer === question.answer) {
-        userScore += 1;
+        userScore += 1; // Increment score for correct answers
       }
     });
 
-    const totalQuestions = questionsData.data.length;
+    const totalQuestions = questionsToShow.length; // Use questionsToShow length for total
     const percentageScore = (userScore / totalQuestions) * 100;
+    console.log(percentageScore);
 
     const resultData = {
       score: percentageScore,
       quizId: id,
       userId: userid,
-      answer: answers,
+      answer: Object.values(selectedOptions).slice(0, totalQuestions),
     };
-
-    console.log(resultData);
 
     try {
       const res = await result(resultData).unwrap();
@@ -344,26 +358,60 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
           ? 'Quiz has been done'
           : ''
       );
-      sessionStorage.removeItem('answers');
     } catch (error: unknown) {
       const err = error as ErrorResponse;
-      setErrMsg(
-        err?.data.response ===
-          'You can only create a new result for this quiz after 12/9/2024'
-          ? 'Score not recorded'
-          : 'Something went wrong'
-      );
-      console.log(error);
+      setErrMsg('Your attempts for this quiz has been maxed out');
+      console.log(err);
     }
-  };
+  }, [
+    questionsToShow,
+    selectedOptions,
+    id,
+    userid,
+    result,
+    navigate,
+    setErrMsg,
+  ]);
 
-  if (questionsLoading || assessmentLoading || currentQuestionIndex === null) {
+  const [submitted, setSubmitted] = useState<boolean>(false);
+  // fucntion to submit quiz once time is up
+  useEffect(() => {
+    // If time reaches 0, submit the quiz and stop the timer
+    if (time === 0 && !submitted) {
+      handleSubmit();
+      setSubmitted(true);
+      return;
+    }
+
+    // Set up interval to countdown
+    const timerId = setInterval(() => {
+      setTime((prevTime) => prevTime - 1);
+    }, 1000);
+
+    // Clear the interval when time is 0 or component unmounts
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [time, handleSubmit, submitted]);
+
+  if (
+    questionsLoading ||
+    assessmentLoading ||
+    currentQuestionIndex === null ||
+    totalAttemptsLoading ||
+    questionsToShow.length === 0
+  ) {
     return (
       <div className="loading_container">
         <FadeLoader color="#007BFF" />
       </div>
     );
   }
+
+  const currentQuestion = questionsToShow[currentQuestionIndex];
+  const selectedOption = selectedOptions[currentQuestionIndex] || null;
+  const isLastQuestion = currentQuestionIndex === questionsToShow.length - 1;
+  const isFirstQuestion = currentQuestionIndex === 0;
 
   if (questionsData?.data?.length === 0) {
     return (
@@ -387,11 +435,6 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     );
   }
 
-  const currentQuestion = questionsData.data[currentQuestionIndex];
-  const selectedOption = selectedOptions[currentQuestionIndex] || null;
-  const isLastQuestion = currentQuestionIndex === questionsData.data.length - 1;
-  const isFirstQuestion = currentQuestionIndex === 0;
-
   return (
     <div className="multiple_choice_root">
       <div className="multiple_choice_header">
@@ -405,7 +448,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       </div>
       <div className="question_container">
         <div className="question_out_of">
-          Question {currentQuestionIndex + 1} of {questionsData.data.length}
+          Question {currentQuestionIndex + 1} of {questionsToShow.length}
         </div>
         <div className="question_text">{currentQuestion.question}</div>
         <div className="options">
@@ -450,6 +493,10 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
           >
             <button
               className="question_submit_btn"
+              style={{
+                backgroundColor: !resultLoading ? '#007BFF' : 'grey',
+                cursor: !resultLoading ? 'pointer' : 'not-allowed',
+              }}
               onClick={handleSubmit}
               disabled={questionsData.data.length < 1 || resultLoading}
             >

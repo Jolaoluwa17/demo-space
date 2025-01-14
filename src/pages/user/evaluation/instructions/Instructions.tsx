@@ -26,7 +26,7 @@ const Instructions = () => {
   };
 
   const handleBackClick = () => {
-    navigate(-1);
+    navigate('/dashboard/evaluation');
   };
 
   const instructions = [
@@ -37,18 +37,19 @@ const Instructions = () => {
     'Review your answers before submitting.',
     'Ensure your internet connection is stable. If it goes offline, you will be stuck on the current question, and the timer will continue counting down.',
     'A notification will pop up if your internet connection is lost or restored.',
-    'Do not refresh your page during the quiz. If the page refreshes, one of your attempts to take the quiz will be used.',
   ];
 
   const quizAttempt = [
     'Every participant has a maximum of 3 attempts to complete the quiz.',
-    'If the Start Evaluation button is clicked and you leave the website before submitting, one of your attempts will be used, and your score for that quiz will be recorded as 0.',
+    'Do not refresh your page during the quiz. If the page refreshes, one of your attempts to take the quiz will be used.',
+    'If the Start Evaluation button is clicked and you leave the website before submitting, one of your attempts will be used, and your score for that quiz will be null.',
   ];
 
   const {
     data: totalAttemptData,
     isLoading: totalAttemptsLoading,
     refetch: refetchTotalAttempts,
+    isError: totalAttemptError,
   } = useTotalAttemptsQuery({ userId: userid, quizId: id });
 
   const {
@@ -72,9 +73,12 @@ const Instructions = () => {
     }
   }, []);
 
-  const hasLowScore = getResultDataByUserIdAndQuizId?.response?.some(
-    (item: { score: number }) => item.score < 69
-  );
+  const hasLowScore =
+    getResultDataByUserIdAndQuizId?.response?.length > 0
+      ? getResultDataByUserIdAndQuizId.response.some(
+          (item: { score: number }) => item.score > 69
+        )
+      : undefined;
 
   const attemptsLeft = totalAttemptData?.response?.noOfRetake
     ? 3 - totalAttemptData.response.noOfRetake
@@ -83,18 +87,9 @@ const Instructions = () => {
   const calculateTimeLeft = () => {
     // Ensure response exists and is an array
     if (attemptsLeft === 0) {
-      const sortedResults = [
-        ...(getResultDataByUserIdAndQuizId?.response || []),
-      ].sort(
-        (a: { createdAt: string }, b: { createdAt: string }) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
+      const resultDate = totalAttemptData?.response?.lastRetrieved;
 
-      // Get the last (most recent) result
-      const latestResult = sortedResults?.[0];
-      const resultDate = latestResult?.createdAt;
-
-      if (!resultDate) return null;
+      if (!resultDate) return null; // If there is no lastRetrieved, return null
 
       const targetDate = new Date(resultDate);
       targetDate.setMonth(targetDate.getMonth() + 3); // Add 3 months
@@ -127,11 +122,10 @@ const Instructions = () => {
   }
 
   const isButtonDisabled =
-    (attemptsLeft === 0 && timeLeft) || // Only check timeLeft if attempts are 0
+    (attemptsLeft === 0 && timeLeft) ||
     getResultDataByUserIdAndQuizId?.response?.some(
       (item: { score: number }) => item.score > 69
     );
-
   return (
     <div className="instructions_root">
       <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />
@@ -139,14 +133,16 @@ const Instructions = () => {
         <div className="instructions_content">
           <div className="instruction_title_container">
             <div className="instructions_title">{course}</div>
-            {hasLowScore && (
+            {!hasLowScore && (
               <div className="no_of_attempts_left">
                 No. of attempts left:{' '}
-                <span style={{ fontWeight: '600' }}>{attemptsLeft}</span>
+                <span style={{ fontWeight: '600' }}>
+                  {totalAttemptError ? 3 : attemptsLeft}
+                </span>
               </div>
             )}
           </div>
-          {hasLowScore
+          {hasLowScore === undefined || !hasLowScore
             ? totalAttemptData?.response?.noOfRetake === 3 && (
                 <div
                   className="taken_assessment_indicator"
@@ -186,7 +182,7 @@ const Instructions = () => {
                     }}
                   />
                   <span style={{ fontWeight: '600', color: 'green' }}>
-                    You passed this assessment
+                    Assessment Passed
                   </span>
                 </div>
               )}

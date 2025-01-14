@@ -11,28 +11,30 @@ const SkillGap = () => {
   const {
     data: programsData,
     isLoading: programsDataLoading,
-    refetch: refecthProgramsData,
+    refetch: refetchProgramsData,
+    isError: programDataError,
   } = useGetAllProgramsQuery({});
   const [searchTerm, setSearchTerm] = useState('');
 
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // refetch data everytime the screen is rendered
+  // Refetch data every time the screen is rendered
   useEffect(() => {
-    refecthProgramsData();
-  }, [location.key, refecthProgramsData]);
+    refetchProgramsData();
+  }, [location.key, refetchProgramsData]);
 
-  // Function to filter the data based on the search term
-  const filteredSkillGapData = programsData?.response.filter(
-    (card: { _id: string; title: string; discreption: string }) =>
-      card.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Safely filter the data based on the search term
+  const filteredSkillGapData = programsData?.response
+    ? programsData.response.filter(
+        (card: { _id: string; title: string; discreption: string }) =>
+          card.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   const handleSkillClick = (id: string) => {
     navigate(`/dashboard/skill-gap/details?id=${id}`);
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="skill_gap_root">
@@ -40,6 +42,28 @@ const SkillGap = () => {
       {programsDataLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />
+        </div>
+      ) : programDataError ? ( // Show error message if data fetching failed
+        <div className="nodata_container">
+          <img
+            src="/images/NoData.jpg"
+            alt="No Data"
+            style={{ width: '250px', height: '250px' }}
+          />
+          <div style={{ fontWeight: '600' }}>
+            Oops, Failed to fetch programs 😭
+          </div>
+        </div>
+      ) : filteredSkillGapData.length === 0 ? ( // Check for no results
+        <div className="nodata_container">
+          <img
+            src="/images/NoData.jpg"
+            alt="No Data"
+            style={{ width: '250px', height: '250px' }}
+          />
+          <div style={{ fontWeight: '600' }}>
+            Oops, No programs available at this time 😭
+          </div>
         </div>
       ) : (
         <div className="skill_gap_container">

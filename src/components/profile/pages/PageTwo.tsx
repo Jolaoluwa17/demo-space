@@ -174,9 +174,6 @@ const PageTwo: React.FC<Props> = ({
           </div>
         </div>
       </div>
-      <div className="skip_btn" onClick={() => setCurrentPage(3)}>
-        Skip
-      </div>
       <button
         className={`next_btn`}
         onClick={() => setCurrentPage(3)}

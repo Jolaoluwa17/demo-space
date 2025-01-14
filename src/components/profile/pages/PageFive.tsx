@@ -210,9 +210,9 @@ const PageFive: React.FC<Props> = ({
           </div>
         </div>
       </div>
-      <div className="skip_btn" onClick={() => setCurrentPage(6)}>
+      {/* <div className="skip_btn" onClick={() => setCurrentPage(6)}>
         Skip
-      </div>
+      </div> */}
       <button
         className={`next_btn`}
         onClick={() => setCurrentPage(6)}

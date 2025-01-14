@@ -68,9 +68,6 @@ const PageFour: React.FC<Props> = ({
             </div>
           ))}
         </div>
-        <div className="skip_btn" onClick={() => setCurrentPage(5)}>
-          Skip
-        </div>
         <button
           className={`next_btn`}
           onClick={() => setCurrentPage(5)}

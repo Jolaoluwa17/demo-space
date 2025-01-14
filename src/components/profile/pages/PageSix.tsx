@@ -139,9 +139,6 @@ const PageSix: React.FC<Props> = ({
           </div>
         </div>
       </div>
-      <div className="skip_btn" onClick={handleUpdateProfile}>
-        Skip
-      </div>
       <button
         className={`next_btn`}
         onClick={handleUpdateProfile}

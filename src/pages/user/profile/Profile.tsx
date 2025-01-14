@@ -83,7 +83,7 @@ const Profile = () => {
     const queryParams = new URLSearchParams(location.search);
     const tab = queryParams.get('tab');
     const currentTab = getTabFromPage(currentPage);
-  
+
     if (tab && tab !== currentTab) {
       const page = getPageFromTab(tab);
       setCurrentPage(page);
@@ -111,7 +111,10 @@ const Profile = () => {
 
   const userid = sessionStorage.getItem('id');
 
-  const [fullName, setFullName] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [github, setGitHub] = useState<string>('');
+  const [linkedIn, setLinkedIn] = useState<string>('');
   const [phoneNo, setPhoneNo] = useState<string>('');
   const [fileInput, setFileInput] = useState<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -147,8 +150,17 @@ const Profile = () => {
     const formData = new FormData();
 
     // Only append non-empty fields
-    if (fullName.trim()) {
-      formData.append('fullName', fullName);
+    if (firstName.trim()) {
+      formData.append('firstName', firstName);
+    }
+    if (lastName.trim()) {
+      formData.append('lastName', lastName);
+    }
+    if (linkedIn.trim()) {
+      formData.append('linkedIn', linkedIn);
+    }
+    if (github.trim()) {
+      formData.append('github', github);
     }
     if (phoneNo.trim()) {
       formData.append('phoneNumber', phoneNo);
@@ -276,8 +288,14 @@ const Profile = () => {
           {currentPage === 1 && (
             <Pageone
               setCurrentPage={handlePageChange}
-              fullName={fullName}
-              setFullName={setFullName}
+              firstName={firstName}
+              setFirstName={setFirstName}
+              lastName={lastName}
+              setLastName={setLastName}
+              linkedIn={linkedIn}
+              setLinkedIn={setLinkedIn}
+              github={github}
+              setGitHub={setGitHub}
               phoneNo={phoneNo}
               setPhoneNo={setPhoneNo}
               setFileInput={setFileInput}
