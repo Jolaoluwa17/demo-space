@@ -18,6 +18,7 @@ import { useCreateResultMutation } from '@/services/features/result/resultSlice'
 import ErrorResponse from '@/types/ErrorResponse';
 import NotificationToast from '@/components/notificationToast/NotificationToast';
 import { usePageLeaveWarning } from '@/components/pageLeaveWarning/usePageLeavingWarning';
+import Popup from '@/modals/popup/Popup';
 
 declare interface NetworkInformation {
   downlink: number;
@@ -60,6 +61,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
   const id = searchParams.get('id');
   const questionId = searchParams.get('questionId');
   const userid = sessionStorage.getItem('id');
+  const [showPopup, setShowPopup] = useState(false);
 
   const { data: assessmentData, isLoading: assessmentLoading } =
     useGetAllAssessmentsQuery({});
@@ -143,6 +145,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       setIsInitialized(true);
     }
   }, [questionsData, questionId, isInitialized]);
+  console.log('questionData:' + questionsData?.data);
 
   const QUESTIONS_PER_ATTEMPT = 10;
   let attemptIndex = 0;
@@ -163,6 +166,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     if (questionsData?.data) {
       const startIndex = attemptIndex * QUESTIONS_PER_ATTEMPT;
       const endIndex = startIndex + QUESTIONS_PER_ATTEMPT;
+      console.log(questionsData.data.slice(startIndex, endIndex));
       return questionsData.data.slice(startIndex, endIndex);
     } else {
       console.log('Questions data is not available or empty.');
@@ -497,7 +501,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
                 backgroundColor: !resultLoading ? '#007BFF' : 'grey',
                 cursor: !resultLoading ? 'pointer' : 'not-allowed',
               }}
-              onClick={handleSubmit}
+              onClick={() => setShowPopup(true)}
               disabled={questionsData.data.length < 1 || resultLoading}
             >
               {resultLoading ? <div className="spinner"></div> : 'Submit'}
@@ -514,7 +518,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
           </div>
         )}
         <button
-          className={`back_and_next_button ${!isOnline ? 'disabled' : ''}`}
+          className={`back_and_next_button ${!isOnline || isLastQuestion ? 'disabled' : ''}`}
           onClick={handleNextQuestion}
           disabled={isLastQuestion || !isOnline}
         >
@@ -538,6 +542,54 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
           </motion.div>
         )}
       </AnimatePresence>
+      <Popup popup={showPopup}>
+        <div style={{ width: '100%' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '10px',
+            }}
+          >
+            <img
+              src="/images/submit.png"
+              alt=""
+              style={{ width: '80%', height: '100%' }}
+            />
+          </div>
+          <div className="decision_title">
+            Are you sure you want to proceed with submitting your assessment?
+          </div>
+          <div className="decision_container">
+            <div
+              className="decision_btn"
+              style={{
+                backgroundColor: !resultLoading ? '#007BFF' : 'grey',
+                cursor: !resultLoading ? 'pointer' : 'not-allowed',
+                color: 'white',
+              }}
+              onClick={
+                questionsData.data.length < 1 || resultLoading
+                  ? undefined
+                  : handleSubmit
+              }
+            >
+              {resultLoading ? <div className="spinner"></div> : 'Yes'}
+            </div>
+            <div
+              className="decision_btn"
+              style={{
+                cursor: !resultLoading ? 'pointer' : 'not-allowed',
+                color: !resultLoading ? 'black' : 'grey',
+              }}
+              onClick={resultLoading ? undefined : () => setShowPopup(false)}
+            >
+              {resultLoading ? <div className="spinner"></div> : 'No'}
+            </div>
+          </div>
+        </div>
+      </Popup>
     </div>
   );
 };
