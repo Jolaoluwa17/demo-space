@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { IoPersonSharp } from 'react-icons/io5';
+import { PulseLoader } from 'react-spinners';
 
 import './pages.css';
 import EditProfileIcon from '@/icons/EditProfileIcon';
+import { Link } from 'react-router-dom';
 
 interface Props {
   firstName: string;
@@ -13,8 +15,8 @@ interface Props {
   setLinkedIn: (linkedIn: string) => void;
   github: string;
   setGitHub: (github: string) => void;
-  phoneNo?: string;
-  setPhoneNo?: (phoneNo: string) => void;
+  phoneNo: string; // Made required
+  setPhoneNo: (phoneNo: string) => void; // Made required
   email?: string;
   setEmail?: (email: string) => void;
   isLoading?: boolean;
@@ -22,8 +24,16 @@ interface Props {
   setImage?: React.Dispatch<React.SetStateAction<string | null>>;
   handleFileChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   userDataIsLoading?: boolean;
+  userDataError?: boolean;
   handleUpdateProfile?: () => Promise<void>;
 }
+
+const country = [
+  { country: 'NG', code: '+234' },
+  { country: 'US', code: '+1' },
+  { country: 'GB', code: '+44' }, // United Kingdom
+  { country: 'DE', code: '+49' }, // Germany
+];
 
 const PersonalInformation: React.FC<Props> = ({
   firstName,
@@ -42,14 +52,55 @@ const PersonalInformation: React.FC<Props> = ({
   image,
   userDataIsLoading,
   handleUpdateProfile,
+  userDataError,
   isLoading,
 }) => {
-  // Using useRef for the file input element
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedCode, setSelectedCode] = useState<string>('+234');
 
   const triggerFileUpload = () => {
     fileInputRef.current?.click();
   };
+
+  const handlePhoneNumberChange = (input: string) => {
+    // Remove non-numeric characters
+    const sanitizedInput = input.replace(/\D/g, '');
+
+    // Prevent starting with 0
+    if (sanitizedInput.startsWith('0')) {
+      return;
+    }
+
+    setPhoneNo(`${selectedCode}${sanitizedInput}`);
+  };
+
+  const getPhoneNumberWithoutCode = (
+    fullNumber: string,
+    code: string
+  ): string => {
+    return fullNumber.startsWith(code) ? fullNumber.slice(code.length) : '';
+  };
+
+  const formatPhoneNumber = (
+    phoneNo: string,
+    country: Array<{ code: string; country: string }>
+  ) => {
+    if (!phoneNo) return '';
+
+    // Find the country code from the phone number
+    const countryCode =
+      country.find((item) => phoneNo.startsWith(item.code))?.code || '';
+
+    if (!countryCode) return phoneNo;
+
+    // Get the number without the country code
+    const numberWithoutCode = phoneNo.slice(countryCode.length);
+
+    // Format as (countryCode) rest-of-number
+    return `(${countryCode}) ${numberWithoutCode}`;
+  };
+
+  const [edit, setEdit] = useState(false);
 
   return (
     <div className="settings_content">
@@ -58,7 +109,11 @@ const PersonalInformation: React.FC<Props> = ({
         <div className="settings_page_subHeader">
           This information will be used to create your personal profile.
         </div>
-        <div className="settings_page_profile_pic" onClick={triggerFileUpload}>
+        <div
+          className="settings_page_profile_pic"
+          onClick={edit ? triggerFileUpload : undefined}
+          style={{ cursor: edit ? 'pointer' : 'auto' }}
+        >
           {image ? (
             <img
               src={image}
@@ -73,9 +128,11 @@ const PersonalInformation: React.FC<Props> = ({
           ) : (
             <IoPersonSharp fontSize={60} color="white" />
           )}
-          <div className="profile_edit">
-            <EditProfileIcon />
-          </div>
+          {edit && (
+            <div className="profile_edit">
+              <EditProfileIcon />
+            </div>
+          )}
         </div>
         <input
           type="file"
@@ -86,95 +143,234 @@ const PersonalInformation: React.FC<Props> = ({
           disabled={userDataIsLoading || isLoading}
         />
 
-        {/* Full Name Inputs */}
         <div className="profile_form_item_main_1">
           <div className="profile_form_item_1">
             <label htmlFor="firstName">First Name</label>
-            <input
-              type="text"
-              className="profile_input_item"
-              name="firstName"
-              value={firstName} // Attach `firstName` value
-              onChange={(e) => setFirstName(e.target.value)} // Update `firstName` value
-              disabled={userDataIsLoading || isLoading}
-            />
+            {edit ? (
+              <input
+                type="text"
+                className="profile_input_item"
+                name="firstName"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                disabled={userDataIsLoading || isLoading}
+              />
+            ) : userDataIsLoading ? (
+              <div className="profile_input_item_none">
+                <PulseLoader size={8} color="#007bff" />
+              </div>
+            ) : userDataError || !firstName ? (
+              <div className="profile_input_item_none">No Data</div>
+            ) : (
+              <div className="profile_input_item_none">{firstName}</div>
+            )}
           </div>
           <div className="profile_form_item_1">
             <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              className="profile_input_item"
-              name="lastName"
-              value={lastName} // Attach `lastName` value
-              onChange={(e) => setLastName(e.target.value)} // Update `lastName` value
-              disabled={userDataIsLoading || isLoading}
-            />
+            {edit ? (
+              <input
+                type="text"
+                className="profile_input_item"
+                name="lastName"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                disabled={userDataIsLoading || isLoading}
+              />
+            ) : userDataIsLoading ? (
+              <div className="profile_input_item_none">
+                <PulseLoader size={8} color="#007bff" />
+              </div>
+            ) : userDataError || !lastName ? (
+              <div className="profile_input_item_none">No Data</div>
+            ) : (
+              <div className="profile_input_item_none">{lastName}</div>
+            )}
           </div>
         </div>
 
-        {/* Phone Number Input */}
-        <div className="profile_form_item">
-          <label htmlFor="phoneNo">Phone No.</label>
-          <input
-            type="text"
-            className="profile_input_item"
-            name="phoneNo"
-            value={phoneNo || ''}
-            onChange={(e) => setPhoneNo?.(e.target.value)}
-            disabled={userDataIsLoading || isLoading}
-          />
+        <div className="profile_pageone_form_item">
+          <label htmlFor="phoneNo">Enter Phone Number</label>
+          {edit ? (
+            <div className="phoneNo_container_code">
+              <select
+                value={selectedCode}
+                onChange={(e) => {
+                  const newCode = e.target.value;
+                  setSelectedCode(newCode);
+                  const numberWithoutCode = getPhoneNumberWithoutCode(
+                    phoneNo,
+                    selectedCode
+                  );
+                  setPhoneNo(`${newCode}${numberWithoutCode}`);
+                }}
+                disabled={userDataIsLoading || isLoading}
+                style={{ borderColor: '#e7ebe6' }}
+              >
+                {country.map((item, index) => (
+                  <option key={index} value={item.code}>
+                    {item.code} ({item.country})
+                  </option>
+                ))}
+              </select>
+              <input
+                type="text"
+                name="phoneNo"
+                className="profile_pageone_input"
+                style={{ borderColor: '#e7ebe6' }}
+                value={getPhoneNumberWithoutCode(phoneNo, selectedCode)}
+                maxLength={15}
+                onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                disabled={userDataIsLoading || isLoading}
+              />
+            </div>
+          ) : userDataIsLoading ? (
+            <div className="profile_input_item_none">
+              <PulseLoader size={8} color="#007bff" />
+            </div>
+          ) : userDataError || !phoneNo ? (
+            <div className="profile_input_item_none">No Data</div>
+          ) : (
+            <div className="profile_input_item_none">
+              {formatPhoneNumber(phoneNo, country)}
+            </div>
+          )}
         </div>
 
         <div className="profile_form_item">
           <label htmlFor="github">GitHub</label>
-          <input
-            type="text"
-            className="profile_input_item"
-            name="github"
-            value={github || ''}
-            onChange={(e) => setGitHub?.(e.target.value)}
-            disabled={userDataIsLoading || isLoading}
-          />
+          {edit ? (
+            <input
+              type="text"
+              className="profile_input_item"
+              name="github"
+              value={github}
+              onChange={(e) => setGitHub(e.target.value)}
+              disabled={userDataIsLoading || isLoading}
+            />
+          ) : userDataIsLoading ? (
+            <div className="profile_input_item_none">
+              <PulseLoader size={8} color="#007bff" />
+            </div>
+          ) : userDataError || !github ? (
+            <div className="profile_input_item_none">No Data</div>
+          ) : (
+            <Link to={github} target="_blank" rel="noopener noreferrer">
+              <div
+                className="profile_input_item_none"
+                style={{
+                  textDecoration: 'underline',
+                  color: '#007bff',
+                  cursor: 'pointer',
+                }}
+              >
+                {github}
+              </div>
+            </Link>
+          )}
         </div>
 
         <div className="profile_form_item">
           <label htmlFor="linkedIn">LinkedIn</label>
-          <input
-            type="text"
-            className="profile_input_item"
-            name="linkedIn"
-            value={linkedIn || ''}
-            onChange={(e) => setLinkedIn?.(e.target.value)}
-            disabled={userDataIsLoading || isLoading}
-          />
+          {edit ? (
+            <input
+              type="text"
+              className="profile_input_item"
+              name="linkedIn"
+              value={linkedIn}
+              onChange={(e) => setLinkedIn(e.target.value)}
+              disabled={userDataIsLoading || isLoading}
+            />
+          ) : userDataIsLoading ? (
+            <div className="profile_input_item_none">
+              <PulseLoader size={8} color="#007bff" />
+            </div>
+          ) : userDataError || !linkedIn ? (
+            <div className="profile_input_item_none">No Data</div>
+          ) : (
+            <Link to={linkedIn} target="_blank" rel="noopener noreferrer">
+              <div
+                className="profile_input_item_none"
+                style={{
+                  textDecoration: 'underline',
+                  color: '#007bff',
+                  cursor: 'pointer',
+                }}
+              >
+                {linkedIn}
+              </div>
+            </Link>
+          )}
         </div>
 
-        {/* Email Input */}
         <div className="profile_form_item">
           <label htmlFor="email">Email Address</label>
-          <input
-            type="text"
-            className="profile_input_item"
-            name="email"
-            value={email || ''}
-            onChange={(e) => setEmail?.(e.target.value)}
-            disabled
-          />
+          {edit ? (
+            <input
+              type="text"
+              className="profile_input_item"
+              name="email"
+              value={email || ''}
+              onChange={(e) => setEmail?.(e.target.value)}
+              disabled
+            />
+          ) : userDataIsLoading ? (
+            <div className="profile_input_item_none">
+              <PulseLoader size={8} color="#007bff" />
+            </div>
+          ) : userDataError || !email ? (
+            <div className="profile_input_item_none">No Data</div>
+          ) : (
+            <div className="profile_input_item_none">{email}</div>
+          )}
         </div>
-
-        {/* Save Button */}
         <div className="settings_edit_btn_container">
           <div
             className="settings_edit_btn"
             style={{
-              backgroundColor: isLoading ? 'grey' : '#007BFF',
-              cursor: isLoading ? 'not-allowed' : 'pointer',
-              pointerEvents: isLoading ? 'none' : 'auto',
+              backgroundColor:
+                isLoading || userDataIsLoading || userDataError
+                  ? 'grey'
+                  : edit
+                    ? 'red'
+                    : '#007BFF',
+              cursor:
+                isLoading || userDataIsLoading || userDataError
+                  ? 'not-allowed'
+                  : 'pointer',
             }}
-            onClick={!isLoading ? handleUpdateProfile : undefined}
+            onClick={() => {
+              if (!isLoading && !userDataIsLoading && !userDataError) {
+                setEdit(!edit);
+              }
+            }}
           >
-            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+            {isLoading ? (
+              <div className="spinner"></div>
+            ) : edit ? (
+              'CANCEL'
+            ) : (
+              'EDIT INFORMATION'
+            )}
           </div>
+          {edit && (
+            <div
+              className="settings_edit_btn"
+              style={{
+                backgroundColor: isLoading ? 'grey' : '#007BFF',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                pointerEvents: isLoading ? 'none' : 'auto',
+              }}
+              onClick={() => {
+                if (!isLoading && handleUpdateProfile) {
+                  // Check if handleUpdateProfile is defined
+                  handleUpdateProfile();
+                  setEdit(false); // Set edit to false after clicking
+                }
+              }}
+            >
+              {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+            </div>
+          )}
         </div>
       </div>
     </div>

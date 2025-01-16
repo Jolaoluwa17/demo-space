@@ -32,6 +32,23 @@
   font-size: 16px;
   box-sizing: border-box;
 }
+.phoneNo_container_code {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.phoneNo_container_code select {
+  padding: 13.5px 10px 13.5px 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  outline-color: #007bff;
+  border: 1px solid #cbcbcc;
+  font-size: 16px;
+  cursor: pointer;
+  appearance: none; /* Remove default dropdown styling */
+
+  /* position: relative; */
+}
 .profile_pageone_textarea {
   width: 100%;
   height: 116px;
@@ -216,7 +233,8 @@
   .profile_pageone_input,
   .profile_pageone_form_item label,
   .profile_pageone_subTitle,
-  .remove_entry_button {
+  .remove_entry_button,
+  .phoneNo_container_code select {
     font-size: 14px;
   }
   .add_another_entry .content {

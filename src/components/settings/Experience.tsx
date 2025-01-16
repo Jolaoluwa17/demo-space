@@ -4,6 +4,7 @@ import { FiMinusCircle } from 'react-icons/fi';
 import './pages.css';
 import AddIcon from '@/icons/AddIcon';
 import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
+import { PulseLoader } from 'react-spinners';
 
 interface Entry {
   title: string;
@@ -20,6 +21,7 @@ interface Props {
   userDataIsLoading?: boolean;
   isLoading?: boolean;
   handleUpdateProfile?: () => Promise<void>;
+  userDataError?: boolean;
 }
 
 const Experience: React.FC<Props> = ({
@@ -28,6 +30,7 @@ const Experience: React.FC<Props> = ({
   userDataIsLoading,
   isLoading,
   handleUpdateProfile,
+  userDataError,
 }) => {
   const getCurrentDate = (addDays = 0) => {
     const today = new Date();
@@ -115,6 +118,8 @@ const Experience: React.FC<Props> = ({
   const placeholderEntry = {
     currentlyWorking: false,
   };
+
+  const [edit, setEdit] = useState(false);
 
   return (
     <div className="settings_content">
@@ -212,7 +217,7 @@ const Experience: React.FC<Props> = ({
               <div className="profile_form_item">
                 <label htmlFor={`jobTitle-${index}`}>
                   Job Title
-                  {index > 0 && (
+                  {index > 0 && edit && (
                     <div
                       className="remove_entry_main"
                       onClick={() => handleRemoveEntry(index)}
@@ -225,121 +230,247 @@ const Experience: React.FC<Props> = ({
                     </div>
                   )}
                 </label>
-                <input
-                  type="text"
-                  name="title"
-                  id={`jobTitle-${index}`}
-                  value={entry.title || ''}
-                  className="profile_input_item"
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={userDataIsLoading}
-                />
+                {edit ? (
+                  <input
+                    type="text"
+                    name="title"
+                    id={`jobTitle-${index}`}
+                    value={entry.title || ''}
+                    className="profile_input_item"
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={userDataIsLoading}
+                  />
+                ) : userDataIsLoading ? (
+                  <div className="profile_input_item_none">
+                    <PulseLoader size={8} color="#007bff" />
+                  </div>
+                ) : userDataError || !entry.title ? (
+                  <div className="profile_input_item_none">No Data</div>
+                ) : (
+                  <div className="profile_input_item_none">
+                    {entry.title || null}
+                  </div>
+                )}
               </div>
               <div className="profile_form_item">
                 <label htmlFor={`comapanyName-${index}`}>Company Name</label>
-                <input
-                  type="text"
-                  name="companyName"
-                  id={`companyName-${index}`}
-                  value={entry.companyName || ''}
-                  className="profile_input_item"
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={userDataIsLoading}
-                />
+                {edit ? (
+                  <input
+                    type="text"
+                    name="companyName"
+                    id={`companyName-${index}`}
+                    value={entry.companyName || ''}
+                    className="profile_input_item"
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={userDataIsLoading}
+                  />
+                ) : userDataIsLoading ? (
+                  <div className="profile_input_item_none">
+                    <PulseLoader size={8} color="#007bff" />
+                  </div>
+                ) : userDataError || !entry.companyName ? (
+                  <div className="profile_input_item_none">No Data</div>
+                ) : (
+                  <div className="profile_input_item_none">
+                    {entry.companyName || null}
+                  </div>
+                )}
               </div>
               <div className="profile_form_item">
                 <label htmlFor={`jobDescription-${index}`}>
                   Job Description
                 </label>
-                <textarea
-                  name="description"
-                  id={`jobDescription-${index}`}
-                  value={entry.description || ''}
-                  className="profile_input_textarea"
-                  rows={5}
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={userDataIsLoading}
-                />
+                {edit ? (
+                  <textarea
+                    name="description"
+                    id={`jobDescription-${index}`}
+                    value={entry.description || ''}
+                    className="profile_input_textarea"
+                    rows={5}
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={userDataIsLoading}
+                  />
+                ) : userDataIsLoading ? (
+                  <div className="profile_input_item_none">
+                    <PulseLoader size={8} color="#007bff" />
+                  </div>
+                ) : userDataError || !entry.description ? (
+                  <div className="profile_input_item_none">No Data</div>
+                ) : (
+                  <div className="profile_input_item_none">
+                    {entry.description || null}
+                  </div>
+                )}
               </div>
               <div className="profile_form_item">
                 <label htmlFor={`startDate-${index}`}>Start Date</label>
-                <input
-                  type="date"
-                  name="startDate"
-                  id={`startDate-${index}`}
-                  value={
-                    entry.startDate ? entry.startDate.substring(0, 10) : ''
-                  }
-                  className="profile_input_item"
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={userDataIsLoading}
-                />
+                {edit ? (
+                  <input
+                    type="date"
+                    name="startDate"
+                    id={`startDate-${index}`}
+                    value={
+                      entry.startDate ? entry.startDate.substring(0, 10) : ''
+                    }
+                    className="profile_input_item"
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={userDataIsLoading}
+                  />
+                ) : userDataIsLoading ? (
+                  <div className="profile_input_item_none">
+                    <PulseLoader size={8} color="#007bff" />
+                  </div>
+                ) : userDataError || !entry.startDate ? (
+                  <div className="profile_input_item_none">No Data</div>
+                ) : (
+                  <div className="profile_input_item_none">
+                    {entry.startDate ? entry.startDate.substring(0, 10) : ''}
+                  </div>
+                )}
               </div>
               {!entry.currentlyWorking && (
                 <div className="profile_form_item">
                   <label htmlFor={`endDate-${index}`}>End Date</label>
-                  <input
-                    type="date"
-                    name="endDate"
-                    id={`endDate-${index}`}
-                    value={entry.endDate ? entry.endDate.substring(0, 10) : ''}
-                    className="profile_input_item"
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={entry.currentlyWorking || userDataIsLoading}
-                  />
-                </div>
-              )}
-              <div className="currently_working_here">
-                <div
-                  onClick={() => handleCheckboxChange(index)}
-                  style={{
-                    cursor: 'pointer',
-                    marginRight: '10px',
-                    width: '15px',
-                    height: '15px',
-                  }}
-                >
-                  {entry.currentlyWorking ? (
-                    <RememberMeCheckBox />
+                  {edit ? (
+                    <input
+                      type="date"
+                      name="endDate"
+                      id={`endDate-${index}`}
+                      value={
+                        entry.endDate ? entry.endDate.substring(0, 10) : ''
+                      }
+                      className="profile_input_item"
+                      onChange={(event) => handleInputChange(index, event)}
+                      disabled={entry.currentlyWorking || userDataIsLoading}
+                    />
+                  ) : userDataIsLoading ? (
+                    <div className="profile_input_item_none">
+                      <PulseLoader size={8} color="#007bff" />
+                    </div>
+                  ) : userDataError || !entry.endDate ? (
+                    <div className="profile_input_item_none">No Data</div>
                   ) : (
-                    <div className="pages_empty_checkbox"></div>
+                    <div className="profile_input_item_none">
+                      {entry.endDate ? entry.endDate.substring(0, 10) : ''}
+                    </div>
                   )}
                 </div>
-                <div style={{ paddingTop: '5px' }}>Currently Working Here</div>
-              </div>
+              )}
+              {edit || entry.currentlyWorking ? (
+                <div className="currently_working_here">
+                  {edit ? (
+                    <div
+                      onClick={() => handleCheckboxChange(index)}
+                      style={{
+                        cursor: 'pointer',
+                        marginRight: '10px',
+                        width: '15px',
+                        height: '15px',
+                      }}
+                    >
+                      {entry.currentlyWorking ? (
+                        <RememberMeCheckBox />
+                      ) : (
+                        <div className="pages_empty_checkbox"></div>
+                      )}
+                    </div>
+                  ) : userDataIsLoading ? (
+                    <div
+                      style={{
+                        marginRight: '10px',
+                        width: '15px',
+                        height: '15px',
+                      }}
+                    >
+                      <div className="pages_empty_checkbox"></div>
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        marginRight: '10px',
+                        width: '15px',
+                        height: '15px',
+                      }}
+                    >
+                      <RememberMeCheckBox />
+                    </div>
+                  )}
+                  <div style={{ paddingTop: '5px' }}>
+                    Currently Working Here
+                  </div>
+                </div>
+              ) : null}
             </div>
           ))
         )}
 
-        <div className="add_another_entry_2">
-          <div className="content" onClick={handleAddEntry}>
-            <AddIcon />
-            <div
-              style={{
-                fontSize: '14px',
-                paddingBottom: '4px',
-                paddingLeft: '5px',
-              }}
-            >
-              Add Another Entry
+        {edit && (
+          <div className="add_another_entry_2">
+            <div className="content" onClick={handleAddEntry}>
+              <AddIcon />
+              <div
+                style={{
+                  fontSize: '14px',
+                  paddingBottom: '4px',
+                  paddingLeft: '5px',
+                }}
+              >
+                Add Another Entry
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="settings_edit_btn_container">
-          <button
+          <div
             className="settings_edit_btn"
-            disabled={isButtonDisabled || isLoading}
-            onClick={handleUpdateProfile}
             style={{
               backgroundColor:
-                isLoading || isButtonDisabled ? 'grey' : '#007BFF',
-              cursor: isLoading ? 'not-allowed' : 'pointer',
-              pointerEvents: isLoading ? 'none' : 'auto',
+                isLoading || userDataIsLoading || userDataError
+                  ? 'grey'
+                  : edit
+                    ? 'red'
+                    : '#007BFF',
+              cursor:
+                isLoading || userDataIsLoading || userDataError
+                  ? 'not-allowed'
+                  : 'pointer',
+            }}
+            onClick={() => {
+              if (!isLoading && !userDataIsLoading && !userDataError) {
+                setEdit(!edit);
+              }
             }}
           >
-            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
-          </button>
+            {isLoading ? (
+              <div className="spinner"></div>
+            ) : edit ? (
+              'CANCEL'
+            ) : (
+              'EDIT INFORMATION'
+            )}
+          </div>
+          {edit && (
+            <button
+              className="settings_edit_btn"
+              disabled={isButtonDisabled || isLoading}
+              onClick={() => {
+                if (!isLoading && handleUpdateProfile) {
+                  // Check if handleUpdateProfile is defined
+                  handleUpdateProfile();
+                  setEdit(false); // Set edit to false after clicking
+                }
+              }}
+              style={{
+                backgroundColor:
+                  isLoading || isButtonDisabled ? 'grey' : '#007BFF',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                pointerEvents: isLoading ? 'none' : 'auto',
+              }}
+            >
+              {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+            </button>
+          )}
         </div>
       </div>
     </div>

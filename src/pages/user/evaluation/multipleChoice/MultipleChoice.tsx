@@ -207,7 +207,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
 
   // Reset shuffling state when question changes (optional)
   useEffect(() => {
-    setIsShuffled(false); // Reset the shuffling state when a new question is selected
+    setIsShuffled(false);
   }, [currentQuestionIndex]);
 
   // Internet status management

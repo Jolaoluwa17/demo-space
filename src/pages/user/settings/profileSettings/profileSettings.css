@@ -24,6 +24,7 @@
 }
 .settings_content_container {
   margin-top: 16px;
+  position: relative;
 }
 .tabs_icon {
   display: none;

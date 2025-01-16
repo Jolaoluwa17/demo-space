@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import './pages.css';
 import CancelIcon from '@/icons/CancelIcon';
+import { PulseLoader } from 'react-spinners';
 
 interface Props {
   skillSet?: string[];
@@ -9,6 +10,7 @@ interface Props {
   userDataIsLoading?: boolean;
   isLoading?: boolean;
   handleUpdateProfile?: () => Promise<void>;
+  userDataError?: boolean;
 }
 
 const Skills: React.FC<Props> = ({
@@ -17,6 +19,7 @@ const Skills: React.FC<Props> = ({
   userDataIsLoading,
   isLoading,
   handleUpdateProfile,
+  userDataError,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredSkills, setFilteredSkills] = useState<string[]>([]);
@@ -71,6 +74,8 @@ const Skills: React.FC<Props> = ({
   // Filter out any empty, null, or invalid skills
   const validSkills = skillSet.filter((skill) => skill && skill.trim() !== '');
 
+  const [edit, setEdit] = useState(false);
+
   return (
     <div className="settings_content">
       <div className="settings_main">
@@ -79,59 +84,121 @@ const Skills: React.FC<Props> = ({
           Highlight your technical and soft skills.
         </div>
         <div className="profile_form_item">
-          <label htmlFor="skill">Add your Skill</label>
-          <div className="settings_profile_searchInput">
-            <input
-              type="text"
-              name="skill"
-              className="input"
-              placeholder="Search Skill"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              disabled={userDataIsLoading || isLoading}
-            />
-            {/* Display filtered skill options as a dropdown */}
-            {searchTerm && filteredSkills.length > 0 && (
-              <div className="settings_profile_skills_dropdown">
-                {filteredSkills.map((skill) => (
-                  <div
-                    key={skill}
-                    className="settings_profile_skill_item"
-                    onClick={() => handleSkillSelect(skill)}
-                  >
-                    {skill}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="skillheader">You can add up to 10 skills</div>
-          <div className="skills_container">
-            {validSkills.map((skill) => (
-              <div className="skill" key={skill}>
-                <div style={{ marginRight: '12.5px' }}>{skill}</div>
-                <div
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => handleSkillRemove(skill)}
-                >
-                  <CancelIcon />
+          {edit && <label htmlFor="skill">Add your Skill</label>}
+          {edit && (
+            <div className="settings_profile_searchInput">
+              <input
+                type="text"
+                name="skill"
+                className="input"
+                placeholder="Search Skill"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                disabled={userDataIsLoading || isLoading}
+              />
+              {/* Display filtered skill options as a dropdown */}
+              {searchTerm && filteredSkills.length > 0 && (
+                <div className="settings_profile_skills_dropdown">
+                  {filteredSkills.map((skill) => (
+                    <div
+                      key={skill}
+                      className="settings_profile_skill_item"
+                      onClick={() => handleSkillSelect(skill)}
+                    >
+                      {skill}
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ))}
-          </div>
+              )}
+            </div>
+          )}
+
+          {edit && (
+            <div className="skillheader">You can add up to 10 skills</div>
+          )}
+          {userDataIsLoading ? (
+            <div
+              className="profile_input_item_none"
+              style={{ marginTop: '-10px' }}
+            >
+              <PulseLoader size={8} color="#007bff" />
+            </div>
+          ) : userDataError || validSkills.length < 1 ? (
+            <div
+              className="profile_input_item_none"
+              style={{ marginTop: '-20px' }}
+            >
+              No Data
+            </div>
+          ) : (
+            <div
+              className="skills_container"
+              style={{ marginTop: edit ? '' : '-10px' }}
+            >
+              {validSkills.map((skill) => (
+                <div className="skill" key={skill}>
+                  <div>{skill}</div>
+                  {edit && (
+                    <div
+                      style={{ cursor: 'pointer', marginLeft: '12.5px' }}
+                      onClick={() => handleSkillRemove(skill)}
+                    >
+                      <CancelIcon />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="settings_edit_btn_container">
           <div
             className="settings_edit_btn"
             style={{
-              backgroundColor: isLoading ? 'grey' : '#007BFF',
-              cursor: isLoading ? 'not-allowed' : 'pointer',
-              pointerEvents: isLoading ? 'none' : 'auto',
+              backgroundColor:
+                isLoading || userDataIsLoading || userDataError
+                  ? 'grey'
+                  : edit
+                    ? 'red'
+                    : '#007BFF',
+              cursor:
+                isLoading || userDataIsLoading || userDataError
+                  ? 'not-allowed'
+                  : 'pointer',
             }}
-            onClick={!isLoading ? handleUpdateProfile : undefined}
+            onClick={() => {
+              if (!isLoading && !userDataIsLoading && !userDataError) {
+                setEdit(!edit);
+              }
+            }}
           >
-            {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+            {isLoading ? (
+              <div className="spinner"></div>
+            ) : edit ? (
+              'CANCEL'
+            ) : (
+              'EDIT INFORMATION'
+            )}
           </div>
+          {edit && (
+            <div
+              className="settings_edit_btn"
+              style={{
+                backgroundColor: isLoading ? 'grey' : '#007BFF',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                pointerEvents: isLoading ? 'none' : 'auto',
+              }}
+              onClick={() => {
+                if (!isLoading && handleUpdateProfile) {
+                  // Check if handleUpdateProfile is defined
+                  handleUpdateProfile();
+                  setEdit(false); // Set edit to false after clicking
+                }
+              }}
+            >
+              {isLoading ? <div className="spinner"></div> : 'SAVE INFORMATION'}
+            </div>
+          )}
         </div>
       </div>
     </div>

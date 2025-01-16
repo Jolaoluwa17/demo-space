@@ -18,11 +18,12 @@ import Skills from '@/components/settings/Skills';
 import AreaOfInterest from '@/components/settings/AreaOfInterest';
 import Experience from '@/components/settings/Experience';
 import Certificate from '@/components/settings/Certificate';
-import ToastNotification from '@/components/toastNotification/ToastNotification';
 import {
   useGetUserQuery,
   useUpdateUserProfileMutation,
 } from '@/services/features/user/userSlice';
+import { AnimatePresence, motion } from 'framer-motion';
+import NotificationToast from '@/components/notificationToast/NotificationToast';
 
 interface EducationEntry {
   institutionName: string;
@@ -88,6 +89,7 @@ const ProfileSettings = () => {
     data,
     isLoading: userDataIsLoading,
     refetch,
+    isError: userDataError,
   } = useGetUserQuery(userid ? userid : '');
 
   const [firstName, setFirstName] = useState<string>('');
@@ -191,7 +193,6 @@ const ProfileSettings = () => {
 
   const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
   const [showToast, setShowToast] = useState(false);
-  const [toastMsg, setToastMsg] = useState('');
   const [toastStatus, setToastStatus] = useState(false);
 
   const handleUpdateProfile = async () => {
@@ -278,10 +279,8 @@ const ProfileSettings = () => {
       await updateUserProfile(formData).unwrap();
       refetch();
       setShowToast(true);
-      setToastMsg('Profile Updated Successfully !');
       setToastStatus(false);
     } catch (error: unknown) {
-      setToastMsg('An Error Occured');
       setShowToast(true);
       setToastStatus(true);
       console.log(error);
@@ -294,13 +293,6 @@ const ProfileSettings = () => {
 
   return (
     <div className="settings_root">
-      {showToast && (
-        <ToastNotification
-          message={toastMsg}
-          show={showToast}
-          error={toastStatus}
-        />
-      )}
       <PageHeader
         pageTitle="Profile Settings"
         handleBackClick={handleBackClick}
@@ -329,6 +321,27 @@ const ProfileSettings = () => {
         ))}
       </div>
       <div className="settings_content_container">
+        {showToast && (
+          <AnimatePresence>
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.5 }}
+              className="notification-toast-wrapper"
+            >
+              <NotificationToast
+                msg={
+                  toastStatus
+                    ? 'Oops 😭! Something went wrong while updating your profile. Please try again later.'
+                    : 'Great job 👍🏼! Your profile has been successfully updated, and your changes are now live.'
+                }
+                toastType={toastStatus ? 'error' : 'success'}
+                cancel={() => setShowToast(false)}
+              />
+            </motion.div>
+          </AnimatePresence>
+        )}
         {activeTab === 'Personal Information' && (
           <PersonalInformation
             firstName={firstName}
@@ -349,6 +362,7 @@ const ProfileSettings = () => {
             userDataIsLoading={userDataIsLoading}
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
+            userDataError={userDataError}
           />
         )}
         {activeTab === 'Educational Background' && (
@@ -358,6 +372,7 @@ const ProfileSettings = () => {
             userDataIsLoading={userDataIsLoading}
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
+            userDataError={userDataError}
           />
         )}
         {activeTab === 'Skills' && (
@@ -367,6 +382,7 @@ const ProfileSettings = () => {
             userDataIsLoading={userDataIsLoading}
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
+            userDataError={userDataError}
           />
         )}
         {activeTab === 'Area of Interest' && (
@@ -376,6 +392,7 @@ const ProfileSettings = () => {
             userDataIsLoading={userDataIsLoading}
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
+            userDataError={userDataError}
           />
         )}
         {activeTab === 'Experience' && (
@@ -385,6 +402,7 @@ const ProfileSettings = () => {
             userDataIsLoading={userDataIsLoading}
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
+            userDataError={userDataError}
           />
         )}
         {activeTab === 'Certificates' && (
@@ -394,6 +412,7 @@ const ProfileSettings = () => {
             userDataIsLoading={userDataIsLoading}
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
+            userDataError={userDataError}
           />
         )}
       </div>

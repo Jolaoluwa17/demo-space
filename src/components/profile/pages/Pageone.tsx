@@ -26,6 +26,13 @@ interface Props {
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+const country = [
+  { country: 'NG', code: '+234' },
+  { country: 'US', code: '+1' },
+  { country: 'GB', code: '+44' }, // United Kingdom
+  { country: 'DE', code: '+49' }, // Germany
+];
+
 const Pageone: React.FC<Props> = ({
   setCurrentPage,
   firstName,
@@ -48,6 +55,7 @@ const Pageone: React.FC<Props> = ({
   handleFileUpload,
 }) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const [selectedCode, setSelectedCode] = useState<string>('+234');
 
   const handleRemoveImage = () => {
     setImage(null);
@@ -63,6 +71,11 @@ const Pageone: React.FC<Props> = ({
         (github.trim() !== '' || linkedIn.trim() !== '')
     );
   }, [firstName, lastName, phoneNo, github, linkedIn]);
+
+  const handlePhoneNumberChange = (input: string) => {
+    const sanitizedInput = input.replace(/\D/g, ''); // Remove non-numeric characters
+    setPhoneNo(`${selectedCode}${sanitizedInput}`); // Combine country code with phone number
+  };
 
   return (
     <div className="profile_pageone_root">
@@ -100,13 +113,32 @@ const Pageone: React.FC<Props> = ({
       {/* Phone Number Input */}
       <div className="profile_pageone_form_item">
         <label htmlFor="phoneNo">Enter Phone Number</label>
-        <input
-          type="text"
-          name="phoneNo"
-          className="profile_pageone_input"
-          value={phoneNo}
-          onChange={(e) => setPhoneNo(e.target.value)}
-        />
+        <div className="phoneNo_container_code">
+          <select
+            value={selectedCode}
+            onChange={(e) => {
+              setSelectedCode(e.target.value); // Update selected code
+              // Update phone number with new code
+              setPhoneNo(
+                `${e.target.value}${phoneNo.replace(selectedCode, '')}`
+              );
+            }}
+          >
+            {country.map((item, index) => (
+              <option key={index} value={item.code}>
+                {item.code} ({item.country})
+              </option>
+            ))}
+          </select>
+          <input
+            type="text"
+            name="phoneNo"
+            className="profile_pageone_input"
+            value={phoneNo.replace(selectedCode, '')} // Show only the number portion
+            maxLength={15}
+            onChange={(e) => handlePhoneNumberChange(e.target.value)}
+          />
+        </div>
       </div>
 
       {/* LinkedIn Input */}

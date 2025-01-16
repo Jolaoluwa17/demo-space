@@ -67,6 +67,10 @@
   text-align: left;
   color: inherit;
 }
+.profile_input_item_none {
+  padding: 14px 0px;
+  font-size: 16px;
+}
 .profile_input_item:disabled {
   background-color: #f0f0f0;
   color: grey;
@@ -89,6 +93,7 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 16px;
+  gap: 12px;
 }
 .profile_custom_select {
   margin-top: 10px;
@@ -157,6 +162,9 @@
   border-radius: 10px;
   top: 50px;
   left: 0px;
+  height: 120px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .settings_profile_skill_item {
   margin-bottom: 10px;
@@ -190,6 +198,24 @@
   margin-top: 10px;
   cursor: pointer;
   box-sizing: border-box;
+}
+.multi_select_interest_new {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.profile_pageone_form_item .interests_uneditted {
+  padding: 10px 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid #e7ebe6;
+  border-radius: 20px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  background-color: #007bff;
+  color: white;
 }
 .profile_input_textarea {
   width: 100%;
@@ -275,4 +301,23 @@
     display: none;
     -webkit-appearance: none;
   }
+}
+
+/* Customize the scrollbar */
+.settings_profile_skills_dropdown::-webkit-scrollbar {
+  width: 5px; /* Thinner scrollbar */
+}
+
+.settings_profile_skills_dropdown::-webkit-scrollbar-thumb {
+  background-color: #8d8d8d; /* Thumb color */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.settings_profile_skills_dropdown::-webkit-scrollbar-thumb:hover {
+  background-color: #8d8d8d; /* Thumb color on hover */
+}
+
+.settings_profile_skills_dropdown::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Track color */
+  border-radius: 10px;
 }

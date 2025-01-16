@@ -9,12 +9,12 @@ interface Props {
 const AskQuestions: React.FC<Props> = ({ contactBtn }) => {
   const accordionItems = [
     {
-      title: 'How do I sign up for the evaluator app ?',
+      title: 'How do I sign up on ProficioNext ?',
       content:
         'Signing up is easy! Simply download the app from the App Store, Google Play, or access it via the web. Create your profile by entering basic details, and you’ll be ready to start evaluating your skills in minutes.',
     },
     {
-      title: 'Can I use the app on both mobile and web ?',
+      title: 'Can I use ProficioNext on both mobile and web ?',
       content:
         'Yes, the app is available on both Android and iOS platforms, as well as through a web application.',
     },
@@ -36,7 +36,7 @@ const AskQuestions: React.FC<Props> = ({ contactBtn }) => {
     {
       title: 'How do I reset my password ?',
       content:
-        'To reset your password, go to the login screen, click "Forgot Password," and follow the instructions sent to your registered email address.',
+        'To reset your password, go to the login screen, click "Forgot Password", and follow the instructions sent to your registered email address.',
     },
     {
       title: 'How do I view completed evaluations ?',
