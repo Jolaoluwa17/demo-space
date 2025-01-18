@@ -226,6 +226,33 @@
   }
 }
 
+@media (max-width: 730px) {
+  .signup_root .left {
+    width: 0%;
+  }
+  .signup_root .right {
+    width: 100%;
+  }
+  .right_signup_content {
+    max-width: 550px;
+    padding: 0px 36px 24px 36px;
+    width: 100%;
+  }
+  .signup_techwings_logo {
+    display: block;
+    position: relative;
+    width: 250px;
+    margin-bottom: 50px;
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+  .signup_logo_absolute {
+    position: absolute;
+    top: -70px;
+    left: -22px;
+  }
+}
+
 @media (max-width: 450px) {
   .signup_root {
     width: 100%;
@@ -245,7 +272,6 @@
   }
   .right_signup_content {
     max-width: 350px;
-    padding: 0px 0px 24px 0px;
     width: 100%;
   }
 

@@ -32,15 +32,12 @@
   padding-left: 20px;
   padding-right: 16px;
 }
-.history_text {
-  display: flex;
-}
 .history_title {
   margin-top: 24px;
   width: 100%;
   background-color: #007bff;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 24px;
   box-sizing: border-box;
   border-radius: 5px;
@@ -58,83 +55,65 @@
   /* margin-left: 16px; */
 }
 .history_skill_description {
-  margin-top: 10px;
+  margin-top: 5px;
   color: white;
 }
-.history_overview {
-  width: 100%;
-  height: 93px;
-  border: 1px solid #e3e8ff;
-  margin-top: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 225px;
-  box-sizing: border-box;
+.history_table_container {
+  margin-top: 20px;
 }
-.history_overview_item {
+.history_quiz_table {
+  width: 100%;
+  border-collapse: separate;
+  position: relative;
+  height: 100%;
+  table-layout: fixed;
+  border-spacing: 0 24px;
+}
+
+.history_quiz_table th,
+.history_quiz_table td {
+  text-align: center;
+  box-sizing: border-box;
+  width: calc(100% / 3);
+}
+
+.history_quiz_table td {
+  padding: 17px 12px;
+  color: #6a757e;
+}
+.history_quiz_table tbody tr {
+  position: relative;
+  background: white;
+  box-shadow: rgba(46, 46, 46, 0.1) 0px 0px 5px; 
+}
+.history_table_first_data {
+  position: relative; 
+}
+
+.history_table_first_data::before {
+  content: '';
+  position: absolute;
+  left: -1px; 
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #007bff;
+}
+
+.history_quiz_table th {
+  background-color: #f8f8f8;
+  font-weight: 600;
+  color: #5e5d6f;
+  padding: 14px 12px;
+}
+.history_quiz_status {
+  border: 1px solid #00ff00;
+  width: 70px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-}
-.list_of_ques {
-  font-size: 16px;
-  color: #6a757e;
-  font-weight: 600;
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
-.question_list_card {
-  width: 100%;
-  padding: 10px 0px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #cbcbcc;
-  margin-bottom: 16px;
-  cursor: pointer;
-}
-
-.history_question_text {
-  font-size: 16px;
-  color: #333a41;
-  font-weight: 600;
-  width: 90%;
-}
-
-@media (max-width: 1024px) {
-  .history_overview {
-    padding: 0px 145px;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 768px) {
-  .history_overview {
-    padding: 0px 55px;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 450px) {
-  .history_overview {
-    padding: 0px 25px;
-    box-sizing: border-box;
-  }
-  .history_overview_title,
-  .history_question_text {
-    font-size: 15px;
-  }
-  .history_overview_content,
-  .correct_or_wrong {
-    font-size: 13px;
-    margin-top: 4px;
-  }
-  .history_skill_text {
-    font-size: 16px;
-  }
-  .back_text {
-    display: none;
-  }
+  border-radius: 20px;
+  background-color: #edffed;
+  color: black;
 }

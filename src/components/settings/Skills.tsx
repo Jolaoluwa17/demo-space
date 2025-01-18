@@ -23,6 +23,9 @@ const Skills: React.FC<Props> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredSkills, setFilteredSkills] = useState<string[]>([]);
+  const [edit, setEdit] = useState(false);
+  // Add state to store original skills when entering edit mode
+  const [originalSkills, setOriginalSkills] = useState<string[]>([]);
 
   const skillsList = [
     'JavaScript',
@@ -49,7 +52,6 @@ const Skills: React.FC<Props> = ({
     const value = e.target.value;
     setSearchTerm(value);
 
-    // Filter skills as the user types (case insensitive matching)
     const filtered = skillsList.filter(
       (skill) =>
         skill.toLowerCase().includes(value.toLowerCase()) &&
@@ -71,10 +73,23 @@ const Skills: React.FC<Props> = ({
     setSkillSet?.(skillSet.filter((s) => s !== skill));
   };
 
-  // Filter out any empty, null, or invalid skills
   const validSkills = skillSet.filter((skill) => skill && skill.trim() !== '');
 
-  const [edit, setEdit] = useState(false);
+  // Handle entering edit mode
+  const handleEditClick = () => {
+    if (!isLoading && !userDataIsLoading && !userDataError) {
+      setOriginalSkills([...skillSet]); // Save current skills
+      setEdit(true);
+    }
+  };
+
+  // Handle cancel
+  const handleCancel = () => {
+    setEdit(false);
+    setSearchTerm('');
+    setFilteredSkills([]);
+    setSkillSet?.(originalSkills); // Restore original skills
+  };
 
   return (
     <div className="settings_content">
@@ -96,7 +111,6 @@ const Skills: React.FC<Props> = ({
                 onChange={handleSearchChange}
                 disabled={userDataIsLoading || isLoading}
               />
-              {/* Display filtered skill options as a dropdown */}
               {searchTerm && filteredSkills.length > 0 && (
                 <div className="settings_profile_skills_dropdown">
                   {filteredSkills.map((skill) => (
@@ -166,11 +180,7 @@ const Skills: React.FC<Props> = ({
                   ? 'not-allowed'
                   : 'pointer',
             }}
-            onClick={() => {
-              if (!isLoading && !userDataIsLoading && !userDataError) {
-                setEdit(!edit);
-              }
-            }}
+            onClick={edit ? handleCancel : handleEditClick}
           >
             {isLoading ? (
               <div className="spinner"></div>
@@ -190,9 +200,8 @@ const Skills: React.FC<Props> = ({
               }}
               onClick={() => {
                 if (!isLoading && handleUpdateProfile) {
-                  // Check if handleUpdateProfile is defined
                   handleUpdateProfile();
-                  setEdit(false); // Set edit to false after clicking
+                  setEdit(false);
                 }
               }}
             >

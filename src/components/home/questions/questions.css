@@ -67,6 +67,9 @@
 }
 
 @media (max-width: 768px) {
+  .ask_question_root {
+    padding: 80px 50px;
+  }
   .ask_question_subTitle {
     font-size: 24px;
   }
@@ -81,10 +84,16 @@
   }
 }
 
-@media (max-width: 450px) {
-  .ask_question_root {
-    padding: 50px 24px;
+@media (max-width: 700px) {
+  .ask_question_root .left {
+    width: 35%;
   }
+  .ask_question_root .right {
+    width: 60%;
+  }
+}
+
+@media (max-width: 550px) {
   .ask_question_container {
     flex-direction: column;
   }
@@ -94,5 +103,11 @@
   }
   .ask_question_root .right {
     margin-top: 24px;
+  }
+}
+
+@media (max-width: 450px) {
+  .ask_question_root {
+    padding: 50px 24px;
   }
 }

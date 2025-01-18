@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import './pages.css';
 import AddIcon from '@/icons/AddIcon';
 import { FiMinusCircle } from 'react-icons/fi';
@@ -28,7 +27,12 @@ const Certificate: React.FC<Props> = ({
   handleUpdateProfile,
   userDataError,
 }) => {
-  // Set default certification if no certifications are passed in
+  const [edit, setEdit] = useState(false);
+  // Store original certifications when entering edit mode
+  const [originalCertifications, setOriginalCertifications] = useState<
+    Certification[]
+  >([]);
+
   useEffect(() => {
     if (certifications.length === 0 && setCertifications) {
       setCertifications([
@@ -75,13 +79,25 @@ const Certificate: React.FC<Props> = ({
     }
   };
 
-  // Ensure at least one input field is visible when certifications are empty
+  // Handle entering/exiting edit mode
+  const handleEditToggle = () => {
+    if (!isLoading && !userDataIsLoading && !userDataError) {
+      if (!edit) {
+        // Entering edit mode - store original certifications
+        setOriginalCertifications([...certifications]);
+        setEdit(true);
+      } else {
+        // Exiting edit mode (cancel) - restore original certifications
+        setCertifications?.(originalCertifications);
+        setEdit(false);
+      }
+    }
+  };
+
   const certificationsToDisplay =
     certifications.length > 0
       ? certifications
       : [{ name: '', issuedBy: '', dateObtained: getCurrentDate() }];
-
-  const [edit, setEdit] = useState(false);
 
   return (
     <div className="settings_content">
@@ -146,7 +162,7 @@ const Certificate: React.FC<Props> = ({
                   type="text"
                   name="issuedBy"
                   id={`organization-${index}`}
-                  value={cert.issuedBy || ''} // Fallback to empty string if cert.issuedBy is null
+                  value={cert.issuedBy || ''}
                   className="profile_input_item"
                   onChange={(event) => handleInputChange(index, event)}
                   disabled={userDataIsLoading || isLoading}
@@ -172,7 +188,7 @@ const Certificate: React.FC<Props> = ({
                   id={`issueDate-${index}`}
                   value={
                     cert.dateObtained ? cert.dateObtained.split('T')[0] : ''
-                  } // Fallback to empty string if cert.dateObtained is null
+                  }
                   className="profile_input_item"
                   onChange={(event) => handleInputChange(index, event)}
                   disabled={userDataIsLoading || isLoading}
@@ -222,11 +238,7 @@ const Certificate: React.FC<Props> = ({
                   ? 'not-allowed'
                   : 'pointer',
             }}
-            onClick={() => {
-              if (!isLoading && !userDataIsLoading && !userDataError) {
-                setEdit(!edit);
-              }
-            }}
+            onClick={handleEditToggle}
           >
             {isLoading ? (
               <div className="spinner"></div>
@@ -246,9 +258,8 @@ const Certificate: React.FC<Props> = ({
               }}
               onClick={() => {
                 if (!isLoading && handleUpdateProfile) {
-                  // Check if handleUpdateProfile is defined
                   handleUpdateProfile();
-                  setEdit(false); // Set edit to false after clicking
+                  setEdit(false);
                 }
               }}
             >

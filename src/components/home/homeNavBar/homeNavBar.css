@@ -100,7 +100,7 @@
   }
   .logo_absolute {
     position: absolute;
-    top: 0px;
+    top: -19px;
   }
   .home_nav_btn,
   .home_nav_getStarted {
@@ -111,7 +111,7 @@
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 550px) {
   .homeNav_techwings_logo {
     width: 150px;
     height: 80px;

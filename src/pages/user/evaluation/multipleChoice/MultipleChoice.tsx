@@ -145,7 +145,8 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       setIsInitialized(true);
     }
   }, [questionsData, questionId, isInitialized]);
-  console.log('questionData:' + questionsData?.data);
+  // console.log('questionData:' + questionsData?.data);
+  console.log(questionsData)
 
   const QUESTIONS_PER_ATTEMPT = 10;
   let attemptIndex = 0;

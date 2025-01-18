@@ -65,29 +65,45 @@ const Settings = () => {
           </div>
           <RightArrowIcon />
         </div>
-        <div className="settings_base_option_button2">
+        <a
+          href="https://www.instagram.com/officialtechwingsglobal?igsh=MWJoM2YwZ3JzYXpmaA=="
+          style={{ textDecoration: 'none' }}
+          target="_blank"
+          className="settings_base_option_button2"
+        >
           <div className="first_section">
             <FiInstagram size={25} color="#6a757e" />
-            <div className="settings_base_option_text">Techwings_global</div>
-          </div>
-          <RightArrowIcon />
-        </div>
-        <div className="settings_base_option_button2">
-          <div className="first_section">
-            <LuMail size={25} color="#6a757e" />
             <div className="settings_base_option_text">
-              support@techwings.com
+              officialtechwingsglobal
             </div>
           </div>
           <RightArrowIcon />
-        </div>
-        <div className="settings_base_option_button2">
+        </a>
+        <a
+          href="mailto:info@techwingsglobal.com"
+          style={{ textDecoration: 'none' }}
+          className="settings_base_option_button2"
+        >
           <div className="first_section">
-            <FiTwitter size={25} color="#6a757e" />
-            <div className="settings_base_option_text">Techwings_global</div>
+            <LuMail size={25} color="#6a757e" />
+            <div className="settings_base_option_text">
+              info@techwingsglobal.com
+            </div>
           </div>
           <RightArrowIcon />
-        </div>
+        </a>
+        <a
+          href="https://x.com/techwingsllc/"
+          className="settings_base_option_button2"
+          style={{ textDecoration: 'none' }}
+          target="_blank"
+        >
+          <div className="first_section">
+            <FiTwitter size={25} color="#6a757e" />
+            <div className="settings_base_option_text">techwingsllc</div>
+          </div>
+          <RightArrowIcon />
+        </a>
         <div
           className="settings_base_option_button2"
           style={{ backgroundColor: 'red' }}

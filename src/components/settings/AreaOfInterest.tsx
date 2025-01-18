@@ -32,6 +32,10 @@ const AreaOfInterest: React.FC<Props> = ({
   handleUpdateProfile,
   userDataError,
 }) => {
+  const [edit, setEdit] = useState(false);
+  // Add state to store original interests when entering edit mode
+  const [originalInterests, setOriginalInterests] = useState<string[]>([]);
+
   // Handle clicking on an interest div
   const handleInterestClick = (interest: string) => {
     if (setAreaOfInterest) {
@@ -43,7 +47,19 @@ const AreaOfInterest: React.FC<Props> = ({
     }
   };
 
-  const [edit, setEdit] = useState(false);
+  // Handle entering edit mode
+  const handleEditClick = () => {
+    if (!isLoading && !userDataIsLoading && !userDataError) {
+      setOriginalInterests([...areaOfInterest]); // Save current interests
+      setEdit(true);
+    }
+  };
+
+  // Handle cancel
+  const handleCancel = () => {
+    setEdit(false);
+    setAreaOfInterest?.(originalInterests); // Restore original interests
+  };
 
   return (
     <div className="settings_content">
@@ -116,11 +132,7 @@ const AreaOfInterest: React.FC<Props> = ({
                   ? 'not-allowed'
                   : 'pointer',
             }}
-            onClick={() => {
-              if (!isLoading && !userDataIsLoading && !userDataError) {
-                setEdit(!edit);
-              }
-            }}
+            onClick={edit ? handleCancel : handleEditClick}
           >
             {isLoading ? (
               <div className="spinner"></div>
@@ -140,9 +152,8 @@ const AreaOfInterest: React.FC<Props> = ({
               }}
               onClick={() => {
                 if (!isLoading && handleUpdateProfile) {
-                  // Check if handleUpdateProfile is defined
                   handleUpdateProfile();
-                  setEdit(false); // Set edit to false after clicking
+                  setEdit(false);
                 }
               }}
             >

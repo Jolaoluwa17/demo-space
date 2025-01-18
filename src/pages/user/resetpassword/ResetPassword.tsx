@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import {
-  IoCheckmarkDoneOutline,
-  IoClose,
-  IoEye,
-  IoEyeOff,
-} from 'react-icons/io5';
+import { IoEye, IoEyeOff } from 'react-icons/io5';
 
 import './resetPassword.css';
 import { useResetPasswordMutation } from '@/services/features/auth/authApiSlice';
@@ -117,63 +112,26 @@ const ResetPassword = () => {
           </div>
 
           {/* Password Validator */}
-          <div className="password_validator" style={{ marginTop: '20px' }}>
+          {password.length > 0 && (
             <div
               className="password_indicator_option"
-              style={{ color: hasMinLength ? 'green' : 'red' }}
+              style={{
+                color:
+                  hasMinLength &&
+                  hasUppercase &&
+                  hasLowercase &&
+                  hasSpecialChar &&
+                  hasNumber
+                    ? 'green'
+                    : 'red',
+                marginTop: '20px',
+              }}
             >
-              {hasMinLength ? (
-                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-              ) : (
-                <IoClose style={{ paddingRight: '5px' }} />
-              )}
-              8 Characters
+              Your password must be at least 8 characters long, have at least 1
+              capital letter, have at least 1 lowercase letter, have at least 1
+              special character, and must have at least 1 number
             </div>
-            <div
-              className="password_indicator_option"
-              style={{ color: hasUppercase ? 'green' : 'red' }}
-            >
-              {hasUppercase ? (
-                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-              ) : (
-                <IoClose style={{ paddingRight: '5px' }} />
-              )}
-              An Uppercase Letter
-            </div>
-            <div
-              className="password_indicator_option"
-              style={{ color: hasLowercase ? 'green' : 'red' }}
-            >
-              {hasLowercase ? (
-                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-              ) : (
-                <IoClose style={{ paddingRight: '5px' }} />
-              )}
-              A Lowercase Letter
-            </div>
-            <div
-              className="password_indicator_option"
-              style={{ color: hasSpecialChar ? 'green' : 'red' }}
-            >
-              {hasSpecialChar ? (
-                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-              ) : (
-                <IoClose style={{ paddingRight: '5px' }} />
-              )}
-              A Special Character
-            </div>
-            <div
-              className="password_indicator_option"
-              style={{ color: hasNumber ? 'green' : 'red' }}
-            >
-              {hasNumber ? (
-                <IoCheckmarkDoneOutline style={{ paddingRight: '5px' }} />
-              ) : (
-                <IoClose style={{ paddingRight: '5px' }} />
-              )}
-              A Number
-            </div>
-          </div>
+          )}
 
           <div className="form_item">
             <label htmlFor="password">Confirm Password</label>

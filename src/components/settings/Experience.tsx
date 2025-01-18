@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { FiMinusCircle } from 'react-icons/fi';
-
-import './pages.css';
 import AddIcon from '@/icons/AddIcon';
 import RememberMeCheckBox from '@/icons/RememberMeCheckBox';
 import { PulseLoader } from 'react-spinners';
@@ -32,16 +30,18 @@ const Experience: React.FC<Props> = ({
   handleUpdateProfile,
   userDataError,
 }) => {
+  const [edit, setEdit] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [originalEntries, setOriginalEntries] = useState<Entry[]>([]);
+
   const getCurrentDate = (addDays = 0) => {
     const today = new Date();
-    today.setDate(today.getDate() + addDays); // Add the specified number of days
+    today.setDate(today.getDate() + addDays);
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleInputChange = (
     index: number,
@@ -50,7 +50,7 @@ const Experience: React.FC<Props> = ({
     const { name, value } = event.target;
     const updatedEntries = [...entries];
     updatedEntries[index] = { ...updatedEntries[index], [name]: value };
-    setEntries?.(updatedEntries); // Safe call with optional chaining
+    setEntries?.(updatedEntries);
   };
 
   const handleAddEntry = () => {
@@ -71,7 +71,28 @@ const Experience: React.FC<Props> = ({
     setEntries?.(entries.filter((_, i) => i !== index));
   };
 
-  // Check if the Edit button should be disabled
+  const handleCheckboxChange = (index: number) => {
+    const updatedEntries = [...entries];
+    const isCurrentlyWorking = !updatedEntries[index].currentlyWorking;
+    updatedEntries[index].currentlyWorking = isCurrentlyWorking;
+    updatedEntries[index].endDate = isCurrentlyWorking
+      ? null
+      : getCurrentDate(1);
+    setEntries?.(updatedEntries);
+  };
+
+  const handleEditToggle = () => {
+    if (!isLoading && !userDataIsLoading && !userDataError) {
+      if (!edit) {
+        setOriginalEntries([...entries]);
+        setEdit(true);
+      } else {
+        setEntries?.(originalEntries);
+        setEdit(false);
+      }
+    }
+  };
+
   useEffect(() => {
     const allEntriesFilled = entries.every(
       (entry) =>
@@ -83,21 +104,6 @@ const Experience: React.FC<Props> = ({
     );
     setIsButtonDisabled(!allEntriesFilled);
   }, [entries]);
-
-  const handleCheckboxChange = (index: number) => {
-    const updatedEntries = [...entries];
-    const isCurrentlyWorking = !updatedEntries[index].currentlyWorking;
-
-    // Toggle the `currentlyWorking` state
-    updatedEntries[index].currentlyWorking = isCurrentlyWorking;
-
-    // If `currentlyWorking` is true, set `endDate` to null; otherwise, provide a default date
-    updatedEntries[index].endDate = isCurrentlyWorking
-      ? null
-      : getCurrentDate(1);
-
-    setEntries?.(updatedEntries);
-  };
 
   useEffect(() => {
     const updatedEntries = entries.map((entry) => ({
@@ -118,8 +124,6 @@ const Experience: React.FC<Props> = ({
   const placeholderEntry = {
     currentlyWorking: false,
   };
-
-  const [edit, setEdit] = useState(false);
 
   return (
     <div className="settings_content">
@@ -253,7 +257,7 @@ const Experience: React.FC<Props> = ({
                 )}
               </div>
               <div className="profile_form_item">
-                <label htmlFor={`comapanyName-${index}`}>Company Name</label>
+                <label htmlFor={`companyName-${index}`}>Company Name</label>
                 {edit ? (
                   <input
                     type="text"
@@ -436,11 +440,7 @@ const Experience: React.FC<Props> = ({
                   ? 'not-allowed'
                   : 'pointer',
             }}
-            onClick={() => {
-              if (!isLoading && !userDataIsLoading && !userDataError) {
-                setEdit(!edit);
-              }
-            }}
+            onClick={handleEditToggle}
           >
             {isLoading ? (
               <div className="spinner"></div>

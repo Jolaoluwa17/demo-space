@@ -99,7 +99,7 @@
 
 @media (max-width: 768px) {
   .about_us_root {
-    padding: 120px 80px;
+    padding: 80px 50px;
   }
   .about_us_rhode2 {
     bottom: 15px;
@@ -110,6 +110,24 @@
   .about_us_card_content .title {
     font-size: 17px;
     font-weight: 600;
+  }
+}
+
+@media (max-width: 708px) {
+  .about_us_card {
+    height: 130px;
+  }
+}
+
+@media (max-width: 645px) {
+  .about_us_card_container {
+    flex-direction: column;
+  }
+  .about_us_card {
+    width: 100%;
+  }
+  .about_us_card {
+    height: 110px;
   }
 }
 

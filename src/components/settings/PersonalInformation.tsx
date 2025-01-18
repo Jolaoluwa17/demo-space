@@ -100,6 +100,46 @@ const PersonalInformation: React.FC<Props> = ({
     return `(${countryCode}) ${numberWithoutCode}`;
   };
 
+  const getCountryCode = (phone: string): string | undefined => {
+    return country.find((item) => phone.startsWith(item.code))?.code;
+  };
+
+  // Store temporary values while editing
+  const [tempValues, setTempValues] = useState({
+    firstName: '',
+    lastName: '',
+    linkedIn: '',
+    github: '',
+    phoneNo: '',
+    selectedCode: '+234',
+  });
+
+  // When entering edit mode, store current values
+  const handleEditClick = () => {
+    if (!isLoading && !userDataIsLoading && !userDataError) {
+      if (!edit) {
+        // Entering edit mode - store current values
+        setTempValues({
+          firstName,
+          lastName,
+          linkedIn,
+          github,
+          phoneNo,
+          selectedCode: getCountryCode(phoneNo) || '+234',
+        });
+        setEdit(true);
+      } else {
+        // Canceling - restore original values
+        setFirstName(tempValues.firstName);
+        setLastName(tempValues.lastName);
+        setLinkedIn(tempValues.linkedIn);
+        setGitHub(tempValues.github);
+        setPhoneNo(tempValues.phoneNo);
+        setEdit(false);
+      }
+    }
+  };
+
   const [edit, setEdit] = useState(false);
 
   return (
@@ -338,11 +378,7 @@ const PersonalInformation: React.FC<Props> = ({
                   ? 'not-allowed'
                   : 'pointer',
             }}
-            onClick={() => {
-              if (!isLoading && !userDataIsLoading && !userDataError) {
-                setEdit(!edit);
-              }
-            }}
+            onClick={handleEditClick}
           >
             {isLoading ? (
               <div className="spinner"></div>

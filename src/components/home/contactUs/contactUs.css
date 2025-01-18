@@ -132,9 +132,9 @@
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
   .contact_us_root {
-    padding: 50px 24px;
+    padding: 80px 50px;
   }
   .contact_us_container .left {
     display: none;
@@ -142,6 +142,13 @@
   .contact_us_container .right {
     width: 100%;
   }
+}
+
+@media (max-width: 450px) {
+  .contact_us_root {
+    padding: 50px 24px;
+  }
+
   .contact_us_root button {
     font-size: 14px;
   }

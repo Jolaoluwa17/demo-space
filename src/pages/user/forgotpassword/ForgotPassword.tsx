@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import { IoInformationCircleSharp } from 'react-icons/io5';
 
 import './forgotPassword.css';
 import { useForgotPasswordMutation } from '@/services/features/auth/authApiSlice';
 import ErrorResponse from '@/types/ErrorResponse';
+import { AnimatePresence, motion } from 'framer-motion';
+import NotificationToast from '@/components/notificationToast/NotificationToast';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<boolean>(true);
-  const isFormValid = !emailError;
+  const isFormValid = !emailError && email.length !== 0;
   const [success, setIsSuccess] = useState(false);
 
   const validateEmail = (email: string) => {
@@ -43,9 +44,13 @@ const ForgotPassword = () => {
       const err = error as ErrorResponse;
       setErr(
         err.data.error === 'User with the given email not found'
-          ? 'User already exists'
+          ? 'User not found'
           : 'Something went wrong'
       );
+    } finally {
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 3000);
     }
   };
 
@@ -106,15 +111,6 @@ const ForgotPassword = () => {
           >
             {isLoading ? <div className="spinner"></div> : 'Reset Password'}
           </button>
-          {success && (
-            <div className="success_sent_link">
-              <IoInformationCircleSharp
-                size={20}
-                style={{ paddingRight: '5px' }}
-              />
-              Password Reset Link Sent
-            </div>
-          )}
           <div className="or_forgotpassword">
             <hr />
             <div>or login with</div>
@@ -127,6 +123,23 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
+      {success && (
+        <AnimatePresence>
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 0.5 }}
+            className="notification-toast-wrapper"
+          >
+            <NotificationToast
+              msg="Message sent 👍🏼! We will get back to you as soon as possible"
+              toastType="success"
+              cancel={() => setIsSuccess(false)}
+            />
+          </motion.div>
+        </AnimatePresence>
+      )}
     </div>
   );
 };

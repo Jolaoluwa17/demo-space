@@ -65,6 +65,7 @@ const Progress = () => {
         []
       ) || [];
 
+
   return (
     <div className="progress_root">
       <div className="progress_header">Progress</div>
@@ -110,7 +111,7 @@ const Progress = () => {
                   language={card.quizId.course}
                   description={description}
                   category={card.quizId.category}
-                  disabled={true}
+                  disabled={false}
                   onClick={() =>
                     handleCardClick(
                       card.quizId._id,

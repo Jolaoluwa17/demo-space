@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
-import { BiSolidErrorAlt } from 'react-icons/bi';
 import { IoInformationCircleSharp } from 'react-icons/io5';
 import {
   differenceInDays,
@@ -16,11 +15,13 @@ import {
   useGetAllInternshipQuery,
   useGetSpecificProgramQuery,
 } from '@/services/features/skillGap/skillGapSlice';
+import { AnimatePresence, motion } from 'framer-motion';
+import NotificationToast from '@/components/notificationToast/NotificationToast';
 
 const Details = () => {
   const navigate = useNavigate();
   const userid = sessionStorage.getItem('id');
-  const [errMsg, setErrMsg] = useState('');
+  const [success, setIsSuccess] = useState(false);
 
   const extractField = (htmlString: string, label: string) => {
     const regex = new RegExp(
@@ -55,8 +56,12 @@ const Details = () => {
       navigate('/dashboard/skill-gap/status');
       internshipRefetch();
     } catch (error) {
-      setErrMsg('Something went wrong');
+      setIsSuccess(true);
       console.log(error);
+    } finally {
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 5000);
     }
   };
 
@@ -225,23 +230,24 @@ const Details = () => {
               )}
             </div>
           </div>
-          {errMsg && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <div className="error_message">
-                <BiSolidErrorAlt
-                  fontSize={18}
-                  style={{ paddingRight: '5px' }}
-                />
-                {errMsg}
-              </div>
-            </div>
-          )}
         </div>
+      )}
+      {success && (
+        <AnimatePresence>
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 0.5 }}
+            className="notification-toast-wrapper"
+          >
+            <NotificationToast
+              msg="Something went wrong 😭! Please come back and try again later"
+              toastType="error"
+              cancel={() => setIsSuccess(false)}
+            />
+          </motion.div>
+        </AnimatePresence>
       )}
     </div>
   );

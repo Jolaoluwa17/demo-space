@@ -90,6 +90,22 @@
   .app_features_star {
     top: 33px;
   }
+  .app_features_root {
+    padding: 80px 50px;
+  }
+}
+
+@media (max-width: 735px) {
+  
+}
+
+@media (max-width: 545px) {
+  .app_features_root {
+    padding: 50px;
+  }
+  .app_features_star {
+    display: none;
+  }
 }
 
 @media (max-width: 450px) {

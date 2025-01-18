@@ -19,7 +19,6 @@ import Status from './pages/user/evaluation/status/Status';
 import ProgressRoot from './pages/user/progress/ProgressRoot';
 import Progress from './pages/user/progress/Progress';
 import History from './pages/user/progress/history/History';
-import Questions from './pages/user/progress/questions/Questions';
 import SkillGap from './pages/user/skillGap/SkillGap';
 import SkillGapRoot from './pages/user/skillGap/SkillGapRoot';
 import Details from './pages/user/skillGap/details/Details';
@@ -87,7 +86,7 @@ function App() {
             <Route path="progress" element={<ProgressRoot />}>
               <Route index element={<Progress />} />
               <Route path="history" element={<History />} />
-              <Route path="question" element={<Questions />} />
+              {/* <Route path="question" element={<Questions />} /> */}
             </Route>
             <Route path="skill-gap" element={<SkillGapRoot />}>
               <Route index element={<SkillGap />} />

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { FiMinusCircle } from 'react-icons/fi';
-
 import './pages.css';
 import CustomSelect from '../customselect/CustomSelect';
 import AddIcon from '@/icons/AddIcon';
@@ -41,6 +40,10 @@ const EducationalBackground: React.FC<Props> = ({
   handleUpdateProfile,
   userDataError,
 }) => {
+  const [edit, setEdit] = useState(false);
+  // Store the original entries in a separate state variable
+  const [originalEntries, setOriginalEntries] = useState<EducationEntry[]>([]);
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -52,14 +55,14 @@ const EducationalBackground: React.FC<Props> = ({
   // Ensure the state is initialized with at least one empty entry
   useEffect(() => {
     if (educationEntries.length === 0 && setEducationEntries) {
-      setEducationEntries([
-        {
-          institutionName: '',
-          degreeObtained: '',
-          degreeType: '',
-          graduationDate: getCurrentDate(),
-        },
-      ]);
+      const initialEntry = {
+        institutionName: '',
+        degreeObtained: '',
+        degreeType: '',
+        graduationDate: getCurrentDate(),
+      };
+      setEducationEntries([initialEntry]);
+      setOriginalEntries([initialEntry]);
     }
   }, [educationEntries, setEducationEntries]);
 
@@ -69,20 +72,21 @@ const EducationalBackground: React.FC<Props> = ({
     value: string
   ) => {
     const updatedEntries = [...educationEntries];
-    updatedEntries[index][field] = value;
+    updatedEntries[index] = {
+      ...updatedEntries[index],
+      [field]: value,
+    };
     setEducationEntries?.(updatedEntries);
   };
 
   const addNewEntry = () => {
-    setEducationEntries?.([
-      ...educationEntries,
-      {
-        institutionName: '',
-        degreeObtained: '',
-        degreeType: '',
-        graduationDate: getCurrentDate(),
-      },
-    ]);
+    const newEntry = {
+      institutionName: '',
+      degreeObtained: '',
+      degreeType: '',
+      graduationDate: getCurrentDate(),
+    };
+    setEducationEntries?.([...educationEntries, newEntry]);
   };
 
   const handleRemoveEntry = (index: number) => {
@@ -90,7 +94,34 @@ const EducationalBackground: React.FC<Props> = ({
     setEducationEntries?.(updatedEntries.length > 0 ? updatedEntries : []);
   };
 
-  const [edit, setEdit] = useState(false);
+  // Handle entering edit mode
+  const handleEditClick = () => {
+    if (!isLoading && !userDataIsLoading && !userDataError) {
+      // Create a deep copy of the current entries
+      const entriesCopy = educationEntries.map((entry) => ({
+        institutionName: entry.institutionName,
+        degreeObtained: entry.degreeObtained,
+        degreeType: entry.degreeType,
+        graduationDate: entry.graduationDate,
+      }));
+      setOriginalEntries(entriesCopy);
+      setEdit(true);
+    }
+  };
+
+  // Handle cancel
+  const handleCancel = () => {
+    // Restore the original entries from our backup
+    setEducationEntries?.(
+      originalEntries.map((entry) => ({
+        institutionName: entry.institutionName,
+        degreeObtained: entry.degreeObtained,
+        degreeType: entry.degreeType,
+        graduationDate: entry.graduationDate,
+      }))
+    );
+    setEdit(false);
+  };
 
   return (
     <div className="settings_content">
@@ -271,11 +302,7 @@ const EducationalBackground: React.FC<Props> = ({
                   ? 'not-allowed'
                   : 'pointer',
             }}
-            onClick={() => {
-              if (!isLoading && !userDataIsLoading && !userDataError) {
-                setEdit(!edit);
-              }
-            }}
+            onClick={edit ? handleCancel : handleEditClick}
           >
             {isLoading ? (
               <div className="spinner"></div>
@@ -295,9 +322,8 @@ const EducationalBackground: React.FC<Props> = ({
               }}
               onClick={() => {
                 if (!isLoading && handleUpdateProfile) {
-                  // Check if handleUpdateProfile is defined
                   handleUpdateProfile();
-                  setEdit(false); // Set edit to false after clicking
+                  setEdit(false);
                 }
               }}
             >
