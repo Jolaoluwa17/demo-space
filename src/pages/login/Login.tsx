@@ -89,7 +89,7 @@ const Login = () => {
         );
         handleRequestCode();
         navigate('/auth/verifyaccount');
-      } else if (!res.user.fullName) {
+      } else if (!res.user.firstName || !res.user.lastName) {
         navigate('/user-profile');
       } else {
         navigate('/dashboard');
