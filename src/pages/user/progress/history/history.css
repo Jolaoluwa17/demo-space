@@ -22,6 +22,8 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  font-weight: 600;
+  color: #5e5d6f;
 }
 .left_arrow_icon {
   width: 24px;
@@ -41,6 +43,7 @@
   padding: 24px;
   box-sizing: border-box;
   border-radius: 5px;
+  position: relative;
 }
 .img_holder {
   width: 84px;
@@ -52,7 +55,12 @@
   font-size: 30px;
   color: white;
   font-weight: 600;
-  /* margin-left: 16px; */
+}
+.history_no_of_attempts_left {
+  position: absolute;
+  right: 24px;
+  font-size: 16px;
+  top: 24px;
 }
 .history_skill_description {
   margin-top: 5px;
@@ -84,16 +92,16 @@
 .history_quiz_table tbody tr {
   position: relative;
   background: white;
-  box-shadow: rgba(46, 46, 46, 0.1) 0px 0px 5px; 
+  box-shadow: rgba(46, 46, 46, 0.1) 0px 0px 5px;
 }
 .history_table_first_data {
-  position: relative; 
+  position: relative;
 }
 
 .history_table_first_data::before {
   content: '';
   position: absolute;
-  left: -1px; 
+  left: -1px;
   top: 0;
   bottom: 0;
   width: 3px;
@@ -116,4 +124,49 @@
   border-radius: 20px;
   background-color: #edffed;
   color: black;
+}
+.history_title_code_text {
+  margin-left: 20px;
+}
+
+@media (max-width: 900px) {
+  .history_skill_text {
+    font-size: 25px;
+  }
+  .history_title_code_text {
+    margin-left: 0px;
+  }
+  .img_holder {
+    display: none;
+  }
+  .history_skill_description {
+    font-size: 15px;
+  }
+  .history_quiz_table th,
+  .history_quiz_table td {
+    font-size: 15px;
+  }
+  .history_quiz_status {
+    font-size: 14px;
+    width: 60px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 730px) {
+  .history_table_container {
+    max-width: 500px;
+    overflow-x: scroll;
+  }
+  .history_quiz_table {
+    width: 700px;
+  }
+}
+
+@media (max-width: 375px) {
+  .history_no_of_attempts_left {
+    position: initial;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
