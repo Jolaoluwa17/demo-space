@@ -16,10 +16,11 @@ const History = () => {
   const { course, description } = location.state || {};
 
   const { data, isLoading, isError, refetch } = useGetAllResultsQuery({});
-  const userResults = data?.response.filter(
-    (result: { quizId: { _id: string }; userId: { _id: string } }) =>
-      result.quizId?._id === id && result.userId?._id === userId
-  );
+  const userResults =
+    data?.response.filter(
+      (result: { quizId: { _id: string }; userId: { _id: string } }) =>
+        result.quizId?._id === id && result.userId?._id === userId
+    ) || [];
 
   const {
     data: totalAttemptData,
@@ -36,6 +37,18 @@ const History = () => {
     refetch();
     refetchTotalAttempts();
   }, [location.key, refetch, refetchTotalAttempts]);
+
+  // Add an extra row if the conditions are met
+  const displayedResults = [...userResults];
+  if (
+    totalAttemptData?.response?.noOfRetake === 2 &&
+    userResults.length === 1
+  ) {
+    displayedResults.push({
+      createdAt: null,
+      score: 0,
+    });
+  }
 
   return (
     <div className="history_root">
@@ -93,19 +106,24 @@ const History = () => {
                 </tr>
               </thead>
               <tbody>
-                {userResults.map(
+                {displayedResults.map(
                   (
-                    data: { createdAt: string; score: number },
+                    data: { createdAt: string | null; score: number },
                     index: number
                   ) => (
                     <tr key={index}>
                       <td className="history_table_first_data">{index + 1}</td>
                       <td>
-                        {new Date(data.createdAt).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                        })}
+                        {data.createdAt
+                          ? new Date(data.createdAt).toLocaleDateString(
+                              'en-US',
+                              {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                              }
+                            )
+                          : 'N/A'}
                       </td>
                       <td>{data.score}%</td>
                       <td>70%</td>
@@ -120,11 +138,21 @@ const History = () => {
                         <div
                           className="history_quiz_status"
                           style={{
-                            borderColor: data.score < 70 ? '#FF0000' : '',
-                            backgroundColor: data.score < 70 ? '#FFEDED' : '',
+                            borderColor:
+                              data.score < 70 && data.createdAt
+                                ? '#FF0000'
+                                : '',
+                            backgroundColor:
+                              data.score < 70 && data.createdAt
+                                ? '#FFEDED'
+                                : '',
                           }}
                         >
-                          {data.score < 70 ? 'Fail' : 'Pass'}
+                          {data.createdAt
+                            ? data.score < 70
+                              ? 'Fail'
+                              : 'Pass'
+                            : 'N/A'}
                         </div>
                       </td>
                     </tr>
