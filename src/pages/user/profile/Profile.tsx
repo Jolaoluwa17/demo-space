@@ -239,7 +239,7 @@ const Profile = () => {
       await updateUserProfile(formData).unwrap();
       navigate('/dashboard');
     } catch (error: unknown) {
-      console.error('Error during profile update:', error);
+      console.log('Error during profile update:', error);
     }
   };
 
