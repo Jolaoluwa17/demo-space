@@ -11,7 +11,8 @@ import descriptionGeneric from '@/utils/descriptionGeneric';
 
 interface UserType {
   response: {
-    fullName: string;
+    firstName: string;
+    lastName: string;
     email: string;
   };
 }
@@ -74,7 +75,7 @@ const Overview = () => {
             Welcome,{' '}
             {data && (
               <span style={{ fontWeight: '600' }}>
-                {data?.response?.fullName}
+                {data?.response?.firstName} {data?.response?.lastName}
               </span>
             )}
           </div>

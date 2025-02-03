@@ -137,7 +137,7 @@ const Skills: React.FC<Props> = ({
             >
               <PulseLoader size={8} color="#007bff" />
             </div>
-          ) : userDataError || validSkills.length < 1 ? (
+          ) : userDataError || validSkills.length < 1 && !edit ? (
             <div
               className="profile_input_item_none"
               style={{ marginTop: '-20px' }}

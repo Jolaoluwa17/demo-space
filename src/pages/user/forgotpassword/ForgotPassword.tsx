@@ -133,7 +133,7 @@ const ForgotPassword = () => {
             className="notification-toast-wrapper"
           >
             <NotificationToast
-              msg="Message sent 👍🏼! We will get back to you as soon as possible"
+              msg="Message sent 👍🏼! Please check your mail or spam mail"
               toastType="success"
               cancel={() => setIsSuccess(false)}
             />

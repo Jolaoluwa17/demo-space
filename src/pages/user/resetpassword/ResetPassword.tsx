@@ -5,6 +5,8 @@ import { IoEye, IoEyeOff } from 'react-icons/io5';
 
 import './resetPassword.css';
 import { useResetPasswordMutation } from '@/services/features/auth/authApiSlice';
+import { AnimatePresence, motion } from 'framer-motion';
+import NotificationToast from '@/components/notificationToast/NotificationToast';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -47,6 +49,7 @@ const ResetPassword = () => {
   const navigator = useNavigate();
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const [success, setIsSuccess] = useState(false);
 
   const handleResetPassword = async () => {
     const userData = {
@@ -59,6 +62,7 @@ const ResetPassword = () => {
       navigator('/auth/login');
     } catch (error: unknown) {
       console.log(error);
+      setIsSuccess(true);
     }
   };
 
@@ -172,6 +176,23 @@ const ResetPassword = () => {
           </button>
         </div>
       </div>
+      {success && (
+        <AnimatePresence>
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 0.5 }}
+            className="notification-toast-wrapper"
+          >
+            <NotificationToast
+              msg="Something went wrong 😭! Please try again later"
+              toastType="error"
+              cancel={() => setIsSuccess(false)}
+            />
+          </motion.div>
+        </AnimatePresence>
+      )}
     </div>
   );
 };
