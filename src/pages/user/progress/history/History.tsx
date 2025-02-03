@@ -1,5 +1,4 @@
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-
 import './history.css';
 import LeftArrowIcon from '@/icons/LeftArrowIcon';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
@@ -38,17 +37,32 @@ const History = () => {
     refetchTotalAttempts();
   }, [location.key, refetch, refetchTotalAttempts]);
 
-  // Add an extra row if the conditions are met
-  const displayedResults = [...userResults];
-  if (
-    totalAttemptData?.response?.noOfRetake === 2 &&
-    userResults.length === 1
-  ) {
-    displayedResults.push({
-      createdAt: null,
-      score: 0,
-    });
-  }
+  const calculateDisplayedResults = () => {
+    const results = [...userResults];
+
+    if (attemptsLeft === 0) {
+      // When no attempts left, always show 3 rows total
+      while (results.length < 3) {
+        results.push({
+          createdAt: null,
+          score: 0,
+        });
+      }
+    } else {
+      // When attempts left, only show completed attempts + remaining attempts
+      const totalRowsToShow = results.length + attemptsLeft;
+      while (results.length < totalRowsToShow) {
+        results.push({
+          createdAt: null,
+          score: 0,
+        });
+      }
+    }
+
+    return results;
+  };
+
+  const displayedResults = calculateDisplayedResults();
 
   return (
     <div className="history_root">
@@ -125,7 +139,7 @@ const History = () => {
                             )
                           : 'N/A'}
                       </td>
-                      <td>{data.score}%</td>
+                      <td>{data.createdAt ? `${data.score}%` : 'N/A'}</td>
                       <td>70%</td>
                       <td
                         style={{
@@ -139,11 +153,11 @@ const History = () => {
                           className="history_quiz_status"
                           style={{
                             borderColor:
-                              data.score < 70 && data.createdAt
+                              data.createdAt === null || data.score < 70
                                 ? '#FF0000'
                                 : '',
                             backgroundColor:
-                              data.score < 70 && data.createdAt
+                              data.createdAt === null || data.score < 70
                                 ? '#FFEDED'
                                 : '',
                           }}

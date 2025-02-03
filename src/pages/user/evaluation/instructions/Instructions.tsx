@@ -10,7 +10,7 @@ import {
 
 import './instruction.css';
 import PageHeader from '@/components/pageHeader/PageHeader';
-import { useGetResultByUserIdAndQuizIdQuery } from '@/services/features/result/resultSlice';
+import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 import { useTotalAttemptsQuery } from '@/services/features/quiz/quizSlice';
 
 const Instructions = () => {
@@ -53,15 +53,15 @@ const Instructions = () => {
   } = useTotalAttemptsQuery({ userId: userid, quizId: id });
 
   const {
-    data: getResultDataByUserIdAndQuizId,
-    isLoading: loadingResultDataByUserIdAndQuizId,
-    refetch: refetchDataByUserIdAndQuizId,
-  } = useGetResultByUserIdAndQuizIdQuery({ userId: userid, quizId: id });
+    data: getAllResults,
+    isLoading: getAllResultsLoading,
+    refetch: getAllRefetch,
+  } = useGetAllResultsQuery({});
 
   useEffect(() => {
     refetchTotalAttempts();
-    refetchDataByUserIdAndQuizId();
-  }, [refetchTotalAttempts, refetchDataByUserIdAndQuizId]);
+    getAllRefetch();
+  }, [refetchTotalAttempts, getAllRefetch]);
 
   useEffect(() => {
     const countDownTimer = sessionStorage.getItem('countdownTime');
@@ -73,11 +73,14 @@ const Instructions = () => {
     }
   }, []);
 
+  const filteredResults = getAllResults?.response?.filter(
+    (item: { userId: { _id: string }; quizId: { _id: string } }) =>
+      item.userId._id === userid && item.quizId._id === id
+  );
+
   const hasLowScore =
-    getResultDataByUserIdAndQuizId?.response?.length > 0
-      ? getResultDataByUserIdAndQuizId.response.some(
-          (item: { score: number }) => item.score > 69
-        )
+    filteredResults?.length > 0
+      ? filteredResults.some((item: { score: number }) => item.score > 69)
       : undefined;
 
   const attemptsLeft = totalAttemptData?.response?.noOfRetake
@@ -107,7 +110,7 @@ const Instructions = () => {
 
   const timeLeft = calculateTimeLeft();
 
-  if (totalAttemptsLoading || loadingResultDataByUserIdAndQuizId) {
+  if (totalAttemptsLoading || getAllResultsLoading) {
     return (
       <div className="instructions_root">
         <PageHeader
@@ -123,9 +126,8 @@ const Instructions = () => {
 
   const isButtonDisabled =
     (attemptsLeft === 0 && timeLeft) ||
-    getResultDataByUserIdAndQuizId?.response?.some(
-      (item: { score: number }) => item.score > 69
-    );
+    filteredResults.some((item: { score: number }) => item.score > 69);
+
   return (
     <div className="instructions_root">
       <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />

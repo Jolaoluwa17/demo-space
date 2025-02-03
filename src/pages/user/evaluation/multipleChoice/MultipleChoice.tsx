@@ -145,8 +145,6 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
       setIsInitialized(true);
     }
   }, [questionsData, questionId, isInitialized]);
-  // console.log('questionData:' + questionsData?.data);
-  console.log(questionsData)
 
   const QUESTIONS_PER_ATTEMPT = 10;
   let attemptIndex = 0;
@@ -167,7 +165,6 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
     if (questionsData?.data) {
       const startIndex = attemptIndex * QUESTIONS_PER_ATTEMPT;
       const endIndex = startIndex + QUESTIONS_PER_ATTEMPT;
-      console.log(questionsData.data.slice(startIndex, endIndex));
       return questionsData.data.slice(startIndex, endIndex);
     } else {
       console.log('Questions data is not available or empty.');
@@ -338,7 +335,6 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
 
     const totalQuestions = questionsToShow.length; // Use questionsToShow length for total
     const percentageScore = (userScore / totalQuestions) * 100;
-    console.log(percentageScore);
 
     const resultData = {
       score: percentageScore,
@@ -357,7 +353,6 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
           userId: userid,
         },
       });
-      console.log('submitted successfully');
       setErrMsg(
         res.response === 'Result already submitted for this quiz'
           ? 'Quiz has been done'
