@@ -61,3 +61,12 @@
     display: none; /* Hide text on smaller screens */
   }
 }
+
+/* Dark mode style  */
+.page_header_root_dark {
+  background-color: #1d1d1d;
+  color: white;
+}
+.page_header_root_dark .page_innner_header {
+  color: white;
+}

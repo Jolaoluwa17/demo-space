@@ -11,7 +11,11 @@ import AskQuestions from '@/components/home/questions/Questions';
 import HomeNavBar from '@/components/home/homeNavBar/HomeNavBar';
 import ContactUs from '@/components/home/contactUs/ContactUs';
 
-const Home = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const Home: React.FC<Props> = ({ darkmode }) => {
   const featuresRef = useRef<HTMLDivElement | null>(null);
   const homeRef = useRef<HTMLDivElement | null>(null);
   const contactRef = useRef<HTMLDivElement | null>(null);
@@ -39,8 +43,9 @@ const Home = () => {
       <HomeNavBar
         featuresBtn={handleScrollToFeatures}
         homeBtn={handleScrollToHome}
+        darkmode={darkmode}
       />
-      <HeroSection />
+      <HeroSection darkmode={darkmode} />
       <AboutUs />
       <div ref={featuresRef}>
         <AppFeatures />

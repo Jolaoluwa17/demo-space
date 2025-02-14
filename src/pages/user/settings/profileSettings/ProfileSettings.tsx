@@ -47,7 +47,11 @@ interface Certification {
   dateObtained: string;
 }
 
-const ProfileSettings = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const ProfileSettings: React.FC<Props> = ({ darkmode }) => {
   const tabs = [
     {
       name: 'Personal Information',
@@ -292,10 +296,11 @@ const ProfileSettings = () => {
   };
 
   return (
-    <div className="settings_root">
+    <div className={`settings_root ${darkmode && 'settings_root_dark'}`}>
       <PageHeader
         pageTitle="Profile Settings"
         handleBackClick={handleBackClick}
+        darkmode={darkmode}
       />
       <div className="settings_tabs_root">
         {tabs.map((tab) => (
@@ -307,10 +312,10 @@ const ProfileSettings = () => {
               activeTab === tab.name
                 ? {
                     borderBottom: '2px solid #007BFF',
-                    color: '#007BFF',
-                    backgroundColor: 'white',
+                    color: darkmode ? '#007BFF' : '#007BFF',
+                    backgroundColor: darkmode ? '#1d1d1d' : 'white',
                   }
-                : { color: 'rgba(117, 117, 117, 1)' }
+                : { color: darkmode ? '' : 'rgba(117, 117, 117, 1)' }
             }
           >
             <p>
@@ -363,6 +368,7 @@ const ProfileSettings = () => {
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
             userDataError={userDataError}
+            darkmode={darkmode}
           />
         )}
         {activeTab === 'Educational Background' && (
@@ -373,6 +379,7 @@ const ProfileSettings = () => {
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
             userDataError={userDataError}
+            darkmode={darkmode}
           />
         )}
         {activeTab === 'Skills' && (
@@ -383,6 +390,7 @@ const ProfileSettings = () => {
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
             userDataError={userDataError}
+            darkmode={darkmode}
           />
         )}
         {activeTab === 'Area of Interest' && (
@@ -393,6 +401,7 @@ const ProfileSettings = () => {
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
             userDataError={userDataError}
+            darkmode={darkmode}
           />
         )}
         {activeTab === 'Experience' && (
@@ -403,6 +412,7 @@ const ProfileSettings = () => {
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
             userDataError={userDataError}
+            darkmode={darkmode}
           />
         )}
         {activeTab === 'Certificates' && (
@@ -413,6 +423,7 @@ const ProfileSettings = () => {
             handleUpdateProfile={handleUpdateProfile}
             isLoading={isLoading}
             userDataError={userDataError}
+            darkmode={darkmode}
           />
         )}
       </div>

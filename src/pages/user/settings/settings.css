@@ -132,3 +132,39 @@
     padding: 15px 15px;
   }
 }
+
+/* Dark mode style */
+.settings_root_dark .settings_base_header {
+  background-color: #1d1d1d;
+  color: white;
+}
+
+.settings_root_dark .settings_base_option_button {
+  width: 100%;
+  box-shadow: rgba(255, 255, 255, 0.7) 0px 1px 4px;
+  background-color: black;
+  margin-top: 16px;
+  border-radius: 8px;
+  padding: 20px 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.settings_root_dark .settings_base_option_button2 {
+  width: 49%;
+  box-shadow: rgba(255, 255, 255, 0.7) 0px 1px 4px;
+  background-color: black;
+  margin-top: 16px;
+  border-radius: 8px;
+  padding: 20px 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.settings_root_dark .settings_base_option_text {
+  color: white;
+}

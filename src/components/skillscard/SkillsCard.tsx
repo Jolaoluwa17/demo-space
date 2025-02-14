@@ -1,5 +1,5 @@
 import './skillsCard.css';
-import RightArrowIcon from '@/icons/RightArrowIcon';
+import { FaChevronRight } from 'react-icons/fa';
 
 interface Props {
   imgSrc?: string;
@@ -8,6 +8,7 @@ interface Props {
   category?: string;
   onClick?: () => void;
   disabled?: boolean;
+  darkmode?: boolean;
 }
 
 const SkillsCard: React.FC<Props> = ({
@@ -16,6 +17,7 @@ const SkillsCard: React.FC<Props> = ({
   description,
   category,
   disabled = false,
+  darkmode,
 }) => {
   const getLanguageImageAndColor = () => {
     const lowerCaseLanguage = (category || '').toLowerCase();
@@ -51,7 +53,7 @@ const SkillsCard: React.FC<Props> = ({
 
   return (
     <div
-      className="skills_card_component"
+      className={`skills_card_component ${darkmode ? 'skills_card_component_dark' : ''}`}
       onClick={!disabled ? onClick : undefined}
     >
       <div className="skills_card_component_left_section">
@@ -66,7 +68,7 @@ const SkillsCard: React.FC<Props> = ({
         </div>
       </div>
       <div className="skills_card_component_right_section">
-        <RightArrowIcon />
+        <FaChevronRight color={darkmode ? 'white' : '#6A757E'} />
       </div>
     </div>
   );

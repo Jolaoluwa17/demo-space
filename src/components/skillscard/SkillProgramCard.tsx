@@ -5,12 +5,14 @@ interface Props {
   language: string;
   description: string;
   onClick?: () => void;
+  darkmode: boolean;
 }
 
 const SkillProgramCard: React.FC<Props> = ({
   language,
   description,
   onClick,
+  darkmode,
 }) => {
   const extractDescription = (htmlString: string) => {
     const descriptionMatch = htmlString.match(
@@ -52,7 +54,10 @@ const SkillProgramCard: React.FC<Props> = ({
   const { image, color } = getLanguageImageAndColor();
 
   return (
-    <div className="skills_card_component" onClick={onClick}>
+    <div
+      className={`skills_card_component ${darkmode ? 'skills_card_component_dark' : ''}`}
+      onClick={onClick}
+    >
       <div className="skills_card_component_left_section">
         <div className="skills_img_wrapper" style={{ backgroundColor: color }}>
           <img src={image} alt={language} className="skills_img" />

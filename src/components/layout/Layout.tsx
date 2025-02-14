@@ -6,11 +6,10 @@ import Sidebar from '../sidebar/SideBar';
 
 interface LayoutProps {
   examInProgress: boolean;
+  darkmode: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({
-  examInProgress,
-}) => {
+const Layout: React.FC<LayoutProps> = ({ examInProgress, darkmode }) => {
   const userName = 'Emmanuel Alabi';
   const location = useLocation();
   const pathname = location.pathname.substring(1);
@@ -35,14 +34,16 @@ const Layout: React.FC<LayoutProps> = ({
   })();
 
   return (
-    <div className="layout_root">
+    <div className={`layout_root ${darkmode ? 'darkmode_theme' : ''}`}>
       <div className="sidebar_mobile_container">
-        <Sidebar
-          examInProgress={examInProgress}
-        />
+        <Sidebar examInProgress={examInProgress} darkmode={darkmode} />
       </div>
-      <div className={`content_wrapper open`}>
-        <Header activeLink={activeLink} userName={userName} />
+      <div className={`content_wrapper open `}>
+        <Header
+          activeLink={activeLink}
+          userName={userName}
+          darkmode={darkmode}
+        />
         <main className="main_content">
           <Outlet />
         </main>

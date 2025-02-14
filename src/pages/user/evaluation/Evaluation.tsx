@@ -8,7 +8,11 @@ import SkillsCard from '@/components/skillscard/SkillsCard';
 import { useGetAllAssessmentsQuery } from '@/services/features/quiz/quizSlice';
 import descriptionGeneric from '@/utils/descriptionGeneric';
 
-const Evaluation = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const Evaluation: React.FC<Props> = ({ darkmode }) => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState<string[]>([]); // State to hold unique categories
@@ -67,8 +71,10 @@ const Evaluation = () => {
       }) || [];
 
   return (
-    <div className="evaluation_root">
-      <SearchInput handleSearch={handleSearch} />
+    <div
+      className={`evaluation_root ${darkmode ? 'evaluation_root_dark' : ''}`}
+    >
+      <SearchInput handleSearch={handleSearch} darkmode={darkmode} />
       {isLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />
@@ -128,6 +134,7 @@ const Evaluation = () => {
                     onClick={() =>
                       handleCardClick(card._id, card.course, description)
                     }
+                    darkmode={darkmode}
                   />
                 );
               }

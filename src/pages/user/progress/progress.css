@@ -19,4 +19,10 @@
   font-weight: 700;
   color: #5e5d6f;
   justify-content: center;
+  margin-bottom: 30px;
+}
+
+.progress_root_dark .progress_header {
+  background-color: #1d1d1d;
+  color: white;
 }

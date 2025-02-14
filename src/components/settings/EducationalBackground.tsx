@@ -12,6 +12,7 @@ interface Props {
   isLoading?: boolean;
   userDataError?: boolean;
   handleUpdateProfile?: () => Promise<void>;
+  darkmode: boolean;
 }
 
 const degreeOptions = [
@@ -39,6 +40,7 @@ const EducationalBackground: React.FC<Props> = ({
   isLoading,
   handleUpdateProfile,
   userDataError,
+  darkmode,
 }) => {
   const [edit, setEdit] = useState(false);
   // Store the original entries in a separate state variable
@@ -124,7 +126,7 @@ const EducationalBackground: React.FC<Props> = ({
   };
 
   return (
-    <div className="settings_content">
+    <div className={`settings_content ${darkmode && 'settings_content_dark'}`}>
       <div className="settings_main">
         <div className="settings_page_header">Educational Background</div>
         <div className="settings_page_subHeader">
@@ -216,6 +218,7 @@ const EducationalBackground: React.FC<Props> = ({
                       handleInputChange(index, 'degreeType', value)
                     }
                     placeholder="Select your degree type"
+                    darkmode={darkmode}
                   />
                 </div>
               ) : userDataIsLoading ? (

@@ -170,3 +170,15 @@
     margin-bottom: 10px;
   }
 }
+
+.history_root_dark .history_header,
+.history_root_dark .history_title,
+.history_root_dark .history_quiz_table th,
+.history_root_dark .history_quiz_table tbody tr {
+  background-color: #1d1d1d;
+  color: white;
+}
+.history_root_dark .history_back_btn,
+.history_root_dark .history_quiz_table td {
+  color: white;
+}

@@ -7,7 +7,11 @@ import SearchInput from '@/components/searchinput/SearchInput';
 import SkillProgramCard from '@/components/skillscard/SkillProgramCard';
 import { useGetAllProgramsQuery } from '@/services/features/skillGap/skillGapSlice';
 
-const SkillGap = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const SkillGap: React.FC<Props> = ({ darkmode }) => {
   const {
     data: programsData,
     isLoading: programsDataLoading,
@@ -38,7 +42,10 @@ const SkillGap = () => {
 
   return (
     <div className="skill_gap_root">
-      <SearchInput handleSearch={(term: string) => setSearchTerm(term)} />
+      <SearchInput
+        handleSearch={(term: string) => setSearchTerm(term)}
+        darkmode={darkmode}
+      />
       {programsDataLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />
@@ -81,6 +88,7 @@ const SkillGap = () => {
                 language={card.title}
                 description={card.discreption}
                 onClick={() => handleSkillClick(card._id)}
+                darkmode={darkmode}
               />
             )
           )}

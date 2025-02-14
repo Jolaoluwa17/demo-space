@@ -73,3 +73,14 @@
     width: 100%;
   }
 }
+
+/* Dark mode style */
+.skills_card_component_dark {
+  box-shadow: rgba(255, 255, 255, 0.7) 0px 1px 4px;
+}
+.skills_card_component_dark .skills_component_programming_language {
+  color: white;
+}
+.skills_card_component_dark .skills_component_card_text {
+  color: #ababab;
+}

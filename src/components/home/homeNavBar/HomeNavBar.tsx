@@ -8,6 +8,7 @@ import HamBurgerIcon from '@/icons/HamBurgerIcon';
 interface Props {
   featuresBtn: (value: unknown) => void;
   homeBtn: (value: unknown) => void;
+  darkmode: boolean;
 }
 
 const HomeNavBar: React.FC<Props> = ({ featuresBtn, homeBtn }) => {

@@ -33,9 +33,10 @@ const containerVariants = {
 
 interface Props {
   examInProgress: boolean;
+  darkmode: boolean;
 }
 
-const Sidebar: React.FC<Props> = ({ examInProgress }) => {
+const Sidebar: React.FC<Props> = ({ examInProgress, darkmode }) => {
   const containerControls = useAnimationControls();
   const location = useLocation();
   const pathname = location.pathname;
@@ -52,7 +53,7 @@ const Sidebar: React.FC<Props> = ({ examInProgress }) => {
     <motion.nav
       variants={containerVariants}
       animate={containerControls}
-      className="sidebar "
+      className={`sidebar ${darkmode ? 'darkmode_theme' : ''}`}
     >
       <div className="sidebar_header">
         <img
@@ -71,13 +72,14 @@ const Sidebar: React.FC<Props> = ({ examInProgress }) => {
           }
           link={`${baseRoute}`}
           disabled={examInProgress}
+          darkmode={darkmode}
         >
           <SidebarOverviewIcon
             color={
               pathname === `${baseRoute}` ||
               pathname.startsWith(`${baseRoute}/overview`)
                 ? '#007BFF'
-                : '#7d868e'
+                : darkmode ? 'white' : '#6A757E'
             }
           />
         </NavigationLink>
@@ -86,12 +88,13 @@ const Sidebar: React.FC<Props> = ({ examInProgress }) => {
           isActive={pathname.startsWith(`${baseRoute}/evaluation`)}
           link={`${baseRoute}/evaluation`}
           disabled={examInProgress}
+          darkmode={darkmode}
         >
           <SidebarEvaluationIcon
             color={
               pathname.startsWith(`${baseRoute}/evaluation`)
                 ? '#007BFF'
-                : '#7d868e'
+                : darkmode ? 'white' : '#6A757E'
             }
           />
         </NavigationLink>
@@ -100,12 +103,13 @@ const Sidebar: React.FC<Props> = ({ examInProgress }) => {
           isActive={pathname.startsWith(`${baseRoute}/progress`)}
           link={`${baseRoute}/progress`}
           disabled={examInProgress}
+          darkmode={darkmode}
         >
           <SidebarProgress
             color={
               pathname.startsWith(`${baseRoute}/progress`)
                 ? '#007BFF'
-                : '#7d868e'
+                : darkmode ? 'white' : '#6A757E'
             }
           />
         </NavigationLink>
@@ -114,12 +118,13 @@ const Sidebar: React.FC<Props> = ({ examInProgress }) => {
           isActive={pathname.startsWith(`${baseRoute}/skill-gap`)}
           link={`${baseRoute}/skill-gap`}
           disabled={examInProgress}
+          darkmode={darkmode}
         >
           <SidebarSkillGapIcon
             color={
               pathname.startsWith(`${baseRoute}/skill-gap`)
                 ? '#007BFF'
-                : '#7d868e'
+                : darkmode ? 'white' : '#6A757E'
             }
           />
         </NavigationLink>
@@ -128,12 +133,13 @@ const Sidebar: React.FC<Props> = ({ examInProgress }) => {
           isActive={pathname.startsWith(`${baseRoute}/profile`)}
           link={`${baseRoute}/profile`}
           disabled={examInProgress}
+          darkmode={darkmode}
         >
           <SidebarProfileIcon
             color={
               pathname.startsWith(`${baseRoute}/profile`)
                 ? '#007BFF'
-                : '#7d868e'
+                : darkmode ? 'white' : '#6A757E'
             }
           />
         </NavigationLink>

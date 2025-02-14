@@ -10,6 +10,7 @@ interface Props {
   link?: string;
   hidden?: boolean;
   disabled?: boolean;
+  darkmode?: boolean;
 }
 
 const NavigationLink = ({
@@ -20,10 +21,11 @@ const NavigationLink = ({
   isActive,
   hidden,
   disabled,
+  darkmode,
 }: Props) => {
   const commonClasses = `navigation-link ${isActive ? 'active' : ''} ${
     hidden ? 'hidden-class' : ''
-  } ${disabled ? 'disabled' : ''}`; 
+  } ${disabled ? 'disabled' : ''} ${darkmode ? "darkmode_theme" : "lightmode_theme"}`;
 
   if (disabled) {
     // Render a span instead of Link when disabled
@@ -39,7 +41,7 @@ const NavigationLink = ({
         <p
           className="navigation_text"
           style={{
-            color: isActive ? '#007BFF' : '#6A757E',
+            color: isActive ? '#007BFF' : darkmode ? 'white' : '#6A757E',
             fontWeight: '600',
           }}
         >
@@ -61,7 +63,7 @@ const NavigationLink = ({
       <p
         className="navigation_text"
         style={{
-          color: isActive ? '#007BFF' : '#6A757E',
+          color: isActive ? '#007BFF' : darkmode ? 'white' : '#6A757E',
           fontWeight: '600',
         }}
       >

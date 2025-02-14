@@ -86,3 +86,9 @@
     font-size: 14px;
   }
 }
+
+/* Dark mode style  */
+
+.instructions_root_dark .instructions_content {
+  box-shadow: rgba(255, 255, 255, 0.7) 0px 1px 4px;
+}

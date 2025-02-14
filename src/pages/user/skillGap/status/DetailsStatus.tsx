@@ -1,8 +1,12 @@
 import '../../evaluation/status/status.css';
 
-function DetailsStatus() {
+interface Props {
+  darkmode: boolean;
+}
+
+const DetailsStatus: React.FC<Props> = ({ darkmode }) => {
   return (
-    <div className="status_root">
+    <div className={`status_root ${darkmode && "status_root_dark"}`}>
       <div className="status_container">
         <img src="/images/success.svg" alt="success" />
         <div className="status_text">Application Received!!</div>
@@ -13,6 +17,6 @@ function DetailsStatus() {
       </div>
     </div>
   );
-}
+};
 
 export default DetailsStatus;

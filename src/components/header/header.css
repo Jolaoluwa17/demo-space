@@ -9,6 +9,9 @@
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.header.darkmode_theme {
+  border-bottom: 1.5px solid #2a2a2a;
+}
 
 .header_title {
   font-size: 1.5rem;

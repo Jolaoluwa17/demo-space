@@ -20,6 +20,7 @@ interface Props {
   isLoading?: boolean;
   handleUpdateProfile?: () => Promise<void>;
   userDataError?: boolean;
+  darkmode: boolean;
 }
 
 const Experience: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const Experience: React.FC<Props> = ({
   isLoading,
   handleUpdateProfile,
   userDataError,
+  darkmode,
 }) => {
   const [edit, setEdit] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -126,7 +128,7 @@ const Experience: React.FC<Props> = ({
   };
 
   return (
-    <div className="settings_content">
+    <div className={`settings_content ${darkmode && 'settings_content_dark'}`}>
       <div className="settings_main">
         <div className="settings_page_header">Experience</div>
         <div className="settings_page_subHeader">
@@ -206,7 +208,12 @@ const Experience: React.FC<Props> = ({
                   <div className="pages_empty_checkbox"></div>
                 )}
               </div>
-              <div style={{ paddingTop: '5px' }}>Currently Working Here</div>
+              <div
+                style={{ paddingTop: '5px' }}
+                className="currently_working_here_text"
+              >
+                Currently Working Here
+              </div>
             </div>
           </div>
         ) : (
@@ -399,7 +406,10 @@ const Experience: React.FC<Props> = ({
                       <RememberMeCheckBox />
                     </div>
                   )}
-                  <div style={{ paddingTop: '5px' }}>
+                  <div
+                    style={{ paddingTop: '5px' }}
+                    className="currently_working_here_text"
+                  >
                     Currently Working Here
                   </div>
                 </div>

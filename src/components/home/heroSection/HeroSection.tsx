@@ -2,7 +2,11 @@ import { useRef } from 'react';
 import './heroSection.css';
 import { motion, useInView } from 'framer-motion';
 
-const HeroSection = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const HeroSection: React.FC<Props> = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -16,7 +20,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="hero_section_root">
+    <div className={`hero_section_root`}>
       <div className="hero_section_content">
         <div className="content_container">
           <motion.div

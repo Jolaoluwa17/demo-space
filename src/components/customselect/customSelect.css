@@ -70,3 +70,12 @@
 .custom_select_options {
   pointer-events: auto; /* Ensure dropdown is clickable if not disabled */
 }
+
+/* Dark mode style */
+.custom_select_dark .custom_select_trigger,
+.custom_select_dark .custom_select_options {
+  background-color: black;
+}
+.custom_select_dark .custom_select_option:hover {
+  background-color: #1d1d1d;
+}

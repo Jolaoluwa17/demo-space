@@ -156,7 +156,7 @@
   position: absolute;
   width: 100%;
   background-color: white;
-  padding: 20px;
+
   box-sizing: border-box;
   margin-top: 10px;
   border-radius: 10px;
@@ -169,6 +169,11 @@
 .settings_profile_skill_item {
   margin-bottom: 10px;
   cursor: pointer;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.settings_profile_skill_item:hover {
+  background-color: #f1f1f1;
 }
 .profile_pageone_form_item {
   margin-top: 24px;
@@ -320,4 +325,34 @@
 .settings_profile_skills_dropdown::-webkit-scrollbar-track {
   background-color: #f1f1f1; /* Track color */
   border-radius: 10px;
+}
+
+/* Dark mode style */
+
+.settings_content_dark .profile_input_item,
+.settings_content_dark .phoneNo_container_code select,
+.settings_content_dark .profile_pageone_input,
+.settings_content_dark .input,
+.settings_content_dark .settings_profile_skills_dropdown,
+.settings_content_dark .profile_input_textarea {
+  background-color: black;
+  color: white;
+}
+
+.settings_content_dark input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(0) saturate(100%) hue-rotate(180deg);
+}
+
+.settings_content_dark
+  .settings_profile_skills_dropdown
+  .settings_profile_skill_item:hover {
+  background-color: #1d1d1d;
+}
+
+.settings_content_dark .currently_working_here_text {
+  color: white;
+}
+
+.settings_content_dark .interests_uneditted {
+  border: none;
 }

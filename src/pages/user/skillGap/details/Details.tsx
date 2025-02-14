@@ -18,7 +18,11 @@ import {
 import { AnimatePresence, motion } from 'framer-motion';
 import NotificationToast from '@/components/notificationToast/NotificationToast';
 
-const Details = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const Details: React.FC<Props> = ({ darkmode }) => {
   const navigate = useNavigate();
   const userid = sessionStorage.getItem('id');
   const [success, setIsSuccess] = useState(false);
@@ -128,8 +132,12 @@ const Details = () => {
   }, [filteredInternships, getApply]);
 
   return (
-    <div className="details_root">
-      <PageHeader pageTitle="Details" handleBackClick={handleBackClick} />
+    <div className={`details_root ${darkmode && "details_root_dark"}`}>
+      <PageHeader
+        pageTitle="Details"
+        handleBackClick={handleBackClick}
+        darkmode={darkmode}
+      />
       {isLoading || internshipApplyLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />

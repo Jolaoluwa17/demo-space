@@ -6,7 +6,11 @@ import { useTotalAttemptsQuery } from '@/services/features/quiz/quizSlice';
 import { FadeLoader } from 'react-spinners';
 import { useEffect } from 'react';
 
-const History = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const History: React.FC<Props> = ({ darkmode }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const userId = sessionStorage.getItem('id');
@@ -65,7 +69,7 @@ const History = () => {
   const displayedResults = calculateDisplayedResults();
 
   return (
-    <div className="history_root">
+    <div className={`history_root ${darkmode && "history_root_dark"}`}>
       {isLoading || totalAttemptsLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />

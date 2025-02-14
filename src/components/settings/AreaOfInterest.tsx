@@ -22,6 +22,7 @@ interface Props {
   isLoading?: boolean;
   handleUpdateProfile?: () => Promise<void>;
   userDataError?: boolean;
+  darkmode: boolean;
 }
 
 const AreaOfInterest: React.FC<Props> = ({
@@ -31,6 +32,7 @@ const AreaOfInterest: React.FC<Props> = ({
   isLoading,
   handleUpdateProfile,
   userDataError,
+  darkmode,
 }) => {
   const [edit, setEdit] = useState(false);
   // Add state to store original interests when entering edit mode
@@ -62,7 +64,7 @@ const AreaOfInterest: React.FC<Props> = ({
   };
 
   return (
-    <div className="settings_content">
+    <div className={`settings_content ${darkmode && 'settings_content_dark'}`}>
       <div className="settings_main">
         <div className="settings_page_header">Area of interest</div>
         <div className="settings_page_subHeader">

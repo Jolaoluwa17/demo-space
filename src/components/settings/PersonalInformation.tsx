@@ -26,6 +26,7 @@ interface Props {
   userDataIsLoading?: boolean;
   userDataError?: boolean;
   handleUpdateProfile?: () => Promise<void>;
+  darkmode: boolean;
 }
 
 const country = [
@@ -54,6 +55,7 @@ const PersonalInformation: React.FC<Props> = ({
   handleUpdateProfile,
   userDataError,
   isLoading,
+  darkmode,
 }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedCode, setSelectedCode] = useState<string>('+234');
@@ -143,7 +145,7 @@ const PersonalInformation: React.FC<Props> = ({
   const [edit, setEdit] = useState(false);
 
   return (
-    <div className="settings_content">
+    <div className={`settings_content ${darkmode && 'settings_content_dark'}`}>
       <div className="settings_main">
         <div className="settings_page_header">Personal Information</div>
         <div className="settings_page_subHeader">

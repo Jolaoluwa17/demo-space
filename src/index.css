@@ -100,3 +100,10 @@ body {
     font-size: 14px;
   }
 }
+
+/* Theme style */
+.darkmode_theme {
+  background-color: black;
+  color: white;
+  border-color: white;
+}

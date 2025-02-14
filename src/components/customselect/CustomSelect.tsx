@@ -9,6 +9,7 @@ interface SelectProps {
   placeholder?: string;
   disabled?: boolean;
   minWidth?: string;
+  darkmode: boolean;
 }
 
 const CustomSelect: React.FC<SelectProps> = ({
@@ -18,6 +19,7 @@ const CustomSelect: React.FC<SelectProps> = ({
   placeholder = 'Select an option',
   disabled = false,
   minWidth,
+  darkmode,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -47,7 +49,7 @@ const CustomSelect: React.FC<SelectProps> = ({
 
   return (
     <div
-      className={`custom_select ${disabled ? 'disabled' : ''}`}
+      className={`custom_select ${disabled ? 'disabled' : ''} ${darkmode && "custom_select_dark"}`}
       ref={selectRef}
       style={{ minWidth: minWidth ? minWidth : '' }}
     >

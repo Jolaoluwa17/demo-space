@@ -11,6 +11,7 @@ interface Props {
   isLoading?: boolean;
   handleUpdateProfile?: () => Promise<void>;
   userDataError?: boolean;
+  darkmode: boolean;
 }
 
 interface Certification {
@@ -26,6 +27,7 @@ const Certificate: React.FC<Props> = ({
   isLoading,
   handleUpdateProfile,
   userDataError,
+  darkmode,
 }) => {
   const [edit, setEdit] = useState(false);
   // Store original certifications when entering edit mode
@@ -100,7 +102,7 @@ const Certificate: React.FC<Props> = ({
       : [{ name: '', issuedBy: '', dateObtained: getCurrentDate() }];
 
   return (
-    <div className="settings_content">
+    <div className={`settings_content ${darkmode && 'settings_content_dark'}`}>
       <div className="settings_main">
         <div className="settings_page_header">Certifications</div>
         <div className="settings_page_subHeader">

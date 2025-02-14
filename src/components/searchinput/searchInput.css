@@ -17,3 +17,9 @@
   outline: none;
   font-size: 15px;
 }
+
+.searchbar_dark,
+.searchbar_dark .search_input {
+  background-color: black;
+  color: white;
+}

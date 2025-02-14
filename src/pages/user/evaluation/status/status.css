@@ -51,3 +51,8 @@
   color: green;
   font-weight: 600;
 }
+
+.status_root_dark .status_text,
+.status_root_dark .status_statement {
+  color: white;
+}

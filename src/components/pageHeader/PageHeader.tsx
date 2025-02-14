@@ -5,11 +5,16 @@ import './pageHeader.css';
 interface Props {
   handleBackClick: () => void;
   pageTitle: string;
+  darkmode: boolean;
 }
 
-const PageHeader: React.FC<Props> = ({ handleBackClick, pageTitle }) => {
+const PageHeader: React.FC<Props> = ({
+  handleBackClick,
+  pageTitle,
+  darkmode,
+}) => {
   return (
-    <div className="page_header_root">
+    <div className={`page_header_root ${darkmode && 'page_header_root_dark'}`}>
       <div className="page_innner_header">
         <div className="page_back_btn" onClick={handleBackClick}>
           <div className="pageheader_left_arrow_icon">

@@ -60,3 +60,9 @@
     display: none;
   }
 }
+
+/* Dark mode style */
+.evaluation_root_dark .evaluation_pagination_btn {
+  border: 1px solid #414141;
+  color: white;
+}

@@ -11,6 +11,7 @@ interface Props {
   isLoading?: boolean;
   handleUpdateProfile?: () => Promise<void>;
   userDataError?: boolean;
+  darkmode: boolean
 }
 
 const Skills: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const Skills: React.FC<Props> = ({
   isLoading,
   handleUpdateProfile,
   userDataError,
+  darkmode
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredSkills, setFilteredSkills] = useState<string[]>([]);
@@ -92,7 +94,7 @@ const Skills: React.FC<Props> = ({
   };
 
   return (
-    <div className="settings_content">
+    <div className={`settings_content ${darkmode && 'settings_content_dark'}`}>
       <div className="settings_main">
         <div className="settings_page_header">Your Skills</div>
         <div className="settings_page_subHeader">

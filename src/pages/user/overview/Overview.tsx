@@ -17,7 +17,11 @@ interface UserType {
   };
 }
 
-const Overview = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const Overview: React.FC<Props> = ({ darkmode }) => {
   const navigate = useNavigate();
   const userid = sessionStorage.getItem('id');
 
@@ -66,7 +70,7 @@ const Overview = () => {
   }, [location.key, refecthProgramsData, refetchAssessment]);
 
   return (
-    <div className="overview_root">
+    <div className={`overview_root ${darkmode ? 'overview_darkmode' : ''}`}>
       {isLoading || isError ? (
         <div className="skeleton_loader_overview_header"></div>
       ) : (
@@ -130,6 +134,7 @@ const Overview = () => {
                     onClick={() =>
                       handleCardClick(card._id, card.course, description)
                     }
+                    darkmode={darkmode}
                   />
                 );
               }
@@ -174,6 +179,7 @@ const Overview = () => {
                   language={card.title}
                   description={card.discreption}
                   onClick={() => handleSkillClick(card._id)}
+                  darkmode={darkmode}
                 />
               )
             )}

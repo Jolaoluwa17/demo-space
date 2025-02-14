@@ -7,7 +7,11 @@ import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 import descriptionGeneric from '@/utils/descriptionGeneric';
 import { useEffect } from 'react';
 
-const Progress = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const Progress: React.FC<Props> = ({ darkmode }) => {
   const navigate = useNavigate();
   const userId = sessionStorage.getItem('id');
 
@@ -65,9 +69,8 @@ const Progress = () => {
         []
       ) || [];
 
-
   return (
-    <div className="progress_root">
+    <div className={`progress_root ${darkmode ? 'progress_root_dark' : ''}`}>
       <div className="progress_header">Progress</div>
       <div className="progress_skills_container">
         {resultDataLoading ? (
@@ -119,6 +122,7 @@ const Progress = () => {
                       description
                     )
                   }
+                  darkmode={darkmode}
                 />
               );
             }

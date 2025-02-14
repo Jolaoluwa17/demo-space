@@ -9,6 +9,9 @@
   position: fixed;
   width: 236px;
 }
+.sidebar.darkmode_theme {
+  border-right: 1.5px solid #2a2a2a;
+}
 .admin_sidebar {
   width: 260px;
 }

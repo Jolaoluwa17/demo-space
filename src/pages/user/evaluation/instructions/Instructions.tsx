@@ -13,7 +13,11 @@ import PageHeader from '@/components/pageHeader/PageHeader';
 import { useGetAllResultsQuery } from '@/services/features/result/resultSlice';
 import { useTotalAttemptsQuery } from '@/services/features/quiz/quizSlice';
 
-const Instructions = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const Instructions: React.FC<Props> = ({ darkmode }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
@@ -116,6 +120,7 @@ const Instructions = () => {
         <PageHeader
           handleBackClick={handleBackClick}
           pageTitle="Instructions"
+          darkmode={darkmode}
         />
         <div className="loading_container">
           <FadeLoader color="#007BFF" />
@@ -129,8 +134,14 @@ const Instructions = () => {
     filteredResults.some((item: { score: number }) => item.score > 69);
 
   return (
-    <div className="instructions_root">
-      <PageHeader handleBackClick={handleBackClick} pageTitle="Instructions" />
+    <div
+      className={`instructions_root ${darkmode && 'instructions_root_dark'}`}
+    >
+      <PageHeader
+        handleBackClick={handleBackClick}
+        pageTitle="Instructions"
+        darkmode={darkmode}
+      />
       <div>
         <div className="instructions_content">
           <div className="instruction_title_container">
@@ -157,11 +168,11 @@ const Instructions = () => {
                     size={20}
                     style={{
                       paddingRight: '5px',
-                      color: 'red',
+                      color: '#c1121f',
                     }}
                   />
                   {timeLeft && (
-                    <span style={{ fontWeight: '600' }}>
+                    <span style={{ fontWeight: '600', color: '#c1121f' }}>
                       Assessment limit maxed out time left before retake{' '}
                       {`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m`}
                     </span>

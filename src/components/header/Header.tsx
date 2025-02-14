@@ -7,16 +7,19 @@ import { useGetUserQuery } from '@/services/features/user/userSlice';
 interface Props {
   activeLink: string;
   userName: string;
+  darkmode: boolean;
 }
 
 interface UserType {
   response: {
     fullName: string;
     email: string;
+    firstName: string;
+    lastName: string;
   };
 }
 
-const Header: React.FC<Props> = ({ activeLink }) => {
+const Header: React.FC<Props> = ({ activeLink, darkmode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -46,8 +49,10 @@ const Header: React.FC<Props> = ({ activeLink }) => {
     isLoading: boolean;
   };
 
+  console.log(data);
+
   return (
-    <header className="header">
+    <header className={`header ${darkmode ? 'darkmode_theme' : 'lightmode_theme'}`}>
       <h1 className="header_title">{activeLink}</h1>
       <div className="header_right_section">
         <div className="profile-dropdown">
@@ -59,7 +64,7 @@ const Header: React.FC<Props> = ({ activeLink }) => {
               Hi,{' '}
               {data && (
                 <span style={{ fontWeight: '600' }}>
-                  {data?.response?.fullName}
+                  {data?.response?.lastName} {data?.response?.firstName}
                 </span>
               )}
             </div>

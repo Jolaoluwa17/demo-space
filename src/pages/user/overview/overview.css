@@ -15,6 +15,7 @@
   font-size: 20px;
   color: #333a41;
 }
+
 .overview_subTitle {
   font-size: 14px;
   color: #6a757e;
@@ -91,4 +92,30 @@
     width: 100%;
     height: 112px;
   }
+}
+
+/* Dark mode style */
+.overview_darkmode .skeleton_loader_overview_header {
+  background-color: #2b2b2b;
+  width: 100%;
+  height: 118px;
+  border-radius: 8px;
+  animation: flicker 1s infinite linear;
+}
+.overview_darkmode .skeleton_loader_overview_section_card {
+  background-color: #2b2b2b;
+  width: 49%;
+  height: 125px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  animation: flicker 1s infinite linear;
+}
+
+.overview_darkmode .overview_title,
+.overview_darkmode .overview_section_title {
+  color: white;
+}
+.overview_darkmode .overview_subTitle,
+.overview_darkmode .overview_section_subTitle {
+  color: #ababab;
 }

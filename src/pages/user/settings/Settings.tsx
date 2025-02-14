@@ -5,6 +5,7 @@ import { FiTwitter, FiInstagram, FiHeadphones } from 'react-icons/fi';
 import { LuMail } from 'react-icons/lu';
 import { IoPersonOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
+import { CiLight, CiDark } from 'react-icons/ci';
 
 import './settings.css';
 import RightArrowIcon from '@/icons/RightArrowIcon';
@@ -12,7 +13,12 @@ import Popup from '@/modals/popup/Popup';
 import { useDeleteUserMutation } from '@/services/features/user/userSlice';
 import { logout } from '@/services/features/auth/authSlice';
 
-const Settings = () => {
+interface Props {
+  darkmode: boolean;
+  setDarkMode: (darkmode: boolean) => void;
+}
+
+const Settings: React.FC<Props> = ({ darkmode, setDarkMode }) => {
   const navigate = useNavigate();
 
   const [showPopup, setShowPopup] = useState(false);
@@ -38,8 +44,12 @@ const Settings = () => {
     }
   };
 
+  const handleDarkMode = () => {
+    setDarkMode(!darkmode);
+  };
+
   return (
-    <div className="settings_root">
+    <div className={`settings_root ${darkmode && 'settings_root_dark'}`}>
       <div className="settings_base_header">Settings</div>
       <div className="settings_option_container">
         <div className="settings_base_option">
@@ -49,7 +59,10 @@ const Settings = () => {
             onClick={() => navigate('/dashboard/profile/profile-settings')}
           >
             <div className="first_section">
-              <IoPersonOutline size={25} color="#6a757e" />
+              <IoPersonOutline
+                size={25}
+                color={darkmode ? 'white' : '#6a757e'}
+              />
               <div className="settings_base_option_text">Profile Setting</div>
             </div>
             <RightArrowIcon />
@@ -60,7 +73,7 @@ const Settings = () => {
       <div className="settings_option_container">
         <div className="settings_base_option_button2">
           <div className="first_section">
-            <FiHeadphones size={25} color="#6a757e" />
+            <FiHeadphones size={25} color={darkmode ? 'white' : '#6a757e'} />
             <div className="settings_base_option_text">01 - 2345678 - 9</div>
           </div>
           <RightArrowIcon />
@@ -72,7 +85,7 @@ const Settings = () => {
           className="settings_base_option_button2"
         >
           <div className="first_section">
-            <FiInstagram size={25} color="#6a757e" />
+            <FiInstagram size={25} color={darkmode ? 'white' : '#6a757e'} />
             <div className="settings_base_option_text">
               officialtechwingsglobal
             </div>
@@ -85,7 +98,7 @@ const Settings = () => {
           className="settings_base_option_button2"
         >
           <div className="first_section">
-            <LuMail size={25} color="#6a757e" />
+            <LuMail size={25} color={darkmode ? 'white' : '#6a757e'} />
             <div className="settings_base_option_text">
               info@techwingsglobal.com
             </div>
@@ -99,11 +112,23 @@ const Settings = () => {
           target="_blank"
         >
           <div className="first_section">
-            <FiTwitter size={25} color="#6a757e" />
+            <FiTwitter size={25} color={darkmode ? 'white' : '#6a757e'} />
             <div className="settings_base_option_text">techwingsllc</div>
           </div>
           <RightArrowIcon />
         </a>
+        <div className="settings_base_option_button2" onClick={handleDarkMode}>
+          <div className="first_section">
+            {darkmode ? (
+              <CiDark size={27} color="white" />
+            ) : (
+              <CiLight size={27} color="#6a757e" />
+            )}
+            <div className="settings_base_option_text">
+              Theme {darkmode ? 'Dark' : 'Light'}
+            </div>
+          </div>
+        </div>
         <div
           className="settings_base_option_button2"
           style={{ backgroundColor: 'red' }}

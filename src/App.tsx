@@ -33,13 +33,14 @@ import { useState } from 'react';
 
 function App() {
   const [examInProgress, setExamInProgress] = useState(false);
+  const [darkmode, setDarkMode] = useState(false);
 
   return (
     <Providers>
       <BrowserRouter>
         <Routes>
           {/* Landing Routes */}
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home darkmode={darkmode} />} />
 
           {/* Authentication Routes */}
           <Route path="auth" element={<AuthLayout />}>
@@ -63,15 +64,20 @@ function App() {
             path="/dashboard"
             element={
               <ProtectedRoute
-                element={<Layout examInProgress={examInProgress} />}
+                element={
+                  <Layout examInProgress={examInProgress} darkmode={darkmode} />
+                }
                 allowedRoles={['User']}
               />
             }
           >
-            <Route index element={<Overview />} />
+            <Route index element={<Overview darkmode={darkmode} />} />
             <Route path="evaluation" element={<EvaluationRoot />}>
-              <Route index element={<Evaluation />} />
-              <Route path="instructions" element={<Instructions />} />
+              <Route index element={<Evaluation darkmode={darkmode} />} />
+              <Route
+                path="instructions"
+                element={<Instructions darkmode={darkmode} />}
+              />
               <Route
                 path="multiple-choice"
                 element={
@@ -84,18 +90,29 @@ function App() {
               <Route path="status" element={<Status />} />
             </Route>
             <Route path="progress" element={<ProgressRoot />}>
-              <Route index element={<Progress />} />
-              <Route path="history" element={<History />} />
+              <Route index element={<Progress darkmode={darkmode} />} />
+              <Route path="history" element={<History darkmode={darkmode} />} />
               {/* <Route path="question" element={<Questions />} /> */}
             </Route>
             <Route path="skill-gap" element={<SkillGapRoot />}>
-              <Route index element={<SkillGap />} />
-              <Route path="details" element={<Details />} />
-              <Route path="status" element={<DetailsStatus />} />
+              <Route index element={<SkillGap darkmode={darkmode} />} />
+              <Route path="details" element={<Details darkmode={darkmode} />} />
+              <Route
+                path="status"
+                element={<DetailsStatus darkmode={darkmode} />}
+              />
             </Route>
             <Route path="profile" element={<SettingsRoot />}>
-              <Route index element={<Settings />} />
-              <Route path="profile-settings" element={<ProfileSettings />} />
+              <Route
+                index
+                element={
+                  <Settings darkmode={darkmode} setDarkMode={setDarkMode} />
+                }
+              />
+              <Route
+                path="profile-settings"
+                element={<ProfileSettings darkmode={darkmode} />}
+              />
               <Route path="change-password" element={<ChangePassword />} />
             </Route>
           </Route>
