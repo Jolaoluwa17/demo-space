@@ -112,27 +112,6 @@
   font-weight: 600;
 }
 
-@media (max-width: 768px) {
-  .settings_base_option_button2,
-  .settings_base_option {
-    width: 100%;
-  }
-}
-
-@media (max-width: 450px) {
-  .settings_base_option_text {
-    font-size: 14px;
-  }
-  .settings_label2,
-  .settings_label {
-    font-size: 15px;
-  }
-  .settings_base_option_button,
-  .settings_base_option_button2 {
-    padding: 15px 15px;
-  }
-}
-
 /* Dark mode style */
 .settings_root_dark .settings_base_header {
   background-color: #1d1d1d;
@@ -168,3 +147,28 @@
 .settings_root_dark .settings_base_option_text {
   color: white;
 }
+
+@media (max-width: 768px) {
+  .settings_base_option_button2,
+  .settings_base_option,
+  .settings_root_dark .settings_base_option_button,
+  .settings_root_dark .settings_base_option_button2 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  .settings_base_option_text {
+    font-size: 14px;
+  }
+  .settings_label2,
+  .settings_label {
+    font-size: 15px;
+  }
+  .settings_base_option_button,
+  .settings_base_option_button2 {
+    padding: 15px 15px;
+  }
+}
+
+

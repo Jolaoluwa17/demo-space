@@ -139,6 +139,10 @@
     padding-left: 8px;
     background-color: white;
   }
+  .navigation-link.active.darkmode_theme{
+    border-left: none;
+    background-color: black;
+  }
   .hidden-class {
     display: block;
   }

@@ -6,7 +6,10 @@ import { FcGoogle } from 'react-icons/fc';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 
 import './signup.css';
-import { useSignUpMutation } from '@/services/features/auth/authApiSlice';
+import {
+  // useGoogleAuthQuery,
+  useSignUpMutation,
+} from '@/services/features/auth/authApiSlice';
 import { setCredentials } from '@/services/features/auth/authSlice';
 
 interface ErrorResponse {
@@ -92,6 +95,16 @@ const Signup = () => {
       );
     }
   };
+
+  // const { data, isLoading: googleLoading, error } = useGoogleAuthQuery({});
+
+  // const handleGoogleSignIn = () => {
+  //   // Trigger the Google authentication request when the button is clicked
+  //   if (data && data.url) {
+  //     console.log(data);
+  //     window.location.href = data.url; // Redirect the user to the Google sign-in page
+  //   }
+  // };
 
   return (
     <div className="signup_root">
@@ -308,9 +321,10 @@ const Signup = () => {
               <span>or sign up with</span>
               <hr />
             </div>
-            <div className="google_sign">
+            <div className="google_sign" >
               <FcGoogle size={20} />
             </div>
+        
           </div>
         </div>
       </div>
