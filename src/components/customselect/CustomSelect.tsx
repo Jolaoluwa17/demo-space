@@ -9,7 +9,7 @@ interface SelectProps {
   placeholder?: string;
   disabled?: boolean;
   minWidth?: string;
-  darkmode: boolean;
+  darkmode?: boolean;
 }
 
 const CustomSelect: React.FC<SelectProps> = ({

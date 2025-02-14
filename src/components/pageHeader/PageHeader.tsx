@@ -5,7 +5,7 @@ import './pageHeader.css';
 interface Props {
   handleBackClick: () => void;
   pageTitle: string;
-  darkmode: boolean;
+  darkmode?: boolean;
 }
 
 const PageHeader: React.FC<Props> = ({
