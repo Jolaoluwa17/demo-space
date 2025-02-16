@@ -55,7 +55,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 8px;
 }
 .options_text {
   padding-left: 12px;
@@ -117,4 +116,16 @@
   .nodata_container {
     padding-top: 130px;
   }
+}
+
+.multiple_choice_root_dark .multiple_choice_header {
+  background-color: #1d1d1d;
+  color: white;
+}
+.multiple_choice_root_dark .multiple_choice_header .timer {
+  color: white;
+}
+.multiple_choice_root_dark .selected_option {
+  background-color: #007bff;
+  /* border: 1px solid white; */
 }

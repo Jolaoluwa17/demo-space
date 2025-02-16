@@ -21,6 +21,11 @@
   border-radius: 15px;
 }
 
+.popup_root_dark .popup_main {
+  background-color: black;
+  box-shadow: rgba(255, 255, 255, 0.7) 0px 1px 4px;
+}
+
 @media (max-width: 768px) {
   .popup_main {
     width: 390px;

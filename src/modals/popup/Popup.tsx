@@ -5,9 +5,10 @@ interface Props {
   popup: boolean;
   children: React.ReactNode;
   closePopup?: () => void;
+  darkmode?: boolean
 }
 
-const Popup: React.FC<Props> = ({ popup, children, closePopup }) => {
+const Popup: React.FC<Props> = ({ popup, children, closePopup, darkmode }) => {
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const Popup: React.FC<Props> = ({ popup, children, closePopup }) => {
   if (!popup) return null;
 
   return (
-    <div className="popup_root">
+    <div className={`popup_root ${darkmode && "popup_root_dark"}`}>
       <div className="popup_main" ref={popupRef}>
         {children}
       </div>

@@ -7,13 +7,18 @@ import Popup from '@/modals/popup/Popup';
 import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
 
-const ChangePassword = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const ChangePassword: React.FC<Props> = ({ darkmode }) => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [popup, setPopup] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -37,6 +42,10 @@ const ChangePassword = () => {
 
   const handleHiddenTrigger = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleOldPassword = () => {
+    setShowOldPassword(!showOldPassword);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,21 +72,30 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="change_password_root">
+    <div
+      className={`change_password_root ${darkmode && 'change_password_root_dark'}`}
+    >
       <PageHeader
         pageTitle="Change Password"
         handleBackClick={handleBackClick}
+        darkmode={darkmode}
       />
       <div className="change_password_form">
         <div className="change_password_form_item">
           <div className="form_item">
             <label htmlFor="">Enter Old Password</label>
             <input
-              type="password"
+              type={showOldPassword ? 'text' : 'password'}
               className="change_password_input"
               value={oldPassword}
               onChange={handleOldPasswordChange}
             />
+            <div
+              onClick={handleOldPassword}
+              className="change_password_see_password"
+            >
+              {showOldPassword ? <EyeOpen /> : <EyeClosed />}
+            </div>
           </div>
           <div className="form_item">
             <label htmlFor="">Enter New Password</label>

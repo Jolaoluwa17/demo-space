@@ -29,11 +29,20 @@ import ProfileSettings from './pages/user/settings/profileSettings/ProfileSettin
 import SettingsRoot from './pages/user/settings/SettingsRoot';
 import ChangePassword from './pages/user/settings/changePassword/ChangePassword';
 import Home from './pages/home/Home';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [examInProgress, setExamInProgress] = useState(false);
   const [darkmode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 18 || currentHour < 5) {
+      setDarkMode(true); // Enable dark mode between 18:00 and 5:00
+    } else {
+      setDarkMode(false); // Light mode otherwise
+    }
+  }, []);
 
   return (
     <Providers>
@@ -84,10 +93,11 @@ function App() {
                   <MultipleChoice
                     examInProgress={examInProgress}
                     setExamInProgress={setExamInProgress}
+                    darkmode={darkmode}
                   />
                 }
               />
-              <Route path="status" element={<Status />} />
+              <Route path="status" element={<Status darkmode={darkmode} />} />
             </Route>
             <Route path="progress" element={<ProgressRoot />}>
               <Route index element={<Progress darkmode={darkmode} />} />
@@ -113,7 +123,10 @@ function App() {
                 path="profile-settings"
                 element={<ProfileSettings darkmode={darkmode} />}
               />
-              <Route path="change-password" element={<ChangePassword />} />
+              <Route
+                path="change-password"
+                element={<ChangePassword darkmode={darkmode} />}
+              />
             </Route>
           </Route>
         </Routes>

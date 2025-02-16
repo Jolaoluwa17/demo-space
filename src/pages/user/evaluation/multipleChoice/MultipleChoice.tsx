@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 import { AnimatePresence, motion } from 'framer-motion';
+import { FaCheckCircle } from 'react-icons/fa';
 
 import './multipleChoice.css';
 import {
@@ -10,7 +11,6 @@ import {
   useGetQuizQuestionQuery,
   useTotalAttemptsQuery,
 } from '@/services/features/quiz/quizSlice';
-import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import ArrowLeftIcon from '@/icons/ArrowLeftIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
 import NavigationArrow from '@/icons/NavigationArrow';
@@ -44,9 +44,10 @@ interface Question {
 interface Props {
   examInProgress: boolean;
   setExamInProgress: (examInProgress: boolean) => void;
+  darkmode: boolean;
 }
 
-const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
+const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
   // disable side bar and other buttons when quiz is in progress
   useEffect(() => {
     setExamInProgress(true);
@@ -436,7 +437,9 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
   }
 
   return (
-    <div className="multiple_choice_root">
+    <div
+      className={`multiple_choice_root ${darkmode && 'multiple_choice_root_dark'}`}
+    >
       <div className="multiple_choice_header">
         <div>Questions</div>
         <div className="timer">{formatTime(time)}</div>
@@ -462,7 +465,10 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
             >
               <div className="check_icon">
                 {selectedOption === option ? (
-                  <CheckCircleIcon />
+                  <FaCheckCircle
+                    color={darkmode ? 'white' : 'black'}
+                    size={20}
+                  />
                 ) : (
                   <div className="empty_check_circle"></div>
                 )}
@@ -538,7 +544,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
           </motion.div>
         )}
       </AnimatePresence>
-      <Popup popup={showPopup}>
+      <Popup popup={showPopup} darkmode={darkmode}>
         <div style={{ width: '100%' }}>
           <div
             style={{
@@ -561,7 +567,11 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
             <div
               className="decision_btn"
               style={{
-                backgroundColor: !resultLoading ? '#007BFF' : 'grey',
+                backgroundColor: !resultLoading
+                  ? darkmode
+                    ? 'black'
+                    : '#007BFF'
+                  : 'grey',
                 cursor: !resultLoading ? 'pointer' : 'not-allowed',
                 color: 'white',
               }}
@@ -577,7 +587,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress }) => {
               className="decision_btn"
               style={{
                 cursor: !resultLoading ? 'pointer' : 'not-allowed',
-                color: !resultLoading ? 'black' : 'grey',
+                color: !resultLoading ? (darkmode ? 'white' : 'black') : 'grey',
               }}
               onClick={resultLoading ? undefined : () => setShowPopup(false)}
             >

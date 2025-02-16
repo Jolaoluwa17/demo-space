@@ -6,6 +6,7 @@ import { LuMail } from 'react-icons/lu';
 import { IoPersonOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { CiLight, CiDark } from 'react-icons/ci';
+import { FaLock } from 'react-icons/fa';
 
 import './settings.css';
 import RightArrowIcon from '@/icons/RightArrowIcon';
@@ -64,6 +65,21 @@ const Settings: React.FC<Props> = ({ darkmode, setDarkMode }) => {
                 color={darkmode ? 'white' : '#6a757e'}
               />
               <div className="settings_base_option_text">Profile Setting</div>
+            </div>
+            <RightArrowIcon />
+          </div>
+        </div>
+        <div className="settings_base_option">
+          <div className="settings_label" style={{ visibility: 'hidden' }}>
+            something
+          </div>
+          <div
+            className="settings_base_option_button"
+            onClick={() => navigate('/dashboard/profile/change-password')}
+          >
+            <div className="first_section">
+              <FaLock size={23} color={darkmode ? 'white' : '#6a757e'} />
+              <div className="settings_base_option_text">Change Password</div>
             </div>
             <RightArrowIcon />
           </div>
@@ -146,7 +162,7 @@ const Settings: React.FC<Props> = ({ darkmode, setDarkMode }) => {
         </div>
       </div>
 
-      <Popup popup={showPopup}>
+      <Popup popup={showPopup} darkmode={darkmode}>
         {!showSuccess ? (
           <div style={{ width: '100%' }}>
             <div className="decision_title">
@@ -156,7 +172,11 @@ const Settings: React.FC<Props> = ({ darkmode, setDarkMode }) => {
               <div
                 className="decision_btn"
                 style={{
-                  backgroundColor: !deleteUserLoading ? '#007BFF' : 'grey',
+                  backgroundColor: !deleteUserLoading
+                    ? darkmode
+                      ? 'black'
+                      : '#007BFF'
+                    : 'grey',
                   cursor: !deleteUserLoading ? 'pointer' : 'not-allowed',
                   color: !deleteUserLoading ? 'white' : 'grey',
                 }}
@@ -168,7 +188,11 @@ const Settings: React.FC<Props> = ({ darkmode, setDarkMode }) => {
                 className="decision_btn"
                 style={{
                   cursor: !deleteUserLoading ? 'pointer' : 'not-allowed',
-                  color: !deleteUserLoading ? 'black' : 'grey',
+                  color: !deleteUserLoading
+                    ? darkmode
+                      ? 'white'
+                      : 'black'
+                    : 'grey',
                 }}
                 onClick={
                   deleteUserLoading ? undefined : () => setShowPopup(false)

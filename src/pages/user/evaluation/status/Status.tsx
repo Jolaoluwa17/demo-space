@@ -5,7 +5,11 @@ import './status.css';
 import NavigationArrow from '@/icons/NavigationArrow';
 import { useTotalAttemptsQuery } from '@/services/features/quiz/quizSlice';
 
-const Status = () => {
+interface Props {
+  darkmode: boolean;
+}
+
+const Status: React.FC<Props> = ({ darkmode }) => {
   const location = useLocation();
   const userScore = location.state?.score;
   const noQuestions = location.state?.noQuestions;
@@ -28,7 +32,7 @@ const Status = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="status_root">
+    <div className={`status_root ${darkmode && 'status_root_dark'}`}>
       {totalAttemptsLoading ? (
         <div>Loading...</div>
       ) : (

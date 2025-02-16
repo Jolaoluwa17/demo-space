@@ -147,6 +147,9 @@
 .settings_root_dark .settings_base_option_text {
   color: white;
 }
+.settings_root_dark .delete_account_text p {
+  color: white;
+}
 
 @media (max-width: 768px) {
   .settings_base_option_button2,
@@ -170,5 +173,3 @@
     padding: 15px 15px;
   }
 }
-
-
