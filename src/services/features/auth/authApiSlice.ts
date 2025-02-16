@@ -59,8 +59,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
     googleAuth: builder.query({
       query: () => ({
-        url: '/user/auth/google',
+        url: 'user/auth/google',
         method: 'GET',
+      }),
+    }),
+    changepassword: builder.mutation({
+      query: (userData) => ({
+        url: 'user/changepassword',
+        method: 'POST',
+        body: userData,
       }),
     }),
   }),
@@ -76,5 +83,6 @@ export const {
   useRequestCodeMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useGoogleAuthQuery
+  useGoogleAuthQuery,
+  useChangepasswordMutation,
 } = authApiSlice;

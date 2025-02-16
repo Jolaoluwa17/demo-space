@@ -98,11 +98,26 @@ const Signup = () => {
 
   // const { data, isLoading: googleLoading, error } = useGoogleAuthQuery({});
 
-  // const handleGoogleSignIn = () => {
-  //   // Trigger the Google authentication request when the button is clicked
-  //   if (data && data.url) {
-  //     console.log(data);
-  //     window.location.href = data.url; // Redirect the user to the Google sign-in page
+  // console.log(data)
+
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     const response = await fetch("https://evaluatorappapi.onrender.com/api/user/auth/google", {
+  //       method: "GET",
+  //       credentials: "include", // Ensures cookies/session are passed if needed
+  //     });
+
+  //     const data = await response.json();
+  //     if (data.success) {
+  //       console.log("Login Successful:", data);
+  //       localStorage.setItem("token", data.token); // Store token for authentication
+  //       localStorage.setItem("user", JSON.stringify(data.user)); // Store user details
+  //       // dispatch(setCredentials({ email, password, userType: 'User' }));
+  //     } else {
+  //       console.error("Google Login Failed");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during Google Login:", error);
   //   }
   // };
 
@@ -321,10 +336,9 @@ const Signup = () => {
               <span>or sign up with</span>
               <hr />
             </div>
-            <div className="google_sign" >
+            <div className="google_sign">
               <FcGoogle size={20} />
             </div>
-        
           </div>
         </div>
       </div>
