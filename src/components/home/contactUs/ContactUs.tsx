@@ -60,16 +60,16 @@ const ContactUs = () => {
           <div className="contact_us_left_item">
             <CiLocationOn size={50} color="#007BFF" />
             <div className="item_text">
-              2715 Ash Dr. San Jose, South Dakota 83475
+              2nd Street, #2651 Casper WY, 82601 United States
             </div>
           </div>
           <div className="contact_us_left_item">
             <IoMailOutline size={50} color="#007BFF" />
-            <div className="item_text">support@techwingsglobal.com</div>
+            <div className="item_text">info@techwingsglobal.com</div>
           </div>
           <div className="contact_us_left_item">
             <FiPhone size={50} color="#007BFF" />
-            <div className="item_text">(219) 555-0114</div>
+            <div className="item_text">+16892565535</div>
           </div>
         </div>
         <div className="right">

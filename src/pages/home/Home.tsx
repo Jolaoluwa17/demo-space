@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { LuCopyright } from 'react-icons/lu';
 
 import './home.css';
@@ -10,6 +10,7 @@ import HeroSection from '@/components/home/heroSection/HeroSection';
 import AskQuestions from '@/components/home/questions/Questions';
 import HomeNavBar from '@/components/home/homeNavBar/HomeNavBar';
 import ContactUs from '@/components/home/contactUs/ContactUs';
+import { useSearchParams } from 'react-router-dom';
 
 interface Props {
   darkmode: boolean;
@@ -37,6 +38,13 @@ const Home: React.FC<Props> = ({ darkmode }) => {
       contactRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const [searchParams] = useSearchParams();
+  useEffect(() => {
+    if (searchParams.get('help') === 'true') {
+      handleScrollToContactUs();
+    }
+  }, [searchParams, handleScrollToContactUs]);
 
   return (
     <div className="home_root" ref={homeRef}>

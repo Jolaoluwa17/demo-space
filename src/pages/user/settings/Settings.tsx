@@ -90,7 +90,7 @@ const Settings: React.FC<Props> = ({ darkmode, setDarkMode }) => {
         <div className="settings_base_option_button2">
           <div className="first_section">
             <FiHeadphones size={25} color={darkmode ? 'white' : '#6a757e'} />
-            <div className="settings_base_option_text">01 - 2345678 - 9</div>
+            <div className="settings_base_option_text">+16892565535</div>
           </div>
           <RightArrowIcon />
         </div>
@@ -122,14 +122,14 @@ const Settings: React.FC<Props> = ({ darkmode, setDarkMode }) => {
           <RightArrowIcon />
         </a>
         <a
-          href="https://x.com/techwingsllc/"
+          href="https://x.com/OfficialTWGLLC?s=09"
           className="settings_base_option_button2"
           style={{ textDecoration: 'none' }}
           target="_blank"
         >
           <div className="first_section">
             <FiTwitter size={25} color={darkmode ? 'white' : '#6a757e'} />
-            <div className="settings_base_option_text">techwingsllc</div>
+            <div className="settings_base_option_text">officialtechwingsglobal</div>
           </div>
           <RightArrowIcon />
         </a>

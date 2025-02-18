@@ -47,16 +47,7 @@ const ChangePassword: React.FC<Props> = ({ darkmode }) => {
     } else {
       setIsButtonDisabled(true);
     }
-  }, [
-    password,
-    confirmPassword,
-    oldPassword,
-    hasMinLength,
-    hasUppercase,
-    hasLowercase,
-    hasNumber,
-    hasSpecialChar,
-  ]);
+  }, [password, confirmPassword, oldPassword]);
 
   const handleBackClick = () => {
     navigate('/dashboard/profile');

@@ -13,6 +13,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 import './userDropdown.css';
 import { useGetUserQuery } from '@/services/features/user/userSlice';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/services/features/auth/authSlice';
 
 interface UserType {
   response: {
@@ -25,6 +27,7 @@ interface UserType {
 export default function UserDropdown() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,7 +41,14 @@ export default function UserDropdown() {
 
   const handleLogout = () => {
     setAnchorEl(null);
+    dispatch(logout());
     navigate('/auth/login');
+  };
+
+  const handleHelpCentre = () => {
+    setAnchorEl(null);
+    dispatch(logout());
+    navigate('/?help=true');
   };
 
   const userid = sessionStorage.getItem('id');
@@ -52,7 +62,7 @@ export default function UserDropdown() {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title="Account settings">
+        <Tooltip title="">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -112,7 +122,7 @@ export default function UserDropdown() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleHelpCentre}>
           <ListItemIcon>
             <HelpIcon color="disabled" fontSize="medium" />
           </ListItemIcon>
