@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { LuCopyright } from 'react-icons/lu';
 
 import './home.css';
@@ -33,11 +33,11 @@ const Home: React.FC<Props> = ({ darkmode }) => {
     }
   };
 
-  const handleScrollToContactUs = () => {
+  const handleScrollToContactUs = useCallback(() => {
     if (contactRef.current) {
-      contactRef.current.scrollIntoView({ behavior: 'smooth' });
+      contactRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, [contactRef]);
 
   const [searchParams] = useSearchParams();
   useEffect(() => {
