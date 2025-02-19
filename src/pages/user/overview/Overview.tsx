@@ -84,7 +84,7 @@ const Overview: React.FC<Props> = ({ darkmode }) => {
             )}
           </div>
           <div className="overview_subTitle">
-            Ready to continue your learning journey?
+            Ready to showcase your tech skills and advance your career?
           </div>
         </div>
       )}
