@@ -26,12 +26,21 @@
   color: white;
 }
 
+.circle.completed {
+  background-color: #007bff;
+  color: white;
+}
+
 .line {
   width: 80px;
   height: 4px;
   border-radius: 4px;
   background-color: #cbcbcc;
   margin-right: 5px;
+}
+
+.line.completed-line {
+  background-color: #007bff;
 }
 
 @media (max-width: 450px) {

@@ -59,6 +59,7 @@
   font-size: 24px;
   font-weight: 600;
   color: #333a41;
+  position: relative;
 }
 .contact_us_form_subTitle {
   color: #6a757e;
@@ -151,5 +152,17 @@
 
   .contact_us_root button {
     font-size: 14px;
+  }
+  .contactus_form_top_section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .contactus_form_top_section input {
+    width: 100%;
+  }
+  .contactus_form_top_section_second_input {
+    margin-top: 16px;
   }
 }

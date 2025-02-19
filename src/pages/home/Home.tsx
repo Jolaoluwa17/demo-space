@@ -35,7 +35,7 @@ const Home: React.FC<Props> = ({ darkmode }) => {
 
   const handleScrollToContactUs = useCallback(() => {
     if (contactRef.current) {
-      contactRef.current.scrollIntoView({ behavior: "smooth" });
+      contactRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [contactRef]);
 

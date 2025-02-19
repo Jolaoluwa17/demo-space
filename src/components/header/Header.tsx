@@ -16,8 +16,10 @@ interface UserType {
     email: string;
     firstName: string;
     lastName: string;
+    profileImg: string; // Add this field
   };
 }
+
 
 const Header: React.FC<Props> = ({ activeLink, darkmode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,15 +51,15 @@ const Header: React.FC<Props> = ({ activeLink, darkmode }) => {
     isLoading: boolean;
   };
 
-  console.log(data);
-
   return (
-    <header className={`header ${darkmode ? 'darkmode_theme' : 'lightmode_theme'}`}>
+    <header
+      className={`header ${darkmode ? 'darkmode_theme' : 'lightmode_theme'}`}
+    >
       <h1 className="header_title">{activeLink}</h1>
       <div className="header_right_section">
         <div className="profile-dropdown">
           <div className="profile-container">
-            <UserDropdown />
+            <UserDropdown darkmode={darkmode} userData={data ?? undefined} />
           </div>
           <div className="profile_dropdown_text">
             <div className="profile_dropdown_text_name">

@@ -93,6 +93,7 @@ const ContactUs = () => {
               name="email"
               placeholder="Email"
               value={form.email}
+              className="contactus_form_top_section_second_input"
               onChange={handleChange}
             />
           </div>
