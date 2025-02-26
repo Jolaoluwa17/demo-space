@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './profile.css';
 import Pagination from '@/components/pagination/Pagination';
@@ -35,77 +35,91 @@ interface Certification {
 }
 
 const Profile = () => {
-  const location = useLocation();
+  // const location = useLocation();
+  // const navigate = useNavigate();
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const totalPages = 6;
+
+  // const getTabFromPage = (page: number) => {
+  //   switch (page) {
+  //     case 1:
+  //       return 'personal-information';
+  //     case 2:
+  //       return 'educational-background';
+  //     case 3:
+  //       return 'skills';
+  //     case 4:
+  //       return 'interests';
+  //     case 5:
+  //       return 'experience';
+  //     case 6:
+  //       return 'certificates';
+  //     default:
+  //       return 'personal-information';
+  //   }
+  // };
+
+  // const getPageFromTab = (tab: string) => {
+  //   switch (tab) {
+  //     case 'personal-information':
+  //       return 1;
+  //     case 'educational-background':
+  //       return 2;
+  //     case 'skills':
+  //       return 3;
+  //     case 'interests':
+  //       return 4;
+  //     case 'experience':
+  //       return 5;
+  //     case 'certificates':
+  //       return 6;
+  //     default:
+  //       return 1;
+  //   }
+  // };
+
+  // // Sync currentPage with URL tab on load
+  // useEffect(() => {
+  //   const queryParams = new URLSearchParams(location.search);
+  //   const tab = queryParams.get('tab');
+  //   const currentTab = getTabFromPage(currentPage);
+
+  //   if (tab && tab !== currentTab) {
+  //     const page = getPageFromTab(tab);
+  //     setCurrentPage(page);
+  //   } else if (!tab) {
+  //     navigate(`/user-profile?tab=personal-information`, { replace: true });
+  //   }
+  // }, [location.search, navigate, currentPage]);
+
+  // // Modify the page change handler to update URL directly
+  // const handlePageChange = (page: number) => {
+  //   const newTab = getTabFromPage(page);
+  //   navigate(`/user-profile?tab=${newTab}`, { replace: true });
+  //   setCurrentPage(page);
+  // };
+
+  // // Modify back button handler to use the same pattern
+  // const handleBackButtonClick = () => {
+  //   if (currentPage > 1) {
+  //     const newPage = currentPage - 1;
+  //     const newTab = getTabFromPage(newPage);
+  //     navigate(`/user-profile?tab=${newTab}`, { replace: true });
+  //     setCurrentPage(newPage);
+  //   }
+  // };
+  // const location = useLocation();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 6;
 
-  const getTabFromPage = (page: number) => {
-    switch (page) {
-      case 1:
-        return 'personal-information';
-      case 2:
-        return 'educational-background';
-      case 3:
-        return 'skills';
-      case 4:
-        return 'interests';
-      case 5:
-        return 'experience';
-      case 6:
-        return 'certificates';
-      default:
-        return 'personal-information';
-    }
-  };
-
-  const getPageFromTab = (tab: string) => {
-    switch (tab) {
-      case 'personal-information':
-        return 1;
-      case 'educational-background':
-        return 2;
-      case 'skills':
-        return 3;
-      case 'interests':
-        return 4;
-      case 'experience':
-        return 5;
-      case 'certificates':
-        return 6;
-      default:
-        return 1;
-    }
-  };
-
-  // Sync currentPage with URL tab on load
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const tab = queryParams.get('tab');
-    const currentTab = getTabFromPage(currentPage);
-
-    if (tab && tab !== currentTab) {
-      const page = getPageFromTab(tab);
-      setCurrentPage(page);
-    } else if (!tab) {
-      navigate(`/user-profile?tab=personal-information`, { replace: true });
-    }
-  }, [location.search, navigate, currentPage]);
-
-  // Modify the page change handler to update URL directly
   const handlePageChange = (page: number) => {
-    const newTab = getTabFromPage(page);
-    navigate(`/user-profile?tab=${newTab}`, { replace: true });
     setCurrentPage(page);
   };
 
-  // Modify back button handler to use the same pattern
   const handleBackButtonClick = () => {
     if (currentPage > 1) {
-      const newPage = currentPage - 1;
-      const newTab = getTabFromPage(newPage);
-      navigate(`/user-profile?tab=${newTab}`, { replace: true });
-      setCurrentPage(newPage);
+      setCurrentPage(currentPage - 1);
     }
   };
 
