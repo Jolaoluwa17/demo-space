@@ -65,7 +65,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
     changepassword: builder.mutation({
       query: (userData) => ({
-        url: 'user/changepassword',
+        url: `user/changepassword/${userData.id}`,
         method: 'POST',
         body: userData,
       }),

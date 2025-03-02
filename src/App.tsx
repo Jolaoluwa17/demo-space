@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Login from './pages/login/Login';
-// import ProtectedRoute from './middleware/ProtectRoute';
+import ProtectedRoute from './middleware/ProtectRoute';
 
 import Signup from './pages/user/signup/Signup';
 import VerifyAccount from './pages/user/verifyAccount/VerifyAccount';
@@ -61,19 +61,23 @@ function App() {
           </Route>
 
           {/* Settings Route */}
-          <Route path="/user-profile" element={<Profile />} />
+          <Route
+            path="/user-profile"
+            element={
+              <ProtectedRoute element={<Profile />} />
+            }
+          />
 
           {/* Dashboard Routes */}
           <Route
             path="/dashboard"
-            // element={
-            //   <ProtectedRoute
             element={
-              <Layout examInProgress={examInProgress} darkmode={darkmode} />
+              <ProtectedRoute
+                element={
+                  <Layout examInProgress={examInProgress} darkmode={darkmode} />
+                }
+              />
             }
-            //   allowedRoles={['User']}
-            // />
-            // }
           >
             <Route index element={<Overview darkmode={darkmode} />} />
             <Route path="evaluation" element={<EvaluationRoot />}>

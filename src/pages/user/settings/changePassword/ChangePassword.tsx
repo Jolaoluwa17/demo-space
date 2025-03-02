@@ -6,9 +6,9 @@ import PageHeader from '@/components/pageHeader/PageHeader';
 import Popup from '@/modals/popup/Popup';
 import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
-// import { useChangepasswordMutation } from '@/services/features/auth/authApiSlice';
-// import ErrorResponse from '@/types/ErrorResponse';
-// import { BiSolidErrorAlt } from 'react-icons/bi';
+import { useChangepasswordMutation } from '@/services/features/auth/authApiSlice';
+import ErrorResponse from '@/types/ErrorResponse';
+import { BiSolidErrorAlt } from 'react-icons/bi';
 import { AnimatePresence, motion } from 'framer-motion';
 import NotificationToast from '@/components/notificationToast/NotificationToast';
 
@@ -31,6 +31,7 @@ const ChangePassword: React.FC<Props> = ({ darkmode }) => {
   const hasLowercase = /[a-z]/.test(password);
   const hasNumber = /\d/.test(password);
   const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>_]/.test(password);
+  const userid = sessionStorage.getItem('id');
 
   // Check if both passwords are filled and match
   useEffect(() => {
@@ -87,29 +88,29 @@ const ChangePassword: React.FC<Props> = ({ darkmode }) => {
   };
 
   const [showToast, setShowToast] = useState(false);
-  // const [changePassword, { isLoading }] = useChangepasswordMutation({});
-  // const [err, setErr] = useState<string>('');
+  const [changePassword, { isLoading }] = useChangepasswordMutation({});
+  const [err, setErr] = useState<string>('');
 
   const handleChangePassword = async () => {
-    // const userData = { newPassword: password };
-    setShowToast(true);
-    // try {
-    //   const res = await changePassword(userData).unwrap();
-    //   console.log(res);
-    //   setPopup(true);
-    // } catch (error: unknown) {
-    //   const err = error as ErrorResponse;
-    //   setErr(
-    //     err.data.error === 'User with the given email not found'
-    //       ? 'User not found'
-    //       : 'Something went wrong'
-    //   );
-    // } finally {
-    //   setTimeout(() => {
-    //     setPopup(false);
-    //     navigate('/auth/login');
-    //   }, 3000);
-    // }
+    const userData = { newPassword: password, id: userid };
+    // setShowToast(true);
+    try {
+      const res = await changePassword(userData).unwrap();
+      console.log(res);
+      setPopup(true);
+    } catch (error: unknown) {
+      const err = error as ErrorResponse;
+      setErr(
+        err.data.error === 'User with the given email not found'
+          ? 'User not found'
+          : 'Something went wrong'
+      );
+    } finally {
+      setTimeout(() => {
+        setPopup(false);
+        navigate('/auth/login');
+      }, 3000);
+    }
   };
 
   return (
@@ -187,18 +188,19 @@ const ChangePassword: React.FC<Props> = ({ darkmode }) => {
               {showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
             </div>
           </div>
-          {/* {err && (
+          {err && (
             <div className="error_message">
               <BiSolidErrorAlt fontSize={18} />
               <div style={{ paddingLeft: '5px' }}>{err}</div>
             </div>
-          )} */}
+          )}
           <div
             className={`change_password_confirm_btn ${isButtonDisabled ? 'disabled' : ''}`}
-            onClick={!isButtonDisabled ? handleChangePassword : undefined}
+            onClick={!isButtonDisabled && !isLoading ? handleChangePassword : undefined}
             style={{
-              backgroundColor: isButtonDisabled ? 'grey' : '',
-              cursor: isButtonDisabled ? 'not-allowed' : 'pointer',
+              backgroundColor: isButtonDisabled && !isLoading ? 'grey' : '',
+              cursor:
+                isButtonDisabled && !isLoading ? 'not-allowed' : 'pointer',
             }}
           >
             Change Password

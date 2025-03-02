@@ -104,7 +104,7 @@ const Signup = () => {
   //   try {
   //     const response = await fetch("https://evaluatorappapi.onrender.com/api/user/auth/google", {
   //       method: "GET",
-  //       credentials: "include", // Ensures cookies/session are passed if needed
+  //       //credentials: "include", // Ensures cookies/session are passed if needed
   //     });
 
   //     const data = await response.json();
@@ -120,6 +120,11 @@ const Signup = () => {
   //     console.error("Error during Google Login:", error);
   //   }
   // };
+
+  const handleGoogleLogin = () => {
+    window.location.href = "https://evaluatorappapi.onrender.com/api/user/auth/google";
+  };
+  
 
   return (
     <div className="signup_root">
@@ -336,7 +341,7 @@ const Signup = () => {
               <span>or sign up with</span>
               <hr />
             </div>
-            <div className="google_sign">
+            <div className="google_sign" onClick={handleGoogleLogin}>
               <FcGoogle size={20} />
             </div>
           </div>
