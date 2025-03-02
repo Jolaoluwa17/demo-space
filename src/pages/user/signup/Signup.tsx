@@ -96,35 +96,10 @@ const Signup = () => {
     }
   };
 
-  // const { data, isLoading: googleLoading, error } = useGoogleAuthQuery({});
-
-  // console.log(data)
-
-  // const handleGoogleLogin = async () => {
-  //   try {
-  //     const response = await fetch("https://evaluatorappapi.onrender.com/api/user/auth/google", {
-  //       method: "GET",
-  //       //credentials: "include", // Ensures cookies/session are passed if needed
-  //     });
-
-  //     const data = await response.json();
-  //     if (data.success) {
-  //       console.log("Login Successful:", data);
-  //       localStorage.setItem("token", data.token); // Store token for authentication
-  //       localStorage.setItem("user", JSON.stringify(data.user)); // Store user details
-  //       // dispatch(setCredentials({ email, password, userType: 'User' }));
-  //     } else {
-  //       console.error("Google Login Failed");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during Google Login:", error);
-  //   }
-  // };
-
   const handleGoogleLogin = () => {
-    window.location.href = "https://evaluatorappapi.onrender.com/api/user/auth/google";
+    window.location.href =
+      'https://evaluatorappapi.onrender.com/api/user/auth/google';
   };
-  
 
   return (
     <div className="signup_root">

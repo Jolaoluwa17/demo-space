@@ -38,7 +38,7 @@ const Layout: React.FC<LayoutProps> = ({ examInProgress, darkmode }) => {
       <div className="sidebar_mobile_container">
         <Sidebar examInProgress={examInProgress} darkmode={darkmode} />
       </div>
-      <div className={`content_wrapper open `}>
+      <div className={`content_wrapper open`}>
         <Header
           activeLink={activeLink}
           userName={userName}

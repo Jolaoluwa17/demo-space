@@ -1,6 +1,5 @@
 .settings_root {
   padding: 24px;
-  /* position: relative; */
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -33,18 +32,41 @@
   display: block;
 }
 
+/* Dark mode style */
+.settings_root_dark .settings_tabs_root {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #1d1d1d;
+  width: 100%;
+  margin-top: 24px;
+  color: white;
+}
+.settings_root_dark .settings_tabs {
+  width: 185px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid #1d1d1d;
+}
+
 @media (max-width: 1024px) {
   .settings_content_container {
     width: 741px;
   }
-  .settings_tabs {
+  .settings_tabs,
+  .settings_root_dark .settings_tabs {
     width: 115px;
     text-align: center;
   }
 }
 
 @media (max-width: 768px) {
-  .settings_tabs {
+  .settings_tabs,
+  .settings_root_dark .settings_tabs {
     width: 83px;
     text-align: center;
     font-size: 12px;
@@ -64,24 +86,4 @@
   }
 }
 
-/* Dark mode style */
-.settings_root_dark .settings_tabs_root {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color:  #1d1d1d;
-  width: 100%;
-  margin-top: 24px;
-  color: white;
-}
-.settings_root_dark .settings_tabs {
-  width: 185px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  border-bottom: 2px solid #1d1d1d;
-}
 

@@ -117,6 +117,11 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href =
+      'https://evaluatorappapi.onrender.com/api/user/auth/google';
+  };
+
   return (
     <div className="signup_root" onKeyDown={handleKeyDown} tabIndex={0}>
       <div className="right">
@@ -235,7 +240,7 @@ const Login = () => {
               <span>or login with</span>
               <hr />
             </div>
-            <div className="google_sign">
+            <div className="google_sign" onClick={handleGoogleLogin}>
               <FcGoogle size={20} />
             </div>
           </div>

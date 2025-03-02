@@ -49,7 +49,6 @@ const VerifyAccount = () => {
       email: email,
       password: password,
     };
-    console.log(userData);
     try {
       const res = await login(userData).unwrap();
       dispatch(
