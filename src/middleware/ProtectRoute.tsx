@@ -13,7 +13,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   const tokenFromParams = searchParams.get('token');
   const userIdFromParams = searchParams.get('id');
 
-  // Retrieve token and userType from sessionStorage or query params
   const accessToken = sessionStorage.getItem('token') || tokenFromParams;
 
   useEffect(() => {

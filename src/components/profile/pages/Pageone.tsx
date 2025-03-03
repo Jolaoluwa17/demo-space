@@ -24,6 +24,7 @@ interface Props {
   setImageName: React.Dispatch<React.SetStateAction<string>>;
   handleFileUpload: () => void; // Prop for file upload
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  userDataIsLoading: boolean;
 }
 
 const country = [
@@ -53,6 +54,7 @@ const Pageone: React.FC<Props> = ({
   setImageName,
   handleFileChange,
   handleFileUpload,
+  userDataIsLoading = false,
 }) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [selectedCode, setSelectedCode] = useState<string>('+234');
@@ -95,6 +97,7 @@ const Pageone: React.FC<Props> = ({
           className="profile_pageone_input"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          disabled={userDataIsLoading === true}
         />
       </div>
 
@@ -107,6 +110,7 @@ const Pageone: React.FC<Props> = ({
           className="profile_pageone_input"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          disabled={userDataIsLoading === true}
         />
       </div>
 
@@ -123,6 +127,7 @@ const Pageone: React.FC<Props> = ({
                 `${e.target.value}${phoneNo.replace(selectedCode, '')}`
               );
             }}
+            disabled={userDataIsLoading === true}
           >
             {country.map((item, index) => (
               <option key={index} value={item.code}>
@@ -137,6 +142,7 @@ const Pageone: React.FC<Props> = ({
             value={phoneNo.replace(selectedCode, '')} // Show only the number portion
             maxLength={15}
             onChange={(e) => handlePhoneNumberChange(e.target.value)}
+            disabled={userDataIsLoading === true}
           />
         </div>
       </div>
@@ -150,6 +156,7 @@ const Pageone: React.FC<Props> = ({
           className="profile_pageone_input"
           value={linkedIn}
           onChange={(e) => setLinkedIn(e.target.value)}
+          disabled={userDataIsLoading === true}
         />
       </div>
 
@@ -162,6 +169,7 @@ const Pageone: React.FC<Props> = ({
           className="profile_pageone_input"
           value={github}
           onChange={(e) => setGitHub(e.target.value)}
+          disabled={userDataIsLoading === true}
         />
       </div>
 
@@ -186,6 +194,7 @@ const Pageone: React.FC<Props> = ({
         accept=".png, .jpeg, .jpg, .svg"
         style={{ display: 'none' }}
         onChange={handleFileChange}
+        disabled={userDataIsLoading === true}
       />
       {image && (
         <div className="image_tag">

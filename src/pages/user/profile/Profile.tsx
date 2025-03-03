@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import './profile.css';
@@ -10,7 +10,10 @@ import PageFive from '@/components/profile/pages/PageFive';
 import PageFour from '@/components/profile/pages/PageFour';
 import PageThree from '@/components/profile/pages/PageThree';
 import ProfileBackArrow from '@/icons/ProfileBackArrow';
-import { useUpdateUserProfileMutation } from '@/services/features/user/userSlice';
+import {
+  useGetUserQuery,
+  useUpdateUserProfileMutation,
+} from '@/services/features/user/userSlice';
 
 interface EducationEntry {
   institutionName: string;
@@ -35,67 +38,12 @@ interface Certification {
 }
 
 const Profile = () => {
-  // const location = useLocation();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 6;
 
-  // const getTabFromPage = (page: number) => {
-  //   switch (page) {
-  //     case 1:
-  //       return 'personal-information';
-  //     case 2:
-  //       return 'educational-background';
-  //     case 3:
-  //       return 'skills';
-  //     case 4:
-  //       return 'interests';
-  //     case 5:
-  //       return 'experience';
-  //     case 6:
-  //       return 'certificates';
-  //     default:
-  //       return 'personal-information';
-  //   }
-  // };
-
-  // const getPageFromTab = (tab: string) => {
-  //   switch (tab) {
-  //     case 'personal-information':
-  //       return 1;
-  //     case 'educational-background':
-  //       return 2;
-  //     case 'skills':
-  //       return 3;
-  //     case 'interests':
-  //       return 4;
-  //     case 'experience':
-  //       return 5;
-  //     case 'certificates':
-  //       return 6;
-  //     default:
-  //       return 1;
-  //   }
-  // };
-
-  // Sync currentPage with URL tab on load
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(location.search);
-  //   const tab = queryParams.get('tab');
-  //   const currentTab = getTabFromPage(currentPage);
-
-  //   if (tab && tab !== currentTab) {
-  //     const page = getPageFromTab(tab);
-  //     setCurrentPage(page);
-  //   } else if (!tab) {
-  //     navigate(`/user-profile?tab=personal-information`, { replace: true });
-  //   }
-  // }, [location.search, navigate, currentPage]);
-
   // Modify the page change handler to update URL directly
   const handlePageChange = (page: number) => {
-    // const newTab = getTabFromPage(page);
-    // navigate(`/user-profile?tab=${newTab}`, { replace: true });
     setCurrentPage(page);
   };
 
@@ -103,8 +51,6 @@ const Profile = () => {
   const handleBackButtonClick = () => {
     if (currentPage > 1) {
       const newPage = currentPage - 1;
-      // const newTab = getTabFromPage(newPage);
-      // navigate(`/user-profile?tab=${newTab}`, { replace: true });
       setCurrentPage(newPage);
     }
   };
@@ -151,6 +97,65 @@ const Profile = () => {
   ]);
 
   const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
+  const { data, isLoading: userDataIsLoading } = useGetUserQuery(
+    userid ? userid : ''
+  );
+
+  useEffect(() => {
+    if (data?.response) {
+      const response = data.response;
+
+      setFirstName(response.firstName || '');
+      setLastName(response.lastName || '');
+      setLinkedIn(response.linkedIn || '');
+      setGitHub(response.github || '');
+      setPhoneNo(response.phoneNumber || '');
+      setImage(response.profileImg || null);
+      setSkillSet(
+        Array.isArray(response.skillSet) && response.skillSet.length > 0
+          ? response.skillSet
+          : []
+      );
+
+      // Only set areaOfInterest if it contains valid values
+      setAreaOfInterest(
+        Array.isArray(response.areaOfInterest) &&
+          response.areaOfInterest.length > 0
+          ? response.areaOfInterest
+          : []
+      );
+
+      // Map education entries
+      setEducationEntries(
+        response.education?.map((edu: EducationEntry) => ({
+          institutionName: edu.institutionName || '',
+          degreeObtained: edu.degreeObtained || '',
+          degreeType: edu.degreeType || '',
+          graduationDate: edu.graduationDate || '',
+        })) || []
+      );
+
+      // Map job entries
+      setEntries(
+        response.job?.map((job: Entry) => ({
+          title: job.title || '',
+          description: job.description || '',
+          companyName: job.companyName || '',
+          startDate: job.startDate || '',
+          endDate: job.endDate || null,
+        })) || []
+      );
+
+      // Map certifications
+      setCertifications(
+        response.certifications?.map((cert: Certification) => ({
+          name: cert.name || '',
+          issuedBy: cert.issuedBy || '',
+          dateObtained: cert.dateObtained || null,
+        })) || []
+      );
+    }
+  }, [data]);
 
   const handleUpdateProfile = async () => {
     const formData = new FormData();
@@ -244,6 +249,10 @@ const Profile = () => {
       // Uncomment the actual call when ready
       await updateUserProfile(formData).unwrap();
       navigate('/dashboard');
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     } catch (error: unknown) {
       console.log('Error during profile update:', error);
     }
@@ -312,6 +321,7 @@ const Profile = () => {
               setImageName={setImageName}
               handleFileChange={handleFileChange}
               handleFileUpload={handleFileUpload}
+              userDataIsLoading={userDataIsLoading}
             />
           )}
           {currentPage === 2 && (
