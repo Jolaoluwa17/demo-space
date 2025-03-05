@@ -11,7 +11,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
 
   // Extract token and userId from query params
   const tokenFromParams = searchParams.get('token');
-  const userIdFromParams = searchParams.get('id');
+  const userIdFromParams = searchParams.get('userId');
+
+  console.log(userIdFromParams)
 
   const accessToken = sessionStorage.getItem('token') || tokenFromParams;
 

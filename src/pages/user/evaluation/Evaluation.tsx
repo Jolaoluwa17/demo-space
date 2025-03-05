@@ -38,7 +38,7 @@ const Evaluation: React.FC<Props> = ({ darkmode }) => {
 
   // Navigate to instructions page
   const handleCardClick = (id: string, course: string, description: string) => {
-    navigate(`/dashboard/evaluation/instructions?id=${id}`, {
+    navigate(`/dashboard/evaluation/instructions?quizId=${id}`, {
       state: { course, description },
     });
   };

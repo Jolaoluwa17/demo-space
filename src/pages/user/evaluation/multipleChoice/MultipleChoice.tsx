@@ -59,7 +59,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const id = searchParams.get('id');
+  const id = searchParams.get('quizId');
   const questionId = searchParams.get('questionId');
   const userid = sessionStorage.getItem('id');
   const [showPopup, setShowPopup] = useState(false);

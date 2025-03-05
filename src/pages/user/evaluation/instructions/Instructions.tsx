@@ -20,13 +20,13 @@ interface Props {
 const Instructions: React.FC<Props> = ({ darkmode }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const id = searchParams.get('id');
+  const id = searchParams.get('quizId');
   const userid = sessionStorage.getItem('id');
   const location = useLocation();
   const { course, description } = location.state || {};
 
   const handleClick = () => {
-    navigate(`/dashboard/evaluation/multiple-choice?id=${id}`);
+    navigate(`/dashboard/evaluation/multiple-choice?quizId=${id}`);
   };
 
   const handleBackClick = () => {
@@ -77,10 +77,12 @@ const Instructions: React.FC<Props> = ({ darkmode }) => {
     }
   }, []);
 
-  const filteredResults = getAllResults?.response?.filter(
-    (item: { userId: { _id: string }; quizId: { _id: string } }) =>
-      item.userId._id === userid && item.quizId._id === id
-  );
+  const filteredResults = Array.isArray(getAllResults?.response)
+    ? getAllResults.response.filter(
+        (item: { userId?: { _id?: string }; quizId?: { _id?: string } }) =>
+          item.userId?._id === userid && item.quizId?._id === id
+      )
+    : [];
 
   const hasLowScore =
     filteredResults?.length > 0
