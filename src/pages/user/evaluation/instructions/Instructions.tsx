@@ -65,7 +65,7 @@ const Instructions: React.FC<Props> = ({ darkmode }) => {
   useEffect(() => {
     refetchTotalAttempts();
     getAllRefetch();
-  }, [refetchTotalAttempts, getAllRefetch]);
+  }, [refetchTotalAttempts, getAllRefetch, location.key]);
 
   useEffect(() => {
     const countDownTimer = sessionStorage.getItem('countdownTime');

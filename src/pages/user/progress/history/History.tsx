@@ -45,23 +45,15 @@ const History: React.FC<Props> = ({ darkmode }) => {
     const results = [...userResults];
 
     if (attemptsLeft === 0) {
-      // When no attempts left, always show 3 rows total
+      // When no attempts left, always show exactly 3 rows total
       while (results.length < 3) {
         results.push({
           createdAt: null,
           score: 0,
         });
       }
-    } else {
-      // When attempts left, only show completed attempts + remaining attempts
-      const totalRowsToShow = results.length + attemptsLeft;
-      while (results.length < totalRowsToShow) {
-        results.push({
-          createdAt: null,
-          score: 0,
-        });
-      }
     }
+    // When attempts are left, only show the valid scores (no placeholders)
 
     return results;
   };
@@ -69,7 +61,7 @@ const History: React.FC<Props> = ({ darkmode }) => {
   const displayedResults = calculateDisplayedResults();
 
   return (
-    <div className={`history_root ${darkmode && "history_root_dark"}`}>
+    <div className={`history_root ${darkmode && 'history_root_dark'}`}>
       {isLoading || totalAttemptsLoading ? (
         <div className="loading_container">
           <FadeLoader color="#007BFF" />

@@ -47,7 +47,7 @@ const Overview: React.FC<Props> = ({ darkmode }) => {
   } = useGetAllProgramsQuery({});
 
   const handleCardClick = (id: string, course: string, description: string) => {
-    navigate(`/dashboard/evaluation/instructions?id=${id}`, {
+    navigate(`/dashboard/evaluation/instructions?quizId=${id}`, {
       state: { course, description },
     });
   };

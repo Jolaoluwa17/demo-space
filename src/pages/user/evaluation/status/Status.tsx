@@ -16,11 +16,18 @@ const Status: React.FC<Props> = ({ darkmode }) => {
   const quizId = location.state?.quizId;
   const userId = location.state?.userId;
 
-  const { data: totalAttemptData, isLoading: totalAttemptsLoading } =
-    useTotalAttemptsQuery({ userId: userId, quizId: quizId });
+  const {
+    data: totalAttemptData,
+    isLoading: totalAttemptsLoading,
+    refetch: refetchTotalAttempts,
+  } = useTotalAttemptsQuery({ userId: userId, quizId: quizId });
   console.log(totalAttemptData);
 
   const [percentage, setPercentage] = useState<number | null>(null);
+
+  useEffect(() => {
+    refetchTotalAttempts();
+  }, [refetchTotalAttempts, location.key]);
 
   useEffect(() => {
     if (userScore !== undefined && noQuestions !== undefined) {

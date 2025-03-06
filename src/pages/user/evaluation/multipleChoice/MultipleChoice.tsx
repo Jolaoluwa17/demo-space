@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -61,6 +61,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const id = searchParams.get('quizId');
+  const location = useLocation();
   const questionId = searchParams.get('questionId');
   const userid = sessionStorage.getItem('id');
   const [showPopup, setShowPopup] = useState(false);
@@ -71,7 +72,12 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
     data: questionsData,
     isLoading: questionsLoading,
     isError: questionError,
+    refetch: refetchQuestions,
   } = useGetQuizQuestionQuery({ userId: userid, quizId: id });
+
+  useEffect(() => {
+    refetchQuestions();
+  }, [refetchQuestions, location.key]);
 
   const [isInitialized, setIsInitialized] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<{
@@ -121,28 +127,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
     };
   }, []);
 
-  // Show popup and start countdown when leaveCount reaches 3
-  useEffect(() => {
-    if (leaveCount === 2) {
-      setLeaveCountPopup(true);
-      let timer = 5;
-
-      const interval = setInterval(() => {
-        setCountdown((prev) => prev - 1);
-        timer--;
-
-        if (timer === 0) {
-          clearInterval(interval);
-          navigate('/dashboard');
-          setTimeout(() => {
-            window.location.reload();
-          }, 100);
-        }
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [leaveCount, navigate]);
+  
 
   // in the case the user refreshes 3 times it navigates them back to instruction page.
   useEffect(() => {
@@ -179,7 +164,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
 
   useEffect(() => {
     refetchTotalAttempts();
-  }, [refetchTotalAttempts]);
+  }, [refetchTotalAttempts, location.key]);
 
   // Initialize current question index
   useEffect(() => {
@@ -407,6 +392,9 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
           userId: userid,
         },
       });
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 100);
       setErrMsg(
         res.response === 'Result already submitted for this quiz'
           ? 'Quiz has been done'
@@ -426,6 +414,26 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
     navigate,
     setErrMsg,
   ]);
+
+  // Show popup and start countdown when leaveCount reaches 3
+  useEffect(() => {
+    if (leaveCount === 2) {
+      setLeaveCountPopup(true);
+      let timer = 5;
+
+      const interval = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+        timer--;
+
+        if (timer === 0) {
+          clearInterval(interval);
+          handleSubmit();
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [leaveCount, navigate, handleSubmit]);
 
   const [submitted, setSubmitted] = useState<boolean>(false);
   // fucntion to submit quiz once time is up
@@ -654,9 +662,8 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
         <div className="leave_count_error">
           <MdError size={40} color="red" />
           <div style={{ textAlign: 'center', marginTop: '20px', color: 'red' }}>
-            Anti-cheat system has detected that you left the website 3 times.
-            You will be redirected to the dashboard screen in {countdown}{' '}
-            seconds.
+            Anti-cheat system has detected that you left the website 2 times.
+            Your quiz will be submitted in {countdown} seconds.
           </div>
         </div>
       </Popup>
