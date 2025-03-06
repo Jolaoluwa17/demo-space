@@ -7,8 +7,6 @@ import Popup from '@/modals/popup/Popup';
 import EyeOpen from '@/icons/Eye';
 import EyeClosed from '@/icons/EyeClosed';
 import { useChangepasswordMutation } from '@/services/features/auth/authApiSlice';
-import ErrorResponse from '@/types/ErrorResponse';
-import { BiSolidErrorAlt } from 'react-icons/bi';
 import { AnimatePresence, motion } from 'framer-motion';
 import NotificationToast from '@/components/notificationToast/NotificationToast';
 
@@ -35,21 +33,18 @@ const ChangePassword: React.FC<Props> = ({ darkmode }) => {
 
   // Check if both passwords are filled and match
   useEffect(() => {
-    if (
-      password &&
-      confirmPassword &&
+    const isValid =
+      password !== '' &&
+      confirmPassword !== '' &&
       password === confirmPassword &&
-      oldPassword &&
+      oldPassword !== '' &&
       hasMinLength &&
       hasUppercase &&
       hasLowercase &&
       hasNumber &&
-      hasSpecialChar
-    ) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
+      hasSpecialChar;
+
+    setIsButtonDisabled(!isValid);
   }, [
     password,
     confirmPassword,
@@ -89,27 +84,26 @@ const ChangePassword: React.FC<Props> = ({ darkmode }) => {
 
   const [showToast, setShowToast] = useState(false);
   const [changePassword, { isLoading }] = useChangepasswordMutation({});
-  const [err, setErr] = useState<string>('');
 
   const handleChangePassword = async () => {
-    const userData = { newPassword: password, id: userid };
+    const userData = {
+      newPassword: password,
+      id: userid,
+      password: oldPassword,
+    };
     // setShowToast(true);
     try {
       const res = await changePassword(userData).unwrap();
       console.log(res);
       setPopup(true);
-    } catch (error: unknown) {
-      const err = error as ErrorResponse;
-      setErr(
-        err.data.error === 'User with the given email not found'
-          ? 'User not found'
-          : 'Something went wrong'
-      );
-    } finally {
       setTimeout(() => {
         setPopup(false);
         navigate('/auth/login');
       }, 3000);
+    } catch (error: unknown) {
+      if (error) {
+        setShowToast(true);
+      }
     }
   };
 
@@ -188,25 +182,24 @@ const ChangePassword: React.FC<Props> = ({ darkmode }) => {
               {showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
             </div>
           </div>
-          {err && (
-            <div className="error_message">
-              <BiSolidErrorAlt fontSize={18} />
-              <div style={{ paddingLeft: '5px' }}>{err}</div>
-            </div>
-          )}
           <div
             className={`change_password_confirm_btn ${isButtonDisabled ? 'disabled' : ''}`}
-            onClick={!isButtonDisabled && !isLoading ? handleChangePassword : undefined}
+            onClick={
+              isButtonDisabled || isLoading ? undefined : handleChangePassword
+            }
             style={{
-              backgroundColor: isButtonDisabled && !isLoading ? 'grey' : '',
-              cursor:
-                isButtonDisabled && !isLoading ? 'not-allowed' : 'pointer',
+              backgroundColor: isButtonDisabled ? 'grey' : '',
+              cursor: isButtonDisabled ? 'not-allowed' : 'pointer',
             }}
           >
-            Change Password
+            {isLoading ? <div className="spinner"></div> : 'Change Password'}
           </div>
 
-          <Popup popup={popup} closePopup={() => setPopup(false)} darkmode>
+          <Popup
+            popup={popup}
+            closePopup={() => setPopup(false)}
+            darkmode={darkmode}
+          >
             <div className="change_password_popup">
               <img src="/images/DeleteAccount.svg" alt="" />
               <div className="change_password_popup_text">
@@ -229,9 +222,7 @@ const ChangePassword: React.FC<Props> = ({ darkmode }) => {
             className="notification-toast-wrapper"
           >
             <NotificationToast
-              msg={
-                'Oops 😭! Service is currently unavaliable. Please try again later.'
-              }
+              msg={'Oops 😭! Incorrect password. Please try again.'}
               toastType={'error'}
               cancel={() => setShowToast(false)}
             />

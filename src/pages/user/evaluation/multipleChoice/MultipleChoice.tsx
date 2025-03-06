@@ -4,6 +4,7 @@ import { FadeLoader } from 'react-spinners';
 import { BiSolidErrorAlt } from 'react-icons/bi';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaCheckCircle } from 'react-icons/fa';
+import { MdError } from 'react-icons/md';
 
 import './multipleChoice.css';
 import {
@@ -90,6 +91,58 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
   const [internetSpeed, setInternetSpeed] = useState<string>('');
   const [success, setIsSuccess] = useState(false);
   const [onlineStatusMessage, setOnlineStatusMessage] = useState<string>('');
+
+  const [leaveCount, setLeaveCount] = useState(0);
+  const [leaveCountPopup, setLeaveCountPopup] = useState(false);
+  const [countdown, setCountdown] = useState(5);
+
+  // useeffect to detect if mouse is on website or not
+  useEffect(() => {
+    const handleUserLeave = () => {
+      setLeaveCount((prevCount) => {
+        if (prevCount < 3) {
+          return prevCount + 1;
+        }
+        return prevCount;
+      });
+    };
+
+    const handleBlur = handleUserLeave;
+    const handleVisibilityChange = () => {
+      if (document.hidden) handleUserLeave();
+    };
+
+    window.addEventListener('blur', handleBlur);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('blur', handleBlur);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  // Show popup and start countdown when leaveCount reaches 3
+  useEffect(() => {
+    if (leaveCount === 2) {
+      setLeaveCountPopup(true);
+      let timer = 5;
+
+      const interval = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+        timer--;
+
+        if (timer === 0) {
+          clearInterval(interval);
+          navigate('/dashboard');
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [leaveCount, navigate]);
 
   // in the case the user refreshes 3 times it navigates them back to instruction page.
   useEffect(() => {
@@ -449,6 +502,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
           {isOnline ? `Internet speed is ${internetSpeed}` : 'You are offline'}
         </p>
       </div>
+      <div>Leave Counter: {leaveCount} / 2</div>
       <div className="question_container">
         <div className="question_out_of">
           Question {currentQuestionIndex + 1} of {questionsToShow.length}
@@ -593,6 +647,16 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
             >
               {resultLoading ? <div className="spinner"></div> : 'No'}
             </div>
+          </div>
+        </div>
+      </Popup>
+      <Popup popup={leaveCountPopup} darkmode={darkmode}>
+        <div className="leave_count_error">
+          <MdError size={40} color="red" />
+          <div style={{ textAlign: 'center', marginTop: '20px', color: 'red' }}>
+            Anti-cheat system has detected that you left the website 3 times.
+            You will be redirected to the dashboard screen in {countdown}{' '}
+            seconds.
           </div>
         </div>
       </Popup>
