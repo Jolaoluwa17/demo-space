@@ -198,7 +198,7 @@ const Login = () => {
             <div className="other_login_options">
               <div className="TOS_container">
                 <input type="checkbox" onChange={handleRememberMeChange} />
-                <div className="TOS">Rememeber me</div>
+                <div className="TOS">Remember me</div>
               </div>
               <div
                 className="TOS underline_link"
