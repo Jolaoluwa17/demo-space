@@ -100,7 +100,7 @@ const MultipleChoice: React.FC<Props> = ({ setExamInProgress, darkmode }) => {
   useEffect(() => {
     const handleUserLeave = () => {
       setLeaveCount((prevCount) => {
-        if (prevCount < 3) {
+        if (prevCount < 2) {
           return prevCount + 1;
         }
         return prevCount;
